@@ -490,6 +490,16 @@ footer {
     margin-bottom: 0.35rem;
 }
 
+.inst-card h4 a {
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.inst-card h4 a:hover {
+    color: var(--primary);
+}
+
 .inst-card p {
     font-size: 0.85rem;
     color: var(--text-muted);
