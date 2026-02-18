@@ -334,10 +334,47 @@ footer {
     margin-bottom: 0.75rem;
 }
 
-.lit-card p:last-child {
+.lit-card p:last-of-type:not(.lit-link) {
     font-size: 0.95rem;
     color: var(--text-muted);
     max-width: 100%;
+}
+
+.lit-link {
+    font-size: 0.85rem !important;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+}
+
+.lit-link a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.lit-link a:hover {
+    color: var(--text);
+}
+
+/* Expert contact links */
+.expert-links {
+    font-size: 0.8rem !important;
+    margin-top: 0.75rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+}
+
+.expert-links a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.expert-links a:hover {
+    color: var(--text);
 }
 
 /* Scenarios table */
