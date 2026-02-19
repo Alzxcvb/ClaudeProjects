@@ -126,6 +126,45 @@ Produce a thesis that is theoretically rigorous, grounded in quantitative modeli
 - Excellence Programme scholarship deadline passed (Feb 1). Non-EU tuition ~€20,600/yr
 - https://www.wur.nl/en/education-programmes/master/msc-programmes/msc-climate-studies.htm
 
+### Tier 4 — Budget-friendly German programs (tuition-free or near-free, still open)
+
+**University of Hamburg** — MSc Integrated Climate System Sciences
+- Hamburg, Germany. Taught in English. 2-year program.
+- Deadline: **February 15 – March 31, 2026**
+- Tuition: **€335/semester** (semester fee only, includes transit pass)
+- Covers all parts of the climate system including economics and social sciences. 75% international students.
+- https://www.sicss.uni-hamburg.de/msc-programs/msc-integrated-climate-science.html
+
+**University of Freiburg** — MSc Environmental Governance
+- Freiburg, Germany. Taught in English. 2-year program.
+- Deadline: **March 1 – May 15, 2026**
+- Tuition: **€1,500/semester** (non-EU); EU citizens free
+- ~35 students per cohort. Requires 2 recommendation letters + motivation letter.
+- https://www.meg.uni-freiburg.de/
+
+**Leuphana University Lüneburg** — MSc Sustainability Science
+- Lüneburg, Germany. Taught in English. Multiple tracks available.
+- Deadline: **~June 1, 2026** (via uni-assist for non-EU)
+- Tuition: **~€350/semester** (semester fee only)
+- Tracks: Ecosystems/Biodiversity/Society; Entrepreneurship/Agency/Leadership
+- https://www.leuphana.de/en/graduate-school/masters-programmes.html
+
+### Cost comparison (total estimated cost for full program, including living)
+
+| Program | Duration | Tuition Total | Living Total | **Grand Total** | Feasible on $20K? |
+|---|---|---|---|---|---|
+| Uni Hamburg ICSS | 2yr | ~$1,400 | ~$25,200 | **~$26,600** | Close — with part-time work, yes |
+| Uni Freiburg MEG | 2yr | ~$12,600 | ~$22,000 | **~$34,600** | Needs part-time work |
+| Leuphana Sustainability | 2yr | ~$1,500 | ~$22,000 | **~$23,500** | Best shot — tight but doable |
+| CEU Vienna MESP | 1yr | ~$12,600 | ~$15,750 | **~$28,350** | Needs scholarship |
+
+Note: Germany allows international students to work 120 full days or 240 half days per year (~€5,000-8,000/yr income).
+
+### Scholarships still open
+- **educations.com "Study a Master's in Europe"** — €5,000, deadline May 15, 2026
+- **CEU external funding** — various options listed at ceu.edu/admissions/financial-aid/external-funding-opportunities
+- Most major scholarships (DAAD, Fulbright, Erasmus Mundus) closed for 2026-27 cycle
+
 ### Common thread
 All programs value interdisciplinary research combining quantitative modeling, sustainability, and global systemic analysis.
 
