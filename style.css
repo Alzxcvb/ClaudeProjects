@@ -175,6 +175,12 @@ section p {
     border: 1px solid rgba(168, 85, 247, 0.3);
 }
 
+.project-status.archived {
+    background-color: rgba(148, 163, 184, 0.15);
+    color: var(--text-muted);
+    border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
 .project-status.wip {
     background-color: rgba(217, 119, 6, 0.15);
     color: var(--primary);
