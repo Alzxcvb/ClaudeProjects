@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Hygiene Score</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0d1117;
+            color: #e6edf3;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            color: #8b949e;
+            margin-top: 0.4rem;
+            font-size: 0.95rem;
+        }
+
+        .score-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .score-ring {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin-bottom: 1rem;
+        }
+
+        .score-ring svg {
+            transform: rotate(-90deg);
+        }
+
+        .score-ring .bg-circle {
+            fill: none;
+            stroke: #21262d;
+            stroke-width: 12;
+        }
+
+        .score-ring .progress-circle {
+            fill: none;
+            stroke-width: 12;
+            stroke-linecap: round;
+            stroke-dasharray: 502;
+            stroke-dashoffset: 502;
+            transition: stroke-dashoffset 0.8s ease, stroke 0.5s ease;
+        }
+
+        .score-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .score-number {
+            font-size: 2.8rem;
+            font-weight: 800;
+            line-height: 1;
+            transition: color 0.5s ease;
+        }
+
+        .score-label {
+            font-size: 0.75rem;
+            color: #8b949e;
+            margin-top: 2px;
+        }
+
+        .score-tier {
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 0.4rem 1.2rem;
+            border-radius: 20px;
+            background: #161b22;
+            border: 1px solid #30363d;
+            transition: all 0.5s ease;
+        }
+
+        .categories {
+            max-width: 640px;
+            margin: 0 auto 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .category {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .category-header:hover {
+            background: #1c2128;
+        }
+
+        .category-title {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .category-icon { font-size: 1.1rem; }
+
+        .category-pts {
+            font-size: 0.8rem;
+            color: #8b949e;
+            background: #0d1117;
+            padding: 0.2rem 0.6rem;
+            border-radius: 10px;
+        }
+
+        .category-body {
+            padding: 0 1.2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            padding: 0.7rem 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .check-item:hover { background: #1c2128; }
+
+        .check-item input[type="checkbox"] {
+            display: none;
+        }
+
+        .custom-check {
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            border-radius: 5px;
+            border: 2px solid #30363d;
+            background: #0d1117;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            margin-top: 1px;
+        }
+
+        .check-item.checked .custom-check {
+            background: #238636;
+            border-color: #238636;
+        }
+
+        .check-item.checked .custom-check::after {
+            content: '✓';
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .check-text { flex: 1; }
+
+        .check-text strong {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .check-text small {
+            color: #8b949e;
+            font-size: 0.78rem;
+            line-height: 1.4;
+        }
+
+        .check-pts {
+            font-size: 0.75rem;
+            color: #3fb950;
+            font-weight: 600;
+            min-width: 36px;
+            text-align: right;
+            margin-top: 2px;
+        }
+
+        .resources {
+            max-width: 640px;
+            margin: 0 auto 2rem;
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 1.2rem;
+        }
+
+        .resources h2 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: #8b949e;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.75rem;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+
+        .resource-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 0.8rem;
+            background: #0d1117;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #58a6ff;
+            font-size: 0.82rem;
+            border: 1px solid #21262d;
+            transition: border-color 0.2s;
+        }
+
+        .resource-link:hover { border-color: #58a6ff; }
+
+        footer {
+            text-align: center;
+            color: #484f58;
+            font-size: 0.78rem;
+            margin-top: 1rem;
+        }
+
+        /* Score color states */
+        .elite    { color: #3fb950; }
+        .strong   { color: #56d364; }
+        .good     { color: #e3b341; }
+        .average  { color: #f0883e; }
+        .atrisk   { color: #f85149; }
+
+        .tier-elite   { border-color: #238636; color: #3fb950; }
+        .tier-strong  { border-color: #2ea043; color: #56d364; }
+        .tier-good    { border-color: #9e6a03; color: #e3b341; }
+        .tier-average { border-color: #bd561d; color: #f0883e; }
+        .tier-atrisk  { border-color: #da3633; color: #f85149; }
+
+        .progress-elite   { stroke: #3fb950; }
+        .progress-strong  { stroke: #56d364; }
+        .progress-good    { stroke: #e3b341; }
+        .progress-average { stroke: #f0883e; }
+        .progress-atrisk  { stroke: #f85149; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Cyber Hygiene Score</h1>
+    <p>Check what you have. See where you stand.</p>
+</header>
+
+<div class="score-section">
+    <div class="score-ring">
+        <svg width="180" height="180" viewBox="0 0 180 180">
+            <circle class="bg-circle" cx="90" cy="90" r="80"/>
+            <circle class="progress-circle" id="progressCircle" cx="90" cy="90" r="80"/>
+        </svg>
+        <div class="score-center">
+            <div class="score-number" id="scoreNumber">0</div>
+            <div class="score-label">/ 100</div>
+        </div>
+    </div>
+    <div class="score-tier" id="scoreTier">Check your boxes below</div>
+</div>
+
+<div class="categories" id="categories">
+
+    <!-- PASSWORDS -->
+    <div class="category">
+        <div class="category-header">
+            <div class="category-title">
+                <span class="category-icon">🔑</span> Passwords
+            </div>
+            <span class="category-pts" id="pts-passwords">0 / 20 pts</span>
+        </div>
+        <div class="category-body">
+            <label class="check-item" data-pts="10" data-cat="passwords">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>I use a password manager</strong>
+                    <small>Bitwarden (free), 1Password, or similar. Every site gets a unique password.</small>
+                </div>
+                <div class="check-pts">+10</div>
+            </label>
+            <label class="check-item" data-pts="10" data-cat="passwords">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>All my passwords are unique</strong>
+                    <small>No password is reused across different sites or apps.</small>
+                </div>
+                <div class="check-pts">+10</div>
+            </label>
+        </div>
+    </div>
+
+    <!-- 2FA -->
+    <div class="category">
+        <div class="category-header">
+            <div class="category-title">
+                <span class="category-icon">🔐</span> Two-Factor Authentication
+            </div>
+            <span class="category-pts" id="pts-2fa">0 / 25 pts</span>
+        </div>
+        <div class="category-body">
+            <label class="check-item" data-pts="10" data-cat="2fa">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>2FA on my email</strong>
+                    <small>Email is the master key to everything. Use an authenticator app, not SMS if possible.</small>
+                </div>
+                <div class="check-pts">+10</div>
+            </label>
+            <label class="check-item" data-pts="10" data-cat="2fa">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>2FA on financial accounts</strong>
+                    <small>Bank, PayPal, Venmo, crypto exchanges — anything with money.</small>
+                </div>
+                <div class="check-pts">+10</div>
+            </label>
+            <label class="check-item" data-pts="5" data-cat="2fa">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>2FA on social media</strong>
+                    <small>Instagram, Twitter/X, Facebook, LinkedIn — account takeovers are common.</small>
+                </div>
+                <div class="check-pts">+5</div>
+            </label>
+        </div>
+    </div>
+
+    <!-- NETWORK -->
+    <div class="category">
+        <div class="category-header">
+            <div class="category-title">
+                <span class="category-icon">🌐</span> Network & Browsing
+            </div>
+            <span class="category-pts" id="pts-network">0 / 20 pts</span>
+        </div>
+        <div class="category-body">
+            <label class="check-item" data-pts="8" data-cat="network">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>I use a VPN</strong>
+                    <small>Especially on public WiFi. Mullvad or ProtonVPN are privacy-first. Even on home networks it helps.</small>
+                </div>
+                <div class="check-pts">+8</div>
+            </label>
+            <label class="check-item" data-pts="7" data-cat="network">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>Ad & tracker blocker active</strong>
+                    <small>uBlock Origin (browser extension) or Brave browser. Blocks ads, trackers, and malicious scripts.</small>
+                </div>
+                <div class="check-pts">+7</div>
+            </label>
+            <label class="check-item" data-pts="5" data-cat="network">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>Home WiFi uses WPA2 or WPA3</strong>
+                    <small>Check your router settings. Never use WEP — it's broken.</small>
+                </div>
+                <div class="check-pts">+5</div>
+            </label>
+        </div>
+    </div>
+
+    <!-- DEVICE -->
+    <div class="category">
+        <div class="category-header">
+            <div class="category-title">
+                <span class="category-icon">💻</span> Device Security
+            </div>
+            <span class="category-pts" id="pts-device">0 / 20 pts</span>
+        </div>
+        <div class="category-body">
+            <label class="check-item" data-pts="8" data-cat="device">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>Full disk encryption enabled</strong>
+                    <small>FileVault on Mac (System Settings → Privacy & Security). BitLocker on Windows. If your laptop is stolen, data is unreadable.</small>
+                </div>
+                <div class="check-pts">+8</div>
+            </label>
+            <label class="check-item" data-pts="5" data-cat="device">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>Screen locks automatically</strong>
+                    <small>Locks after 2–5 minutes of inactivity. Requires password to unlock.</small>
+                </div>
+                <div class="check-pts">+5</div>
+            </label>
+            <label class="check-item" data-pts="7" data-cat="device">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>OS and apps auto-update</strong>
+                    <small>Most breaches exploit known, patched vulnerabilities. Staying updated closes the door.</small>
+                </div>
+                <div class="check-pts">+7</div>
+            </label>
+        </div>
+    </div>
+
+    <!-- ACCOUNT HYGIENE -->
+    <div class="category">
+        <div class="category-header">
+            <div class="category-title">
+                <span class="category-icon">🧹</span> Account Hygiene
+            </div>
+            <span class="category-pts" id="pts-accounts">0 / 15 pts</span>
+        </div>
+        <div class="category-body">
+            <label class="check-item" data-pts="5" data-cat="accounts">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>Checked Have I Been Pwned</strong>
+                    <small>haveibeenpwned.com — see if your email appears in any known data breaches. Change those passwords.</small>
+                </div>
+                <div class="check-pts">+5</div>
+            </label>
+            <label class="check-item" data-pts="5" data-cat="accounts">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>Removed apps/accounts I no longer use</strong>
+                    <small>Old accounts are forgotten breach targets. Delete them if you're done.</small>
+                </div>
+                <div class="check-pts">+5</div>
+            </label>
+            <label class="check-item" data-pts="5" data-cat="accounts">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>No sensitive data in unencrypted notes or email</strong>
+                    <small>Passwords, SSN, card numbers — not in Apple Notes, Gmail drafts, or plain text files.</small>
+                </div>
+                <div class="check-pts">+5</div>
+            </label>
+        </div>
+    </div>
+
+</div>
+
+<div class="resources">
+    <h2>Recommended Tools &amp; Resources</h2>
+    <div class="resource-grid">
+        <a class="resource-link" href="https://bitwarden.com" target="_blank" rel="noopener">🔑 Bitwarden (free)</a>
+        <a class="resource-link" href="https://haveibeenpwned.com" target="_blank" rel="noopener">🔍 Have I Been Pwned</a>
+        <a class="resource-link" href="https://mullvad.net" target="_blank" rel="noopener">🌐 Mullvad VPN</a>
+        <a class="resource-link" href="https://ublockorigin.com" target="_blank" rel="noopener">🛡 uBlock Origin</a>
+        <a class="resource-link" href="https://privacyguides.org" target="_blank" rel="noopener">📖 Privacy Guides</a>
+        <a class="resource-link" href="https://2fa.directory" target="_blank" rel="noopener">📱 2FA Directory</a>
+    </div>
+</div>
+
+<footer>
+    <p>Built with Claude &mdash; ClaudeProjects &mdash; 2026</p>
+</footer>
+
+<script>
+    const CIRCUMFERENCE = 2 * Math.PI * 80; // 502.65
+
+    const catMaxes = {
+        passwords: 20,
+        '2fa': 25,
+        network: 20,
+        device: 20,
+        accounts: 15
+    };
+
+    const catScores = {
+        passwords: 0,
+        '2fa': 0,
+        network: 0,
+        device: 0,
+        accounts: 0
+    };
+
+    function getTier(score) {
+        if (score >= 90) return { label: 'Top 1% — Elite', cls: 'elite', tier: 'elite' };
+        if (score >= 75) return { label: 'Top 10% — Very Strong', cls: 'strong', tier: 'strong' };
+        if (score >= 60) return { label: 'Top 25% — Above Average', cls: 'good', tier: 'good' };
+        if (score >= 40) return { label: 'Average — Room to Improve', cls: 'average', tier: 'average' };
+        return { label: 'At Risk — Act Now', cls: 'atrisk', tier: 'atrisk' };
+    }
+
+    function updateScore() {
+        const total = Object.values(catScores).reduce((a, b) => a + b, 0);
+        const pct = Math.round(total);
+
+        // Ring
+        const offset = CIRCUMFERENCE - (CIRCUMFERENCE * pct / 100);
+        const circle = document.getElementById('progressCircle');
+        circle.style.strokeDashoffset = offset;
+
+        // Remove old color classes
+        circle.className = 'progress-circle';
+
+        // Number
+        const numEl = document.getElementById('scoreNumber');
+        numEl.textContent = pct;
+
+        // Tier
+        const tierEl = document.getElementById('scoreTier');
+
+        if (pct === 0) {
+            numEl.className = 'score-number';
+            tierEl.className = 'score-tier';
+            tierEl.textContent = 'Check your boxes below';
+            return;
+        }
+
+        const { label, cls, tier } = getTier(pct);
+        numEl.className = 'score-number ' + cls;
+        tierEl.className = 'score-tier tier-' + tier;
+        tierEl.textContent = label;
+        circle.classList.add('progress-' + tier);
+
+        // Update cat pts displays
+        Object.keys(catScores).forEach(cat => {
+            const el = document.getElementById('pts-' + cat);
+            if (el) el.textContent = catScores[cat] + ' / ' + catMaxes[cat] + ' pts';
+        });
+    }
+
+    // Wire up checkboxes
+    document.querySelectorAll('.check-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const checkbox = item.querySelector('input[type="checkbox"]');
+            checkbox.checked = !checkbox.checked;
+
+            const pts = parseInt(item.dataset.pts);
+            const cat = item.dataset.cat;
+
+            if (checkbox.checked) {
+                item.classList.add('checked');
+                catScores[cat] = Math.min(catMaxes[cat], catScores[cat] + pts);
+            } else {
+                item.classList.remove('checked');
+                catScores[cat] = Math.max(0, catScores[cat] - pts);
+            }
+
+            updateScore();
+        });
+    });
+
+    // Init
+    updateScore();
+</script>
+</body>
+</html>
