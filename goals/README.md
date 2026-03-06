@@ -147,7 +147,6 @@ NODE_ENV="production"
 - Martial Arts 🥋
 - Diving & Australia Reef 🤿
 - Grad School / NZ Citizenship / NS Fellowship 🎓
-- Israeli Citizenship 🇮🇱
 - Personal Book Writing ✍️
 
 ## Known Issues
