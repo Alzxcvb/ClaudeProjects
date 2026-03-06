@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum GoalStatus {
+  ACTIVE
+  ON_DECK
+  ARCHIVED
+}
+
+model Goal {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  emoji       String
+  status      GoalStatus @default(ACTIVE)
+  order       Int
+  createdAt   DateTime @default(now())
+  habits      Habit[]
+  notes       Note[]
+}
+
+model Habit {
+  id        String   @id @default(cuid())
+  goalId    String
+  goal      Goal     @relation(fields: [goalId], references: [id], onDelete: Cascade)
+  name      String
+  order     Int
+  logs      HabitLog[]
+}
+
+model HabitLog {
+  id        String   @id @default(cuid())
+  habitId   String
+  habit     Habit    @relation(fields: [habitId], references: [id], onDelete: Cascade)
+  date      String
+  completed Boolean  @default(false)
+  value     Float?
+  @@unique([habitId, date])
+}
+
+model Note {
+  id        String   @id @default(cuid())
+  goalId    String
+  goal      Goal     @relation(fields: [goalId], references: [id], onDelete: Cascade)
+  content   String
+  milestone Boolean  @default(false)
+  date      String
+  createdAt DateTime @default(now())
+}
