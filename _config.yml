@@ -1,0 +1,20 @@
+# GitHub Pages configuration
+# Use static site without Jekyll processing
+theme: null
+markdown: kramdown
+plugins: []
+
+# Build settings
+exclude:
+  - node_modules
+  - .git
+  - .gitignore
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - "*.md"
+  - goals/
+  - "*/node_modules"
+  - "*/.next"
+  - "*/build"
+  - "*/dist"
