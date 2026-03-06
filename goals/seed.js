@@ -197,9 +197,9 @@ async function main() {
 
   const goal9 = await prisma.goal.create({
     data: {
-      title: 'Israeli Citizenship',
-      description: 'Law of Return application and process',
-      emoji: '🇮🇱',
+      title: 'Personal Book Writing',
+      description: 'Authoring and publishing',
+      emoji: '✍️',
       status: 'ON_DECK',
       order: 9,
     },
@@ -208,24 +208,6 @@ async function main() {
   await prisma.habit.create({
     data: {
       goalId: goal9.id,
-      name: 'Document Collection',
-      order: 1,
-    },
-  });
-
-  const goal10 = await prisma.goal.create({
-    data: {
-      title: 'Personal Book Writing',
-      description: 'Authoring and publishing',
-      emoji: '✍️',
-      status: 'ON_DECK',
-      order: 10,
-    },
-  });
-
-  await prisma.habit.create({
-    data: {
-      goalId: goal10.id,
       name: 'Writing Sessions',
       order: 1,
     },
