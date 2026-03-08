@@ -1,0 +1,39 @@
+{
+  "content": [
+    {
+      "id": 1,
+      "expertId": "polycrisis-expert",
+      "rawInput": "Great can we make another? This time I want to work on Kriaten content for problem, unaware audience, friends, and people that are unaware how the poly crisis and the limit of growth will impact them in their future.",
+      "linkedinDraft": "As I watch friends plan their careers, buy homes, and chart out their futures, I'm struck by a growing disconnect between our personal timelines and the systemic changes bearing down on us.\n\nWe're operating on old assumptions: that economic growth continues forever, that we can always count on stable food prices, that our retirement accounts will steadily appreciate, that our children will have better lives than we did.\n\nBut the data tells a different story. We're pushing against planetary boundaries in multiple systems simultaneously - climate, biodiversity, nitrogen cycles, freshwater. The past 75 years of relative stability and growth were historically anomalous, enabled by cheap fossil fuels and unexploited natural resources.\n\nThis isn't about doom-scrolling - it's about clear-eyed preparation. The polycrisis isn't some far-off threat. It's already showing up in supply chain disruptions, extreme weather events, rising food costs, and political instability.\n\nThe good news? Understanding these dynamics early gives us agency. We can make different choices about where to live, what skills to develop, how to invest, and what communities to build. We can design lives that are more resilient, more local, more aligned with ecological reality.\n\nThe challenging part isn't the technical solutions - it's expanding our imagination about what \"normal\" looks like and what constitutes a good life.\n\nWhat would you do differently if you really internalized that the next 30 years won't look like the last 30? What new possibilities might that open up?",
+      "twitterDrafts": [
+        "The greatest trick of our economic system wasn't making us believe infinite growth was possible - it was making us believe we wouldn't personally face the consequences of hitting planetary limits.",
+        "Reality check: Those \"far-off\" climate impacts? They're in your retirement timeline. Those \"distant\" resource shortages? They're in your kids' future job market.",
+        "The polycrisis isn't some abstract threat - it's already affecting your food prices, insurance rates, and where you'll be able to live in 20 years. The question isn't if it will impact you, but how prepared you'll be when it does."
+      ],
+      "hashtags": [
+        "#SystemsThinking",
+        "#FutureResilience",
+        "#Sustainability",
+        "#ClimateReality",
+        "#PolycrisisAwareness",
+        "#PlanetaryBoundaries",
+        "#SustainableFuture",
+        "#GlobalChange"
+      ],
+      "createdAt": "2026-02-18T09:38:11.037Z",
+      "telegramChatId": 8413726590,
+      "telegramMessageId": 10
+    }
+  ],
+  "expertSessions": [
+    {
+      "telegramUserId": 8413726590,
+      "expertId": "polycrisis-expert"
+    },
+    {
+      "telegramUserId": 8005170146,
+      "expertId": "rfp-expert"
+    }
+  ],
+  "nextId": 2
+}

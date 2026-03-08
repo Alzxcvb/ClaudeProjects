@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desirability Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Desirability Dashboard</h1>
+      <p class="subtitle">Honest, data-driven dating profile feedback</p>
+    </header>
+
+    <!-- Step 1: Photo Upload & Scoring -->
+    <section id="step-scoring" class="card">
+      <h2>1. Get Your Score</h2>
+      <p>Upload 1-3 photos to get your attractiveness score (powered by AI facial analysis).</p>
+
+      <div class="upload-area" id="uploadArea">
+        <input type="file" id="photoInput" multiple accept="image/jpeg,image/png,image/webp" hidden>
+        <div class="upload-prompt" id="uploadPrompt">
+          <span class="upload-icon">+</span>
+          <span>Click to upload photos (max 3)</span>
+        </div>
+        <div id="photoPreview" class="photo-preview"></div>
+      </div>
+
+      <button id="btnScore" class="btn btn-primary" disabled>Analyze Photos</button>
+      <div id="scoreStatus" class="status"></div>
+
+      <!-- Manual fallback -->
+      <details class="manual-fallback">
+        <summary>Enter score manually instead</summary>
+        <p>If auto-scoring fails, go to <a href="https://www.attractivenesstest.com" target="_blank">attractivenesstest.com</a>, upload your photo, and enter the score below.</p>
+        <div class="manual-input">
+          <input type="number" id="manualScore" min="1" max="10" step="0.1" placeholder="Score (1-10)">
+          <button id="btnManualScore" class="btn btn-secondary">Submit Score</button>
+        </div>
+      </details>
+
+      <!-- Score Results -->
+      <div id="scoreResults" class="results-box" hidden>
+        <div class="score-display">
+          <div class="big-score" id="avgScore">—</div>
+          <div class="score-label">Average Score</div>
+        </div>
+        <div class="percentile-display">
+          <div class="percentile-bar">
+            <div class="percentile-fill" id="percentileFill"></div>
+            <div class="percentile-marker" id="percentileMarker"></div>
+          </div>
+          <div class="percentile-text" id="percentileText"></div>
+        </div>
+        <div id="individualScores" class="individual-scores"></div>
+      </div>
+    </section>
+
+    <!-- Step 2: Profile -->
+    <section id="step-profile" class="card">
+      <h2>2. Build Your Profile</h2>
+      <p>Help us give you personalized advice.</p>
+
+      <form id="profileForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" id="age" min="18" max="99" placeholder="25">
+          </div>
+          <div class="form-group">
+            <label for="gender">Gender</label>
+            <select id="gender">
+              <option value="">Select...</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="non-binary">Non-binary</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="location">Location</label>
+            <input type="text" id="location" placeholder="City, State">
+          </div>
+          <div class="form-group">
+            <label for="height">Height</label>
+            <input type="text" id="height" placeholder="5'10&quot;">
+          </div>
+          <div class="form-group">
+            <label for="bodyType">Body Type</label>
+            <select id="bodyType">
+              <option value="">Select...</option>
+              <option value="slim">Slim</option>
+              <option value="athletic">Athletic</option>
+              <option value="average">Average</option>
+              <option value="curvy">Curvy</option>
+              <option value="heavy">Heavy</option>
+            </select>
+          </div>
+        </div>
+
+        <h3>Looking For</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="lookingForGender">Gender Preference</label>
+            <select id="lookingForGender">
+              <option value="">Select...</option>
+              <option value="women">Women</option>
+              <option value="men">Men</option>
+              <option value="everyone">Everyone</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="lookingForAgeMin">Age Range</label>
+            <div class="age-range">
+              <input type="number" id="lookingForAgeMin" min="18" max="99" placeholder="Min">
+              <span>to</span>
+              <input type="number" id="lookingForAgeMax" min="18" max="99" placeholder="Max">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group full-width">
+          <label for="interests">Interests / Hobbies</label>
+          <input type="text" id="interests" placeholder="Hiking, cooking, photography...">
+        </div>
+
+        <div class="form-group full-width">
+          <label for="bio">Current Dating App Bio (optional)</label>
+          <textarea id="bio" rows="3" placeholder="Paste your current bio here for review..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Profile</button>
+        <div id="profileStatus" class="status"></div>
+      </form>
+    </section>
+
+    <!-- Step 3: Analysis -->
+    <section id="step-analysis" class="card">
+      <h2>3. Get Your Analysis</h2>
+      <p>AI-powered improvement suggestions based on your score and profile.</p>
+
+      <button id="btnAnalyze" class="btn btn-primary" disabled>Generate Analysis</button>
+      <div id="analyzeStatus" class="status"></div>
+
+      <div id="analysisResults" hidden>
+        <div class="analysis-section" id="suggestionsContent"></div>
+        <hr>
+        <div class="analysis-section" id="typeInsightsContent"></div>
+      </div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
