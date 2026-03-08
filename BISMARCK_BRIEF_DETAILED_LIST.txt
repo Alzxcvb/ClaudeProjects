@@ -1,0 +1,988 @@
+====================================================================================================
+BISMARCK BRIEF ARTICLE SUMMARY - 241 ARTICLES TOTAL
+====================================================================================================
+
+SECTION BREAKDOWN:
+----------------------------------------------------------------------------------------------------
+Section                                  Count      Avg Words       Pct of Total   
+----------------------------------------------------------------------------------------------------
+Uncategorized                            218        4487              90.5%
+AI 2026                                  17         4315               7.1%
+Public                                   6          4768               2.5%
+
+====================================================================================================
+DETAILED SECTION CONTENTS
+====================================================================================================
+
+UNCATEGORIZED
+----------------------------------------------------------------------------------------------------
+(218 articles)
+
+1. 7 New Insights From 2025 at Bismarck Brief
+   → In 2025, our analysts wrote nearly a quarter of a million words on new technologies, global industry, and live players. Here are 7 key insights from our work this year.
+   [2025-12-30] 1954 words
+
+2. Blue Origin Sparks the Race to Move Millions of Tons Into Space
+   → Jeff Bezos' rocket company has shown it is the closest contender to match or surpass Elon Musk's SpaceX. This marks the emergence of true market competition in space for the first time in history.
+   [2025-12-24] 4998 words
+
+3. The Four-Year Anniversary of Bismarck Brief
+   → Four years ago, we launched the unique and essential guide for every live player seeking to shape modern civilization and make a lasting impact on it.
+   [2025-12-09] 1903 words
+
+4. Carl Zeiss’ Tradition of Knowledge in Optics
+   → Hopes for further scaling computing power for artificial intelligence currently all depend on one foundation-owned German firm that manufactures mirrors and lenses with atomic precision.
+   [2025-11-12] 5171 words
+
+5. Reid Hoffman’s Backstage Role in AI and U.S. Politics
+   → The Microsoft board member and LinkedIn founder uses his network to broker key AI deals and make political moves on behalf of the Democratic Party. He is intensifying his focus on AI companies.
+   [2025-10-29] 4553 words
+
+6. Narendra Modi is Steering India Towards Great Power Status
+   → The Indian prime minister and his party have kept India on track for economic growth. Achieving succession and consolidating power will be necessary to fulfill his ambitions for India.
+   [2025-10-15] 5441 words
+
+7. Chinese Science Will Decide the Future of China’s Economy
+   → As China exhausts gains from incrementally advancing and scaling Western technology, it shows keen interest in reforming institutions to achieve the hard task of making new scientific breakthroughs.
+   [2025-10-08] 5536 words
+
+8. Rupert Murdoch Achieves Power Succession
+   → The family behind The Wall Street Journal and Fox News has produced a successor following a contentious dispute. He will most likely prioritize profits over political influence.
+   [2025-10-01] 4818 words
+
+9. Identifying Live Players Who Outperform the Stock Market
+   → Four years of data show the stock price performance of publicly-traded companies after they are profiled in Bismarck Brief. Live player companies outperformed by far.
+   [2025-09-29] 1772 words
+
+10. The Wealthiest Man in India
+   → Mukesh Ambani followed in his father's footsteps to build a conglomerate with interests across chemicals, retail, telecom, software, and media in India. His empire however may be divided.
+   [2025-09-17] 4403 words
+
+11. The Empire of Laurene Powell Jobs
+   → Steve Jobs' widow is one of the wealthiest women in the world, a top investor in AI, and a major progressive philanthropist. She is a key node between Silicon Valley and the Democratic Party.
+   [2025-08-27] 4076 words
+
+12. Larry Ellison’s Plan to Use AI to Cure Cancer
+   → The long-time head of Oracle is applying both his own vast fortune and his company's capacity to making fast progress in medicine and biotech using artificial intelligence and health data collection.
+   [2025-08-20] 4437 words
+
+13. BYD is On Track to Become the Largest Car Company Ever
+   → A frontrunner in the battery revolution disrupting the global car industry with electric vehicles, China's top auto maker is set to continue reducing prices with growing scale and advanced technology.
+   [2025-08-13] 5165 words
+
+14. Ikea is a Functional Industrial Institution
+   → The Swedish furniture retailer has become the largest company of its kind in the world through unique design and manufacturing choices. It is however no longer led by its eccentric, driven founder.
+   [2025-08-06] 4556 words
+
+15. Honda Maintains Technical Sophistication in Spite of Stagnation
+   → Despite an impressive tradition of knowledge in engineering that has seen the Japanese company build airplanes and rockets, it lacks live player leadership needed to convert it into business success.
+   [2025-07-30] 4561 words
+
+16. The Defense Contractor That Builds Russia’s Weapons
+   → Rostec faces the twin challenges of fueling an industrial-scale war and reshoring production of key components under sanctions. It is making incremental progress.
+   [2025-07-23] 4835 words
+
+17. British Defense Subsidizes and Assists the U.S. Alliance System
+   → The British armed forces and defense industry take a knowingly subsidiary role to the U.S., strengthening its alliances across Europe. This however locks the UK out of great power status.
+   [2025-07-16] 4555 words
+
+18. The European Space Agency is Not Functional
+   → Despite having the financial and technical resources to do so, Europe can at best only slowly replicate advanced space capabilities. Institutional rigidity will cause it to succumb to competition.
+   [2025-07-09] 4609 words
+
+19. Eric Schmidt Brings Tech Into the Service of Government
+   → The former Google CEO devoted himself to modernizing the U.S. defense and foreign policy apparatus. He is a key figure networked both in Silicon Valley and among establishment elites.
+   [2025-07-02] 4495 words
+
+20. The Challenges Facing the Russian Space Industry
+   → The organizations that put the first man in space are largely structurally unchanged despite a long-term funding reduction. Slow-moving reforms are not enough to withstand new live player competition.
+   [2025-06-25] 5381 words
+
+21. How Nayib Bukele Refounded a State
+   → The young president of El Salvador skillfully rose to power then wielded it to install a new elite and crush violent gangs. He is now focused on delivering economic growth to a newly-peaceful country.
+   [2025-06-18] 6211 words
+
+22. Northrop Grumman is a Stagnant Defense Contractor
+   → The third-largest U.S. defense contractor makes unique weapons like stealth bombers and silo-launched nuclear missiles. It is however in every respect a typical dead player of defense contracting.
+   [2025-06-11] 4225 words
+
+23. Hermès
+   → The French luxury goods company makes some of the world's most desirable consumer items. It is a family-run business that has repeatedly solved the succession problem and appears to be a live player.
+   [2025-06-04] 4790 words
+
+24. Diamonds Are Not Forever
+   → Technological advances have made it viable to make diamond gems out of common graphite and electricity. Mass production is ending the socially engineered elevated status of diamonds above other gems.
+   [2025-05-28] 4767 words
+
+25. Pierre Omidyar’s Crusade Against Tech
+   → The eBay founder became a major progressive philanthropist with a particular focus on supporting journalism. He is now widely funding social, financial, and legal attacks on Silicon Valley.
+   [2025-05-21] 4902 words
+
+26. Italy is Europe’s Second Manufacturing Power
+   → From making machine tools to die cast presses, Italy's small and often family-owned firms make the country an underrated industrial power. Rapid aging and expensive energy threaten this economy.
+   [2025-05-14] 4770 words
+
+27. Anduril’s Plan to Modernize the U.S. Military
+   → The largest U.S. defense startup is led by California technologists and defense insiders. Its ambitions to reform Pentagon procurement and deliver war-winning weapons face structural challenges.
+   [2025-05-07] 6396 words
+
+28. Iran’s Drone Industry Invented Very Cheap Guided Missiles
+   → One of the key innovations in modern drone warfare has come, surprisingly, from a developing country cordoned off from the global economy by sanctions. This necessity may spur further innovations.
+   [2025-04-30] 3623 words
+
+29. Toyota is a Fragile Giant
+   → The world's largest and most profitable automobile manufacturer is a Japanese corporation built by a family of mechanical engineers. It has however failed succession and now seems unlikely to adapt.
+   [2025-04-23] 4995 words
+
+30. Geely is Raising the Bar For Being a Functional Auto Manufacturer
+   → China's first private auto maker is still led by its founder. It has successfully pivoted to electric vehicles and is making unusual technical bets, revealing the new bar for auto makers everywhere.
+   [2025-04-16] 3769 words
+
+31. Gavin Newsom and the Democratic Party
+   → The California governor and political scion is often described as a future U.S. presidential favorite. But his consistent deference to party consensus undermines his future political ambitions.
+   [2025-04-09] 4834 words
+
+32. Spain is Not a Model for Europe
+   → One of Europe's largest countries is also one of its oldest and most dependent on tourism. Despite promising fundamentals, it is a canary in the coal mine for aging populations under social democracy.
+   [2025-04-02] 4712 words
+
+33. Silver Lake is an Ally to Exceptional Executives
+   → Perhaps the world's most renowned software and technology-focused private equity firm tends to back competent CEOs and founders. Its success relies on deep relationships and networks among elites.
+   [2025-03-26] 4500 words
+
+34. The Ministry That Built Japan’s Economy
+   → An effective economic bureaucracy guided Japan from the ruin of war to becoming the world’s second-largest economy within a few decades. Succession failure has since led to its and Japan’s decline.
+   [2025-03-19] 4304 words
+
+35. Indonesia’s Ambition to Become an Industrial Giant
+   → The populous and resource-rich Southeast Asian country has many of the fundamentals for industrialization, but will face challenges in building state capacity and dynamic economic institutions.
+   [2025-03-12] 5189 words
+
+36. Lenovo is a Functional Dead Player in Computers
+   → The world's top personal computer maker is a Chinese company originally founded by state-employed computer specialists. Although it remains a functional institution, it is no longer a live player.
+   [2025-03-05] 4512 words
+
+37. Greece Shows the Future of Dead Player Democracies
+   → For decades, the Greek government funded social transfers and subsidies with debt while neglecting industrial competitiveness. The collapse of this system is a warning to other developed democracies.
+   [2025-02-26] 5111 words
+
+38. Walmart is a Functional Retail Empire
+   → The largest corporation in the world by both revenue and employees is an American family business. It has successfully albeit slowly adapted to the internet age.
+   [2025-02-19] 4270 words
+
+39. Xiaomi is a Dynamic Live Player in Consumer Hardware
+   → The young Chinese company mainly sells smartphones, but has also rapidly entered new product categories ranging from home appliances to electric vehicles. Its founder and CEO is a technologist.
+   [2025-02-12] 5232 words
+
+40. Seven Briefs the White House Should Read
+   → As a new presidential administration settles into power in Washington, here are the top Bismarck Briefs most relevant to the next four years of governance.
+   [2025-02-10] 1112 words
+
+41. Cocaine is the Most Valuable Industry in Colombia
+   → The Latin American country's most valuable export is illegal. With a weak state and weak economic prospects otherwise, the country's political economy will not change without a creative live player.
+   [2025-02-05] 5278 words
+
+42. The Potential of Humanoid Robots
+   → The hardware of humanoid robots is roughly solved, albeit at great cost. Live players are now attempting to create sufficiently intelligent software necessary to make such robots useful.
+   [2025-01-29] 5689 words
+
+43. How to Hire Bismarck Analysis
+   → Since 2017, our company has advised investors, philanthropists, companies, and governments, who turn to us to help make unique, qualitative, and long-term improvements in strategy and performance.
+   [2025-01-23] 1928 words
+
+44. Canada’s Underutilized Wealth of Natural Resources
+   → Despite sparse populations and a wealth of oil, gas, and minerals, Canada's political economy does not favor resource extraction beyond the immediate needs of provincial budgets and commodity markets.
+   [2025-01-22] 5222 words
+
+45. Bernard Arnault’s Empire of Luxuries
+   → The wealthiest man in Europe built a global luxury goods conglomerate with a European manufacturing base but an American and Asian customer base. He is also one of the most important people in Paris.
+   [2025-01-15] 5266 words
+
+46. Mitsubishi is the World’s Largest Industrial Conglomerate
+   → The Japanese conglomerate is so large it blurs the lines between itself, the national economy, and the government. It is also a key infrastructure and aerospace manufacturer for the wider world.
+   [2025-01-08] 4206 words
+
+47. Venezuela’s Weak Post-Revolutionary Government
+   → The legitimacy of Venezuela's government is underpinned by charismatic cults of personality that appeal to the poor and the military. Regime change is most likely to come from within the army ranks.
+   [2025-01-01] 3830 words
+
+48. The Untapped Potential of Desalination
+   → Purifying seawater to create fresh water for human consumption is a mature and cost-effective technology. Further scaling and technological advances may well make it viable for agriculture and beyond.
+   [2024-12-25] 4875 words
+
+49. 27 Insights From Three Years of Bismarck Brief
+   → Since 2021, our analysts have written nearly 1 million words on new technologies, global industry, and live players. Here are 27 insights from our work.
+   [2024-12-23] 6446 words
+
+50. Big Business and Bureaucracies Outsource Their Work to McKinsey
+   → The U.S. consulting firm provides an arbitrarily wide range of services to nearly every large corporation and government in the world. Its ubiquity is a consequence and sign of institutional decay.
+   [2024-12-18] 4591 words
+
+51. The Growing Institutional Adoption of Bitcoin
+   → The first and largest cryptocurrency is increasingly viewed as a store of value. A rising share of it is being acquired, both intentionally and not, by companies, investment funds, and governments.
+   [2024-12-11] 6260 words
+
+52. Panama’s Irreplaceable Role in International Trade
+   → Panama has effectively stewarded the Panama Canal, an irreplaceable link in global trade. The country also plays a substantial role in finance, as a tax shelter and sometimes money launderer.
+   [2024-12-04] 4555 words
+
+53. Plastic Recycling Does Not Work
+   → For many materials like metals or paper, recycling drives down costs, saves energy, and substitutes for resource extraction. Plastics, however, are not conducive to large-scale recycling.
+   [2024-11-27] 4716 words
+
+54. Broadcom is a Portfolio of Valuable Semiconductor Businesses
+   → The U.S. semiconductor designer and manufacturer is a patchwork of individually profitable parts that are nonetheless unlikely to cohere into a whole that can drive technical or industrial progress.
+   [2024-11-20] 3930 words
+
+55. The Lessons of Viktor Orbán's Hungary For Modern Governance
+   → Despite repeated electoral victories and subsequently institutionalizing its power, Hungary's largest political party has surprisingly not yet meaningfully changed the country's overall trajectory.
+   [2024-11-13] 6178 words
+
+56. The World Bank is Not Driving Economic Growth
+   → Much of the institution's activity amounts to funding bureaucracies or providing charity. Prioritizing fashionable causes further reduces the likelihood of spurring industrial development.
+   [2024-11-06] 4545 words
+
+57. Elizabeth Warren’s Methods to Mold the Federal Government
+   → The Democratic Senator is a law professor who entered politics late in life, but has shown political talent, prioritizing government staffing and founding new federal bureaucracies.
+   [2024-10-30] 4023 words
+
+58. The Atlas of Live Players and Institutions
+   → Each new weekly Brief brings us closer to creating not just the best guide to our changing world, but a product like no other: the first-ever atlas of institutions, industries, and live players.
+   [2024-10-28] 2323 words
+
+59. China’s Struggle to Manufacture Advanced Semiconductors
+   → SMIC is China's leading chip foundry. The company made leaps and strides by poaching experts, but U.S. restrictions on its supply chain have for now delayed progress.
+   [2024-10-23] 4519 words
+
+60. Hydrogen Could Be Made a Viable Fuel
+   → Hydrogen has the backing of major governments and companies for its potential as a carbon-free fuel. But viability is still locked behind several unsolved technical problems and logistical challenges.
+   [2024-10-16] 4554 words
+
+61. Hyundai’s Successor Kingdoms
+   → The South Korean industrial giant fragmented into separate conglomerates in a botched succession. Two of them provide crucial heavy industrial capacity on demand to the U.S.-aligned world.
+   [2024-10-09] 4217 words
+
+62. Why Argentina’s Social Democracy Failed
+   → Once as affluent as Germany or Italy, the South American nation became an autarkic social democracy without the economic surplus to sustain it. Resource deposits now provide hope for export growth.
+   [2024-10-02] 4642 words
+
+63. Bismarck Brief Outperforms the Stock Market
+   → Three years of data show the stock price performance of publicly-traded companies after they are profiled in Bismarck Brief. Live player-led companies outperformed by far.
+   [2024-09-26] 1750 words
+
+64. AMD is a Functional Institution in Semiconductor Design
+   → The U.S. chip designer is the main competitor of both Nvidia and Intel. It has demonstrated an ability to design superior chips and is pursuing further innovations in anticipation of more AI demand.
+   [2024-09-25] 3690 words
+
+65. Netflix is Fending Off Its Competitors in Streaming
+   → The California film and television streaming company is weathering extensive competition from both Hollywood and Silicon Valley. It is now attempting expansions into sports, games, and blockbusters.
+   [2024-09-18] 4675 words
+
+66. Sony Suggests Japanese Innovation Dies Through Succession Failure
+   → Japan's most valuable consumer technology conglomerate led global innovation in electronics for decades. Succession failure has made it less than the sum of its parts.
+   [2024-09-11] 4850 words
+
+67. Arm’s Long-Term Strategic Dilemma
+   → The British semiconductor design firm has a key and growing role in the global chip industry. But the growth strategy of Arm's Japanese owners risks laying the foundations for its future obsolescence.
+   [2024-08-28] 4391 words
+
+68. Google Leads the Autonomous Taxi Race Through Waymo
+   → The Google subsidiary has deployed self-driving taxis in multiple American cities. Neither regulators nor hardware costs are likely to impede its slow but steady progress.
+   [2024-08-14] 5693 words
+
+69. Lockheed Martin is Entrusted with the Pentagon’s Top Weapons Program
+   → The world's largest defense contractor builds the U.S. military's most important aircraft and missiles. Though it grew through live players, it is now a dead player directed by the Pentagon.
+   [2024-08-07] 4725 words
+
+70. Venezuelan Oil Stopped Flowing Due to the Loss of a Functional Institution
+   → The world's most oil-rich country exports negligible amounts of oil because its only functional economic institution, the state oil company, became a casualty of domestic political conflict.
+   [2024-07-31] 4005 words
+
+71. The IMF’s Role As a Foreign Policy Tool
+   → The lender of last resort for governments is a technocratic institution focused on fiscal responsibility, but also a tool for the U.S. and allies to exert financial power in service of foreign policy.
+   [2024-07-24] 4710 words
+
+72. The Potential of Supersonic Commercial Flight
+   → Flight faster than the speed of sound has found many military applications. Once, civilian passengers could enjoy its benefits too. New advances are needed to make such flights profitable again.
+   [2024-07-17] 4901 words
+
+73. The Growth Prospects for AWS
+   → Amazon's most profitable line of business has been imitated by other tech giants. While breakneck growth has ceased, demand from organizations for more computing with less complexity has not.
+   [2024-07-10] 3903 words
+
+74. Wind Cannot Power Manufacturing
+   → Heavy subsidies have made wind turbines a growing share of electricity in developed countries. But since wind cannot meet the needs of modern industry, it will contribute to deindustrialization.
+   [2024-07-03] 4981 words
+
+75. Tokyo Electron’s Place in Global Semiconductor Manufacturing
+   → Japan's most valuable semiconductor company is a major exporter of the many machines needed to make computer chips. With demand rising, its main challenge is staying on the technological frontier.
+   [2024-06-26] 4584 words
+
+76. Chile is a Politically Disunited Resource Exporter
+   → The most affluent Latin American country's economic success owes more to mineral exports than market reforms. Irreconcilable political divides show it has not found a model for future success.
+   [2024-06-19] 4705 words
+
+77. China Isn’t Pursuing Energy Independence
+   → The world's largest importer of oil and gas has the territory and reserves to vastly increase production. But Beijing continues to bet instead on seaborne trade, prioritizing growth over war.
+   [2024-06-12] 4474 words
+
+78. Spotify’s Grand Bargain Remade the Music Industry
+   → Europe’s most successful startup was born from an unlikely alliance between Swedish software pirates and U.S. record labels. While the alliance has faded, the company's business model won.
+   [2024-06-05] 4149 words
+
+79. How Iran’s Revolutionary Theocracy Works
+   → The Islamic Republic of Iran has a unique system of government that was designed to preserve and expand clerical rule. It has proven robust and is unlikely to change anytime soon.
+   [2024-05-29] 4675 words
+
+80. Airbus Shows European Cooperation Can Defeat U.S. Incumbents
+   → Over decades, the leading aircraft manufacturer has gone from a loose consortium to a genuinely pan-European industrial giant. It has now surpassed the U.S. incumbents it was built to compete with.
+   [2024-05-22] 4506 words
+
+81. Palantir’s Quest to Create Clairvoyant Institutions
+   → Founded by philosophers, the first Silicon Valley government contractor has become a commercial success after two decades. But its philosophical underpinnings have yielded perhaps more mixed results.
+   [2024-05-15] 4926 words
+
+82. Russia’s Yandex is a Functional Software Conglomerate
+   → The software conglomerate beat Google in free market competition at home while carving out niches abroad. The Russian government is locking in this success while maintaining political control.
+   [2024-05-01] 5267 words
+
+83. Venture Capital is Software’s Parallel Financial Guild
+   → Venture capitalists form an independent culture and distinct tradition of knowledge from East Coast financiers. Their skills in financing software will not translate cleanly to politics or industry.
+   [2024-04-24] 5186 words
+
+84. The Decay of Boeing
+   → The aircraft manufacturer is the flagship company of U.S. airpower and aerospace. Succession failure in engineering and on the factory floor now threatens its functionality.
+   [2024-04-17] 4726 words
+
+85. Stripe Stays Private For Public Ends
+   → The payments startup is now one of the world’s most valuable software unicorns. Its founders are keeping it private for long-term business strategy and to use it as a base for philanthropic goals.
+   [2024-04-10] 4015 words
+
+86. Sanctions on Russia Failed Because of Chinese Manufacturing
+   → U.S. and European sanctions aimed to collapse the Russian economy. Alongside technocratic preparation and sanctions evasion, imports of advanced manufactured goods from China neutered this strategy.
+   [2024-04-03] 5331 words
+
+87. Saudi Aramco is the House of Saud’s Oil Throne
+   → Now publicly-traded, Saudi Arabia's state oil company is becoming more of both a conglomerate and an integrated global corporation. It is a rare company that backs a state, rather than vice versa.
+   [2024-03-27] 4617 words
+
+88. The CIA's Venture Capital Arm
+   → In-Q-Tel funds startups with tools and projects near completion that could be useful to U.S. military or intelligence agencies. This goal has made it unusually effective at government procurement.
+   [2024-03-20] 4304 words
+
+89. Steady But Niche Progress in 3D Printing
+   → Also known as additive manufacturing, the technology has found valuable uses in contemporary industry, but remains far from the general-purpose manufacturing process its names imply.
+   [2024-03-06] 4262 words
+
+90. Iran’s Underdeveloped Natural Resource Economy
+   → The independent regional power is rich in oil, natural gas, and minerals. Yet these provide few advantages both due to a failure to build up industry and persistent sanctions on exports.
+   [2024-02-28] 4403 words
+
+91. Alibaba’s Journey From Revolutionary to Incumbent
+   → The Chinese software conglomerate transformed online commerce and payments. However, since Jack Ma’s forced departure, it has become a comfortable incumbent.
+   [2024-02-21] 3865 words
+
+92. IBM Still Provides Institutionally Load-Bearing Computers
+   → The company sells computer hardware and software consulting to large bureaucratic organizations. Despite emphasizing cloud computing and AI, their business model is unlikely to change.
+   [2024-02-14] 4089 words
+
+93. Life in Monaco and the Limits of Statehood
+   → The tiny state is effectively a sovereign resort town fueled by a glamorous lifestyle brand. Despite the trappings of statehood, it is a protectorate of France that lacks meaningful autonomy.
+   [2024-02-07] 3897 words
+
+94. AstraZeneca Shows Why Pharmaceutical Companies Don’t Innovate
+   → The British-Swedish pharmaceutical giant has made a financial and prestige comeback since its low point a decade ago. But it has done so without producing breakthroughs in scientific knowledge.
+   [2024-01-31] 4144 words
+
+95. Ozempic Probably Won’t Be the Last Advance From Novo Nordisk
+   → The Danish pharmaceutical company has produced a weight loss drug and is pursuing further advances. This functional scientific institution is a rare example of for-profit investment in basic science.
+   [2024-01-24] 4476 words
+
+96. Uber’s Long Road to Profitability
+   → The company relied on outpourings of speculative funding to maintain its operations. Now public, it has found a sustainable business model, but one that didn’t revolutionize transportation.
+   [2024-01-17] 4947 words
+
+97. Nigeria is a Small Petrostate Attached to a Large Country
+   → Africa's most populous nation has a surprisingly unified multiethnic elite, but lacks functional institutions to cope with insurgencies, a stagnant economy, and a government dependent on oil.
+   [2024-01-10] 4414 words
+
+98. Andreessen Horowitz Are the Masters of Venture Capital Access
+   → The firm's founders turned their Silicon Valley networks and entrepreneurial prestige into one of the most successful and culturally influential venture capital firms of the present day.
+   [2024-01-03] 4745 words
+
+99. Announcing the Live Players Podcast
+   → In this new weekly conversation, join Samo Burja as he analyzes the structures of modern civilization and the top live players in business and government who influence it, with co-host Erik Torenberg.
+   [2023-12-28] 347 words
+
+100. Boston Dynamics is an Orphaned Research Project
+   → The U.S. robotics company is perhaps the most advanced developer of legged robots worldwide. But these remain unprofitable and the tradition of knowledge behind the company has diffused out of it.
+   [2023-12-27] 4291 words
+
+101. Japan is a Great Military Power Wary of Fighting
+   → Despite a pacifist constitution, Japan has built up a technologically advanced military in all but name. If it grows more independent of the U.S., it may choose not to fight alongside the superpower.
+   [2023-12-20] 4618 words
+
+102. China’s Film Industry is Run Like Hollywood But By the Party
+   → The Chinese Communist Party plays the leading role in the world’s largest film market by viewers. As its sophistication catches up to its size, it will attempt to export films globally.
+   [2023-12-13] 4628 words
+
+103. Geothermal Energy Turns Planets Into Power Sources
+   → Geothermal heat is today a marginal source of renewable energy. Technological breakthroughs could make it an effectively limitless source of cheap electricity and heating, possibly anywhere on Earth.
+   [2023-12-06] 4515 words
+
+104. Why You Should Subscribe to Bismarck Brief
+   → I warmly invite you to receive the unique and essential guide for every live player seeking to shape modern civilization and make a lasting impact on it.
+   [2023-11-27] 1281 words
+
+105. The World’s Largest Modern City is in China
+   → From Hong Kong to Shenzhen to Guangzhou, over 85 million people live in the megalopolis of Guangdong Province, manufacturing everything from electric vehicles to semiconductors on a global scale.
+   [2023-11-22] 4608 words
+
+106. The Growing Power of the NSA
+   → The U.S. signals intelligence agency operates autonomously. Its power will grow further with advances in artificial intelligence and institutional reliance on software for decision-making.
+   [2023-11-15] 5727 words
+
+107. Why You Should Support Palladium Magazine
+   → The contrarian answer to both East Coast legacy institutions and the complacency of Silicon Valley techno-optimism is needed to reform institutions and change the trajectory of modern civilization.
+   [2023-11-06] 882 words
+
+108. The FDIC Makes Financial Returns Predictable at the Cost of Growth
+   → The U.S. financial regulator protects households and financial elites alike from the worst downsides of economic crashes. But in achieving stability, it also slows the development of new industries.
+   [2023-11-01] 4865 words
+
+109. The Return of the Japanese Nuclear Industry
+   → Kept idle for a decade after the Fukushima disaster, Japan’s nuclear plants are slowly coming back online. Both economic and military rationales won out against safety concerns.
+   [2023-10-25] 3975 words
+
+110. Baidu Recreates American Software Successes in China
+   → The Chinese internet search giant has closely recreated Silicon Valley successes in China for decades. With a timely focus on artificial intelligence, it is poised to recreate any new leaps too.
+   [2023-10-18] 4881 words
+
+111. How Bismarck Brief is Upstream of Markets
+   → What is the stock price performance of publicly-traded companies after they are profiled in Bismarck Brief? Celebrating the 100th Brief, an answer to this question.
+   [2023-10-16] 1395 words
+
+112. Ukraine is Forging a New State Through War
+   → Starting from a very low base, the Ukrainian state has been centralizing power since 2014. Despite acceleration following the Russian invasion, it must now also coordinate a coalition of live players.
+   [2023-10-11] 5336 words
+
+113. South Korea Builds Nuclear Plants Quickly and Cheaply
+   → Although its nuclear industry is functional and willing to export reactors, South Korea faces U.S. obstruction on geopolitical grounds. Only live players can import their affordable reactors.
+   [2023-10-04] 5526 words
+
+114. Estonia Shows the Strengths and Limits of Small States
+   → The small country has produced an exceptional number of successful startups while its government uses software at the expense of bureaucracy. It still faces unresolved security challenges from Russia.
+   [2023-09-27] 4903 words
+
+115. Visa Collects the Consumerism Tax
+   → The payments network makes a global consumer economy possible by being the largest middleman between banks, merchants, and customers. It is a functional institution, but serves the banks.
+   [2023-09-20] 4899 words
+
+116. Live Players in the 2024 Presidential Race
+   → There are candidates who can adapt and change and those who can’t. What does that tell us about 2024?
+   [2023-09-14] 513 words
+
+117. Rosatom’s Role in Russia’s Nuclear Arsenal and Energy Exports
+   → The state corporation encompasses nearly all of Russia's civil and military nuclear industry. Under Sergei Kiriyenko, Rosatom has become a more competitive exporter of both nuclear fuel and reactors.
+   [2023-09-13] 5116 words
+
+118. Singapore’s Sovereign Wealth Funds
+   → Through Temasek and GIC, the government of Singapore stewards its economic assets and helps achieve long-term strategic outcomes that also quietly shape global tastes and trends.
+   [2023-09-06] 4471 words
+
+119. How Poland Became a Middle-Class Society
+   → Polish elites built a growing economy around small business. A lack of large functional high-tech firms as well as energy and demographic challenges frustrate the quest to make Poland a middle power.
+   [2023-08-30] 5172 words
+
+120. The Apple Paradox Makes Apple a Dead Player
+   → The company that shifted paradigms in personal computing is now too valuable to be run by a live player. The current CEO Tim Cook stewards Apple’s legacy for profitability above innovation.
+   [2023-08-23] 4630 words
+
+121. The FTC’s Bid to Become Powerful
+   → Under its new chair Lina Khan, the Federal Trade Commission has taken aim at the most influential U.S. tech companies in a bid to usher in a new era of antitrust enforcement.
+   [2023-08-16] 4802 words
+
+122. Bloomberg is Wall Street’s Biggest Tech Company
+   → The privately-held company is a functional institution firmly under founder Michael Bloomberg’s control. It is a rare software giant to emerge from outside California.
+   [2023-08-09] 4488 words
+
+123. The Live Players Leading the United Arab Emirates
+   → The Emirati government is a dynastic alliance between the royal houses of two city-states. Despite hopes to develop manufacturing and technology, the country will remain oil-dependent for now.
+   [2023-08-02] 5275 words
+
+124. USAID Funds U.S. Foreign Policy
+   → The foreign aid agency is not only a humanitarian organization, but a vehicle for moving money from the U.S. Treasury to international organizations and foreign governments.
+   [2023-07-26] 4450 words
+
+125. Disney’s Board Oversees U.S. Cultural Development
+   → The company founded by legendary animator Walt Disney is now a classic board-run corporation that maintains its intellectual property empire and influence on popular formation of values.
+   [2023-07-19] 4858 words
+
+126. The Roots of Brazil’s Long Stagnation
+   → Brazil has the natural fundamentals to make a world power. In practice, a lack of functional political institutions means it has squandered this potential. Only a live player can make Brazil matter.
+   [2023-07-12] 4374 words
+
+127. The Functional Bureaucracies of the U.S. Treasury
+   → The Treasury Department’s bureaucracies pay the government’s bills and manage its debt. They also include the top bank regulator and the key institution that enforces U.S. financial sanctions abroad.
+   [2023-07-05] 4019 words
+
+128. A letter to our subscribers for 2023
+   [2023-07-03] 1804 words
+
+129. The Family That Builds For the U.S. Government
+   → The Bechtel Corporation has been a family business and government construction contractor for a century. After declining revenue abroad, it turns increasingly to domestic projects in the U.S.
+   [2023-06-28] 4758 words
+
+130. The Relationship Economy Behind Endeavor Group
+   → A top Hollywood talent agency is also a key bridge between political, tech, and foreign elites. Its founder Ari Emanuel is leveraging his social capital to build a business empire.
+   [2023-06-21] 4773 words
+
+131. The Global Effects of the U.S. Fracking Boom
+   → Through new technology, the U.S. has become a net energy exporter of oil and gas for the first time in half a century. This diminished the economies of petrostates and pulled U.S. allies closer.
+   [2023-06-14] 4355 words
+
+132. The Strategy of Singapore’s Government
+   → The wealthy city-state’s existence is based on political stability at home and abroad. The government pursues self-preservation through a mix of autarky and white-collar economic growth.
+   [2023-06-07] 4814 words
+
+133. Carlos Slim’s Empire and the Future of North America
+   → The business empire of Mexico’s wealthiest person is rooted in opaque political patronage that undercuts the country’s growth prospects but aligns with U.S. preferences.
+   [2023-05-31] 3952 words
+
+134. The Rising Chinese Nuclear Industry
+   → China has built up its civil nuclear fleet from nothing to second worldwide. It is on track to become the world’s largest producer of nuclear power, yet it won’t lead a nuclear energy revolution.
+   [2023-05-24] 4752 words
+
+135. Gavin de Becker’s Vision of Elite Private Security
+   → The most prestigious private security firm in the United States was founded on a unique vision of value to its prominent clients, but which also has some less obvious downsides.
+   [2023-05-17] 4747 words
+
+136. CNN Is An Influential Dead Player
+   → Once an innovative media organization, the news network has long coasted on its close associations with political and government elites in the U.S. It will continue to stagnate in the future.
+   [2023-05-10] 4561 words
+
+137. The Federal Reserve and the Slow-Moving Bank Run
+   → U.S. banks are seeing unrealized losses rise while customer deposits flee. The sudden wave of bank failures ultimately originates in a reversal in government interest rate policy.
+   [2023-05-03] 4988 words
+
+138. The Family Dynasty Behind Samsung
+   → The heir to South Korea’s largest company and technological powerhouse has achieved succession despite legal problems and imprisonment. He is betting its future on semiconductors.
+   [2023-04-26] 4634 words
+
+139. The State of the U.S. Nuclear Industry
+   → Nuclear power in the U.S. has stagnated along with overall energy demand. Prospects for growth are instead in exports of new small modular reactors.
+   [2023-04-19] 4693 words
+
+140. The SEC and Its Relationship to Cryptocurrency
+   → The regulatory agency sits between the U.S. government and the financial sector. It is in no rush to give up its wide discretion over the new sector of cryptocurrency.
+   [2023-04-12] 4229 words
+
+141. China’s Lagging Defense Industry
+   → China’s defense companies produce arms at a rate comparable to the United States, but lag behind in technological sophistication. Compared to Chinese industry overall, they are underperforming.
+   [2023-04-05] 4997 words
+
+142. Egypt Tries to Spend Its Way to Stability
+   → The biggest Arab country and operator of the Suez Canal is awarding many large, debt-financed contracts to foreign firms. The spree is driven by the political insecurity of the military government.
+   [2023-03-29] 4251 words
+
+143. TikTok’s Struggle To Become A Global Company
+   → The Chinese founder of TikTok wants to build the first truly global tech company that captures both Chinese and American users at once. The U.S. government will likely stop him.
+   [2023-03-22] 4793 words
+
+144. The Chinese Startup That Launched the Drone Industry
+   → DJI’s affordable yet technically superior drones have made the company one of the world’s most valuable unicorns. It has nevertheless become a target for U.S. sanctions.
+   [2023-03-15] 4741 words
+
+145. The King of Thailand Favors Military Rule
+   → King Rama X has aligned himself with Thailand’s military government. In return, the military has supported the monarchy’s authority and made him the richest monarch in the world.
+   [2023-03-08] 4318 words
+
+146. The Limitations of Venture Capital in India
+   → U.S. venture funding helped create a startup boom in India. Competition from U.S. companies, however, makes an Indian Silicon Valley unlikely.
+   [2023-03-01] 4282 words
+
+147. Fusion Power Cannot Count On Governments
+   → Nuclear fusion promises to generate more energy, more safely, than nuclear fission. Aside from technical and institutional challenges, limited interest from governments makes progress uncertain.
+   [2023-02-22] 4496 words
+
+148. Mark Zuckerberg’s Plan for the Metaverse
+   → The Facebook founder has bet his immense company on virtual reality. This radical pivot is aimed at future products that use brain-computer interfaces and upgraded telecom networks.
+   [2023-02-15] 3852 words
+
+149. How French Pullback Led to a Wave of Coups in Africa
+   → France has reduced its military commitments to Africa. The resulting power vacuum is being filled by local military juntas, Russian mercenaries, and the U.S. government.
+   [2023-02-08] 4301 words
+
+150. The New York Times Is A Family Business
+   → America’s most influential news company is controlled by the Sulzberger family. By exercising his personal authority, its latest scion has saved both the company and his family’s fortune.
+   [2023-02-01] 5282 words
+
+151. The Next Possible Step for Unlimited Organ Transplants
+   → Transplants of animal organs into humans have never been approved for trials by the FDA. Live players in the biotech industry are currently trying to break this barrier.
+   [2023-01-25] 4440 words
+
+152. The Business King of Morocco
+   → King Mohammed VI has kept his country politically and economically stable for decades. Through his efforts, Morocco is now laying the foundations for an industrial economy.
+   [2023-01-18] 4272 words
+
+153. TSMC’s Central Role in the Global Chip Industry
+   → Taiwan’s most valuable company is a repository of unique industrial expertise. Competitors in China and elsewhere are attempting to either replicate or acquire it.
+   [2023-01-11] 4475 words
+
+154. Huawei Will Survive U.S.-China Trade Wars
+   → After decades of growth, U.S. sanctions dealt a serious blow to China’s private telecom giant. The company will nevertheless survive on the strength of China’s domestic market.
+   [2023-01-04] 4597 words
+
+155. Brain-Computer Interfaces Reach Limited Viability
+   → Military funding has driven advances in interfacing the brain’s motor functions with computers. Commercialization in medicine and entertainment is now testing whether a new industry will be born.
+   [2022-12-28] 4285 words
+
+156. The Growing Power of China’s Elite Universities
+   → China’s top universities are becoming more like America’s. Future elites are more likely to be credentialed technocrats than ambitious local players or industrial engineers.
+   [2022-12-21] 5278 words
+
+157. Nvidia’s Successful Bet On Artificial Intelligence
+   → Founder and CEO Jensen Huang had an early belief in using graphics processing units for other computationally intensive tasks. Nvidia’s bet on this idea has been borne out so far.
+   [2022-12-14] 4655 words
+
+158. The Vatican Is Conceding Its Financial Autonomy
+   → The world’s smallest state has made compliance with U.S. and European regulators a priority. Financial autonomy for small states and organizations now requires more than just legitimacy and prestige.
+   [2022-12-07] 4981 words
+
+159. The Strategy of Klaus Schwab’s World Economic Forum
+   → The German economist and engineer succeeded at his lifelong project to create a real platform for global governance. But as its only driving force, the WEF’s influence is unlikely to survive him.
+   [2022-11-30] 4302 words
+
+160. The first year of Bismarck Brief
+   [2022-11-25] 1335 words
+
+161. The Functionality of DARPA is Politically Precarious
+   → After sixty years, the R&D agency is still exceptionally functional. But government leaders do not understand how to replicate its success, nor the unique autonomy that underpins it.
+   [2022-11-23] 4919 words
+
+162. The Hard Future Facing Foxconn
+   → The manufacturing giant was one of the greatest beneficiaries of U.S.-China trade. But increasing competition, geopolitical changes, and succession failure all threaten its future.
+   [2022-11-16] 5101 words
+
+163. What the Collapse of FTX Means
+   → The implosion of the leading cryptocurrency exchange will not affect the wider economy, but it will affect tech elites and the Effective Altruism movement, which sought to reform philanthropy.
+   [2022-11-14] 4195 words
+
+164. Erdoğan’s Power and the Turkish Construction Industry
+   → Turkey’s politically connected construction industry drove economic growth under President Erdoğan. His attempts to protect it have now also created a severe economic crisis.
+   [2022-11-09] 5076 words
+
+165. BlackRock’s Close Relationship with the U.S. Government
+   → The gigantic asset manager has a preferential relationship with federal regulators and presidential administrations. In turn, it serves as a channel of influence on the corporate world.
+   [2022-11-02] 4207 words
+
+166. How ESG Takes Advantage of Bureaucratic Finance
+   → Principles for responsible business and investing are not new. But the increasing bureaucratization of the investment industry enabled the rapid rise of ESG.
+   [2022-10-26] 4519 words
+
+167. Tencent’s Pony Ma is China's Model Tech Billionaire
+   → Tencent founder and CEO Pony Ma is one of China’s wealthiest people. His cooperation with the party has also made him, officially, a member of China’s national legislature.
+   [2022-10-19] 4688 words
+
+168. China Can Almost Feed Itself
+   → Farm consolidation and genetically modified crops have barely begun to shape China’s vast agricultural sector. As the population declines, there is unlikely to be a food crisis.
+   [2022-10-12] 4590 words
+
+169. Australian Mining Might Lose Its Biggest Customer
+   → Australia has grown into a top exporter of minerals worldwide and energy in Asia. But the high demand from China that fuels this growth is unlikely to weather a U.S.-China rivalry.
+   [2022-10-05] 4621 words
+
+170. Amazon is Quietly Automating the United States
+   → The world’s biggest fleet of mobile robots now works in the company’s facilities. Amazon’s strategy and Jeff Bezos’ vision of the future suggest it will not stop there.
+   [2022-09-28] 4298 words
+
+171. The Challenge of Industrializing Vietnam
+   → The Southeast Asian country has a path to becoming an advanced manufacturing economy, but a lack of domestic industrial champions make this far from guaranteed.
+   [2022-09-21] 4197 words
+
+172. Israel Mobilizes Tech Talent Through Unit 8200
+   → The young alumni of Unit 8200 have made Israel a global player in cybersecurity. The unit is a model for building functional institutions that overcome demographic and geopolitical constraints.
+   [2022-09-14] 4044 words
+
+173. The People’s Bank of China Centralizes Payments
+   → China’s central bank is increasing its ability to surveil and control financial transactions for both consumers and banks. But its international reach remains limited.
+   [2022-09-07] 4749 words
+
+174. Masayoshi Son Reveals the Limits of Money in Tech
+   → The charismatic SoftBank founder is arguably the single best fundraiser in the world. But more money is not enough to deliver on expectations of economic growth and innovation.
+   [2022-08-31] 4581 words
+
+175. China Refines the World’s Rare Earth Elements
+   → China’s continuing dominance in rare earths is not because of a favorable distribution of natural deposits, but a victory of industrial and trade policy.
+   [2022-08-24] 4918 words
+
+176. Marc Benioff’s Long Rise to the Top
+   → The founder and CEO of Salesforce acts as a passive benefactor of institutional incumbents. His successes show that conventional strategies can work for tech founders.
+   [2022-08-17] 4780 words
+
+177. China’s Southeast Asian Problem
+   → Xi Jinping’s great power ambitions are making Southeast Asia more important to China’s future. But they are simultaneously constraining his options for negotiation and alliance.
+   [2022-08-10] 5028 words
+
+178. You can now listen to Bismarck Brief
+   [2022-08-08] 749 words
+
+179. The Saudi Public Investment Fund Bets on Western Experts
+   → The Saudi Crown Prince has centralized power through the Public Investment Fund. His ambitious strategy is being frustrated by the quality of Western expert consensus.
+   [2022-08-03] 5379 words
+
+180. Quantum Technology Appeals to World Powers
+   → While quantum technology remains experimental, both the U.S. and Chinese governments are persuaded of its strategic potential. Useful breakthroughs will require live players.
+   [2022-07-27] 5120 words
+
+181. Xi Jinping’s Succession Problem
+   → The paramount leader of China has not yet indicated a successor. His choice will not be guided by established norms.
+   [2022-07-20] 4507 words
+
+182. The Foundations of Xi Jinping’s Power
+   → China’s President took power by winning at factional politics. Now, he can optimize his successor for skill, not standing.
+   [2022-07-13] 4625 words
+
+183. Britain’s Last Chance to Become an Energy Producer
+   → The United Kingdom has mismanaged its potential windfalls from North Sea oil and gas reserves, in stark contrast to neighboring Norway. A looming energy crisis is an opportunity to change course.
+   [2022-07-06] 4423 words
+
+184. The Real Decision-Makers at the European Commission
+   → Career civil servants in the European Union’s largest bureaucracy play an influential and overlooked role in determining Europe’s political and economic future.
+   [2022-06-29] 4531 words
+
+185. Pakistan Shows the Limits of China’s Economic Power
+   → Pakistan should be the flagship success of China’s economic aid and investment programs abroad. Instead, it casts doubts on the viability of a Chinese economic world order.
+   [2022-06-22] 4392 words
+
+186. The U.S. Military Supply Chain Is Ready For Peace, But Not War
+   → Recent shocks in the defense supply chain have shown a surprisingly functional system that nevertheless can’t adapt quickly or forecast its own shortfalls.
+   [2022-06-15] 4688 words
+
+187. The Power of Germany’s Political Party Foundations
+   → The state-funded foundations stabilize German politics, move national policy towards academic consensus, and act as a parallel foreign service without a foreign minister.
+   [2022-06-08] 4486 words
+
+188. China Tests Our Dream of an Automated Future
+   → As rich countries enter demographic decline, China is uniquely determined to maintain growth through robotics and automation. After initial success, the scale of the challenge is becoming evident.
+   [2022-06-01] 4586 words
+
+189. Europe Comes Last in the Race for Mediterranean Gas
+   → Discoveries of natural gas in the eastern Mediterranean promise to turn regional players like Egypt and Turkey from energy consumers into suppliers. But not Europe.
+   [2022-05-25] 4466 words
+
+190. Russia’s Plan for Limited Nuclear War
+   → Russian military theorists see tactical nuclear weapons as a critical step between conventional war and an all-out nuclear exchange.
+   [2022-05-18] 4594 words
+
+191. The Swedish Arms Industry
+   → Despite nominal neutrality and pacifist branding, Sweden is one of the world’s largest arms exporters. The country’s defense industry is seeking to expand at home and abroad.
+   [2022-05-11] 5084 words
+
+192. The first six months of Bismarck Brief
+   [2022-05-09] 937 words
+
+193. The Family That Finances Sweden
+   → The Wallenbergs are both the benefactors and beneficiaries of Sweden’s political economy. Five generations in, they demonstrate the viability of dynastic owners in an age of managers.
+   [2022-05-04] 5326 words
+
+194. Macron’s Struggle to Lead France
+   → Despite an appetite for reform and a grand vision for French and European power, the French president has struggled to build a political base that could outlast him.
+   [2022-04-27] 5144 words
+
+195. The Nordic Fallback Option
+   → The Scandinavian countries have selectively opted out of European and trans-Atlantic integration. A shared cultural identity and desire for autonomy unite the region instead.
+   [2022-04-20] 5140 words
+
+196. French Elites Don't Like Competition
+   → Vincent Bolloré turned a sleepy family business into a media empire at home and a logistics empire in Africa. He now faces trial and his African operations will be sold off.
+   [2022-04-13] 6260 words
+
+197. The Challenge of Reviving the French Nuclear Industry
+   → French leaders built the country into a global nuclear powerhouse to bolster French sovereignty. After years of stagnation, Emmanuel Macron plans to expand France’s fleet of reactors.
+   [2022-04-06] 5641 words
+
+198. France Is Europe’s Best Shot At Rearmament
+   → French military procurement has institutionally outperformed its Western allies. With defense budgets poised to expand, France is well-positioned to rearm Europe.
+   [2022-03-30] 5770 words
+
+199. The Koch Family’s Attempt to Mold Electoral Politics
+   → The Kochs financed an intellectual landscape to legitimize their political ideology, but deploying it in electoral politics has created unintended consequences they are unable to course-correct for.
+   [2022-03-23] 6110 words
+
+200. The Legacy of George Soros’ Open Society
+   → For decades, George Soros has implemented and shared a unique philosophy. But left without an aligned successor, his empire will be subsumed by more conventional players.
+   [2022-03-16] 5557 words
+
+201. Drone Adoption Favors Quantity Over Quality In Warfare
+   → Development of drones both large and small has outpaced institutional adoption across militaries. Battlefield successes will pressure an update to a deadlier kind of warfare.
+   [2022-03-09] 5337 words
+
+202. The German Retreat From Nuclear Power
+   → Germany's economic priorities are torn between industrial growth and energy degrowth. As its last nuclear plants are shut down, the choice is between relying on fossil fuels or closing factories.
+   [2022-03-02] 5311 words
+
+203. Modern Russia Can Fight And Win Land Wars
+   → Technological advances strengthen Russia’s artillery-centric army and shrink the threat of a rout from the air by NATO. Russia is poised to change political outcomes with military means for decades.
+   [2022-02-23] 5749 words
+
+204. Russia’s Rapid Reforms Bring Military Theory Into Practice
+   → Putin’s reformist defense ministers have used Marshal Ogarkov’s theories to build a more agile military able to counter NATO air supremacy, showing that Russia is capable of pivots in grand strategy.
+   [2022-02-16] 6071 words
+
+205. Russia’s Long-Term Bet On The Arctic
+   → Further betting on its natural resources-based economy, Russia is investing in Arctic infrastructure and development that will ultimately lead to greater integration with China rather than Europe.
+   [2022-02-09] 5746 words
+
+206. The Gates Foundation’s Blind Spot
+   → An ideological belief in market-based solutions and inevitable progress makes the organization more of a holding company than a charity and rules out the capacity for transformative change.
+   [2022-02-02] 6265 words
+
+207. Photovoltaics Give Credibility To A Solar Revolution
+   → Better and cheaper solar panels have led to rapid adoption of solar power. If progress continues, solar will not just address environmentalist goals, but also upset global energy geopolitics.
+   [2022-01-26] 5605 words
+
+208. The PLA Has Transformed Itself To Take Taiwan
+   → Motivated by the prospect of invading Taiwan, China’s military has greatly modernized and reformed. Whether or not an invasion of Taiwan is ever carried out, a new balance of power has been forged.
+   [2022-01-19] 5454 words
+
+209. Kazakhstan’s Succession Turns Adversarial
+   → Groomed for leadership by founding father Nursultan Nazarbayev, the Kazakh President has abruptly asserted his position against Nazarbayev and his family.
+   [2022-01-12] 5167 words
+
+210. Jack Ma, Xi Jinping, and China's Economic Future
+   → By cracking down on industrialists, China hopes to make its economy more technocratic, but risks economic growth and the country’s political future.
+   [2022-01-05] 6154 words
+
+211. The Mediterranean Cold War Between France and Turkey
+   → In the vacuum of a U.S. pullback, France and Turkey are increasingly competing for diplomatic, military, and economic influence in the Mediterranean and beyond.
+   [2021-12-29] 4678 words
+
+212. Blackstone’s Political Long Game 
+   → “Too big to fail” players in private equity lean on Washington and beyond to sustain their growth.
+   [2021-12-22] 5807 words
+
+213. The first month of Bismarck Brief
+   [2021-12-20] 1067 words
+
+214. Frontex Is The Frontier Of European Statehood 
+   → The European Union's first uniformed service is a rapidly growing border control agency and a test case for security integration.
+   [2021-12-15] 4669 words
+
+215. Turkey's Drone Industry Changes Airpower
+   → By marrying industrial policy to local technical talent, Turkey has reached the leading edge of drone development.
+   [2021-12-08] 3992 words
+
+216. Why Ethiopia Is No Longer Africa's Asian Tiger
+   → A bellwether for Africa and global economic growth, Ethiopia's erstwhile success is now crippled by succession failure and its consequences. 
+   [2021-12-01] 4382 words
+
+217. The Long March Into Space
+   → While private actors drive the space industry in the West, China's state-led approach continues to bear fruit.
+   [2021-11-25] 4087 words
+
+218. Introducing Bismarck Brief
+   [2021-11-22] 641 words
+
+
+AI 2026
+----------------------------------------------------------------------------------------------------
+(17 articles)
+
+1. AI 2026: Cohere is Canada’s Artificial Intelligence Champion
+   → Founded by young pioneering AI researchers, the company today pursues enterprise software revenue rather than frontier capabilities.
+   [2026-02-25] 3697 words
+
+2. Elon Musk’s Frontier AI Lab
+   → xAI is the world's third-most valuable AI startup and Elon Musk's personal frontier AI lab. It is already playing a load-bearing role in the future success of Musk's other companies.
+   [2026-01-28] 4023 words
+
+3. AI 2026: China’s Super-App Giant ByteDance Bets On AI Smartphones
+   → The parent company of TikTok is one of the world's most profitable companies and is exploring how to leverage AI to dominate the next iteration of social media and smartphones.
+   [2026-01-21] 3958 words
+
+4. Tesla’s Self-Driving is Betting on the Scaling Hypothesis
+   → Elon Musk's plan to own virtually all terrestrial transportation by providing low-cost self-driving vehicles is proceeding steadily, if late. It currently depends on further AI progress from scaling.
+   [2026-01-16] 5229 words
+
+5. AI 2026: Andrej Karpathy’s Next Big Project
+   → The OpenAI cofounder and former head of Tesla's self-driving division is a skilled engineer and public communicator who is now focused on using AI to improve education and other passion projects.
+   [2026-01-07] 4031 words
+
+6. AI 2026: Data Centers Restart Growth of a Stagnant U.S. Electrical Grid
+   → Optimism about artificial intelligence has driven a massive new wave of construction to house the chips AI depends on. The energy required to power these data centers will alter the whole U.S. grid.
+   [2025-12-31] 4578 words
+
+7. AI 2026: Ilya Sutskever and the End of the Age of Scaling
+   → The researcher who played a central role in developing ChatGPT now bets that new fundamental breakthroughs are still needed to unravel the mystery of intelligence.
+   [2025-12-17] 4051 words
+
+8. John Carmack Attempts Fundamental AI Research
+   → The famed game developer is a skilled software engineer who has lent his talents to advancing space and virtual reality technology in the past. He now hopes to crack the code of general-purpose AI.
+   [2025-12-10] 3723 words
+
+9. Demis Hassabis’ Quest to Discover Artificial General Intelligence
+   → The British artificial intelligence researcher and Nobel Prize winner is now the head of Google's AI efforts. He has long been on a personal quest to discover the principles behind intelligence.
+   [2025-12-03] 4345 words
+
+10. AI 2026: Z.ai is Open to Government Customers in China and Abroad
+   → The Chinese AI startup is a sister organization to a top Chinese academic computer science lab. As it seeks a viable business strategy, it has not shied away from government customers.
+   [2025-11-26] 3434 words
+
+11. AI 2026: Alibaba’s Qwen Seeks to Encourage AI Adoption
+   → The Chinese e-commerce and data center giant has been releasing popular open-source AI models and investing in smaller AI labs. Its founder Jack Ma believes all AI adoption will be good for business.
+   [2025-11-19] 3704 words
+
+12. AI 2026: Sundar Pichai is Tasked With Preserving Google
+   → The CEO of Google presided over years of peaceful growth but now finds himself in an extreme competition for commercial and technological leadership.
+   [2025-11-05] 4736 words
+
+13. AI 2026: Microsoft’s Transformation Into a Data Center Giant
+   → The software conglomerate has become the second-most valuable company in the world through a pivot to data centers and early support for new AI advances. It is betting further on AI.
+   [2025-10-22] 5673 words
+
+14. Introducing AI 2026: The Global State of Play
+   → In our upcoming AI 2026 Bismarck Strategic Report, we will provide in-depth analysis of all the world's leading artificial intelligence labs, as well as the companies and live players behind them.
+   [2025-10-20] 2307 words
+
+15. AI 2026: China’s Moonshot AI Contends For Technical Leadership
+   → The startup is backed by China's tech giants and led by a skilled researcher aiming to create artificial general intelligence, seeking a competitive edge in algorithmic and architectural innovations.
+   [2025-09-24] 5031 words
+
+16. AI 2026: Mistral Will Rise As Compute is Unleashed
+   → The French startup has delivered leading AI models under compute constraints. Backing from the French government, Nvidia, and ASML will give it access to much more compute.
+   [2025-09-10] 4887 words
+
+17. AI 2026: China’s DeepSeek Cuts Compute Needed For Artificial Intelligence
+   → Offering a superior option to China’s stifling and grind-focused universities, Liang Wenfeng has harnessed the country’s mathematics talent and founded an AI lab capable of advancing technology.
+   [2025-09-03] 5950 words
+
+
+PUBLIC
+----------------------------------------------------------------------------------------------------
+(6 articles)
+
+1. The Attempt to Reform Intel
+   → The chip designer and manufacturer missed multiple major technological opportunities. Its recent pivot to contract manufacturing is heavily backed by the U.S. government.
+   [2024-09-04] 4168 words
+
+2. Raytheon is Now Run Under the Portfolio Theory of the Firm
+   → The storied electronics manufacturer and defense contractor is now just one of a few distinct subsidiaries of a holding company. It is a dead player with no autonomy despite its unique specialties.
+   [2024-08-21] 4181 words
+
+3. Mexico’s Drug Cartels Are Not Competitors to the State
+   → Ravaged by cartel violence, some observers have speculated the Mexican government might collapse entirely. But overall, the drug lords bolster rather than undermine government elites in the country.
+   [2024-05-08] 5264 words
+
+4. Fewer Than One Billion Indians
+   → Falling fertility rates and preferences mean India's population will peak sooner than expected. By the end of the 21st century, there will likely be fewer than one billion Indians.
+   [2024-03-13] 4503 words
+
+5. Y Combinator's Future in the Software Slowdown
+   → The startup accelerator launched a generation of software companies. As the rate of new internet giants slows down, the next technological revolution will need to be sought elsewhere.
+   [2023-11-29] 5272 words
+
+6. The Tradition of Knowledge Behind ASML
+   → Europe’s most valuable tech company is the only manufacturer of the machines needed to make advanced computer chips. This market monopoly rests on a Dutch tradition of knowledge and industrial policy.
+   [2023-11-08] 5224 words
+
