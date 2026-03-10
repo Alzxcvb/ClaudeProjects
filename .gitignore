@@ -4,3 +4,8 @@ R-Bourne-FVG-Trading/
 
 # Personal context file — sensitive, local only
 memory-master-file.md
+
+# External repos (cloned separately, not submodules)
+Qwen3-0.6B/
+ai-model-router/
+learning-to-prompt-claude/
