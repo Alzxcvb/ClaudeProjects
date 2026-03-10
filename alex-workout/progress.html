@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOG // Alex Workout</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="nav-logo">Alex Workout</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Program</a></li>
+            <li><a href="push.html">Push</a></li>
+            <li><a href="pull.html">Pull</a></li>
+            <li><a href="legs.html">Legs</a></li>
+            <li><a href="abs.html">Abs</a></li>
+            <li><a href="recovery.html">Recovery</a></li>
+            <li><a href="progress.html" class="active">Log</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="hero">
+            <h1>Workout Log</h1>
+            <p class="subtitle">Track weights, reps, and progress over time</p>
+        </div>
+
+        <section>
+            <h2>Log Entry</h2>
+            <form id="log-form" class="log-form">
+                <div class="form-row">
+                    <label for="session-select">Session</label>
+                    <select id="session-select">
+                        <option value="">-- Select Session --</option>
+                        <option value="push">Push</option>
+                        <option value="pull">Pull</option>
+                        <option value="legs">Legs</option>
+                        <option value="abs">Abs</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label for="exercise-select">Exercise</label>
+                    <select id="exercise-select">
+                        <option value="">-- Select Exercise --</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label for="weight-input">Weight (kg)</label>
+                    <input type="number" id="weight-input" step="0.5" min="0" placeholder="e.g. 40">
+                </div>
+                <div class="form-row">
+                    <label for="reps-input">Reps</label>
+                    <input type="number" id="reps-input" min="1" max="100" placeholder="e.g. 8">
+                </div>
+                <div class="form-row">
+                    <label for="sets-input">Sets</label>
+                    <input type="number" id="sets-input" min="1" max="10" placeholder="e.g. 4">
+                </div>
+                <div class="form-row">
+                    <label for="notes-input">Notes</label>
+                    <input type="text" id="notes-input" placeholder="Optional (e.g. felt easy, form check)">
+                </div>
+                <div class="form-row">
+                    <button type="submit">Log Set</button>
+                </div>
+            </form>
+        </section>
+
+        <section>
+            <h2>Progress Chart</h2>
+            <div class="chart-container">
+                <canvas id="progress-chart" class="chart-canvas"></canvas>
+            </div>
+        </section>
+
+        <section>
+            <h2>History</h2>
+            <div id="history"></div>
+        </section>
+
+        <section>
+            <h2>Data</h2>
+            <div class="tracker-controls">
+                <button id="export-data" class="secondary">Export CSV</button>
+                <button id="clear-data" class="danger">Clear All Data</button>
+            </div>
+            <p style="font-size: 0.75rem;">All data is stored locally in your browser. Nothing is sent to any server.</p>
+        </section>
+    </div>
+
+    <footer>
+        <p>Alex Workout &mdash; Built with Claude</p>
+    </footer>
+
+    <script src="tracker.js"></script>
+</body>
+</html>

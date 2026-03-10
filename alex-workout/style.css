@@ -1,0 +1,464 @@
+/* Alex Workout — Dark Military Aesthetic */
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #141414;
+  --bg-input: #1a1a1a;
+  --border: #2a2a2a;
+  --text: #e0e0e0;
+  --text-dim: #888;
+  --accent: #c9a227;
+  --accent-dim: #8a6f1a;
+  --green: #4caf50;
+  --red: #e53935;
+  --blue: #42a5f5;
+  --push-color: #e53935;
+  --pull-color: #42a5f5;
+  --legs-color: #4caf50;
+  --abs-color: #c9a227;
+  --font: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* NAV */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-logo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  flex-wrap: wrap;
+}
+
+.nav-links a {
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+/* LAYOUT */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 3rem 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.hero .subtitle {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+
+/* SECTION */
+section {
+  margin-bottom: 3rem;
+}
+
+h2 {
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+h3 {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+p { margin-bottom: 1rem; color: var(--text-dim); }
+
+/* SCHEDULE TABLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+  font-size: 0.85rem;
+}
+
+th {
+  text-align: left;
+  padding: 0.75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.75rem;
+}
+
+td {
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+}
+
+tr:hover td {
+  background: var(--bg-card);
+}
+
+/* EXERCISE CARDS */
+.exercise-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.exercise-card.push { border-left-color: var(--push-color); }
+.exercise-card.pull { border-left-color: var(--pull-color); }
+.exercise-card.legs { border-left-color: var(--legs-color); }
+.exercise-card.abs { border-left-color: var(--abs-color); }
+
+.exercise-num {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--border);
+  min-width: 2rem;
+}
+
+.exercise-info { flex: 1; }
+
+.exercise-name {
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.25rem;
+}
+
+.exercise-sets {
+  font-size: 0.85rem;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.exercise-notes {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-top: 0.25rem;
+}
+
+/* FORM CUES */
+.form-cues {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 1rem;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.form-cues summary {
+  cursor: pointer;
+  color: var(--accent);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.form-cues ul {
+  margin-top: 0.5rem;
+  padding-left: 1.5rem;
+}
+
+.form-cues li {
+  color: var(--text-dim);
+  margin-bottom: 0.25rem;
+}
+
+/* PHASE CARDS */
+.phase-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.phase-card h3 {
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.phase-card ul {
+  padding-left: 1.5rem;
+}
+
+.phase-card li {
+  color: var(--text-dim);
+  margin-bottom: 0.25rem;
+  font-size: 0.85rem;
+}
+
+/* RECOVERY */
+.protocol-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.protocol-card h3 { color: var(--accent); margin-bottom: 0.75rem; }
+.protocol-card ul { padding-left: 1.5rem; }
+.protocol-card li { color: var(--text-dim); margin-bottom: 0.25rem; font-size: 0.85rem; }
+
+.warning {
+  background: rgba(229, 57, 53, 0.1);
+  border: 1px solid var(--red);
+  padding: 0.75rem 1rem;
+  margin: 0.75rem 0;
+  font-size: 0.8rem;
+  color: var(--red);
+}
+
+.tip {
+  background: rgba(76, 175, 80, 0.1);
+  border: 1px solid var(--green);
+  padding: 0.75rem 1rem;
+  margin: 0.75rem 0;
+  font-size: 0.8rem;
+  color: var(--green);
+}
+
+/* PROGRESS TRACKER */
+.tracker-controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+select, input, button {
+  font-family: var(--font);
+  font-size: 0.85rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  color: var(--text);
+  outline: none;
+}
+
+select:focus, input:focus {
+  border-color: var(--accent);
+}
+
+button {
+  background: var(--accent);
+  color: var(--bg);
+  font-weight: 700;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: none;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: var(--accent-dim);
+}
+
+button.secondary {
+  background: var(--bg-card);
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+}
+
+button.secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+button.danger {
+  background: var(--red);
+  color: #fff;
+}
+
+.log-form {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.log-form .form-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.log-form label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+  min-width: 80px;
+}
+
+.log-form input, .log-form select {
+  flex: 1;
+  min-width: 120px;
+}
+
+.history-entry {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.history-date {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+}
+
+.history-weight {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.history-reps {
+  color: var(--text-dim);
+}
+
+/* CHART */
+.chart-container {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 1rem;
+  margin-bottom: 2rem;
+  position: relative;
+  height: 250px;
+}
+
+.chart-canvas {
+  width: 100%;
+  height: 100%;
+}
+
+/* TAGS */
+.day-tag {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 2px;
+}
+
+.day-tag.push { background: rgba(229,57,53,0.15); color: var(--push-color); }
+.day-tag.pull { background: rgba(66,165,245,0.15); color: var(--pull-color); }
+.day-tag.legs { background: rgba(76,175,80,0.15); color: var(--legs-color); }
+.day-tag.rest { background: rgba(136,136,136,0.15); color: var(--text-dim); }
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 2rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: 0.75rem;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+
+  .nav-links {
+    gap: 0.75rem;
+    justify-content: center;
+  }
+
+  .hero h1 { font-size: 1.8rem; }
+
+  .container { padding: 1.5rem 1rem; }
+
+  .exercise-card {
+    flex-direction: column;
+  }
+
+  .tracker-controls {
+    flex-direction: column;
+  }
+
+  .log-form .form-row {
+    flex-direction: column;
+  }
+
+  .log-form label {
+    min-width: auto;
+  }
+
+  table { font-size: 0.75rem; }
+  th, td { padding: 0.5rem; }
+}
