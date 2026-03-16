@@ -41,7 +41,7 @@ ET = ZoneInfo("America/New_York")
 # Strategy parameters
 MOVE_THRESHOLD = 0.01  # 1% move from prior close triggers signal
 TAKE_PROFIT_MULT = 1.30  # target threshold — after reaching this, exit on first price drop
-STOP_LOSS_MULT = 0.95  # exit when premium drops to 0.95x entry (5% loss)
+STOP_LOSS_MULT = 0.80  # exit when premium drops to 0.80x entry (20% loss)
 EXPIRY_DAYS_MIN = 5  # minimum DTE for option selection
 EXPIRY_DAYS_MAX = 9  # maximum DTE (~1 week target)
 SCAN_CHUNK_SIZE = int(os.getenv("MEAN_REV_SCAN_CHUNK_SIZE", "15"))  # symbols per bulk request
