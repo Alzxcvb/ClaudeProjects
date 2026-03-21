@@ -5,6 +5,9 @@ R-Bourne-FVG-Trading/
 # Personal context file — sensitive, local only
 memory-master-file.md
 
+# Session task list — ephemeral, changes every session
+tasks/todo.md
+
 # External repos (cloned separately, not submodules)
 Qwen3-0.6B/
 ai-model-router/
