@@ -1,101 +1,612 @@
 {
   "type": "FeatureCollection",
-  "name": "academic_site_coordinates_wgs84",
-  "crs": {
-    "type": "name",
-    "properties": {
-      "name": "EPSG:4326"
-    }
-  },
   "features": [
     {
       "type": "Feature",
-      "properties": {
-        "site_name": "Cahuachi",
-        "source_name": "Wikimedia Commons Category: Cahuachi",
-        "source_url": "https://commons.wikimedia.org/wiki/Category:Cahuachi",
-        "source_coordinate_text": "14° 49′ 07″ S, 75° 07′ 00″ W",
-        "confidence": "high",
-        "notes": "Confirmed parent archaeological site coordinate from Wikimedia Commons structured data."
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.6158333,
+          -15.4311111
+        ]
       },
+      "properties": {
+        "site_name": "Acari Valley",
+        "coordinate_status": "representative",
+        "source_name": "Bodies of evidence : human decapitation during the early intermediate period in the Acari Valley, south coast, Peru",
+        "source_url": "https://doi.org/10.14288/1.0058405",
+        "coordinate_lookup_url": "https://en.wikipedia.org/wiki/Acar%C3%AD_District",
+        "confidence": "medium",
+        "notes": "Valley-level representative point based on Acari town."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.2,
+          -13.71
+        ]
+      },
+      "properties": {
+        "site_name": "Alto del Molino",
+        "coordinate_status": "representative",
+        "source_name": "The First Field Season of Excavations at the Alto del Molino Site, Pisco Valley, Peru",
+        "source_url": "https://doi.org/10.1179/jfa.1997.24.4.441",
+        "coordinate_lookup_url": "https://en.wikipedia.org/wiki/Pisco,_Peru",
+        "confidence": "medium",
+        "notes": "Representative coordinate in the Pisco urban-valley area for Alto del Molino."
+      }
+    },
+    {
+      "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
           -75.116667,
           -14.818611
         ]
+      },
+      "properties": {
+        "site_name": "Cahuachi",
+        "coordinate_status": "exact",
+        "source_name": "Cahuachi: Non-Urban Cultural Complexity on the South Coast of Peru",
+        "source_url": "https://doi.org/10.1179/jfa.1988.15.4.403",
+        "coordinate_lookup_url": "https://commons.wikimedia.org/wiki/Category:Cahuachi",
+        "confidence": "high",
+        "notes": "Direct coordinate for the Cahuachi archaeological complex."
       }
     },
     {
       "type": "Feature",
-      "properties": {
-        "site_name": "Palpa lines",
-        "source_name": "Wikimedia Commons Category: Palpa lines",
-        "source_url": "https://commons.wikimedia.org/wiki/Category:Palpa_lines",
-        "source_coordinate_text": "14° 35′ 47.64″ S, 75° 11′ 41.82″ W",
-        "confidence": "high",
-        "notes": "Confirmed Palpa lines coordinate from Wikimedia Commons structured data."
-      },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.194949,
-          -14.596568
+          -70.85881,
+          -17.112115
         ]
+      },
+      "properties": {
+        "site_name": "Cerro Baul",
+        "coordinate_status": "exact",
+        "source_name": "Isotopic evidence for Middle Horizon to 16th century camelid herding in the Osmore Valley, Peru",
+        "source_url": "https://doi.org/10.1002/oa.1157",
+        "coordinate_lookup_url": "https://en.wikipedia.org/wiki/Cerro_Ba%C3%BAl",
+        "confidence": "high",
+        "notes": "Direct coordinate for Cerro Baul."
       }
     },
     {
       "type": "Feature",
-      "properties": {
-        "site_name": "Nazca lines",
-        "source_name": "Wikimedia Commons Nazca lines",
-        "source_url": "https://commons.wikimedia.org/wiki/Nazca_lines",
-        "source_coordinate_text": "14° 41′ 51″ S, 75° 08′ 06″ W",
-        "confidence": "high",
-        "notes": "Confirmed Nazca lines coordinate from Wikimedia Commons structured data."
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.8558,
+          -17.095
+        ]
       },
+      "properties": {
+        "site_name": "Cerro Mejia",
+        "coordinate_status": "exact",
+        "source_name": "Isotopic evidence for Middle Horizon to 16th century camelid herding in the Osmore Valley, Peru",
+        "source_url": "https://doi.org/10.1002/oa.1157",
+        "coordinate_lookup_url": "https://mapasamerica.dices.net/peru/mapa.php?id=34003&nombre=Cerro-Mejia",
+        "confidence": "high",
+        "notes": "Direct coordinate for Cerro Mejia."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.9271134,
+          -6.426295
+        ]
+      },
+      "properties": {
+        "site_name": "Chachapoya",
+        "coordinate_status": "representative",
+        "source_name": "Survey of a Peruvian Archaeological Site Using LiDAR and Photogrammetry: A Contribution to the Study of the Chachapoya",
+        "source_url": "https://doi.org/10.1007/978-3-030-86979-3_43",
+        "coordinate_lookup_url": "https://en.wikipedia.org/wiki/Ku%C3%A9lap",
+        "confidence": "medium",
+        "notes": "Representative coordinate using Ku\u00e9lap, the best-known monumental Chachapoya site."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.85,
+          -6.217
+        ]
+      },
+      "properties": {
+        "site_name": "Chachapoyas",
+        "coordinate_status": "exact",
+        "source_name": "Lasers Without Lost Cities: Using Drone Lidar to Capture Architectural Complexity at Kuelap, Amazonas, Peru",
+        "source_url": "https://doi.org/10.1080/00934690.2020.1713287",
+        "coordinate_lookup_url": "https://en.wikipedia.org/wiki/Chachapoyas,_Peru",
+        "confidence": "high",
+        "notes": "City coordinate for Chachapoyas."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.3453139,
+          -17.6458583
+        ]
+      },
+      "properties": {
+        "site_name": "Chiribaya Baja",
+        "coordinate_status": "representative",
+        "source_name": "Techniques of DNA-studies on prehispanic ectoparasites (Pulex sp., Pulicidae, Siphonaptera) from animal mummies of the Chiribaya Culture, Southern Peru",
+        "source_url": "https://doi.org/10.1590/s0074-02762003000900010",
+        "coordinate_lookup_url": "https://en.wikipedia.org/wiki/Ilo,_Peru",
+        "confidence": "medium",
+        "notes": "Representative lower-valley coastal coordinate near Ilo for Chiribaya Baja."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.307,
+          -7.924
+        ]
+      },
+      "properties": {
+        "site_name": "Huaca Prieta",
+        "coordinate_status": "exact",
+        "source_name": "A late pleistocene human presence at Huaca Prieta, Peru, and early Pacific Coastal adaptations",
+        "source_url": "https://doi.org/10.1016/j.yqres.2012.02.003",
+        "coordinate_lookup_url": "https://en.wikipedia.org/wiki/Huaca_Prieta",
+        "confidence": "high",
+        "notes": "Direct coordinate for Huaca Prieta."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.73333333,
+          -14.06666667
+        ]
+      },
+      "properties": {
+        "site_name": "Ica",
+        "coordinate_status": "exact",
+        "source_name": "Cerrillos, an Early Paracas Site in ICA, Peru",
+        "source_url": "https://doi.org/10.2307/277797",
+        "coordinate_lookup_url": "https://en.wikipedia.org/wiki/Ica,_Peru",
+        "confidence": "high",
+        "notes": "City coordinate used for the Ica site mention."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.54555556,
+          -13.16333333
+        ]
+      },
+      "properties": {
+        "site_name": "Intihuatana",
+        "coordinate_status": "representative",
+        "source_name": "Solutions and limitations of the geomatic survey of an archaeological site in hard to access areas with a latest generation smartphone: the example of the Intihuatana stone in Machu Picchu (Peru)",
+        "source_url": "https://doi.org/10.21014/acta_imeko.v11i1.1117",
+        "coordinate_lookup_url": "https://en.wikipedia.org/wiki/Machu_Picchu",
+        "confidence": "medium",
+        "notes": "Representative coordinate for the Intihuatana stone within Machu Picchu."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.20471,
+          -14.54662
+        ]
+      },
+      "properties": {
+        "site_name": "Jauranga",
+        "coordinate_status": "exact",
+        "source_name": "A Chronology of the Pre-Columbian Paracas and Nasca Cultures in South Peru Based on AMS <sup>14</sup>C Dating",
+        "source_url": "https://doi.org/10.1017/s0033822200042466",
+        "coordinate_lookup_url": "https://mapcarta.com/20221136",
+        "confidence": "high",
+        "notes": "Direct coordinate for Jauranga hamlet/site area near Palpa."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.3453139,
+          -17.6458583
+        ]
+      },
+      "properties": {
+        "site_name": "Kilometer 4",
+        "coordinate_status": "representative",
+        "source_name": "Differences in <sup>14</sup>C Age Between Stratigraphically Associated Charcoal and Marine Shell from the Archaic Period Site of Kilometer 4, Southern Peru: Old Wood or Old Water?",
+        "source_url": "https://doi.org/10.1017/s0033822200064663",
+        "coordinate_lookup_url": "https://en.wikipedia.org/wiki/Ilo,_Peru",
+        "confidence": "medium",
+        "notes": "Representative coastal coordinate for the Kilometer 4 site in the Ilo area."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.9271134,
+          -6.426295
+        ]
+      },
+      "properties": {
+        "site_name": "Kuelap",
+        "coordinate_status": "exact",
+        "source_name": "Lasers Without Lost Cities: Using Drone Lidar to Capture Architectural Complexity at Kuelap, Amazonas, Peru",
+        "source_url": "https://doi.org/10.1080/00934690.2020.1713287",
+        "coordinate_lookup_url": "https://en.wikipedia.org/wiki/Ku%C3%A9lap",
+        "confidence": "high",
+        "notes": "Direct coordinate for Ku\u00e9lap."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.2015,
+          -14.5201
+        ]
+      },
+      "properties": {
+        "site_name": "La Mu\u00f1a",
+        "coordinate_status": "representative",
+        "source_name": "A Chronology of the Pre-Columbian Paracas and Nasca Cultures in South Peru Based on AMS <sup>14</sup>C Dating",
+        "source_url": "https://doi.org/10.1017/s0033822200042466",
+        "coordinate_lookup_url": "https://consultasenlinea.mincetur.gob.pe/fichaInventario/index.aspx?cod_Ficha=245",
+        "confidence": "medium",
+        "notes": "Representative Rio Grande district coordinate for La Mu\u00f1a."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.2225,
+          -14.5339333
+        ]
+      },
+      "properties": {
+        "site_name": "Los Molinos",
+        "coordinate_status": "approximate",
+        "source_name": "A Chronology of the Pre-Columbian Paracas and Nasca Cultures in South Peru Based on AMS <sup>14</sup>C Dating",
+        "source_url": "https://doi.org/10.1017/s0033822200042466",
+        "coordinate_lookup_url": "https://en.wikipedia.org/wiki/Palpa_province",
+        "confidence": "medium",
+        "notes": "Approximate site coordinate derived from Palpa province description."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.54555556,
+          -13.16333333
+        ]
+      },
+      "properties": {
+        "site_name": "Machu Picchu",
+        "coordinate_status": "exact",
+        "source_name": "Solutions and limitations of the geomatic survey of an archaeological site in hard to access areas with a latest generation smartphone: the example of the Intihuatana stone in Machu Picchu (Peru)",
+        "source_url": "https://doi.org/10.21014/acta_imeko.v11i1.1117",
+        "coordinate_lookup_url": "https://en.wikipedia.org/wiki/Machu_Picchu",
+        "confidence": "high",
+        "notes": "Direct coordinate for Machu Picchu."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.93333333,
+          -17.2
+        ]
+      },
+      "properties": {
+        "site_name": "Moquegua",
+        "coordinate_status": "exact",
+        "source_name": "The Spanish colonial wineries of Moquegua, Peru",
+        "source_url": "https://doi.org/10.1007/bf03374107",
+        "coordinate_lookup_url": "https://en.wikipedia.org/wiki/Moquegua",
+        "confidence": "high",
+        "notes": "City coordinate used for Moquegua site mentions."
+      }
+    },
+    {
+      "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
           -75.135,
           -14.6975
         ]
-      }
-    },
-    {
-      "type": "Feature",
+      },
       "properties": {
-        "site_name": "Lines and Geoglyphs of Nasca and Palpa (UNESCO property centroid)",
-        "source_name": "UNESCO World Heritage Centre",
-        "source_url": "https://whc.unesco.org/en/list/0700/maps/",
-        "source_coordinate_text": "S14 43 32.988, W75 8 54.996",
+        "site_name": "Nazca lines",
+        "coordinate_status": "exact",
+        "source_name": "A 2,300-year-old architectural and astronomical complex in the Chincha Valley, Peru",
+        "source_url": "https://doi.org/10.1073/pnas.1406501111",
+        "coordinate_lookup_url": "https://en.wikipedia.org/wiki/Nazca_lines",
         "confidence": "high",
-        "notes": "UNESCO property coordinate for the world heritage site."
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -75.14861,
-          -14.72583
-        ]
+        "notes": "Direct site coordinate for the Nazca geoglyph field."
       }
     },
     {
       "type": "Feature",
-      "properties": {
-        "site_name": "Nazca Lizard geoglyph",
-        "source_name": "Google Maps shared by Wikipedia article",
-        "source_url": "https://en.wikipedia.org/wiki/Nazca_lines",
-        "source_coordinate_text": "14° 41′ 35.246″ S, 75° 06′ 50.980″ W",
-        "confidence": "medium",
-        "notes": "Well-known individual geoglyph coordinate surfaced from the Nazca lines reference chain; suitable as a labeled point but secondary to UNESCO/Wikimedia sources."
-      },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -75.114161,
-          -14.693124
+          -70.93333333,
+          -17.2
         ]
+      },
+      "properties": {
+        "site_name": "Osmore Valley",
+        "coordinate_status": "representative",
+        "source_name": "Isotopic evidence for Middle Horizon to 16th century camelid herding in the Osmore Valley, Peru",
+        "source_url": "https://doi.org/10.1002/oa.1157",
+        "coordinate_lookup_url": "https://en.wikipedia.org/wiki/Osmore_River",
+        "confidence": "medium",
+        "notes": "Representative coordinate for the mid Osmore Valley archaeological zone."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.194949,
+          -14.596568
+        ]
+      },
+      "properties": {
+        "site_name": "Palpa lines",
+        "coordinate_status": "exact",
+        "source_name": "A 3D-model of the Nasca lines at Palpa (Peru)",
+        "source_url": "http://hdl.handle.net/20.500.11850/147649",
+        "coordinate_lookup_url": "https://commons.wikimedia.org/wiki/Category:Palpa_lines",
+        "confidence": "high",
+        "notes": "Direct coordinate for the Palpa geoglyph field."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.47396,
+          -6.76256
+        ]
+      },
+      "properties": {
+        "site_name": "Pampa Grande",
+        "coordinate_status": "exact",
+        "source_name": "Pampa Grande and the Mochica Culture",
+        "source_url": "https://doi.org/10.7560/776746",
+        "coordinate_lookup_url": "https://mapcarta.com/19733674",
+        "confidence": "high",
+        "notes": "Direct coordinate for Pampa Grande archaeological site."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.32888889,
+          -13.85888889
+        ]
+      },
+      "properties": {
+        "site_name": "Paracas Peninsula",
+        "coordinate_status": "exact",
+        "source_name": "Ecolog\u00eda de Phyllodactylus angustidigitus y P. gerrhopygus (Squamata: Phyllodactylidae) de la Reserva Nacional de Paracas, Per\u00fa",
+        "source_url": "https://doi.org/10.15381/rpb.v18i2.232",
+        "coordinate_lookup_url": "https://en.wikipedia.org/wiki/Paracas_Peninsula",
+        "confidence": "high",
+        "notes": "Peninsula coordinate for the Paracas site area."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.216,
+          -14.492
+        ]
+      },
+      "properties": {
+        "site_name": "Pernil Alto",
+        "coordinate_status": "exact",
+        "source_name": "A Chronology of the Pre-Columbian Paracas and Nasca Cultures in South Peru Based on AMS <sup>14</sup>C Dating",
+        "source_url": "https://doi.org/10.1017/s0033822200042466",
+        "coordinate_lookup_url": "https://xronos.ch/sites/52722",
+        "confidence": "high",
+        "notes": "Direct coordinate from XRONOS site record for Pernil Alto PAP-266."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.1758333,
+          -14.4808333
+        ]
+      },
+      "properties": {
+        "site_name": "Pinchango Alto",
+        "coordinate_status": "exact",
+        "source_name": "Combining photogrammetry and laser scanning for the recording and modelling of the Late Intermediate Period site of Pinchango Alto, Palpa, Peru",
+        "source_url": "https://doi.org/10.1016/j.jas.2006.12.008",
+        "coordinate_lookup_url": "https://tierra.tutiempo.net/peru/cerro-pinchango-pe047904.html",
+        "confidence": "medium",
+        "notes": "Representative hilltop coordinate for the upper Pinchango Alto site on Cerro Pinchango."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.116667,
+          -14.818611
+        ]
+      },
+      "properties": {
+        "site_name": "Piramide Naranjada",
+        "coordinate_status": "representative",
+        "source_name": "New discoveries in the Piramide Naranjada in Cahuachi (Peru) using satellite, Ground Probing Radar and magnetic investigations",
+        "source_url": "https://doi.org/10.1016/j.jas.2010.12.010",
+        "coordinate_lookup_url": "https://www.sciencedirect.com/science/article/abs/pii/S0305440310004474",
+        "confidence": "medium",
+        "notes": "Representative coordinate within the Cahuachi complex for Piramide Naranjada."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.2,
+          -13.71
+        ]
+      },
+      "properties": {
+        "site_name": "Pisco Valley",
+        "coordinate_status": "representative",
+        "source_name": "The First Field Season of Excavations at the Alto del Molino Site, Pisco Valley, Peru",
+        "source_url": "https://doi.org/10.1179/jfa.1997.24.4.441",
+        "coordinate_lookup_url": "https://en.wikipedia.org/wiki/Pisco,_Peru",
+        "confidence": "medium",
+        "notes": "Representative coordinate for the Pisco Valley study area."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.1854833,
+          -14.5339333
+        ]
+      },
+      "properties": {
+        "site_name": "Pista",
+        "coordinate_status": "representative",
+        "source_name": "High Resolution Drone Surveying of the Pista Geoglyph in Palpa, Peru",
+        "source_url": "https://doi.org/10.3390/geosciences8120479",
+        "coordinate_lookup_url": "https://www.mdpi.com/2076-3263/8/12/479",
+        "confidence": "medium",
+        "notes": "Representative coordinate for the Pista geoglyph near Palpa."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.2015,
+          -14.5201
+        ]
+      },
+      "properties": {
+        "site_name": "Rio Grande de Nazca",
+        "coordinate_status": "representative",
+        "source_name": "Bodies of evidence : human decapitation during the early intermediate period in the Acari Valley, south coast, Peru",
+        "source_url": "https://doi.org/10.14288/1.0058405",
+        "coordinate_lookup_url": "https://en.wikipedia.org/wiki/R%C3%ADo_Grande_District,_Palpa",
+        "confidence": "medium",
+        "notes": "District-level representative coordinate for the Rio Grande de Nazca area."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.5621,
+          -17.865
+        ]
+      },
+      "properties": {
+        "site_name": "Sama",
+        "coordinate_status": "representative",
+        "source_name": "PREHISPANIC PRESENCE, SETTLEMENT PATTERNS AND ECOLOGICAL COMPLEMENTARITY IN THE LOMAS OF THE SAMA VALLEY, TACNA, PERU",
+        "source_url": "https://doi.org/10.4067/s0717-73562019005001201",
+        "coordinate_lookup_url": "https://en.wikipedia.org/wiki/Sama_District",
+        "confidence": "medium",
+        "notes": "District-level representative coordinate for Sama Valley mentions."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.82822,
+          -17.07666
+        ]
+      },
+      "properties": {
+        "site_name": "Torata Alta",
+        "coordinate_status": "exact",
+        "source_name": "Isotopic evidence for Middle Horizon to 16th century camelid herding in the Osmore Valley, Peru",
+        "source_url": "https://doi.org/10.1002/oa.1157",
+        "coordinate_lookup_url": "https://mapcarta.com/N3404140596",
+        "confidence": "high",
+        "notes": "Direct coordinate for Torata Alta."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.92444,
+          -17.14944
+        ]
+      },
+      "properties": {
+        "site_name": "Yaral",
+        "coordinate_status": "exact",
+        "source_name": "Isotopic evidence for Middle Horizon to 16th century camelid herding in the Osmore Valley, Peru",
+        "source_url": "https://doi.org/10.1002/oa.1157",
+        "coordinate_lookup_url": "https://mapcarta.com/20250456",
+        "confidence": "high",
+        "notes": "Direct coordinate for El Yaral / Yaral."
       }
     }
   ]

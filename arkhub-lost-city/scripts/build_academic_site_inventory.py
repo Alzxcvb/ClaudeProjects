@@ -44,6 +44,7 @@ def main() -> None:
                         "longitude": "",
                         "coordinate_status": "missing",
                         "coordinate_source": "",
+                        "coordinate_lookup_url": "",
                         "example_study_title": title,
                         "example_study_doi": doi,
                         "example_study_source": source,
@@ -60,8 +61,9 @@ def main() -> None:
             row = verified[site]
             bucket["latitude"] = row["latitude"]
             bucket["longitude"] = row["longitude"]
-            bucket["coordinate_status"] = "verified"
+            bucket["coordinate_status"] = row.get("coordinate_status", "exact")
             bucket["coordinate_source"] = row["source_name"]
+            bucket["coordinate_lookup_url"] = row.get("coordinate_lookup_url", "")
 
     rows = sorted(site_stats.values(), key=lambda row: (-int(row["study_count"]), row["site_name"]))
     out_path = ACADEMIC_DIR / "Peru_academic_sites_inventory.csv"
@@ -70,7 +72,7 @@ def main() -> None:
         writer.writeheader()
         writer.writerows(rows)
 
-    verified_count = sum(1 for row in rows if row["coordinate_status"] == "verified")
+    verified_count = sum(1 for row in rows if row["coordinate_status"] != "missing")
     print(f"inventory_csv: {out_path}")
     print(f"unique_sites: {len(rows)}")
     print(f"verified_coordinates: {verified_count}")
