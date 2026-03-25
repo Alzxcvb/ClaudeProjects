@@ -1,0 +1,15 @@
+{
+  "query": "south coast Peru archaeology sites",
+  "providers": [
+    "openalex",
+    "crossref"
+  ],
+  "paper_count": 98,
+  "coordinate_mention_count": 1,
+  "papers_with_coordinates": 1,
+  "output_files": {
+    "raw_json": "/Users/alexandercoffman/ClaudeProjects/arkhub-lost-city/data/raw/academic/south-coast-sites_works.json",
+    "papers_csv": "/Users/alexandercoffman/ClaudeProjects/arkhub-lost-city/data/interim/academic/south-coast-sites_papers.csv",
+    "coordinate_mentions_csv": "/Users/alexandercoffman/ClaudeProjects/arkhub-lost-city/data/interim/academic/south-coast-sites_coordinate_mentions.csv"
+  }
+}

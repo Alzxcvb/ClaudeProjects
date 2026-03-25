@@ -1,0 +1,15 @@
+{
+  "query": "Nazca Lines archaeology remote sensing Peru",
+  "providers": [
+    "openalex",
+    "crossref"
+  ],
+  "paper_count": 20,
+  "coordinate_mention_count": 0,
+  "papers_with_coordinates": 0,
+  "output_files": {
+    "raw_json": "/Users/alexandercoffman/ClaudeProjects/arkhub-lost-city/data/raw/academic/nazca-lines-remote_works.json",
+    "papers_csv": "/Users/alexandercoffman/ClaudeProjects/arkhub-lost-city/data/interim/academic/nazca-lines-remote_papers.csv",
+    "coordinate_mentions_csv": "/Users/alexandercoffman/ClaudeProjects/arkhub-lost-city/data/interim/academic/nazca-lines-remote_coordinate_mentions.csv"
+  }
+}

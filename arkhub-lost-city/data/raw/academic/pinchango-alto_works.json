@@ -1,0 +1,129 @@
+{
+  "query": "Pinchango Alto Peru archaeology",
+  "providers": [
+    "openalex"
+  ],
+  "count": 10,
+  "works": [
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W9402541",
+      "title": "Photogrammetric recording of the archaeological site of Pinchango Alto (Palpa, Peru) using a mini helicopter (UAV)",
+      "year": 2005,
+      "doi": "10.1007/s004150050160",
+      "source": "Journal of Neurology",
+      "landing_page_url": null,
+      "pdf_url": null,
+      "authors": "Henri Eisenbeiss; Karsten Lambers; Martin Sauerbier",
+      "abstract": "We studied prospectively 105 unselected patients complaining of ptosis and/or diplopia due to extrinsic ophthalmic muscle palsies without other neurological signs. All patients underwent the same diagnostic protocol. The presenting symptoms were: ptosis, 35 patients (33%); diplopia, 27 patients (26%); ptosis and diplopia, 43 patients (41%). The oculomotor nerve was most frequently involved, followed by the abducens nerve. The final diagnoses were: ocular myasthenia, intracranial and/or orbital pathology, thyroid ophthalmopathy, diabetic ophthalmoplegia, mitochondrial myopathy, oculopharyngeal muscular dystrophy. In 26 patients (25%) the cause remained undetermined. Our study confirms the difficulty of establishing an aetiological diagnosis in patients with isolated ocular palsies."
+    },
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W2168583588",
+      "title": "Combining photogrammetry and laser scanning for the recording and modelling of the Late Intermediate Period site of Pinchango Alto, Palpa, Peru",
+      "year": 2007,
+      "doi": "10.1016/j.jas.2006.12.008",
+      "source": "Journal of Archaeological Science",
+      "landing_page_url": "https://doi.org/10.1016/j.jas.2006.12.008",
+      "pdf_url": null,
+      "authors": "Karsten Lambers; Henri Eisenbeiss; Martin Sauerbier; Denise Kupferschmidt; Thomas Gaisecker; Soheil Sotoodeh; Thomas Hanusch",
+      "abstract": ""
+    },
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W2140558412",
+      "title": "PHOTOGRAMMETRIC DOCUMENTATION OF AN ARCHAEOLOGICAL SITE (PALPA, PERU) USING AN AUTONOMOUS MODEL HELICOPTER",
+      "year": 2005,
+      "doi": "",
+      "source": "KOPS (University of Konstanz)",
+      "landing_page_url": "http://nbn-resolving.de/urn:nbn:de:bsz:352-0-253687",
+      "pdf_url": "http://nbn-resolving.de/urn:nbn:de:bsz:352-0-253687",
+      "authors": "Henri Eisenbeiss; Karsten Lambers; Martin Sauerbier; Zhang Li",
+      "abstract": "In this paper we describe a new system for the recording of archaeological sites based on an autonomous UAV (unmanned aerial vehicle) that has recently been employed in the framework of the Nasca-Palpa Archaeological Project on the south coast of Peru. In the vicinity of Palpa, the prehispanic site of Pinchango Alto is an attractive, yet difficult target for archaeological research. On the one hand, its well preserved stone architecture, abundant surface finds, and richly furnished graves dating to the Late Intermediate Period (AD 1000-1400) offer many opportunities to study this still poorly understood pre-Inkaic period. On the other hand, access to and working on the site is rather difficult. The recording of the preserved surface remains therefore required a highly mobile and flexible documentation system. In the 2004 field campaign we used a model helicopter carrying a CMOS camera to acquire a series of vertical aerial images for a photogrammetric recording and 3D modeling of the site and the surrounding terrain. The system used in Pinchango Alto is based on a commercial low cost model helicopter. It features an integrated GPS/INS based stabilizer. While the GPS/INS unit enables semiautomated navigation along a predefined flight path, the stabilizer ensures a stable flight attitude and thus a highly reliable image acquisition. The processing and analysis of the acquired images encompassed image pre-processing, semiautomatic triangulation, and DTM generation. The inhouse software used for automatic DSM generation is here described in detail. A virtual 3D model of the site was produced and visualized. The resulting data were analyzed concerning in particular the potential of DSM generation from model helicopter images as compared to laser data. In this paper we present the first results of our"
+    },
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W2982492731",
+      "title": "Comparison of DSMs generated from mini UAV imagery and terrestrial laser scanner in a cultural heritage application",
+      "year": 2006,
+      "doi": "10.3929/ethz-b-000158047",
+      "source": "Repository for Publications and Research Data (ETH Zurich)",
+      "landing_page_url": "http://hdl.handle.net/20.500.11850/158047",
+      "pdf_url": "http://hdl.handle.net/20.500.11850/158047",
+      "authors": "Henri Eisenbeiss; Li Zhang",
+      "abstract": "In this paper we present two different methods, which were applied for the DSM generation of the cultural heritage site Pinchango Alto. The area of interest is a LIP (Late Intermediate Period; 1400 AD) settlement, situated 400 km in the south of the capital of Peru (Lima) close by the famous Geoglyphs of Nasca. The site was recorded using a terrestrial laser scanner (Riegl LMS-Z420i) and a mini UAV-system (Unmanned Aerial Vehicle) under the framework of a research program called NTG (\u201cNew methods and technologies in the humanities\u201d). During the field work, using both methods, the complete settlement was documented in a short time. The post-processing of the data was done by use of in-house developed software packages. The image data (UAV) were oriented and a DSM (10 cm resolution) was generated automatically using a multi-image matching approach. For the registration of the single laser scans a surface matcher rather than the special targets was used. As a product of the laser data a regular raster grid with point spacing of 5 cm was generated. The 3D comparison of both elevation models shows a mean value less than 1 cm with a standard deviation of 6 cm. The main discrepancy between the data sets results mostly from occlusion, caused on the restricted viewing directions of the acquisition stand points. The presented data acquisition and processing methods showed their high usability for the documentation of archaeological sites."
+    },
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W2738010486",
+      "title": "Photogrammetric Recording of the Archaeological Site of Pinchango Alto (Palpa, Peru) Using a Mini Helicopter (UAV)",
+      "year": 2007,
+      "doi": "10.15496/publikation-2410",
+      "source": "Universit\u00e4tsbibliothek T\u00fcbingen",
+      "landing_page_url": "https://doi.org/10.15496/publikation-2410",
+      "pdf_url": null,
+      "authors": "Ant\u00f3nio Figueiredo",
+      "abstract": ""
+    },
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W2138784324",
+      "title": "UAV PHOTOGRAMMETRY FOR MAPPING AND 3D MODELING \u2013 CURRENT STATUS AND FUTURE PERSPECTIVES",
+      "year": 2012,
+      "doi": "10.5194/isprsarchives-xxxviii-1-c22-25-2011",
+      "source": "\u0098The \u009cinternational archives of the photogrammetry, remote sensing and spatial information sciences/International archives of the photogrammetry, remote sensing and spatial information sciences",
+      "landing_page_url": "https://doi.org/10.5194/isprsarchives-xxxviii-1-c22-25-2011",
+      "pdf_url": "https://www.int-arch-photogramm-remote-sens-spatial-inf-sci.net/XXXVIII-1-C22/25/2011/isprsarchives-XXXVIII-1-C22-25-2011.pdf",
+      "authors": "Fabio Remondino; Luigi Barazzetti; Francesco Nex; Marco Scaioni; D. Sarazzi",
+      "abstract": "Abstract. UAV platforms are nowadays a valuable source of data for inspection, surveillance, mapping and 3D modeling issues. New applications in the short- and close-range domain are introduced, being the UAVs a low-cost alternatives to the classical manned aerial photogrammetry. Rotary or fixed wing UAVs, capable of performing the photogrammetric data acquisition with amateur or SLR digital cameras, can fly in manual, semi-automated and autonomous modes. With a typical photogrammetric pipeline, 3D results like DSM/DTM, contour lines, textured 3D models, vector data, etc. can be produced, in a reasonable automated way. The paper reports the latest developments of UAV image processing methods for photogrammetric applications, mapping and 3D modeling issues. Automation is nowadays necessary and feasible at the image orientation, DSM generation and orthophoto production stages, while accurate feature extraction is still an interactive procedure. New perspectives are also addressed."
+    },
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W2037061351",
+      "title": "State-of-The-Art and Applications of 3D Imaging Sensors in Industry, Cultural Heritage, Medicine, and Criminal Investigation",
+      "year": 2009,
+      "doi": "10.3390/s90100568",
+      "source": "Sensors",
+      "landing_page_url": "https://doi.org/10.3390/s90100568",
+      "pdf_url": "https://www.mdpi.com/1424-8220/9/1/568/pdf?version=1403311251",
+      "authors": "Giovanna Sansoni; Marco Trebeschi; Franco Docchio",
+      "abstract": "3D imaging sensors for the acquisition of three dimensional (3D) shapes have created, in recent years, a considerable degree of interest for a number of applications. The miniaturization and integration of the optical and electronic components used to build them have played a crucial role in the achievement of compactness, robustness and flexibility of the sensors. Today, several 3D sensors are available on the market, even in combination with other sensors in a \"sensor fusion\" approach. An importance equal to that of physical miniaturization has the portability of the measurements, via suitable interfaces, into software environments designed for their elaboration, e.g., CAD-CAM systems, virtual renders, and rapid prototyping tools. In this paper, following an overview of the state-of-art of 3D imaging sensors, a number of significant examples of their use are presented, with particular reference to industry, heritage, medicine, and criminal investigation applications."
+    },
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W1995711721",
+      "title": "Pheno-Copter: A Low-Altitude, Autonomous Remote-Sensing Robotic Helicopter for High-Throughput Field-Based Phenotyping",
+      "year": 2014,
+      "doi": "10.3390/agronomy4020279",
+      "source": "Agronomy",
+      "landing_page_url": "https://doi.org/10.3390/agronomy4020279",
+      "pdf_url": "https://www.mdpi.com/2073-4395/4/2/279/pdf?version=1403600970",
+      "authors": "Scott Chapman; Torsten Merz; Amy Chan; Paul Jackway; Stefan Hrabar; M. Fernanda Dreccer; Edward J. Holland; Bangyou Zheng; Ling Tong; Jos\u00e9 A. Jim\u00e9nez-Berni",
+      "abstract": "Plant breeding trials are extensive (100s to 1000s of plots) and are difficult and expensive to monitor by conventional means, especially where measurements are time-sensitive. For example, in a land-based measure of canopy temperature (hand-held infrared thermometer at two to 10 plots per minute), the atmospheric conditions may change greatly during the time of measurement. Such sensors measure small spot samples (2 to 50 cm2), whereas image-based methods allow the sampling of entire plots (2 to 30 m2). A higher aerial position allows the rapid measurement of large numbers of plots if the altitude is low (10 to 40 m) and the flight control is sufficiently precise to collect high-resolution images. This paper outlines the implementation of a customized robotic helicopter (gas-powered, 1.78-m rotor diameter) with autonomous flight control and software to plan flights over experiments that were 0.5 to 3 ha in area and, then, to extract, straighten and characterize multiple experimental field plots from images taken by three cameras. With a capacity to carry 1.5 kg for 30 min or 1.1 kg for 60 min, the system successfully completed &gt;150 flights for a total duration of 40 h. Example applications presented here are estimations of the variation in: ground cover in sorghum (early season); canopy temperature in sugarcane (mid-season); and three-dimensional measures of crop lodging in wheat (late season). Together with this hardware platform, improved software to automate the production of ortho-mosaics and digital elevation models and to extract plot data would further benefit the development of high-throughput field-based phenotyping systems."
+    },
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W1533955188",
+      "title": "Development and Status of Image Matching in Photogrammetry",
+      "year": 2012,
+      "doi": "10.1111/j.1477-9730.2011.00671.x",
+      "source": "The Photogrammetric Record",
+      "landing_page_url": "https://doi.org/10.1111/j.1477-9730.2011.00671.x",
+      "pdf_url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/j.1477-9730.2011.00671.x",
+      "authors": "Armin Gruen",
+      "abstract": "Abstract Image and template matching is probably the most important function in digital photogrammetry and also in automated modelling and mapping. Many approaches for matching have evolved over the years, but the problem is still unsolved in general terms. This paper describes the development of image matching techniques in photogrammetry over the past 50 years, addresses the results of some empirical accuracy studies and also provides a critical account of some of the problems that remain. Although automated approaches have quite a number of advantages, the quality of the results is still not satisfactory and, in some cases, far from acceptable. Even with the most advanced techniques, it is not yet possible to achieve the quality of results that a human operator can produce. There is an urgent need for further improvements and innovations, be it through more powerful multi\u2010sensor approaches, thereby enlarging the information spectrum, and/or through advancements in image understanding algorithms, thus coming closer to human capabilities of reading and understanding image content."
+    },
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W2081286693",
+      "title": "Feature Learning Based Approach for Weed Classification Using High Resolution Aerial Images from a Digital Camera Mounted on a UAV",
+      "year": 2014,
+      "doi": "10.3390/rs61212037",
+      "source": "Remote Sensing",
+      "landing_page_url": "https://doi.org/10.3390/rs61212037",
+      "pdf_url": "https://www.mdpi.com/2072-4292/6/12/12037/pdf?version=1417601814",
+      "authors": "Calvin Hung; Zhe Xu; Salah Sukkarieh",
+      "abstract": "The development of low-cost unmanned aerial vehicles (UAVs) and light weight imaging sensors has resulted in significant interest in their use for remote sensing applications. While significant attention has been paid to the collection, calibration, registration and mosaicking of data collected from small UAVs, the interpretation of these data into semantically meaningful information can still be a laborious task. A standard data collection and classification work-flow requires significant manual effort for segment size tuning, feature selection and rule-based classifier design. In this paper, we propose an alternative learning-based approach using feature learning to minimise the manual effort required. We apply this system to the classification of invasive weed species. Small UAVs are suited to this application, as they can collect data at high spatial resolutions, which is essential for the classification of small or localised weed outbreaks. In this paper, we apply feature learning to generate a bank of image filters that allows for the extraction of features that discriminate between the weeds of interest and background objects. These features are pooled to summarise the image statistics and form the input to a texton-based linear classifier that classifies an image patch as weed or background. We evaluated our approach to weed classification on three weeds of significance in Australia: water hyacinth, tropical soda apple and serrated tussock. Our results showed that collecting images at 5\u201310 m resulted in the highest classifier accuracy, indicated by F1 scores of up to 94%."
+    }
+  ]
+}

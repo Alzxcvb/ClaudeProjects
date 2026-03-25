@@ -1,0 +1,102 @@
+{
+  "type": "FeatureCollection",
+  "name": "academic_site_coordinates_wgs84",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "EPSG:4326"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "site_name": "Cahuachi",
+        "source_name": "Wikimedia Commons Category: Cahuachi",
+        "source_url": "https://commons.wikimedia.org/wiki/Category:Cahuachi",
+        "source_coordinate_text": "14° 49′ 07″ S, 75° 07′ 00″ W",
+        "confidence": "high",
+        "notes": "Confirmed parent archaeological site coordinate from Wikimedia Commons structured data."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.116667,
+          -14.818611
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "site_name": "Palpa lines",
+        "source_name": "Wikimedia Commons Category: Palpa lines",
+        "source_url": "https://commons.wikimedia.org/wiki/Category:Palpa_lines",
+        "source_coordinate_text": "14° 35′ 47.64″ S, 75° 11′ 41.82″ W",
+        "confidence": "high",
+        "notes": "Confirmed Palpa lines coordinate from Wikimedia Commons structured data."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.194949,
+          -14.596568
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "site_name": "Nazca lines",
+        "source_name": "Wikimedia Commons Nazca lines",
+        "source_url": "https://commons.wikimedia.org/wiki/Nazca_lines",
+        "source_coordinate_text": "14° 41′ 51″ S, 75° 08′ 06″ W",
+        "confidence": "high",
+        "notes": "Confirmed Nazca lines coordinate from Wikimedia Commons structured data."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.135,
+          -14.6975
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "site_name": "Lines and Geoglyphs of Nasca and Palpa (UNESCO property centroid)",
+        "source_name": "UNESCO World Heritage Centre",
+        "source_url": "https://whc.unesco.org/en/list/0700/maps/",
+        "source_coordinate_text": "S14 43 32.988, W75 8 54.996",
+        "confidence": "high",
+        "notes": "UNESCO property coordinate for the world heritage site."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.14861,
+          -14.72583
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "site_name": "Nazca Lizard geoglyph",
+        "source_name": "Google Maps shared by Wikipedia article",
+        "source_url": "https://en.wikipedia.org/wiki/Nazca_lines",
+        "source_coordinate_text": "14° 41′ 35.246″ S, 75° 06′ 50.980″ W",
+        "confidence": "medium",
+        "notes": "Well-known individual geoglyph coordinate surfaced from the Nazca lines reference chain; suitable as a labeled point but secondary to UNESCO/Wikimedia sources."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.114161,
+          -14.693124
+        ]
+      }
+    }
+  ]
+}

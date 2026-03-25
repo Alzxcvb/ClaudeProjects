@@ -1,0 +1,129 @@
+{
+  "query": "Cahuachi Peru remote sensing archaeology",
+  "providers": [
+    "openalex"
+  ],
+  "count": 10,
+  "works": [
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W2132441697",
+      "title": "Integrated remote sensing techniques for the detection of buried archaeological adobe structures: preliminary results in Cahuachi (Peru)",
+      "year": 2008,
+      "doi": "10.5194/adgeo-19-75-2008",
+      "source": "Advances in geosciences",
+      "landing_page_url": "https://doi.org/10.5194/adgeo-19-75-2008",
+      "pdf_url": "https://adgeo.copernicus.org/articles/19/75/2008/adgeo-19-75-2008.pdf",
+      "authors": "Nicola Masini; Enzo Rizzo; Rosa Lasaponara; Giuseppe Orefici",
+      "abstract": "Abstract. This paper is focused on the jointly use of satellite Quickbird (QB) images and Ground Probing Radar (GPR) for assessing their capability in the detection of archaeological adobe structures (sun-dried earth material). Such detection is particularly complex. due to the low contrast generally existing between the archaeological features and the background. Two significant test areas were investigated in the Ceremonial Centre of Cahuachi (in the Nasca territory, Southern Peru) dating back to 6th century BC to 4th century AD. Our results showed that both satellite and GPR data provided valuable indications for unearthing precious ancient remains. Our preliminary analyses pointed out that the integrated use of non destructive remote sensing techniques has high potentiality for its important scientific implications and for its significant contributions to cultural resource management."
+    },
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W1254409997",
+      "title": "Satellite-Based Monitoring of Archaeological Looting in Peru",
+      "year": 2011,
+      "doi": "10.1007/978-90-481-8801-7_8",
+      "source": "Remote sensing and digital image processing",
+      "landing_page_url": "https://doi.org/10.1007/978-90-481-8801-7_8",
+      "pdf_url": null,
+      "authors": "Rosa Lasaponara; Maria Danese; Nicola Masini",
+      "abstract": ""
+    },
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W2021984623",
+      "title": "Addressing the challenge of detecting archaeological adobe structures in Southern Peru using QuickBird imagery",
+      "year": 2009,
+      "doi": "10.1016/j.culher.2009.10.005",
+      "source": "Journal of Cultural Heritage",
+      "landing_page_url": "https://doi.org/10.1016/j.culher.2009.10.005",
+      "pdf_url": null,
+      "authors": "Nicola Masini; Rosa Lasaponara; Giuseppe Orefici",
+      "abstract": ""
+    },
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W2071719485",
+      "title": "New discoveries in the Piramide Naranjada in Cahuachi (Peru) using satellite, Ground Probing Radar and magnetic investigations",
+      "year": 2011,
+      "doi": "10.1016/j.jas.2010.12.010",
+      "source": "Journal of Archaeological Science",
+      "landing_page_url": "https://doi.org/10.1016/j.jas.2010.12.010",
+      "pdf_url": null,
+      "authors": "Rosa Lasaponara; Nicola Masini; Enzo Rizzo; Giuseppe Orefici",
+      "abstract": ""
+    },
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W2189129584",
+      "title": "Integrated Remote Sensing Approach in Cahuachi (Peru): Studies and Results of the ITACA Mission (2007\u20132010)",
+      "year": 2011,
+      "doi": "10.1007/978-90-481-8801-7_14",
+      "source": "Remote sensing and digital image processing",
+      "landing_page_url": "https://doi.org/10.1007/978-90-481-8801-7_14",
+      "pdf_url": null,
+      "authors": "Nicola Masini; Rosa Lasaponara; Enzo Rizzo; Giuseppe Orefici",
+      "abstract": ""
+    },
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W3011480547",
+      "title": "On the detection of adobe buried archaeological structures using multiscale remote sensing techniques : Piramide Naranja in Cahuachi (Peru)",
+      "year": 2009,
+      "doi": "",
+      "source": "EGUGA",
+      "landing_page_url": "http://ui.adsabs.harvard.edu/abs/2009EGUGA..11.6982M/abstract",
+      "pdf_url": null,
+      "authors": "Nicola Masini; Enzo Rizzo; Rosa Lasaponara; Giuseppe Orefici",
+      "abstract": ""
+    },
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W2497468488",
+      "title": "Trends and perspectives of space-borne SAR remote sensing for archaeological landscape and cultural heritage applications",
+      "year": 2016,
+      "doi": "10.1016/j.jasrep.2016.07.017",
+      "source": "Journal of Archaeological Science Reports",
+      "landing_page_url": "https://doi.org/10.1016/j.jasrep.2016.07.017",
+      "pdf_url": "https://ars.els-cdn.com/content/image/1-s2.0-S2352409X1630373X-fx1_lrg.jpg",
+      "authors": "Deodato Tapete; Francesca Cigna",
+      "abstract": ""
+    },
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W2948518689",
+      "title": "COSMO-SkyMed SAR for Detection and Monitoring of Archaeological and Cultural Heritage Sites",
+      "year": 2019,
+      "doi": "10.3390/rs11111326",
+      "source": "Remote Sensing",
+      "landing_page_url": "https://doi.org/10.3390/rs11111326",
+      "pdf_url": "https://www.mdpi.com/2072-4292/11/11/1326/pdf?version=1559473097",
+      "authors": "Deodato Tapete; Francesca Cigna",
+      "abstract": "Synthetic aperture radar (SAR) imagery has long been used in archaeology since the earliest space radar missions in the 1980s. In the current scenario of SAR missions, the Italian Space Agency (ASI)\u2019s COnstellation of small Satellites for Mediterranean basin Observation (COSMO-SkyMed) has peculiar properties that make this mission of potential use by archaeologists and heritage practitioners: high to very high spatial resolution, site revisit of up to one day, and conspicuous image archives over cultural heritage sites across the globe. While recent literature and the number of research projects using COSMO-SkyMed data for science and applied research suggest a growing interest in these data, it is felt that COSMO-SkyMed still needs to be further disseminated across the archaeological remote sensing community. This paper therefore offers a portfolio of use-cases that were developed in the last two years in the Scientific Research Unit of ASI, where COSMO-SkyMed data were analysed to study and monitor cultural landscapes and heritage sites. SAR-based applications in archaeological and cultural heritage sites in Peru, Syria, Italy, and Iraq, provide evidence on how subsurface and buried features can be detected by interpreting SAR backscatter, its spatial and temporal changes, and interferometric coherence, and how SAR-derived digital elevation models (DEM) can be used to survey surface archaeological features. The use-cases also showcase how high temporal revisit SAR time series can support environmental monitoring of land surface processes, and condition assessment of archaeological heritage and landscape disturbance due to anthropogenic impact (e.g., agriculture, mining, looting). For the first time, this paper provides an overview of the capabilities of COSMO-SkyMed imagery in StripMap Himage and Spotlight-2 mode to support archaeological studies, with the aim to encourage remote sensing scientists and archaeologists to search for and exploit these data for their investigations and research activities. Furthermore, some considerations are made with regard to the perspectives opened by the upcoming launch of ASI\u2019s COSMO-SkyMed Second Generation constellation."
+    },
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W2756282309",
+      "title": "Semi-automated detection of looting in Afghanistan using multispectral imagery and principal component analysis",
+      "year": 2017,
+      "doi": "10.15184/aqy.2017.90",
+      "source": "Antiquity",
+      "landing_page_url": "https://doi.org/10.15184/aqy.2017.90",
+      "pdf_url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/A649663703443DBAB767D434587BBB1C/S0003598X17000904a.pdf/div-class-title-semi-automated-detection-of-looting-in-afghanistan-using-multispectral-imagery-and-principal-component-analysis-div.pdf",
+      "authors": "Anthony J. Lauricella; Joshua Cannon; Scott Branting; Emily Hammer",
+      "abstract": "Abstract"
+    },
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W3020525923",
+      "title": "Multitemporal 2016-2018 Sentinel-2 Data Enhancement for Landscape Archaeology: The Case Study of the Foggia Province, Southern Italy",
+      "year": 2020,
+      "doi": "10.3390/rs12081309",
+      "source": "Remote Sensing",
+      "landing_page_url": "https://doi.org/10.3390/rs12081309",
+      "pdf_url": "https://www.mdpi.com/2072-4292/12/8/1309/pdf?version=1587898353",
+      "authors": "Nicodemo Abate; Abdelaziz Elfadaly; Nicola Masini; Rosa Lasaponara",
+      "abstract": "This paper is focused on the use of satellite Sentinel-2 data for assessing their capability in the identification of archaeological buried remains. We selected the \u201cTavoliere delle Puglie\u201d (Foggia, Italy) as a test area because it is characterized by a long human frequentation and is very rich in archaeological remains. The investigations were performed using multi-temporal Sentinel-2 data and spectral indices, commonly used in satellite-based archaeology, and herein analyzed in known archaeological areas to capture the spectral signatures of soil and crop marks and characterize their temporal behavior using Time Series Analysis and Spectral Un-mixing. Tasseled Cap Transformation and Principal Component Analysis have been also adopted to enhance archaeological features. Results from investigations were compared with independent data sources and enabled us to (i) characterize the spectral signatures of soil and crop marks, (ii) assess the performance of the diverse spectral channels and indices, and (iii) identify the best period of the year to capture the archaeological proxy indicators. Additional very important results of our investigations were (i) the discovery of unknown archaeological areas and (ii) the setup of a database of archaeological features devised ad hoc to characterize and categorize the diverse typologies of archaeological remains detected using Sentinel-2 Data."
+    }
+  ]
+}

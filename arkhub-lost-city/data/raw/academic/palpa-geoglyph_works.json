@@ -1,0 +1,129 @@
+{
+  "query": "Palpa Peru geoglyph archaeology",
+  "providers": [
+    "openalex"
+  ],
+  "count": 10,
+  "works": [
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W1485001834",
+      "title": "The geoglyphs of Palpa (Peru) : documentation, analysis, and interpretation",
+      "year": 2004,
+      "doi": "10.5167/uzh-163230",
+      "source": "Zurich Open Repository and Archive (University of Zurich)",
+      "landing_page_url": null,
+      "pdf_url": null,
+      "authors": "Karsten Lambers",
+      "abstract": "Gegenstand dieser Arbeit ist eine Untersuchung der weltbekannten Geoglyphen von Nasca an der S\u00fcdk\u00fcste Perus (400 v. Chr. - 600 n. Chr.) mit dem Ziel, neue Erkenntnisse \u00fcber ihre Funktion und Bedeutung zu gewinnen. Ein bisher undokumentierter Korpus von \u00fcber 600 Geoglyphen in der Gegend von Palpa wurde erstmals mit modernen Methoden der Geomatik, wie Luftbildphotogrammetrie und GIS, dokumentiert, modelliert und analysiert. Dies wurde erg\u00e4nzt durch eine genaue arch\u00e4ologische Dokumentation der Geoglyphen im Gel\u00e4nde sowie die Auswertung und Interpretation der erhobenen Daten. Dieser interdisziplin\u00e4re Ansatz erm\u00f6glichte neue Erkenntnisse zur Chronologie, Typologie und r\u00e4umlichen Verteilung der Geoglyphen. Zudem konnte ein Erkl\u00e4rungsmodell aus j\u00fcngerer Zeit anhand arch\u00e4ologischer Daten getestet werden, welches versucht, die Geoglyphen auf der Grundlage von sozialen, kulturellen und rituellen Traditionen des Andenraumes zu erkl\u00e4ren. Die Untersuchung ergab, dass die Aktivit\u00e4ten auf den Geoglyphen Konzepte von Wasser und Fruchtbarkeit zum Inhalt hatten, als Mittel des Ausdrucks von sozialem Status und kulturellen Vorstellungen dienten und zu einem grossfl\u00e4chigen Einbezug der W\u00fcste in die Kulturlandschaft f\u00fchrten. Die wichtigsten Resultate dieser Arbeit sind: (1) ein umfassendes digitales Archiv der Nasca-Geoglyphen von Palpa, (2) ein fundiertes Bild dessen, was auf den Geoglyphen geschah, und (3) die kritische Einsch\u00e4tzung eines aktuellen Modells zu Erkl\u00e4rung der Geoglyphen anhand arch\u00e4ologischer Befunde.&#13;\\n&#13;\\nIn this study, the famous Nasca geoglyphs (400 BC - AD 600) on the south coast of Peru are investigated in order to better understand their function, use, and meaning. A hitherto undocumented corpus of more than 600 geoglyphs around the modern town of Palpa was recorded, modeled, and analyzed, using for the first time state of the art geomatic tools like aerial photogrammetry and GIS. This was complemented by a thorough archaeological documentation of the geoglyphs in the field and an analysis and interpretation of the acquired data. This interdisciplinary approach led to important new insights into the chronology, typology, and spatial distribution of the geoglyphs. It furthermore allowed to test a recent model striving to explain the geoglyphs in the framework of social, cultural, and ritual Andean traditions against archaeological field data. The study shows that activity on the geoglyph revolved around concepts of water and fertility. It was a means of expressing social status and cultural concepts and led to a large-scale integration of the desert into the cultural landscape. The main results of this study are: (1) a comprehensive digital archive of the Nasca geoglyphs at Palpa, (2) a well-founded idea of human activity related to geoglyphs, and (3) a critical assessment of a recent model to explain the geoglyphs solidly based on archaeological evidence."
+    },
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W1981467759",
+      "title": "OPTICAL DATING OF GRANITIC STONE SURFACES*",
+      "year": 2005,
+      "doi": "10.1111/j.1475-4754.2005.00224.x",
+      "source": "Archaeometry",
+      "landing_page_url": "https://doi.org/10.1111/j.1475-4754.2005.00224.x",
+      "pdf_url": null,
+      "authors": "Steffen Greilich; Ulrich A. Glasmacher; G\u00fcnther A. Wagner",
+      "abstract": "A novel luminescence methodology for dating surfaces of granitoid rocks is presented, with encouraging results for archaeological stone structures. It is based on the zeroing of the latent signal of optically stimulated luminescence (OSL) in feldspar and quartz grains of the stone surface during exposure to daylight. When after bleaching the surface is shielded from light, the OSL signal builds up again, such that its intensity provides an age for the event of the last exposure to light. This event could be the construction or the destruction of stone structures or, for example, sedimentary deposition of granitic boulders, such as in fan deposits. The experimental approach utilizes a high spatial resolution detection technique (HR\u2010OSL) for OSL of minerals that are left in their original petrological context; that is, without any mineral separation. With this approach, steep gradients in microdosimetry at the surface and at grain boundaries become important and are discussed in detail. The new dating technique is successfully applied to a stone wall of the medieval castle of Lindenfels in southwestern Germany and the pre\u2010Columbian Nasca lines (geoglyphs) around Palpa in southern Peru."
+    },
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W2079695900",
+      "title": "A comprehensive numerical chronology for the pre-Columbian cultures of the Palpa valleys, south coast of Peru",
+      "year": 2012,
+      "doi": "10.1016/j.jas.2012.02.021",
+      "source": "Journal of Archaeological Science",
+      "landing_page_url": "https://doi.org/10.1016/j.jas.2012.02.021",
+      "pdf_url": null,
+      "authors": "Ingmar Unkel; Markus Reindel; Hermann Gorbahn; Johny Isla Cuadrado; Bernd Kromer; Volker So\u00dfna",
+      "abstract": ""
+    },
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W2164419857",
+      "title": "A Chronology of the Pre-Columbian Paracas and Nasca Cultures in South Peru Based on AMS <sup>14</sup>C Dating",
+      "year": 2007,
+      "doi": "10.1017/s0033822200042466",
+      "source": "Radiocarbon",
+      "landing_page_url": "https://doi.org/10.1017/s0033822200042466",
+      "pdf_url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/B201208B6ACF92EE733DD7976D5FACD2/S0033822200042466a.pdf/div-class-title-a-chronology-of-the-pre-columbian-paracas-and-nasca-cultures-in-south-peru-based-on-ams-span-class-sup-14-span-c-dating-div.pdf",
+      "authors": "Ingmar Unkel; Bernd Kromer; Markus Reindel; Lukas Wacker; G\u00fcnther A. Wagner",
+      "abstract": "The people of the Paracas and Nasca cultures, the creators of the famous geoglyphs, lived in the desert of the southern coast of Peru between about 800 BC and AD 650. The archaeological chronology of these cultures has been based almost exclusively on a sequence of ceramic styles. The absolute dating of some of the style phases was supported by a few radiocarbon dates (Rowe 1967). Here, we present an absolute chronology of the Paracas and Nasca cultures based on 14 C dating of more than 100 organic samples from settlement and tomb relics, as well as on material derived from geoglyph sites in the Nasca/Palpa region (south Peru). The main focus has been on Nasca period settlement centers near Palpa, Los Molinos and La Mu\u00f1a, the Paracas period site of Jauranga, and the Initial period site of Pernil Alto. Most of the 14 C samples were dated at the accelerator mass spectrometry (AMS) facility of the ETH Zurich (Switzerland). The targets were produced in the newly built graphitization line at the Heidelberg 14 C laboratory (Germany). Clay (adobe) bricks, which are quite a common building material in Peru, were successfully tested to be used for AMS 14 C dating of adobe architecture in Peruvian archaeology."
+    },
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W2905554737",
+      "title": "High Resolution Drone Surveying of the Pista Geoglyph in Palpa, Peru",
+      "year": 2018,
+      "doi": "10.3390/geosciences8120479",
+      "source": "Geosciences",
+      "landing_page_url": "https://doi.org/10.3390/geosciences8120479",
+      "pdf_url": "https://www.mdpi.com/2076-3263/8/12/479/pdf?version=1544694681",
+      "authors": "Karel Pavelka; Jaroslav \u0160edina; Eva Matou\u0161kov\u00e1",
+      "abstract": "Currently, satellite images can be used to document historical or archaeological sites in areas that are distant, dangerous, or expensive to visit, and they can be used instead of basic fieldwork in several cases. Nowadays, they have final resolution on 35\u201350 cm, which can be limited for searching of fine structures. Results using the analysis of very high resolution (VHR) satellite data and super resolution data from drone on an object nearby Palpa, Peru are discussed in this article. This study is a part of Nasca project focused on using satellite data for documentation and the analysis of the famous geoglyphs in Peru near Palpa and Nasca, and partially on the documentation of other historical objects. The use of drone shows advantages of this technology to achieve high resolution object documentation and analysis, which provide new details. The documented site was the \u201cPista\u201d geoglyph. Discovering of unknown geoglyphs (a bird, a guinea pig, and other small drawings) was quite significant in the area of the well-known geoglyph. The new data shows many other details, unseen from the surface or from the satellite imagery, and provides the basis for updating current knowledge and theories about the use and construction of geoglyphs."
+    },
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W1509688244",
+      "title": "A 3D-model of the Nasca lines at Palpa (Peru)",
+      "year": 2003,
+      "doi": "10.3929/ethz-a-004599129",
+      "source": "Repository for Publications and Research Data (ETH Zurich)",
+      "landing_page_url": "http://hdl.handle.net/20.500.11850/147649",
+      "pdf_url": "http://hdl.handle.net/20.500.11850/147649",
+      "authors": "Martin Sauerbier; Karsten Lambers",
+      "abstract": "The Nasca Lines or geoglyphs in the desert of south Peru are among the most famous cultural heritage sites in the world.Unfortunately, their investigation and interpretation has been hampered for a long time by the lack of an accurate documentation.Based on aerial imagery that was especially acquired for this purpose, we produced a virtual 3D model of the northern part of the Nasca region, around the modern town of Palpa.The slopes and ridges of this area are covered by more than 1'500 geoglyphs that are shown in the model.This 3D model of Palpa, presented at the workshop for the first time in its complete form, is the result of 5 years of archaeological and photogrammetric fieldwork at Palpa jointly conducted by geodetic engineers of ETH Zurich and archaeologists from Germany and Peru.The model consists of a DTM, photorealistic texture based on an orthomosaic, and a vector layer showing the geoglyphs.These high-resolution datasets are needed to ensure accurate results of the intended archaeological analysis.The overall file size of the 3D model is about 3 GB.Such an amount of data could not be visualized in real time until recently when more powerful hard-and software became available for PC systems.For the Palpa model we use Skyline by IDC, Switzerland, to visualize the terrain and the geoglyphs.The advantages and shortcomings of this software are discussed in the present paper.Furthermore, the use of the 3D model as a valuable tool for archaeological research is described."
+    },
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W54757132",
+      "title": "The Clock in the Corn Cob: On the Development of a Chronology of the Paracas and Nasca Period Based on Radiocarbon Dating",
+      "year": 2009,
+      "doi": "10.1007/978-3-540-87438-6_14",
+      "source": "Natural science in archaeology",
+      "landing_page_url": "https://doi.org/10.1007/978-3-540-87438-6_14",
+      "pdf_url": null,
+      "authors": "Ingmar Unkel; Bernd Kromer",
+      "abstract": ""
+    },
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W81131342",
+      "title": "GIS-based visibility studies of the Nasca geoglyphs at Palpa, Peru",
+      "year": 2006,
+      "doi": "",
+      "source": "KOPS (University of Konstanz)",
+      "landing_page_url": "http://nbn-resolving.de/urn:nbn:de:bsz:352-199011",
+      "pdf_url": "http://nbn-resolving.de/urn:nbn:de:bsz:352-199011",
+      "authors": "Karsten Lambers; Martin Sauerbier",
+      "abstract": "The Nasca lines or geoglyphs in southern Peru are known as one of archaeology's greatest mysteries. Since the 1980s, however, new approaches have helped to better understand their function and meaning. The recent photogrammetric recording of 1 500 geoglyphs in the vicinity ofPalpa enabled for the first time a GIS-based analysis. Geoglyph visibility is one of their most discussed traits. While modern observers tend to view the geoglyphs from the air, their creators viewed and perceived them from the ground. The Palpa dataset allowed us to quantify geoglyph visibility and intervisibility by applying viewshed analysis and the Kolmogorov-Smirnov goodness-of-fit test. This investigation has shed new light on the cultural role of the geoglyphs in ancient Nasca society. In this paper we present some recent results ofthe GIS-based analysis of the Palpa geoglyphs, which is still underway. Furthermore, we discuss some general methodological issues of GIS applications in archaeology."
+    },
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W1444052176",
+      "title": "A data model for a GIS-based analysis of the Nasca lines at Palpa (Peru)",
+      "year": 2003,
+      "doi": "10.3929/ethz-a-004599145",
+      "source": "Repository for Publications and Research Data (ETH Zurich)",
+      "landing_page_url": "http://hdl.handle.net/20.500.11850/147650",
+      "pdf_url": "http://hdl.handle.net/20.500.11850/147650",
+      "authors": "Karsten Lambers; Martin Sauerbier",
+      "abstract": "The famous Nasca lines and geoglyphs in the desert on the south coast of Peru are a constitutive part of the Nasca cultural landscape of the Early Intermediate Period (approx. 200 BC \u2013 AD 600). Vast desert zones, largely uninhabited and unused in other epochs, were marked and altered on a large scale according to the cultural concepts, needs and beliefs of the Nasca people. A study of the geoglyphs thus is expected to provide important insights into Nasca culture. Such an investigation requires a regional approach considering the geoglyphs and the landscape they are found in. Since 1997, in close cooperation between geodesists and archaeologists from Switzerland, Germany and Peru, a working scheme was devised and realized that allows for the first time the photogrammetric recording, 3D modeling, and GIS-based archaeological analysis of the geoglyphs of Palpa, in the northern part of the Nasca region, where more than 1 500 geoglyphs cover the ridges and plateaus of the desert. The characteristics and the amount of data obtained during our archaeological and photogrammetric work requires an efficient approach for data storage and analysis. As an important step on the way to a GIS, in this paper we present the central part of our data model, designed in the Unified Modeling Language (UML), that shows how we organize and integrate our geoglyph data following an object-oriented approach."
+    },
+    {
+      "provider": "openalex",
+      "provider_id": "https://openalex.org/W167682661",
+      "title": "Context Matters: GIS-Based Spatial Analysis of the Nasca Geoglyphs of Palpa",
+      "year": 2009,
+      "doi": "10.1007/978-3-540-87438-6_19",
+      "source": "Natural science in archaeology",
+      "landing_page_url": "https://doi.org/10.1007/978-3-540-87438-6_19",
+      "pdf_url": null,
+      "authors": "Karsten Lambers; Martin Sauerbier",
+      "abstract": ""
+    }
+  ]
+}

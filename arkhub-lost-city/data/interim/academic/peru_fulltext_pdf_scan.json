@@ -1,0 +1,94 @@
+[
+  {
+    "title": "Integrated remote sensing techniques for the detection of buried archaeological adobe structures: preliminary results in Cahuachi (Peru)",
+    "year": "2008",
+    "doi": "10.5194/adgeo-19-75-2008",
+    "pdf_url": "https://adgeo.copernicus.org/articles/19/75/2008/adgeo-19-75-2008.pdf",
+    "coordinate_mentions": 0
+  },
+  {
+    "title": "Trends and perspectives of space-borne SAR remote sensing for archaeological landscape and cultural heritage applications",
+    "year": "2016",
+    "doi": "10.1016/j.jasrep.2016.07.017",
+    "pdf_url": "https://ars.els-cdn.com/content/image/1-s2.0-S2352409X1630373X-fx1_lrg.jpg",
+    "coordinate_mentions": "",
+    "error": "Stream has ended unexpectedly"
+  },
+  {
+    "title": "COSMO-SkyMed SAR for Detection and Monitoring of Archaeological and Cultural Heritage Sites",
+    "year": "2019",
+    "doi": "10.3390/rs11111326",
+    "pdf_url": "https://www.mdpi.com/2072-4292/11/11/1326/pdf?version=1559473097",
+    "coordinate_mentions": "",
+    "error": "403 Client Error: Forbidden for url: https://www.mdpi.com/2072-4292/11/11/1326/pdf?version=1559473097"
+  },
+  {
+    "title": "Semi-automated detection of looting in Afghanistan using multispectral imagery and principal component analysis",
+    "year": "2017",
+    "doi": "10.15184/aqy.2017.90",
+    "pdf_url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/A649663703443DBAB767D434587BBB1C/S0003598X17000904a.pdf/div-class-title-semi-automated-detection-of-looting-in-afghanistan-using-multispectral-imagery-and-principal-component-analysis-div.pdf",
+    "coordinate_mentions": 6
+  },
+  {
+    "title": "Multitemporal 2016-2018 Sentinel-2 Data Enhancement for Landscape Archaeology: The Case Study of the Foggia Province, Southern Italy",
+    "year": "2020",
+    "doi": "10.3390/rs12081309",
+    "pdf_url": "https://www.mdpi.com/2072-4292/12/8/1309/pdf?version=1587898353",
+    "coordinate_mentions": "",
+    "error": "403 Client Error: Forbidden for url: https://www.mdpi.com/2072-4292/12/8/1309/pdf?version=1587898353"
+  },
+  {
+    "title": "A Chronology of the Pre-Columbian Paracas and Nasca Cultures in South Peru Based on AMS <sup>14</sup>C Dating",
+    "year": "2007",
+    "doi": "10.1017/s0033822200042466",
+    "pdf_url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/B201208B6ACF92EE733DD7976D5FACD2/S0033822200042466a.pdf/div-class-title-a-chronology-of-the-pre-columbian-paracas-and-nasca-cultures-in-south-peru-based-on-ams-span-class-sup-14-span-c-dating-div.pdf",
+    "coordinate_mentions": 25
+  },
+  {
+    "title": "High Resolution Drone Surveying of the Pista Geoglyph in Palpa, Peru",
+    "year": "2018",
+    "doi": "10.3390/geosciences8120479",
+    "pdf_url": "https://www.mdpi.com/2076-3263/8/12/479/pdf?version=1544694681",
+    "coordinate_mentions": "",
+    "error": "403 Client Error: Forbidden for url: https://www.mdpi.com/2076-3263/8/12/479/pdf?version=1544694681"
+  },
+  {
+    "title": "A 3D-model of the Nasca lines at Palpa (Peru)",
+    "year": "2003",
+    "doi": "10.3929/ethz-a-004599129",
+    "pdf_url": "http://hdl.handle.net/20.500.11850/147649",
+    "coordinate_mentions": "",
+    "error": "Stream has ended unexpectedly"
+  },
+  {
+    "title": "GIS-based visibility studies of the Nasca geoglyphs at Palpa, Peru",
+    "year": "2006",
+    "doi": "",
+    "pdf_url": "http://nbn-resolving.de/urn:nbn:de:bsz:352-199011",
+    "coordinate_mentions": "",
+    "error": "Stream has ended unexpectedly"
+  },
+  {
+    "title": "A data model for a GIS-based analysis of the Nasca lines at Palpa (Peru)",
+    "year": "2003",
+    "doi": "10.3929/ethz-a-004599145",
+    "pdf_url": "http://hdl.handle.net/20.500.11850/147650",
+    "coordinate_mentions": "",
+    "error": "Stream has ended unexpectedly"
+  },
+  {
+    "title": "Interscalar Vehicles for an African Anthropocene: On Waste, Temporality, and Violence",
+    "year": "2018",
+    "doi": "10.14506/ca33.1.05",
+    "pdf_url": "https://journal.culanth.org/index.php/ca/article/download/ca33.1.05/54",
+    "coordinate_mentions": 1
+  },
+  {
+    "title": "GIS-based management and analysis of the geoglyphs in the Palpa region",
+    "year": "2009",
+    "doi": "10.3929/ethz-a-005940066",
+    "pdf_url": "http://hdl.handle.net/20.500.11850/20984",
+    "coordinate_mentions": "",
+    "error": "Stream has ended unexpectedly"
+  }
+]
