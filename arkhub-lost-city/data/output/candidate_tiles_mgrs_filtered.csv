@@ -1,0 +1,296 @@
+global_rank,mgrs_1km,mgrs_compact,region,tier,composite_score,gap_score,river_score,density_score,nearest_site_km,nearest_river_km,lat_center,lon_center
+1,18L YL 66 44,18LYL6644,Highlands — Cusco / Inca Heartland,Tier 1 — High Priority,0.7781,0.7699,0.9486,0.8114,0.51,1.03,-13.157,-72.541
+2,18L YL 65 42,18LYL6542,Highlands — Cusco / Inca Heartland,Tier 1 — High Priority,0.7637,0.7546,0.9168,0.8199,0.8,1.66,-13.175,-72.55
+3,18L YL 67 42,18LYL6742,Highlands — Cusco / Inca Heartland,Tier 1 — High Priority,0.7622,0.7813,0.872,0.8328,0.62,2.56,-13.175,-72.532
+4,18L YL 64 43,18LYL6443,Highlands — Cusco / Inca Heartland,Tier 1 — High Priority,0.7529,0.7148,0.9411,0.8021,1.09,1.18,-13.166,-72.559
+5,18L YL 64 44,18LYL6444,Highlands — Cusco / Inca Heartland,Tier 1 — High Priority,0.7466,0.695,0.9486,0.7965,1.27,1.03,-13.157,-72.559
+6,18L YL 64 45,18LYL6445,Highlands — Cusco / Inca Heartland,Tier 1 — High Priority,0.6882,0.6075,0.9175,0.7015,1.34,1.65,-13.148,-72.559
+7,18L YL 68 42,18LYL6842,Highlands — Cusco / Inca Heartland,Tier 1 — High Priority,0.6821,0.6452,0.832,0.7432,1.32,3.36,-13.175,-72.523
+8,18L YL 65 41,18LYL6541,Highlands — Cusco / Inca Heartland,Tier 1 — High Priority,0.6819,0.634,0.8668,0.6974,0.91,2.66,-13.184,-72.55
+9,18L YL 66 45,18LYL6645,Highlands — Cusco / Inca Heartland,Tier 1 — High Priority,0.6805,0.6083,0.9175,0.6527,0.68,1.65,-13.148,-72.541
+10,18L YL 63 43,18LYL6343,Highlands — Cusco / Inca Heartland,Tier 1 — High Priority,0.666,0.5748,0.8972,0.6822,1.57,2.06,-13.166,-72.568
+11,18L YL 68 41,18LYL6841,Highlands — Cusco / Inca Heartland,Tier 1 — High Priority,0.6649,0.6386,0.8024,0.7066,0.96,3.95,-13.184,-72.523
+12,17M PN 46 15,17MPN4615,North Coast — Mochica Belt,Tier 1 — High Priority,0.6612,0.8518,0.6087,0.9107,0.65,7.83,-7.094,-79.675
+13,18L YL 63 44,18LYL6344,Highlands — Cusco / Inca Heartland,Tier 1 — High Priority,0.6561,0.5408,0.9013,0.6975,2.25,1.97,-13.157,-72.568
+14,18L WJ 09 55,18LWJ0955,South Desert — Nazca-Palpa-Ica,Tier 1 — High Priority,0.6346,0.8511,0.0256,0.9259,0.81,43.99,-14.879,-74.91
+15,18L YL 63 42,18LYL6342,Highlands — Cusco / Inca Heartland,Tier 1 — High Priority,0.6322,0.5375,0.872,0.6077,1.16,2.56,-13.175,-72.568
+16,18L YL 64 41,18LYL6441,Highlands — Cusco / Inca Heartland,Tier 1 — High Priority,0.632,0.5491,0.8582,0.6062,0.94,2.84,-13.184,-72.559
+17,17M PN 45 18,17MPN4518,North Coast — Mochica Belt,Tier 1 — High Priority,0.627,0.9049,0.4005,0.9578,0.55,10.98,-7.067,-79.684
+18,18L YL 63 45,18LYL6345,Highlands — Cusco / Inca Heartland,Tier 1 — High Priority,0.6218,0.4911,0.8821,0.638,2.3,2.36,-13.148,-72.568
+19,18L WJ 09 54,18LWJ0954,South Desert — Nazca-Palpa-Ica,Tier 1 — High Priority,0.6216,0.8333,0.0242,0.8919,0.66,44.65,-14.888,-74.91
+20,17M PN 47 14,17MPN4714,North Coast — Mochica Belt,Tier 1 — High Priority,0.6198,0.7408,0.6716,0.8048,0.8,6.57,-7.103,-79.666
+21,17M PN 45 16,17MPN4516,North Coast — Mochica Belt,Tier 1 — High Priority,0.6189,0.8482,0.4673,0.9214,0.79,9.13,-7.085,-79.684
+22,18L WJ 06 57,18LWJ0657,South Desert — Nazca-Palpa-Ica,Tier 1 — High Priority,0.6058,0.7799,0.0342,0.8941,1.28,40.49,-14.861,-74.937
+23,18L YL 68 40,18LYL6840,Highlands — Cusco / Inca Heartland,Tier 1 — High Priority,0.6044,0.5498,0.7658,0.6143,1.05,4.68,-13.193,-72.523
+24,18L YL 69 42,18LYL6942,Highlands — Cusco / Inca Heartland,Tier 1 — High Priority,0.6036,0.532,0.7884,0.6113,1.3,4.23,-13.175,-72.514
+25,19L AF 76 06,19LAF7606,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.5997,0.5288,0.8214,0.6595,1.98,3.57,-13.49,-71.992
+26,18L WJ 07 57,18LWJ0757,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.5981,0.7654,0.0322,0.8835,1.34,41.22,-14.861,-74.928
+27,18L YL 65 46,18LYL6546,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.5893,0.4538,0.8834,0.5216,1.3,2.33,-13.139,-72.55
+28,18L WJ 08 54,18LWJ0854,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.5883,0.7556,0.0257,0.8698,1.31,43.93,-14.888,-74.919
+29,17M PN 46 14,17MPN4614,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.5868,0.6932,0.655,0.745,0.7,6.9,-7.103,-79.675
+30,18L YL 65 40,18LYL6540,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.586,0.4868,0.8169,0.5513,1.17,3.66,-13.193,-72.55
+31,18L YL 64 46,18LYL6446,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.5856,0.4435,0.8737,0.542,1.82,2.53,-13.139,-72.559
+32,18L YL 62 44,18LYL6244,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.5839,0.4439,0.8531,0.5684,2.19,2.94,-13.157,-72.577
+33,18L YL 62 43,18LYL6243,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.5829,0.4522,0.8503,0.5466,1.73,2.99,-13.166,-72.577
+34,17M PN 48 15,17MPN4815,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.5726,0.676,0.6317,0.7426,0.9,7.37,-7.094,-79.657
+35,18L ZL 24 05,18LZL2405,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.5682,0.4624,0.8374,0.5936,2.21,3.25,-13.499,-72.001
+36,18L YL 69 40,18LYL6940,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.5682,0.5076,0.7328,0.5538,0.84,5.34,-13.193,-72.514
+37,19L AF 77 07,19LAF7707,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.5625,0.4971,0.7829,0.5733,1.33,4.34,-13.481,-71.983
+38,18L YL 63 41,18LYL6341,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.5611,0.4275,0.8351,0.5017,1.48,3.3,-13.184,-72.568
+39,17M PN 44 18,17MPN4418,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.5602,0.7762,0.3881,0.8804,1.18,11.36,-7.067,-79.693
+40,17L QL 48 73,17LQL4873,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.56,0.5312,0.8683,0.5603,0.52,2.63,-8.372,-78.739
+41,17M PN 48 14,17MPN4814,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.5597,0.6124,0.6813,0.727,1.58,6.37,-7.103,-79.657
+42,18L YL 69 43,18LYL6943,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.5565,0.4271,0.8026,0.5473,2.2,3.95,-13.166,-72.514
+43,19L AF 80 06,19LAF8006,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.5558,0.499,0.7562,0.5834,1.45,4.88,-13.49,-71.947
+44,18L YL 62 42,18LYL6242,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.5548,0.4193,0.832,0.4846,1.35,3.36,-13.175,-72.577
+45,17M PN 44 17,17MPN4417,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.5533,0.7546,0.4183,0.8319,0.93,10.46,-7.076,-79.693
+46,18L WJ 05 57,18LWJ0557,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.5529,0.6867,0.0364,0.791,1.32,39.77,-14.861,-74.946
+47,18L YL 66 46,18LYL6646,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.5527,0.3942,0.8737,0.4585,1.4,2.53,-13.139,-72.541
+48,17M PN 47 17,17MPN4717,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.5523,0.7341,0.4535,0.8093,0.93,9.49,-7.076,-79.666
+49,18L YL 63 46,18LYL6346,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.5491,0.3806,0.8482,0.515,2.61,3.04,-13.139,-72.568
+50,18L YL 62 45,18LYL6245,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.5487,0.3781,0.8396,0.5352,2.93,3.21,-13.148,-72.577
+51,17L QL 48 74,17LQL4874,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.5486,0.5061,0.8776,0.533,0.51,2.45,-8.363,-78.748
+52,17L QL 47 73,17LQL4773,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.5472,0.5148,0.8429,0.5693,0.96,3.14,-8.372,-78.748
+53,18L WJ 10 55,18LWJ1055,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.5446,0.6935,0.0241,0.7542,0.8,44.73,-14.879,-74.901
+54,18L WJ 05 56,18LWJ0556,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.5429,0.6859,0.0344,0.7279,0.58,40.45,-14.87,-74.946
+55,18L WJ 08 57,18LWJ0857,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.5425,0.6735,0.0303,0.7668,1.22,41.96,-14.861,-74.919
+56,17M PN 45 15,17MPN4515,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.5402,0.6819,0.5038,0.7674,1.11,8.23,-7.094,-79.684
+57,19L AF 83 03,19LAF8303,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.5369,0.5219,0.6758,0.5633,0.74,6.48,-13.517,-71.92
+58,18L YL 70 41,18LYL7041,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.5361,0.4594,0.7227,0.4895,0.62,5.55,-13.184,-72.505
+59,19L AF 83 02,19LAF8302,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.5353,0.514,0.6745,0.5768,1.09,6.51,-13.526,-71.92
+60,18L YL 68 39,18LYL6839,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.5349,0.4494,0.725,0.5016,1.04,5.5,-13.202,-72.523
+61,18K ZG 09 94,18KZG0994,Far South — Arequipa-Moquegua,Tier 2 — Medium Priority,0.5343,0.8976,0.0293,0.9712,0.76,42.36,-16.315,-72.104
+62,17L QL 46 71,17LQL4671,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.5324,0.5504,0.733,0.5957,0.76,5.34,-8.39,-78.757
+63,18L YL 64 40,18LYL6440,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.5301,0.3808,0.8105,0.472,1.93,3.79,-13.193,-72.559
+64,18L WJ 07 54,18LWJ0754,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.5293,0.6535,0.0273,0.7402,1.17,43.23,-14.888,-74.928
+65,17L QL 49 74,17LQL4974,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.5292,0.439,0.9279,0.4817,0.89,1.44,-8.363,-78.73
+66,17M PN 47 13,17MPN4713,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.5283,0.5355,0.7194,0.6468,1.72,5.61,-7.112,-79.666
+67,17L QL 49 75,17LQL4975,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.5275,0.4249,0.9458,0.4722,1.0,1.08,-8.354,-78.739
+68,18L ZL 24 06,18LZL2406,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.5266,0.4033,0.7986,0.5509,2.68,4.03,-13.49,-72.001
+69,17L QL 49 72,17LQL4972,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.5257,0.4859,0.828,0.5326,0.88,3.44,-8.381,-78.73
+70,18L VJ 79 90,18LVJ7990,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.5234,0.1987,0.9717,0.2207,1.0,0.57,-14.555,-75.189
+71,18L YL 61 43,18LYL6143,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.523,0.3851,0.8026,0.4193,0.82,3.95,-13.166,-72.586
+72,17L QL 47 72,17LQL4772,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.5206,0.4983,0.7729,0.5764,1.36,4.54,-8.381,-78.757
+73,18K ZG 08 96,18KZG0896,Far South — Arequipa-Moquegua,Tier 2 — Medium Priority,0.5206,0.8683,0.0311,0.9523,0.88,41.64,-16.297,-72.113
+74,19L AF 79 07,19LAF7907,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.5203,0.4521,0.7478,0.4865,0.71,5.04,-13.481,-71.956
+75,17L QL 48 75,17LQL4875,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.5199,0.4362,0.8987,0.4857,1.02,2.03,-8.354,-78.748
+76,18L YL 61 44,18LYL6144,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.5196,0.3679,0.8047,0.4367,1.57,3.91,-13.157,-72.586
+77,17M PN 45 19,17MPN4519,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.5194,0.7085,0.3702,0.8251,1.41,11.93,-7.058,-79.684
+78,19L AF 76 07,19LAF7607,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.518,0.4086,0.7741,0.5291,2.28,4.52,-13.481,-71.992
+79,18L YL 62 41,18LYL6241,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.5167,0.3779,0.8024,0.4013,0.58,3.95,-13.184,-72.577
+80,18L YL 70 42,18LYL7042,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.5159,0.4023,0.743,0.4656,1.36,5.14,-13.175,-72.505
+81,17M PN 48 13,17MPN4813,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.5157,0.4985,0.7308,0.6385,2.19,5.38,-7.112,-79.657
+82,18L WJ 10 53,18LWJ1053,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.5147,0.6392,0.0216,0.7101,1.0,46.04,-14.897,-74.901
+83,17L QL 49 75,17LQL4975,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.5134,0.382,0.9778,0.4287,1.09,0.44,-8.354,-78.73
+84,19L AF 82 05,19LAF8205,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.5127,0.4646,0.7011,0.501,0.73,5.98,-13.499,-71.929
+85,17L QL 49 71,17LQL4971,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.5111,0.4873,0.778,0.5319,0.84,4.44,-8.39,-78.73
+86,18K ZG 07 95,18KZG0795,Far South — Arequipa-Moquegua,Tier 2 — Medium Priority,0.5104,0.8527,0.0341,0.9197,0.73,40.56,-16.306,-72.122
+87,18L YL 70 40,18LYL7040,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.5102,0.4238,0.6956,0.4673,0.93,6.09,-13.193,-72.505
+88,17L QL 47 73,17LQL4773,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.5089,0.4552,0.8079,0.5429,1.62,3.84,-8.372,-78.757
+89,18L VJ 80 89,18LVJ8089,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.5077,0.1836,0.9419,0.2096,1.24,1.16,-14.564,-75.18
+90,18L VJ 78 91,18LVJ7891,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.5068,0.2048,0.9112,0.2207,0.72,1.78,-14.546,-75.198
+91,17M PN 38 49,17MPN3849,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.5066,0.4024,0.9314,0.4344,0.74,1.37,-6.788,-79.747
+92,18L WJ 09 53,18LWJ0953,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.5059,0.6129,0.0229,0.7139,1.41,45.32,-14.897,-74.91
+93,17M PN 38 48,17MPN3848,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.5054,0.3732,0.9765,0.4135,0.97,0.47,-6.797,-79.747
+94,18L VJ 78 90,18LVJ7890,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.505,0.1789,0.9488,0.2005,1.08,1.02,-14.555,-75.198
+95,17M PN 48 16,17MPN4816,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.5045,0.6296,0.4982,0.6796,0.74,8.36,-7.085,-79.657
+96,17M PN 44 19,17MPN4419,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.5042,0.6754,0.3596,0.833,1.89,12.27,-7.058,-79.693
+97,17M PN 37 49,17MPN3749,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.5031,0.3973,0.9256,0.4362,0.89,1.49,-6.788,-79.756
+98,17L QL 50 73,17LQL5073,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.5029,0.4275,0.8683,0.4556,0.62,2.63,-8.372,-78.721
+99,18L VJ 79 95,18LVJ7995,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.5012,0.1922,0.9189,0.2049,0.62,1.62,-14.51,-75.189
+100,17L QL 49 76,17LQL4976,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.5004,0.3843,0.9433,0.4049,0.51,1.13,-8.345,-78.739
+101,18L VJ 78 89,18LVJ7889,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.5001,0.1709,0.9516,0.1812,0.57,0.97,-14.564,-75.198
+102,17L QL 47 74,17LQL4774,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.4999,0.4276,0.8351,0.5023,1.49,3.3,-8.363,-78.757
+103,18L YL 65 39,18LYL6539,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.4991,0.3597,0.7669,0.4119,1.27,4.66,-13.202,-72.55
+104,18K ZG 08 93,18KZG0893,Far South — Arequipa-Moquegua,Tier 2 — Medium Priority,0.4986,0.8342,0.032,0.8963,0.69,41.32,-16.324,-72.113
+105,18L VJ 81 89,18LVJ8189,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4981,0.1937,0.8956,0.2074,0.66,2.09,-14.564,-75.171
+106,18L VJ 77 92,18LVJ7792,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4974,0.1974,0.8984,0.2089,0.55,2.03,-14.537,-75.207
+107,18K ZG 10 95,18KZG1095,Far South — Arequipa-Moquegua,Tier 2 — Medium Priority,0.497,0.8303,0.0268,0.9069,0.84,43.41,-16.306,-72.095
+108,18L YL 69 39,18LYL6939,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.4964,0.387,0.6964,0.4707,1.78,6.07,-13.202,-72.514
+109,17L QL 46 71,17LQL4671,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.4963,0.5063,0.7027,0.5334,0.51,5.95,-8.39,-78.766
+110,17L QL 50 74,17LQL5074,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.4962,0.3886,0.9125,0.4269,0.9,1.75,-8.363,-78.721
+111,18L VJ 79 88,18LVJ7988,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4945,0.1724,0.9277,0.1817,0.51,1.45,-14.573,-75.189
+112,18L YL 62 46,18LYL6246,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.4935,0.292,0.8133,0.4488,3.49,3.73,-13.139,-72.577
+113,18L VJ 73 79,18LVJ7379,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4929,0.1557,0.9563,0.1646,0.54,0.87,-14.654,-75.243
+114,18L VJ 72 79,18LVJ7279,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4925,0.1432,0.9753,0.161,1.11,0.49,-14.654,-75.252
+115,18L YL 61 45,18LYL6145,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.4918,0.313,0.7944,0.4178,2.51,4.11,-13.148,-72.586
+116,18L VJ 80 88,18LVJ8088,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.491,0.1721,0.91,0.1907,0.98,1.8,-14.573,-75.18
+117,18L YL 67 46,18LYL6746,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.491,0.2935,0.8482,0.3685,2.04,3.04,-13.139,-72.532
+118,18L WJ 07 58,18LWJ0758,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4906,0.5784,0.034,0.6612,1.25,40.58,-14.852,-74.928
+119,18L YL 63 40,18LYL6340,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.4896,0.3235,0.7926,0.3885,1.67,4.15,-13.193,-72.568
+120,17M PN 46 13,17MPN4613,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.4895,0.4894,0.7001,0.55,1.1,6.0,-7.112,-79.675
+121,18L VJ 77 96,18LVJ7796,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4895,0.1893,0.888,0.2066,0.84,2.24,-14.501,-75.207
+122,18L WJ 49 11,18LWJ4911,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4888,0.2224,0.8531,0.2413,0.79,2.94,-15.275,-74.541
+123,18L VJ 68 79,18LVJ6879,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4885,0.1513,0.9516,0.1759,1.4,0.97,-14.654,-75.288
+124,19L AF 83 01,19LAF8301,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.488,0.4222,0.6657,0.5249,1.96,6.69,-13.535,-71.92
+125,18L VJ 68 80,18LVJ6880,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4876,0.1537,0.9489,0.1709,1.01,1.02,-14.645,-75.288
+126,17M PN 44 16,17MPN4416,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.4875,0.6136,0.4502,0.7053,1.3,9.58,-7.085,-79.693
+127,18L VJ 76 94,18LVJ7694,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4873,0.1679,0.9139,0.1973,1.49,1.72,-14.519,-75.216
+128,18L VJ 72 80,18LVJ7280,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4872,0.1387,0.9702,0.1497,0.73,0.6,-14.645,-75.252
+129,17L QL 49 70,17LQL4970,North Coast — Mochica Belt,Tier 2 — Medium Priority,0.4861,0.4671,0.7281,0.5186,0.99,5.44,-8.399,-78.73
+130,18L VJ 76 93,18LVJ7693,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4857,0.175,0.9032,0.1867,0.63,1.94,-14.528,-75.216
+131,18L VJ 69 79,18LVJ6979,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4856,0.1271,0.9772,0.1663,2.35,0.46,-14.654,-75.279
+132,18L VJ 69 80,18LVJ6980,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4843,0.1306,0.9717,0.1613,1.9,0.57,-14.645,-75.279
+133,18L VJ 72 78,18LVJ7278,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.483,0.1541,0.9271,0.1634,0.57,1.46,-14.663,-75.252
+134,18L VJ 81 88,18LVJ8188,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4827,0.1766,0.875,0.1897,0.69,2.5,-14.573,-75.171
+135,18L WJ 50 10,18LWJ5010,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4823,0.2478,0.7881,0.2657,0.67,4.24,-15.284,-74.532
+136,18L VJ 82 90,18LVJ8290,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.482,0.1901,0.8471,0.2047,0.71,3.06,-14.555,-75.162
+137,19L AF 81 06,19LAF8106,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.4819,0.385,0.7188,0.4708,1.82,5.62,-13.49,-71.938
+138,18L VJ 76 95,18LVJ7695,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4817,0.1646,0.8977,0.2029,1.89,2.05,-14.51,-75.216
+139,18L WJ 48 11,18LWJ4811,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4812,0.2005,0.8613,0.2295,1.26,2.77,-15.275,-74.55
+140,18L VJ 73 80,18LVJ7380,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.481,0.1362,0.9533,0.1457,0.65,0.93,-14.645,-75.243
+141,18L VJ 68 80,18LVJ6880,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4802,0.1676,0.9046,0.1769,0.53,1.91,-14.645,-75.297
+142,18L VJ 78 96,18LVJ7896,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4789,0.1625,0.894,0.1913,1.51,2.12,-14.501,-75.198
+143,18L VJ 68 78,18LVJ6878,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4783,0.1528,0.916,0.1732,1.18,1.68,-14.663,-75.288
+144,18L VJ 77 90,18LVJ7790,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4779,0.1562,0.9046,0.1728,0.96,1.91,-14.555,-75.207
+145,18L VJ 76 96,18LVJ7696,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4773,0.1805,0.864,0.2006,1.0,2.72,-14.501,-75.216
+146,18L YL 64 47,18LYL6447,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.4757,0.2699,0.8265,0.3652,2.61,3.47,-13.13,-72.559
+147,18L VJ 74 79,18LVJ7479,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4756,0.1452,0.9113,0.1632,1.1,1.77,-14.654,-75.234
+148,18L VJ 82 89,18LVJ8289,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4753,0.1761,0.848,0.1932,0.88,3.04,-14.564,-75.162
+149,18L WJ 50 11,18LWJ5011,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4747,0.2084,0.8311,0.2327,1.04,3.38,-15.275,-74.532
+150,18L VJ 68 81,18LVJ6881,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4738,0.15,0.9112,0.1665,0.99,1.78,-14.636,-75.288
+151,18L VJ 71 79,18LVJ7179,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4737,0.1281,0.9369,0.157,1.84,1.26,-14.654,-75.261
+152,18L VJ 69 78,18LVJ6978,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4737,0.1329,0.9277,0.1683,2.1,1.45,-14.663,-75.279
+153,18L WJ 48 10,18LWJ4810,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4731,0.2174,0.8113,0.2318,0.62,3.77,-15.284,-74.55
+154,18L WJ 48 12,18LWJ4812,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4729,0.1548,0.9112,0.1944,2.04,1.78,-15.266,-74.55
+155,18L ZL 23 05,18LZL2305,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.4727,0.3062,0.8005,0.4454,3.13,3.99,-13.499,-72.01
+156,18L VJ 80 87,18LVJ8087,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4724,0.1639,0.8666,0.1734,0.54,2.67,-14.582,-75.18
+157,18L VJ 71 80,18LVJ7180,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4718,0.1276,0.9347,0.1515,1.58,1.31,-14.645,-75.261
+158,19L AF 77 08,19LAF7708,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.4711,0.3725,0.7316,0.3995,0.68,5.37,-13.472,-71.974
+159,18L VJ 74 77,18LVJ7477,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4709,0.1708,0.8507,0.1808,0.56,2.99,-14.672,-75.234
+160,18L VJ 70 79,18LVJ7079,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4704,0.1172,0.9419,0.1582,2.59,1.16,-14.654,-75.27
+161,18K ZG 10 94,18KZG1094,Far South — Arequipa-Moquegua,Tier 2 — Medium Priority,0.47,0.7742,0.0271,0.8763,1.17,43.31,-16.315,-72.095
+162,18L WJ 49 12,18LWJ4912,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4697,0.1579,0.899,0.1923,1.79,2.02,-15.266,-74.541
+163,18L YL 70 43,18LYL7043,Highlands — Cusco / Inca Heartland,Tier 2 — Medium Priority,0.4696,0.304,0.7545,0.395,2.3,4.91,-13.166,-72.505
+164,18L VJ 73 77,18LVJ7377,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4694,0.1568,0.8722,0.1694,0.74,2.56,-14.672,-75.243
+165,18L VJ 70 80,18LVJ7080,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4683,0.1156,0.9396,0.1544,2.51,1.21,-14.645,-75.27
+166,18K ZG 08 97,18KZG0897,Far South — Arequipa-Moquegua,Tier 2 — Medium Priority,0.4683,0.7736,0.0307,0.8569,0.97,41.79,-16.288,-72.113
+167,18L VJ 71 78,18LVJ7178,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.468,0.1355,0.9068,0.1577,1.41,1.86,-14.663,-75.261
+168,18L VJ 70 78,18LVJ7078,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4678,0.1329,0.9101,0.1602,1.71,1.8,-14.663,-75.27
+169,18L VJ 69 81,18LVJ6981,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4678,0.1282,0.9221,0.1582,1.89,1.56,-14.636,-75.279
+170,18L VJ 75 78,18LVJ7578,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4677,0.1659,0.8476,0.177,0.63,3.05,-14.663,-75.225
+171,18K ZG 07 93,18KZG0793,Far South — Arequipa-Moquegua,Tier 2 — Medium Priority,0.4674,0.7788,0.0346,0.8303,0.62,40.36,-16.324,-72.122
+172,18L WJ 11 53,18LWJ1153,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4672,0.5564,0.0203,0.6213,1.05,46.76,-14.897,-74.892
+173,18L VJ 77 89,18LVJ7789,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4664,0.132,0.906,0.1559,1.53,1.88,-14.564,-75.207
+174,18L VJ 82 88,18LVJ8288,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.466,0.1689,0.8332,0.1785,0.54,3.34,-14.573,-75.162
+175,18L VJ 72 77,18LVJ7277,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4655,0.1487,0.8774,0.1583,0.61,2.45,-14.672,-75.252
+176,18L VJ 76 82,18LVJ7682,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4645,0.1035,0.9556,0.11,0.6,0.89,-14.627,-75.216
+177,18L VJ 74 80,18LVJ7480,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4643,0.1278,0.9097,0.1394,0.83,1.81,-14.645,-75.234
+178,18L WJ 50 09,18LWJ5009,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4638,0.2381,0.7426,0.2611,0.88,5.15,-15.293,-74.532
+179,18L VJ 76 83,18LVJ7683,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4632,0.089,0.9758,0.1017,1.25,0.48,-14.618,-75.216
+180,18L VJ 72 81,18LVJ7281,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4625,0.1213,0.9216,0.1306,0.71,1.57,-14.636,-75.252
+181,18L WJ 10 56,18LWJ1056,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4624,0.5458,0.0254,0.5953,0.83,44.09,-14.87,-74.901
+182,18L VJ 75 79,18LVJ7579,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4605,0.1436,0.8639,0.1575,0.88,2.72,-14.654,-75.225
+183,18L VJ 79 96,18LVJ7996,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4605,0.1379,0.8791,0.1599,1.38,2.42,-14.501,-75.189
+184,18L VJ 84 76,18LVJ8476,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4603,0.3749,0.4132,0.398,0.58,10.61,-14.681,-75.144
+185,18K ZG 07 96,18KZG0796,Far South — Arequipa-Moquegua,Tier 2 — Medium Priority,0.4603,0.7458,0.0337,0.8717,1.44,40.69,-16.297,-72.122
+186,18L VJ 77 83,18LVJ7783,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4599,0.1077,0.9293,0.1189,0.94,1.41,-14.618,-75.207
+187,18L WJ 51 10,18LWJ5110,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.459,0.2162,0.7623,0.25,1.35,4.75,-15.284,-74.523
+188,18L VJ 81 94,18LVJ8194,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4589,0.1517,0.8441,0.1712,1.14,3.12,-14.519,-75.171
+189,18L VJ 67 79,18LVJ6779,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4586,0.1539,0.8586,0.1637,0.6,2.83,-14.654,-75.306
+190,18L WJ 47 12,18LWJ4712,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4584,0.1319,0.899,0.1794,2.64,2.02,-15.266,-74.559
+191,18L WJ 48 13,18LWJ4813,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.458,0.0993,0.9612,0.141,2.95,0.78,-15.257,-74.55
+192,18L VJ 70 77,18LVJ7077,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4577,0.1408,0.8666,0.1572,1.04,2.67,-14.672,-75.27
+193,18L VJ 68 77,18LVJ6877,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4576,0.1402,0.8706,0.1576,1.1,2.59,-14.672,-75.288
+194,18L WJ 47 11,18LWJ4711,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4575,0.158,0.8531,0.1975,2.0,2.94,-15.275,-74.559
+195,18L WJ 09 57,18LWJ0957,South Desert — Nazca-Palpa-Ica,Tier 2 — Medium Priority,0.4569,0.5294,0.0285,0.5886,1.01,42.71,-14.861,-74.91
+196,18K ZG 10 93,18KZG1093,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.4378,0.725,0.0272,0.7928,0.86,43.23,-16.324,-72.095
+197,18K ZG 06 94,18KZG0694,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.428,0.7026,0.0372,0.7642,0.81,39.49,-16.315,-72.131
+198,18K ZG 11 95,18KZG1195,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.4244,0.7074,0.0245,0.7559,0.64,44.49,-16.297,-72.086
+199,18K ZG 09 98,18KZG0998,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.424,0.6978,0.028,0.7697,0.93,42.91,-16.279,-72.104
+200,18K ZG 06 95,18KZG0695,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.4218,0.683,0.0369,0.7753,1.19,39.6,-16.306,-72.131
+201,18K ZG 08 92,18KZG0892,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.4148,0.6761,0.0321,0.7595,1.1,41.26,-16.333,-72.113
+202,18L TM 94 43,18LTM9443,Central Coast — Lima Valley,Tier 3 — Low Priority,0.4081,0.2089,0.8866,0.2273,0.81,2.27,-12.264,-76.893
+203,18L TM 94 42,18LTM9442,Central Coast — Lima Valley,Tier 3 — Low Priority,0.4043,0.1803,0.9195,0.2117,1.48,1.61,-12.273,-76.893
+204,18K ZG 11 93,18KZG1193,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.404,0.6693,0.025,0.7214,0.72,44.27,-16.315,-72.086
+205,18K ZG 07 97,18KZG0797,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.4011,0.6327,0.0332,0.7791,1.88,40.85,-16.288,-72.122
+206,18L TM 95 42,18LTM9542,Central Coast — Lima Valley,Tier 3 — Low Priority,0.3977,0.1493,0.9555,0.1774,1.58,0.89,-12.273,-76.884
+207,18K ZG 11 96,18KZG1196,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3933,0.6395,0.0243,0.7298,1.24,44.63,-16.288,-72.086
+208,18L TM 95 41,18LTM9541,Central Coast — Lima Valley,Tier 3 — Low Priority,0.3902,0.1211,0.9756,0.1621,2.53,0.49,-12.282,-76.884
+209,18L TM 95 43,18LTM9543,Central Coast — Lima Valley,Tier 3 — Low Priority,0.3883,0.1619,0.9086,0.1758,0.79,1.83,-12.264,-76.884
+210,18K ZG 07 92,18KZG0792,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3871,0.6236,0.0348,0.7083,1.2,40.31,-16.333,-72.122
+211,18K ZG 08 98,18KZG0898,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.386,0.6132,0.0303,0.7367,1.68,41.97,-16.279,-72.113
+212,18L TM 93 42,18LTM9342,Central Coast — Lima Valley,Tier 3 — Low Priority,0.3847,0.1721,0.8745,0.1941,1.13,2.51,-12.273,-76.902
+213,18L TM 94 41,18LTM9441,Central Coast — Lima Valley,Tier 3 — Low Priority,0.3842,0.136,0.9286,0.1775,2.34,1.43,-12.282,-76.893
+214,18K ZG 11 97,18KZG1197,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3828,0.6293,0.0239,0.6874,0.85,44.79,-16.279,-72.086
+215,18K ZG 06 96,18KZG0696,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3818,0.598,0.0365,0.7363,1.88,39.74,-16.297,-72.131
+216,18K ZG 10 92,18KZG1092,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3818,0.6319,0.0274,0.6678,0.54,43.18,-16.333,-72.095
+217,18L TM 93 45,18LTM9345,Central Coast — Lima Valley,Tier 3 — Low Priority,0.3786,0.2174,0.7767,0.2293,0.52,4.47,-12.246,-76.902
+218,18L TM 96 42,18LTM9642,Central Coast — Lima Valley,Tier 3 — Low Priority,0.3681,0.0999,0.9526,0.1172,1.48,0.95,-12.273,-76.875
+219,18L TM 96 41,18LTM9641,Central Coast — Lima Valley,Tier 3 — Low Priority,0.368,0.0867,0.9707,0.115,2.46,0.59,-12.282,-76.875
+220,18L TM 95 44,18LTM9544,Central Coast — Lima Valley,Tier 3 — Low Priority,0.3656,0.1485,0.8596,0.1585,0.63,2.81,-12.255,-76.884
+221,18L TM 94 45,18LTM9445,Central Coast — Lima Valley,Tier 3 — Low Priority,0.3639,0.1772,0.7986,0.1937,0.85,4.03,-12.246,-76.893
+222,18L VL 03 62,18LVL0362,Central Coast — Lima Valley,Tier 3 — Low Priority,0.363,0.0372,0.9657,0.0403,0.77,0.69,-13.002,-75.894
+223,18K ZG 11 92,18KZG1192,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3628,0.5934,0.0252,0.6489,0.86,44.19,-16.324,-72.086
+224,18K ZG 11 98,18KZG1198,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3609,0.5949,0.0236,0.633,0.6,44.98,-16.27,-72.086
+225,18L TM 95 40,18LTM9540,Central Coast — Lima Valley,Tier 3 — Low Priority,0.3601,0.0868,0.9352,0.1336,3.5,1.3,-12.291,-76.884
+226,18L UM 14 19,18LUM1419,Central Coast — Lima Valley,Tier 3 — Low Priority,0.3592,0.2335,0.6662,0.2469,0.54,6.68,-12.48,-76.704
+227,18K ZG 06 97,18KZG0697,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3591,0.57,0.036,0.6603,1.37,39.9,-16.288,-72.131
+228,18L VL 02 63,18LVL0263,Central Coast — Lima Valley,Tier 3 — Low Priority,0.3584,0.0338,0.9579,0.0365,0.76,0.84,-12.993,-75.903
+229,18L VL 03 63,18LVL0363,Central Coast — Lima Valley,Tier 3 — Low Priority,0.3581,0.0376,0.9494,0.0398,0.56,1.01,-12.993,-75.894
+230,18K ZG 09 99,18KZG0999,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.355,0.5686,0.0275,0.6547,1.32,43.1,-16.27,-72.104
+231,19K CB 00 06,19KCB0006,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3507,0.1028,0.9474,0.1133,0.93,1.05,-17.116,-70.871
+232,19K BB 99 06,19KBB9906,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3459,0.0755,0.9778,0.0929,1.87,0.44,-17.116,-70.88
+233,19K CB 01 07,19KCB0107,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3449,0.1292,0.8803,0.1381,0.64,2.39,-17.107,-70.862
+234,18K ZG 07 98,18KZG0798,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3446,0.535,0.0328,0.6634,1.93,41.03,-16.279,-72.122
+235,19K CB 00 07,19KCB0007,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3441,0.1084,0.9135,0.1217,1.09,1.73,-17.107,-70.871
+236,19K CB 00 05,19KCB0005,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3385,0.0808,0.9448,0.0953,1.52,1.1,-17.125,-70.871
+237,18K ZG 06 92,18KZG0692,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3371,0.5348,0.0377,0.6058,1.17,39.35,-16.333,-72.131
+238,19K BB 99 05,19KBB9905,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3368,0.0618,0.9723,0.0795,2.22,0.55,-17.125,-70.88
+239,19K CB 02 07,19KCB0207,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3348,0.1323,0.8396,0.1444,0.84,3.21,-17.107,-70.853
+240,19K BB 99 07,19KBB9907,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3341,0.0813,0.9278,0.0984,1.74,1.44,-17.107,-70.88
+241,19K CB 02 06,19KCB0206,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3324,0.1202,0.8551,0.1299,0.75,2.9,-17.116,-70.853
+242,19K CB 01 05,19KCB0105,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3311,0.0921,0.9006,0.105,1.23,1.99,-17.125,-70.862
+243,18K ZG 07 91,18KZG0791,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3306,0.5349,0.0349,0.5688,0.6,40.27,-16.342,-72.122
+244,18K ZG 09 91,18KZG0991,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3302,0.5322,0.0297,0.5851,0.9,42.19,-16.342,-72.104
+245,19K AB 98 09,19KAB9809,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3288,0.4266,0.2531,0.4514,0.55,16.49,-17.08,-71.834
+246,18K ZG 12 98,18KZG1298,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3256,0.5345,0.0218,0.5634,0.51,45.92,-16.27,-72.077
+247,18K ZG 10 99,18KZG1099,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3247,0.5268,0.025,0.5693,0.75,44.25,-16.261,-72.095
+248,18K YG 67 90,18KYG6790,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.324,0.0,0.9945,0.0001,9.69,0.11,-16.351,-72.5
+249,19K BB 99 06,19KBB9906,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3233,0.0502,0.9474,0.0699,2.82,1.05,-17.116,-70.889
+250,18K ZG 12 94,18KZG1294,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.321,0.5174,0.0229,0.5774,1.04,45.32,-16.306,-72.077
+251,18K ZG 05 94,18KZG0594,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3203,0.4964,0.0403,0.5893,1.58,38.54,-16.315,-72.14
+252,18K ZG 12 97,18KZG1297,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3196,0.5115,0.0221,0.5843,1.25,45.74,-16.279,-72.077
+253,19K BB 99 05,19KBB9905,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3183,0.0428,0.9448,0.0617,3.06,1.1,-17.125,-70.889
+254,18K ZG 06 98,18KZG0698,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3181,0.5037,0.0354,0.5644,1.07,40.08,-16.279,-72.131
+255,19K BB 99 08,19KBB9908,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3181,0.0804,0.8779,0.0939,1.44,2.44,-17.098,-70.88
+256,18K ZG 05 96,18KZG0596,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3177,0.4957,0.0394,0.5751,1.38,38.79,-16.297,-72.14
+257,18K ZG 11 92,18KZG1192,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3167,0.5166,0.0253,0.5462,0.54,44.14,-16.333,-72.086
+258,19K CB 02 05,19KCB0205,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3163,0.0895,0.8541,0.1061,1.56,2.92,-17.125,-70.853
+259,18K ZG 12 95,18KZG1295,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3161,0.4994,0.0227,0.5927,1.57,45.44,-16.297,-72.077
+260,19K BB 99 07,19KBB9907,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3151,0.054,0.9135,0.0728,2.59,1.73,-17.107,-70.889
+261,19K CB 03 07,19KCB0307,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.315,0.117,0.7959,0.1405,1.67,4.08,-17.107,-70.844
+262,19K CB 00 04,19KCB0004,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3146,0.0562,0.9088,0.0739,2.4,1.82,-17.134,-70.871
+263,18K ZG 05 95,18KZG0595,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3144,0.4779,0.0399,0.6,2.04,38.65,-16.306,-72.14
+264,19K CB 03 08,19KCB0308,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3134,0.1277,0.7734,0.1467,1.3,4.53,-17.098,-70.844
+265,19K BB 99 04,19KBB9904,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3127,0.0451,0.9223,0.0636,2.9,1.55,-17.134,-70.88
+266,18K YG 67 91,18KYG6791,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3125,0.0,0.9556,0.0001,8.84,0.89,-16.342,-72.5
+267,19K CB 01 09,19KCB0109,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3123,0.1112,0.8032,0.1227,0.94,3.94,-17.089,-70.862
+268,18K ZG 08 99,18KZG0899,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3115,0.4746,0.0298,0.6102,2.22,42.17,-16.27,-72.113
+269,18K YG 68 90,18KYG6890,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3111,0.0,0.9517,0.0001,9.23,0.97,-16.351,-72.491
+270,19K CB 03 06,19KCB0306,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3104,0.1032,0.8078,0.1232,1.63,3.84,-17.116,-70.844
+271,19K BB 14 07,19KBB1407,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3097,0.0,0.9877,0.0006,7.47,0.25,-17.098,-71.681
+272,18K YG 67 89,18KYG6789,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.309,0.0,0.9445,0.0001,8.95,1.11,-16.36,-72.5
+273,19K CB 01 04,19KCB0104,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3082,0.0621,0.8769,0.0799,2.23,2.46,-17.134,-70.862
+274,19K CB 00 09,19KCB0009,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3072,0.0918,0.8215,0.1035,1.13,3.57,-17.089,-70.871
+275,19K BB 39 18,19KBB3918,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3069,0.0,0.9831,0.0,11.38,0.34,-16.999,-71.447
+276,18K ZG 12 96,18KZG1296,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3068,0.4758,0.0224,0.5937,1.99,45.58,-16.288,-72.077
+277,18K YG 68 91,18KYG6891,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3061,0.0,0.9347,0.0002,8.34,1.31,-16.342,-72.491
+278,19K CB 29 19,19KCB2919,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3055,0.0,0.9923,0.0024,5.46,0.15,-16.999,-70.601
+279,18K ZG 12 99,18KZG1299,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3053,0.4977,0.0214,0.5262,0.54,46.12,-16.261,-72.077
+280,19K BB 65 30,19KBB6530,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3045,0.0,0.9788,0.0007,6.94,0.42,-16.9,-71.204
+281,18K ZG 05 93,18KZG0593,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.304,0.4725,0.0406,0.544,1.31,38.45,-16.324,-72.14
+282,19K BA 87 98,19KBA8798,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3038,0.0,0.9806,0.0053,6.5,0.39,-17.188,-70.997
+283,18K YG 68 89,18KYG6889,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3035,0.0,0.9267,0.0001,9.34,1.47,-16.36,-72.491
+284,19K BB 66 30,19KBB6630,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3028,0.0,0.9734,0.0006,7.08,0.53,-16.9,-71.195
+285,19K BB 38 18,19KBB3818,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3023,0.0,0.9677,0.0,10.44,0.65,-16.999,-71.456
+286,19K BB 99 04,19KBB9904,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3023,0.0334,0.9088,0.0521,3.58,1.82,-17.134,-70.889
+287,19K BA 66 58,19KBA6658,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3018,0.0,0.9761,0.0,18.48,0.48,-17.548,-71.204
+288,19K BB 14 06,19KBB1406,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3015,0.0,0.9608,0.0004,7.88,0.78,-17.107,-71.681
+289,19K CB 04 08,19KCB0408,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3009,0.1303,0.7319,0.1392,0.64,5.36,-17.098,-70.835
+290,19K BB 99 08,19KBB9908,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3003,0.0521,0.8689,0.0686,2.39,2.62,-17.098,-70.889
+291,19K BA 66 58,19KBA6658,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3003,0.0,0.9713,0.0,19.26,0.57,-17.548,-71.195
+292,19K BB 15 07,19KBB1507,Far South — Arequipa-Moquegua,Tier 3 — Low Priority,0.3001,0.0,0.9561,0.0003,8.37,0.88,-17.098,-71.672
+293,19K AB 97 10,19KAB9710,Far South — Arequipa-Moquegua,Tier 4 — Marginal,0.2997,0.3853,0.2309,0.4116,0.64,17.59,-17.071,-71.843
+294,19L CC 71 74,19LCC7174,Far South — Arequipa-Moquegua,Tier 4 — Marginal,0.2996,0.0,0.9692,0.0001,10.22,0.62,-15.604,-70.196
+295,19K BA 86 98,19KBA8698,Far South — Arequipa-Moquegua,Tier 4 — Marginal,0.2993,0.0,0.9663,0.0035,6.86,0.67,-17.188,-71.006
