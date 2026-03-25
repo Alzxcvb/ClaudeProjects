@@ -1,0 +1,11 @@
+{
+  "type": "FeatureCollection",
+  "name": "candidate_tiles_wgs84",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "EPSG:4326"
+    }
+  },
+  "features": []
+}
