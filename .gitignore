@@ -9,6 +9,9 @@ memory-master-file.md
 # Session task list — ephemeral, changes every session
 tasks/todo.md
 
+# macOS Finder metadata
+.DS_Store
+
 # External repos (cloned separately, not submodules)
 Qwen3-0.6B/
 ai-model-router/
