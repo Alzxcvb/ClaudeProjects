@@ -6,3 +6,6 @@ numpy>=1.26.0
 pandas>=2.2.0
 matplotlib>=3.8.0
 requests>=2.32.0
+scrapetube>=2.5.1
+youtube-transcript-api>=0.6.0
+anthropic>=0.40.0
