@@ -55,6 +55,11 @@ def main():
         default="claude-haiku-4-5-20251001",
         help="Claude model to use for extraction",
     )
+    parser.add_argument(
+        "--cookies",
+        default=None,
+        help="Path to Netscape-format cookies.txt exported from your browser (needed if YouTube blocks requests)",
+    )
 
     args = parser.parse_args()
 
@@ -67,6 +72,7 @@ def main():
     print(f"Channel:       {args.channel}")
     print(f"Max videos:    {args.max_videos if args.max_videos > 0 else 'all'}")
     print(f"Use Claude:    {args.use_claude}")
+    print(f"Cookies:       {args.cookies or 'none (may fail if IP is blocked)'}")
     print()
 
     # Step 1: Fetch videos and transcripts
@@ -77,6 +83,7 @@ def main():
         channel_handle=args.channel,
         max_videos=args.max_videos,
         output_prefix="pillars-of-past",
+        cookies_file=args.cookies,
     )
 
     youtube_outputs = run_youtube_extraction(youtube_config, root)
