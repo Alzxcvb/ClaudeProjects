@@ -39,6 +39,83 @@ CONTEXT_KEYWORDS = {
     "pyramid", "ziggurat", "cathedral", "artifact", "civilization", "period",
 }
 
+GENERIC_SITE_NAMES = {
+    "discover",
+    "discovery",
+    "discoveries",
+    "hidden",
+    "unknown",
+    "forgotten",
+    "untouched",
+    "uncharted",
+    "latest archaeological",
+    "latest archaeological discoveries",
+}
+
+GENERIC_PREFIX_WORDS = {
+    "a",
+    "an",
+    "and",
+    "but",
+    "discover",
+    "explore",
+    "exploring",
+    "find",
+    "found",
+    "forgotten",
+    "hidden",
+    "i",
+    "its",
+    "latest",
+    "lost",
+    "my",
+    "our",
+    "some",
+    "that",
+    "the",
+    "these",
+    "this",
+    "those",
+    "unknown",
+    "unmarked",
+    "untouched",
+    "we",
+    "well",
+}
+
+GENERIC_FRAGMENT_PATTERNS = (
+    "we'll",
+    "we will",
+    "join me",
+    "pieces of our past",
+    "special access",
+    "latest archaeological discoveries",
+    "only known to locals",
+)
+
+COMMON_ENGLISH_WORDS = {
+    "a", "about", "after", "all", "along", "already", "also", "although", "am", "an",
+    "and", "another", "any", "are", "around", "as", "at", "be", "because", "been",
+    "before", "being", "believe", "best", "between", "both", "brief", "but", "by",
+    "called", "can", "city", "complex", "construction", "could", "couple", "culture",
+    "cultures", "dating", "definitely", "did", "discover", "discovered", "discovery",
+    "do", "document", "dozens", "down", "earliest", "evidence", "excavated",
+    "expedition", "explore", "exploring", "far", "find", "first", "forgotten", "found",
+    "from", "further", "go", "going", "had", "happening", "have", "he", "here", "hidden",
+    "history", "hope", "how", "i", "if", "in", "into", "investigated", "is", "it",
+    "its", "join", "just", "known", "latest", "learn", "like", "locals", "look", "lost",
+    "made", "make", "many", "media", "modern", "monumental", "more", "most", "my",
+    "navigate", "new", "not", "of", "oldest", "on", "one", "only", "open", "or", "our",
+    "out", "own", "past", "people", "pieces", "place", "places", "pop", "purpose",
+    "reality", "regions", "release", "repurposing", "ruin", "ruins", "same", "saw",
+    "secret", "seeing", "share", "site", "sites", "some", "special", "structures",
+    "sudden", "supposed", "that", "the", "their", "them", "there", "these", "they",
+    "thing", "this", "those", "through", "time", "to", "true", "unknown", "unmarked",
+    "untouched", "up", "use", "valley", "very", "video", "was", "we", "well", "went",
+    "what", "when", "where", "which", "while", "who", "will", "with", "work", "world",
+    "would", "you", "your", "youre",
+}
+
 
 def extract_candidate_sites(text: str) -> list[dict[str, Any]]:
     """
@@ -76,6 +153,36 @@ def extract_candidate_sites(text: str) -> list[dict[str, Any]]:
             })
 
     return candidates
+
+
+def is_plausible_site_name(name: str, context_snippet: str) -> bool:
+    """Reject generic phrases that match the regex but are not site names."""
+    normalized = " ".join(name.lower().split())
+    if normalized in GENERIC_SITE_NAMES:
+        return False
+
+    words = normalized.split()
+    if not words:
+        return False
+
+    if len(words) > 5:
+        return False
+
+    if words[0] in GENERIC_PREFIX_WORDS:
+        return False
+
+    if len(words) == 1 and words[0] in CONTEXT_KEYWORDS:
+        return False
+
+    non_common_words = [word for word in words if word not in COMMON_ENGLISH_WORDS]
+    if not non_common_words:
+        return False
+
+    context_lower = context_snippet.lower()
+    if any(fragment in context_lower for fragment in GENERIC_FRAGMENT_PATTERNS):
+        return False
+
+    return True
 
 
 def normalize_site_name(name: str) -> str:
@@ -122,6 +229,8 @@ def extract_sites_from_transcripts(
 
         for candidate in candidates:
             site_name = candidate["site_name"]
+            if not is_plausible_site_name(site_name, candidate["context_snippet"]):
+                continue
             normalized = normalize_site_name(site_name)
 
             per_video_rows.append({
@@ -164,6 +273,102 @@ def extract_sites_from_transcripts(
         })
 
     return site_rows, per_video_rows
+
+
+@dataclass
+class TimedSiteMention:
+    site_name: str
+    normalized_name: str
+    video_id: str
+    video_title: str
+    start_seconds: float
+    end_seconds: float
+    context_snippet: str
+    match_position: int
+
+
+def _build_text_and_offsets(words: list[dict[str, Any]]) -> tuple[str, list[tuple[int, int, int]]]:
+    """Join words with spaces. Return (text, spans) where spans[i] = (word_idx, char_start, char_end)."""
+    parts: list[str] = []
+    spans: list[tuple[int, int, int]] = []
+    cursor = 0
+    for idx, w in enumerate(words):
+        token = (w.get("text") or "").strip()
+        if not token:
+            continue
+        if parts:
+            parts.append(" ")
+            cursor += 1
+        spans.append((idx, cursor, cursor + len(token)))
+        parts.append(token)
+        cursor += len(token)
+    return "".join(parts), spans
+
+
+def _word_at_char(spans: list[tuple[int, int, int]], char_pos: int) -> int | None:
+    """Binary search-ish linear scan to find the word index containing char_pos. Small N is fine."""
+    for word_idx, start, end in spans:
+        if start <= char_pos < end:
+            return word_idx
+        if char_pos < start:
+            return word_idx
+    return spans[-1][0] if spans else None
+
+
+def extract_sites_from_words(
+    words: list[dict[str, Any]],
+    video_id: str,
+    video_title: str,
+) -> list[TimedSiteMention]:
+    """Extract site mentions with timestamp ranges from a word-level transcript.
+
+    Each word dict must have keys: text, start_seconds, end_seconds.
+    """
+    if not words:
+        return []
+
+    text, spans = _build_text_and_offsets(words)
+    candidates = extract_candidate_sites(text)
+
+    mentions: list[TimedSiteMention] = []
+    seen_normalized: set[str] = set()
+
+    for cand in candidates:
+        site_name = cand["site_name"]
+        if not is_plausible_site_name(site_name, cand["context_snippet"]):
+            continue
+
+        normalized = normalize_site_name(site_name)
+        key = f"{normalized}@{cand['match_position']}"
+        if key in seen_normalized:
+            continue
+        seen_normalized.add(key)
+
+        match_start = cand["match_position"]
+        match_end = match_start + len(site_name)
+        start_word = _word_at_char(spans, match_start)
+        end_word = _word_at_char(spans, max(match_end - 1, match_start))
+
+        if start_word is None or end_word is None:
+            continue
+
+        start_seconds = float(words[start_word].get("start_seconds") or 0.0)
+        end_seconds = float(words[end_word].get("end_seconds") or start_seconds)
+
+        mentions.append(
+            TimedSiteMention(
+                site_name=site_name,
+                normalized_name=normalized,
+                video_id=video_id,
+                video_title=video_title,
+                start_seconds=start_seconds,
+                end_seconds=end_seconds,
+                context_snippet=cand["context_snippet"],
+                match_position=match_start,
+            )
+        )
+
+    return mentions
 
 
 def stub_claude_extraction(
