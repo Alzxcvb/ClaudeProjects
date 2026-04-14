@@ -57,6 +57,7 @@ Suggested properties:
 cd /Users/alexandercoffman/ClaudeProjects/arkhub-lost-city
 python3 scripts/validate_geojson.py
 python3 scripts/checkpoint2_density.py
+python3 scripts/filter_modern_access.py
 python3 scripts/checkpoint3_imagery.py
 python3 scripts/checkpoint4_analysis.py
 PYTHONPATH=src python3 scripts/academic_paper_extractor.py --query "Peru archaeology desert site coordinates"

@@ -1,0 +1,217 @@
+{
+  "input_candidates": 500,
+  "kept_candidates": 200,
+  "removed_candidates": 300,
+  "optional_layer_files": {
+    "roads": [
+      "data/raw/modern_access/major_roads.geojson",
+      "data/raw/modern_access/tmp/roads.json",
+      "data/raw/modern_access/tmp/roads_central.json",
+      "data/raw/modern_access/tmp/roads_far_south.json",
+      "data/raw/modern_access/tmp/roads_highlands.json",
+      "data/raw/modern_access/tmp/roads_north.json",
+      "data/raw/modern_access/tmp/roads_south_a.json",
+      "data/raw/modern_access/tmp/roads_south_b.json"
+    ],
+    "postal": [
+      "data/raw/modern_access/postal_points.geojson",
+      "data/raw/modern_access/tmp/postal.json"
+    ],
+    "airports": [
+      "data/raw/modern_access/airports.geojson",
+      "data/raw/modern_access/tmp/airports.json"
+    ],
+    "ports": [
+      "data/raw/modern_access/ports.geojson",
+      "data/raw/modern_access/tmp/ports.json"
+    ],
+    "built_up_areas": []
+  },
+  "removed_by_reason": {
+    "settlement_radius": 205,
+    "postal_service": 35,
+    "road_plus_settlement": 60
+  },
+  "top_removed_examples": [
+    {
+      "global_rank": 1,
+      "reason": "settlement_radius",
+      "nearest_settlement_name": "Cusco",
+      "nearest_settlement_km": 2.91,
+      "nearest_major_road_km": 0.87,
+      "nearest_post_office_km": 2.58,
+      "modern_access_score": 0.6413
+    },
+    {
+      "global_rank": 2,
+      "reason": "settlement_radius",
+      "nearest_settlement_name": "Cusco",
+      "nearest_settlement_km": 2.04,
+      "nearest_major_road_km": 0.05,
+      "nearest_post_office_km": 1.97,
+      "modern_access_score": 0.7014
+    },
+    {
+      "global_rank": 3,
+      "reason": "postal_service",
+      "nearest_settlement_name": "Machupicchu",
+      "nearest_settlement_km": 1.83,
+      "nearest_major_road_km": 2.89,
+      "nearest_post_office_km": 1.69,
+      "modern_access_score": 0.6237
+    },
+    {
+      "global_rank": 4,
+      "reason": "settlement_radius",
+      "nearest_settlement_name": "Cusco",
+      "nearest_settlement_km": 3.66,
+      "nearest_major_road_km": 0.6,
+      "nearest_post_office_km": 2.78,
+      "modern_access_score": 0.6306
+    },
+    {
+      "global_rank": 5,
+      "reason": "road_plus_settlement",
+      "nearest_settlement_name": "Machupicchu",
+      "nearest_settlement_km": 3.54,
+      "nearest_major_road_km": 1.19,
+      "nearest_post_office_km": 3.52,
+      "modern_access_score": 0.6039
+    },
+    {
+      "global_rank": 6,
+      "reason": "postal_service",
+      "nearest_settlement_name": "Machupicchu",
+      "nearest_settlement_km": 2.33,
+      "nearest_major_road_km": 3.14,
+      "nearest_post_office_km": 2.43,
+      "modern_access_score": 0.5921
+    },
+    {
+      "global_rank": 7,
+      "reason": "settlement_radius",
+      "nearest_settlement_name": "Cusco",
+      "nearest_settlement_km": 3.43,
+      "nearest_major_road_km": 0.22,
+      "nearest_post_office_km": 3.36,
+      "modern_access_score": 0.6408
+    },
+    {
+      "global_rank": 8,
+      "reason": "road_plus_settlement",
+      "nearest_settlement_name": "Machupicchu",
+      "nearest_settlement_km": 3.95,
+      "nearest_major_road_km": 0.93,
+      "nearest_post_office_km": 3.85,
+      "modern_access_score": 0.5992
+    },
+    {
+      "global_rank": 9,
+      "reason": "settlement_radius",
+      "nearest_settlement_name": "Cusco",
+      "nearest_settlement_km": 4.04,
+      "nearest_major_road_km": 0.38,
+      "nearest_post_office_km": 2.65,
+      "modern_access_score": 0.6325
+    },
+    {
+      "global_rank": 10,
+      "reason": "road_plus_settlement",
+      "nearest_settlement_name": "Machupicchu",
+      "nearest_settlement_km": 3.78,
+      "nearest_major_road_km": 1.89,
+      "nearest_post_office_km": 3.63,
+      "modern_access_score": 0.5755
+    },
+    {
+      "global_rank": 11,
+      "reason": "settlement_radius",
+      "nearest_settlement_name": "Cusco",
+      "nearest_settlement_km": 0.69,
+      "nearest_major_road_km": 0.12,
+      "nearest_post_office_km": 0.59,
+      "modern_access_score": 0.7621
+    },
+    {
+      "global_rank": 12,
+      "reason": "settlement_radius",
+      "nearest_settlement_name": "Cusco",
+      "nearest_settlement_km": 1.36,
+      "nearest_major_road_km": 0.16,
+      "nearest_post_office_km": 1.27,
+      "modern_access_score": 0.7282
+    },
+    {
+      "global_rank": 13,
+      "reason": "settlement_radius",
+      "nearest_settlement_name": "Cusco",
+      "nearest_settlement_km": 2.26,
+      "nearest_major_road_km": 0.11,
+      "nearest_post_office_km": 2.17,
+      "modern_access_score": 0.6902
+    },
+    {
+      "global_rank": 14,
+      "reason": "settlement_radius",
+      "nearest_settlement_name": "Lima",
+      "nearest_settlement_km": 7.0,
+      "nearest_major_road_km": 0.49,
+      "nearest_post_office_km": 0.72,
+      "modern_access_score": 0.6888
+    },
+    {
+      "global_rank": 15,
+      "reason": "settlement_radius",
+      "nearest_settlement_name": "Cusco",
+      "nearest_settlement_km": 1.0,
+      "nearest_major_road_km": 0.0,
+      "nearest_post_office_km": 0.31,
+      "modern_access_score": 0.7646
+    },
+    {
+      "global_rank": 16,
+      "reason": "settlement_radius",
+      "nearest_settlement_name": "Trujillo",
+      "nearest_settlement_km": 3.07,
+      "nearest_major_road_km": 0.06,
+      "nearest_post_office_km": 3.71,
+      "modern_access_score": 0.65
+    },
+    {
+      "global_rank": 17,
+      "reason": "settlement_radius",
+      "nearest_settlement_name": "Trujillo",
+      "nearest_settlement_km": 4.44,
+      "nearest_major_road_km": 0.03,
+      "nearest_post_office_km": 5.07,
+      "modern_access_score": 0.6052
+    },
+    {
+      "global_rank": 18,
+      "reason": "settlement_radius",
+      "nearest_settlement_name": "Lima",
+      "nearest_settlement_km": 6.02,
+      "nearest_major_road_km": 0.03,
+      "nearest_post_office_km": 0.94,
+      "modern_access_score": 0.7143
+    },
+    {
+      "global_rank": 19,
+      "reason": "settlement_radius",
+      "nearest_settlement_name": "Trujillo",
+      "nearest_settlement_km": 3.68,
+      "nearest_major_road_km": 0.07,
+      "nearest_post_office_km": 4.29,
+      "modern_access_score": 0.6289
+    },
+    {
+      "global_rank": 20,
+      "reason": "settlement_radius",
+      "nearest_settlement_name": "Trujillo",
+      "nearest_settlement_km": 1.74,
+      "nearest_major_road_km": 0.03,
+      "nearest_post_office_km": 2.38,
+      "modern_access_score": 0.7027
+    }
+  ]
+}
