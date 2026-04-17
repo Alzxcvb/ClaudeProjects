@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SimpleFile — Free W-2 Tax Calculator</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f0f0f; color: #e8e8e8; min-height: 100vh; }
+header { background: #1a1a1a; border-bottom: 1px solid #2a2a2a; padding: 18px 40px; display: flex; align-items: center; gap: 12px; }
+header h1 { font-size: 20px; font-weight: 700; color: #fff; }
+.badge { background: #1a3a1a; color: #4caf50; border: 1px solid #2d5a2d; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+header p { font-size: 12px; color: #555; margin-left: 8px; }
+main { max-width: 820px; margin: 0 auto; padding: 32px 20px; }
+
+.card { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; padding: 22px; margin-bottom: 20px; }
+.card h2 { font-size: 14px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 16px; }
+
+/* API key */
+.key-row { display: flex; gap: 10px; align-items: center; }
+.key-row input { flex: 1; background: #111; border: 1px solid #333; border-radius: 6px; padding: 9px 12px; color: #e8e8e8; font-size: 13px; font-family: monospace; outline: none; }
+.key-row input:focus { border-color: #4caf50; }
+.key-status { font-size: 12px; color: #555; margin-top: 6px; }
+.key-status.saved { color: #4caf50; }
+
+/* Upload zone */
+.upload-zone { border: 2px dashed #333; border-radius: 10px; padding: 36px 20px; text-align: center; cursor: pointer; transition: all 0.15s; position: relative; }
+.upload-zone:hover, .upload-zone.drag { border-color: #4caf50; background: #111; }
+.upload-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.upload-zone .icon { font-size: 32px; margin-bottom: 10px; }
+.upload-zone h3 { font-size: 15px; color: #e8e8e8; margin-bottom: 6px; }
+.upload-zone p { font-size: 13px; color: #666; }
+.preview-wrap { margin-top: 14px; display: none; }
+.preview-wrap img { max-width: 100%; max-height: 300px; border-radius: 6px; border: 1px solid #333; }
+
+/* Extract button */
+.extract-btn { width: 100%; margin-top: 14px; background: #4caf50; color: #000; border: none; border-radius: 8px; padding: 13px; font-size: 15px; font-weight: 700; cursor: pointer; transition: background 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.extract-btn:hover { background: #5dbf61; }
+.extract-btn:disabled { background: #2a3a2a; color: #555; cursor: not-allowed; }
+
+/* Status */
+.status { margin-top: 12px; font-size: 13px; color: #888; text-align: center; min-height: 20px; }
+.status.loading { color: #4caf50; }
+.status.error { color: #f44336; }
+
+/* Fields grid */
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field label { font-size: 11px; color: #666; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; }
+.field input, .field select { background: #111; border: 1px solid #333; border-radius: 6px; padding: 9px 11px; color: #e8e8e8; font-size: 14px; outline: none; transition: border-color 0.15s; }
+.field input:focus, .field select:focus { border-color: #4caf50; }
+.field input.auto-filled { border-color: #2d5a2d; background: #0f1f0f; }
+.divider { height: 1px; background: #2a2a2a; margin: 16px 0; }
+.calc-btn { width: 100%; background: #1565c0; color: #fff; border: none; border-radius: 8px; padding: 13px; font-size: 15px; font-weight: 700; cursor: pointer; transition: background 0.15s; }
+.calc-btn:hover { background: #1976d2; }
+
+/* Results */
+#results { display: none; }
+.result-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.result-card { background: #111; border: 1px solid #2a2a2a; border-radius: 8px; padding: 18px; }
+.result-card .lbl { font-size: 11px; color: #555; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+.result-card .val { font-size: 30px; font-weight: 800; }
+.result-card .sub { font-size: 12px; color: #555; margin-top: 5px; }
+.refund .val { color: #4caf50; }
+.owed .val { color: #f44336; }
+
+.breakdown { background: #111; border: 1px solid #2a2a2a; border-radius: 8px; padding: 18px; margin-bottom: 16px; }
+.breakdown h3 { font-size: 11px; color: #555; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px; font-weight: 600; }
+.line { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #1a1a1a; font-size: 13px; }
+.line:last-child { border-bottom: none; }
+.line .desc { color: #999; }
+.line .desc b { color: #e8e8e8; }
+.line .amt { font-family: 'SF Mono', Monaco, monospace; }
+.line .amt.green { color: #4caf50; font-weight: 600; }
+.line .amt.red { color: #f44336; font-weight: 600; }
+.line .amt.dim { color: #555; }
+
+.actions { display: flex; gap: 12px; margin-bottom: 16px; }
+.btn { flex: 1; padding: 11px; border-radius: 7px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; text-align: center; text-decoration: none; display: flex; align-items: center; justify-content: center; }
+.btn-print { background: #4caf50; color: #000; }
+.btn-print:hover { background: #5dbf61; }
+.btn-file { background: #1e1e1e; color: #e8e8e8; border: 1px solid #333; }
+.btn-file:hover { background: #252525; }
+
+.note { background: #151f15; border: 1px solid #1e3a1e; border-radius: 8px; padding: 14px 16px; font-size: 12px; color: #888; line-height: 1.7; }
+.note a { color: #4caf50; }
+.note strong { color: #4caf50; }
+
+@media print {
+  header, .card:not(#results-card), .actions, .note { display: none !important; }
+  #results { display: block !important; }
+  #results-card { background: white; color: black; border: none; padding: 0; }
+  .breakdown, .result-card { background: white; border: 1px solid #ccc; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>SimpleFile</h1>
+  <span class="badge">100% Free</span>
+  <p>Upload your W-2 → get federal + CA taxes calculated → file free. Zero data leaves your device except to the AI API for extraction.</p>
+</header>
+
+<main>
+
+  <!-- STEP 1: API KEY -->
+  <div class="card">
+    <h2>Step 1 — OpenRouter API Key</h2>
+    <div class="key-row">
+      <input type="password" id="api_key" placeholder="sk-or-v1-..." autocomplete="off">
+      <button onclick="saveKey()" style="background:#2a2a2a;border:1px solid #333;color:#e8e8e8;padding:9px 16px;border-radius:6px;cursor:pointer;font-size:13px;">Save</button>
+    </div>
+    <div class="key-status" id="key_status">Get a free key at openrouter.ai — used only for W-2 text extraction, never stored on any server.</div>
+  </div>
+
+  <!-- STEP 2: UPLOAD -->
+  <div class="card">
+    <h2>Step 2 — Upload Your W-2</h2>
+    <div class="upload-zone" id="drop_zone">
+      <input type="file" id="w2_file" accept="image/*,.pdf" onchange="handleFile(event)">
+      <div class="icon">📄</div>
+      <h3>Drop your W-2 here or click to browse</h3>
+      <p>JPEG, PNG, or PDF — processed locally in your browser</p>
+    </div>
+    <div class="preview-wrap" id="preview_wrap">
+      <img id="preview_img" src="" alt="W-2 preview">
+    </div>
+    <button class="extract-btn" id="extract_btn" onclick="extractW2()" disabled>
+      <span id="extract_label">⚡ Extract W-2 Data</span>
+    </button>
+    <div class="status" id="extract_status"></div>
+  </div>
+
+  <!-- STEP 3: REVIEW & CALCULATE -->
+  <div class="card">
+    <h2>Step 3 — Review &amp; Calculate</h2>
+    <div class="grid-3" style="margin-bottom:14px;">
+      <div class="field">
+        <label>Filing Status</label>
+        <select id="filing_status">
+          <option value="single">Single</option>
+          <option value="mfj">Married Filing Jointly</option>
+          <option value="hoh">Head of Household</option>
+          <option value="mfs">Married Filing Separately</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Age (Dec 31, 2025)</label>
+        <input type="number" id="age" placeholder="e.g. 28">
+      </div>
+      <div class="field">
+        <label>Legally Blind?</label>
+        <select id="blind">
+          <option value="0">No</option>
+          <option value="1">Yes</option>
+        </select>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <p style="font-size:12px;color:#555;margin-bottom:12px;">These fields are auto-filled from your W-2. Review and correct if needed.</p>
+    <div class="grid" style="margin-bottom:14px;">
+      <div class="field">
+        <label>Box 1 — Federal Wages</label>
+        <input type="number" id="box1" placeholder="0.00" step="0.01">
+      </div>
+      <div class="field">
+        <label>Box 2 — Federal Tax Withheld</label>
+        <input type="number" id="box2" placeholder="0.00" step="0.01">
+      </div>
+    </div>
+    <div class="grid" style="margin-bottom:14px;">
+      <div class="field">
+        <label>Box 12 Code W — HSA Employer</label>
+        <input type="number" id="box12w" placeholder="0.00" step="0.01">
+      </div>
+      <div class="field">
+        <label>Box 12 Code D — 401(k)</label>
+        <input type="number" id="box12d" placeholder="0.00" step="0.01">
+      </div>
+    </div>
+    <div class="grid" style="margin-bottom:14px;">
+      <div class="field">
+        <label>Student Loan Interest (1098-E)</label>
+        <input type="number" id="sli" placeholder="0.00" step="0.01">
+      </div>
+      <div class="field">
+        <label>Other Above-the-Line Deductions</label>
+        <input type="number" id="other_agi" placeholder="0.00" step="0.01">
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="grid" style="margin-bottom:14px;">
+      <div class="field">
+        <label>Box 16 — CA State Wages</label>
+        <input type="number" id="box16" placeholder="0.00" step="0.01">
+      </div>
+      <div class="field">
+        <label>Box 17 — CA State Tax Withheld</label>
+        <input type="number" id="box17" placeholder="0.00" step="0.01">
+      </div>
+    </div>
+    <div class="grid">
+      <div class="field">
+        <label>Box 14 / Box 19 — CA SDI</label>
+        <input type="number" id="sdi" placeholder="0.00" step="0.01">
+      </div>
+      <div class="field">
+        <label>CA County</label>
+        <select id="ca_county">
+          <option value="">Select county</option>
+          <option value="Alameda">Alameda</option><option value="Alpine">Alpine</option><option value="Amador">Amador</option><option value="Butte">Butte</option><option value="Calaveras">Calaveras</option><option value="Colusa">Colusa</option><option value="Contra Costa">Contra Costa</option><option value="Del Norte">Del Norte</option><option value="El Dorado">El Dorado</option><option value="Fresno">Fresno</option><option value="Glenn">Glenn</option><option value="Humboldt">Humboldt</option><option value="Imperial">Imperial</option><option value="Inyo">Inyo</option><option value="Kern">Kern</option><option value="Kings">Kings</option><option value="Lake">Lake</option><option value="Lassen">Lassen</option><option value="Los Angeles">Los Angeles</option><option value="Madera">Madera</option><option value="Marin">Marin</option><option value="Mariposa">Mariposa</option><option value="Mendocino">Mendocino</option><option value="Merced">Merced</option><option value="Modoc">Modoc</option><option value="Mono">Mono</option><option value="Monterey">Monterey</option><option value="Napa">Napa</option><option value="Nevada">Nevada</option><option value="Orange">Orange</option><option value="Placer">Placer</option><option value="Plumas">Plumas</option><option value="Riverside">Riverside</option><option value="Sacramento">Sacramento</option><option value="San Benito">San Benito</option><option value="San Bernardino">San Bernardino</option><option value="San Diego">San Diego</option><option value="San Francisco">San Francisco</option><option value="San Joaquin">San Joaquin</option><option value="San Luis Obispo">San Luis Obispo</option><option value="San Mateo">San Mateo</option><option value="Santa Barbara">Santa Barbara</option><option value="Santa Clara">Santa Clara</option><option value="Santa Cruz">Santa Cruz</option><option value="Shasta">Shasta</option><option value="Sierra">Sierra</option><option value="Siskiyou">Siskiyou</option><option value="Solano">Solano</option><option value="Sonoma">Sonoma</option><option value="Stanislaus">Stanislaus</option><option value="Sutter">Sutter</option><option value="Tehama">Tehama</option><option value="Trinity">Trinity</option><option value="Tulare">Tulare</option><option value="Tuolumne">Tuolumne</option><option value="Ventura">Ventura</option><option value="Yolo">Yolo</option><option value="Yuba">Yuba</option>
+        </select>
+      </div>
+    </div>
+    <div style="margin-top:16px;">
+      <button class="calc-btn" onclick="calculate()">Calculate My Taxes →</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: RESULTS -->
+  <div id="results">
+    <div class="card" id="results-card">
+      <h2>Your 2025 Tax Summary</h2>
+
+      <div class="result-row">
+        <div class="result-card" id="fed_card">
+          <div class="lbl">Federal Refund / Owed</div>
+          <div class="val" id="fed_val">—</div>
+          <div class="sub" id="fed_sub"></div>
+        </div>
+        <div class="result-card" id="ca_card">
+          <div class="lbl">California Refund / Owed</div>
+          <div class="val" id="ca_val">—</div>
+          <div class="sub" id="ca_sub"></div>
+        </div>
+      </div>
+
+      <div class="breakdown">
+        <h3>Federal 1040 — Line by Line</h3>
+        <div class="line"><span class="desc"><b>1z</b> Wages (Box 1)</span><span class="amt" id="r_wages"></span></div>
+        <div class="line"><span class="desc"><b>Adj</b> 401(k) pre-tax (Box 12 D — already excluded from Box 1)</span><span class="amt dim" id="r_401k"></span></div>
+        <div class="line"><span class="desc"><b>Adj</b> HSA employer contrib (Box 12 W — already excluded from Box 1)</span><span class="amt dim" id="r_hsa"></span></div>
+        <div class="line"><span class="desc"><b>Adj</b> Student loan interest deduction</span><span class="amt dim" id="r_sli"></span></div>
+        <div class="line"><span class="desc"><b>11</b> Adjusted Gross Income</span><span class="amt" id="r_agi"></span></div>
+        <div class="line"><span class="desc"><b>12</b> Standard deduction</span><span class="amt dim" id="r_std"></span></div>
+        <div class="line"><span class="desc"><b>15</b> Taxable income</span><span class="amt" id="r_taxable"></span></div>
+        <div class="line"><span class="desc"><b>16</b> Federal income tax</span><span class="amt" id="r_tax"></span></div>
+        <div class="line"><span class="desc"><b>25a</b> Federal withheld (Box 2)</span><span class="amt" id="r_withheld"></span></div>
+        <div class="line"><span class="desc"><b>35a/37</b> Refund / Amount owed</span><span class="amt" id="r_fed_final"></span></div>
+      </div>
+
+      <div class="breakdown">
+        <h3>California Form 540</h3>
+        <div class="line"><span class="desc"><b>12</b> CA wages (Box 16)</span><span class="amt" id="r_cawages"></span></div>
+        <div class="line"><span class="desc"><b>18</b> CA standard deduction</span><span class="amt dim" id="r_castd"></span></div>
+        <div class="line"><span class="desc"><b>19</b> CA taxable income</span><span class="amt" id="r_cataxable"></span></div>
+        <div class="line"><span class="desc"><b>31</b> CA income tax</span><span class="amt" id="r_catax"></span></div>
+        <div class="line"><span class="desc"><b>74</b> CA SDI credit (Box 14/19)</span><span class="amt" id="r_sdi"></span></div>
+        <div class="line"><span class="desc"><b>71</b> CA state tax withheld (Box 17)</span><span class="amt" id="r_cawithheld"></span></div>
+        <div class="line"><span class="desc"><b>115/111</b> CA Refund / Amount owed</span><span class="amt" id="r_ca_final"></span></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-print" onclick="downloadFilled1040()">⬇ Download filled 1040 PDF</button>
+        <button class="btn btn-print" onclick="downloadFilledCA540()" style="background:#1565c0;color:#fff;">⬇ Download filled CA 540 PDF</button>
+      </div>
+      <div class="actions">
+        <a class="btn btn-file" href="https://www.ftb.ca.gov/file/personal/ways-to-file/calfile.html" target="_blank">→ CA CalFile (free e-file)</a>
+        <button class="btn btn-file" onclick="listPdfFields()">🔍 Log PDF field names (debug)</button>
+      </div>
+
+      <div class="note">
+        <strong>How to file free with these numbers:</strong><br>
+        <b>Federal:</b> Download the filled 1040 PDF above, verify every line, sign, and mail to the IRS (address depends on your state — see irs.gov/filing/where-to-file-paper). Refund arrives in 6–8 weeks.<br>
+        <b>California:</b> Fastest path is CalFile e-file (free) — use the numbers on this page to enter into CalFile directly. Or mail the filled CA 540 PDF.<br><br>
+        These calculations are for W-2 income + standard deduction only. Verify accuracy before filing. This tool is open source — not a licensed tax preparer.
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ─── CONSTANTS: 2025 TAX YEAR ────────────────────────────────────────────────
+
+const FED_STD = { single:15000, mfj:30000, hoh:22500, mfs:15000 };
+const FED_STD_ADDL = { single:2000, mfj:1600, hoh:2000, mfs:1600 };
+const FED_BRACKETS = {
+  single: [[0,11925,.10],[11925,48475,.12],[48475,103350,.22],[103350,197300,.24],[197300,250525,.32],[250525,626350,.35],[626350,Infinity,.37]],
+  mfj:    [[0,23850,.10],[23850,96950,.12],[96950,206700,.22],[206700,394600,.24],[394600,501050,.32],[501050,751600,.35],[751600,Infinity,.37]],
+  hoh:    [[0,17000,.10],[17000,64850,.12],[64850,103350,.22],[103350,197300,.24],[197300,250500,.32],[250500,626350,.35],[626350,Infinity,.37]],
+  mfs:    [[0,11925,.10],[11925,48475,.12],[48475,103350,.22],[103350,197300,.24],[197300,250525,.32],[250525,313175,.35],[313175,Infinity,.37]],
+};
+const CA_STD = { single:5540, mfj:11080, hoh:11080, mfs:5540 };
+const CA_BRACKETS = {
+  single: [[0,10756,.01],[10756,25499,.02],[25499,40245,.04],[40245,55866,.06],[55866,70606,.08],[70606,360659,.093],[360659,432787,.103],[432787,721314,.113],[721314,Infinity,.123]],
+  mfj:    [[0,21512,.01],[21512,50998,.02],[50998,80490,.04],[80490,111732,.06],[111732,141212,.08],[141212,721318,.093],[721318,865574,.103],[865574,1000000,.113],[1000000,Infinity,.123]],
+  hoh:    [[0,21527,.01],[21527,51000,.02],[51000,65744,.04],[65744,81364,.06],[81364,96107,.08],[96107,490093,.093],[490093,588111,.103],[588111,980186,.113],[980186,Infinity,.123]],
+  mfs:    [[0,10756,.01],[10756,25499,.02],[25499,40245,.04],[40245,55866,.06],[55866,70606,.08],[70606,360659,.093],[360659,432787,.103],[432787,721314,.113],[721314,Infinity,.123]],
+};
+const SLI_PHASE = { single:[85000,100000], mfj:[175000,205000], hoh:[85000,100000], mfs:[0,0] };
+
+// ─── HELPERS ─────────────────────────────────────────────────────────────────
+
+function n(id){ return parseFloat(document.getElementById(id).value)||0; }
+function set(id,v){ document.getElementById(id).textContent=v; }
+function fmt(v){ const s=Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); return (v<0?'-':'')+`$${s}`; }
+
+function brackets(income, table){
+  let tax=0;
+  for(const [lo,hi,rate] of table){
+    if(income<=lo) break;
+    tax += (Math.min(income,hi)-lo)*rate;
+  }
+  return Math.max(0,tax);
+}
+
+function sliDeduction(raw, agi, status){
+  if(status==='mfs') return 0;
+  const max=Math.min(raw,2500);
+  const [start,end]=SLI_PHASE[status];
+  if(end===0||agi>=end) return 0;
+  if(agi<=start) return max;
+  return max*(1-(agi-start)/(end-start));
+}
+
+// ─── API KEY ─────────────────────────────────────────────────────────────────
+
+function saveKey(){
+  const k=document.getElementById('api_key').value.trim();
+  if(!k){ alert('Enter a key first'); return; }
+  localStorage.setItem('or_key',k);
+  document.getElementById('key_status').textContent='✓ Key saved locally in your browser.';
+  document.getElementById('key_status').className='key-status saved';
+  checkExtractReady();
+}
+
+function loadKey(){
+  const k=localStorage.getItem('or_key');
+  if(k){
+    document.getElementById('api_key').value=k;
+    document.getElementById('key_status').textContent='✓ Key loaded from local storage.';
+    document.getElementById('key_status').className='key-status saved';
+  }
+}
+
+function getKey(){ return document.getElementById('api_key').value.trim()||localStorage.getItem('or_key')||''; }
+
+// ─── FILE HANDLING ───────────────────────────────────────────────────────────
+
+let imageBase64 = null;
+let imageMime = null;
+
+function checkExtractReady(){
+  const hasFile = imageBase64 !== null;
+  const hasKey = getKey().length > 10;
+  document.getElementById('extract_btn').disabled = !(hasFile && hasKey);
+}
+
+async function handleFile(e){
+  const file = e.target.files[0];
+  if(!file) return;
+
+  const status = document.getElementById('extract_status');
+  status.textContent = 'Loading file...';
+  status.className = 'status loading';
+
+  if(file.type === 'application/pdf'){
+    await loadPdfAsImage(file);
+  } else {
+    await loadImageFile(file);
+  }
+  checkExtractReady();
+}
+
+function loadImageFile(file){
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const dataUrl = e.target.result;
+      imageBase64 = dataUrl.split(',')[1];
+      imageMime = file.type;
+      document.getElementById('preview_img').src = dataUrl;
+      document.getElementById('preview_wrap').style.display = 'block';
+      document.getElementById('extract_status').textContent = 'File ready — click Extract to read your W-2.';
+      document.getElementById('extract_status').className = 'status';
+      resolve();
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+async function loadPdfAsImage(file){
+  const status = document.getElementById('extract_status');
+  try {
+    // Load pdf.js dynamically
+    if(!window.pdfjsLib){
+      await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');
+      window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({data: arrayBuffer}).promise;
+    const page = await pdf.getPage(1);
+    const viewport = page.getViewport({scale: 2.0});
+    const canvas = document.createElement('canvas');
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+    const ctx = canvas.getContext('2d');
+    await page.render({canvasContext: ctx, viewport}).promise;
+    const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
+    imageBase64 = dataUrl.split(',')[1];
+    imageMime = 'image/jpeg';
+    document.getElementById('preview_img').src = dataUrl;
+    document.getElementById('preview_wrap').style.display = 'block';
+    status.textContent = 'PDF rendered — click Extract to read your W-2.';
+    status.className = 'status';
+  } catch(err) {
+    status.textContent = 'PDF load failed: ' + err.message;
+    status.className = 'status error';
+  }
+}
+
+function loadScript(src){
+  return new Promise((resolve,reject)=>{
+    const s=document.createElement('script');
+    s.src=src; s.onload=resolve; s.onerror=reject;
+    document.head.appendChild(s);
+  });
+}
+
+// ─── W-2 EXTRACTION ──────────────────────────────────────────────────────────
+
+async function extractW2(){
+  const key = getKey();
+  if(!key){ alert('Enter your OpenRouter API key first.'); return; }
+  if(!imageBase64){ alert('Upload a W-2 image first.'); return; }
+
+  const btn = document.getElementById('extract_btn');
+  const status = document.getElementById('extract_status');
+  btn.disabled = true;
+  document.getElementById('extract_label').textContent = '⏳ Extracting...';
+  status.textContent = 'Sending to AI for extraction...';
+  status.className = 'status loading';
+
+  const prompt = `Extract all values from this W-2 tax form. Return ONLY a JSON object with these exact keys (use 0 for any missing fields, numbers only no commas or $ signs):
+{
+  "box1": <wages tips other compensation>,
+  "box2": <federal income tax withheld>,
+  "box3": <social security wages>,
+  "box4": <social security tax withheld>,
+  "box5": <medicare wages>,
+  "box6": <medicare tax withheld>,
+  "box12_D": <401k contribution, code D>,
+  "box12_W": <HSA employer contribution, code W>,
+  "box12_DD": <employer health insurance cost, code DD>,
+  "box14_SDI": <CA SDI or any state disability amount in box 14>,
+  "box16": <state wages>,
+  "box17": <state income tax withheld>,
+  "box19": <local income tax withheld>,
+  "employer_name": "<employer name>",
+  "employer_ein": "<EIN>",
+  "employee_name": "<employee name>",
+  "state": "<2-letter state code>"
+}
+Return ONLY the JSON, no explanation.`;
+
+  try {
+    const resp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${key}`,
+        'Content-Type': 'application/json',
+        'HTTP-Referer': window.location.href,
+        'X-Title': 'SimpleFile Tax Tool'
+      },
+      body: JSON.stringify({
+        model: 'google/gemini-2.0-flash-001',
+        messages: [{
+          role: 'user',
+          content: [
+            { type: 'image_url', image_url: { url: `data:${imageMime};base64,${imageBase64}` } },
+            { type: 'text', text: prompt }
+          ]
+        }],
+        max_tokens: 500,
+        temperature: 0
+      })
+    });
+
+    if(!resp.ok){
+      const err = await resp.text();
+      throw new Error(`API error ${resp.status}: ${err}`);
+    }
+
+    const data = await resp.json();
+    const raw = data.choices[0].message.content.trim();
+
+    // Strip markdown code fences if present
+    const jsonStr = raw.replace(/^```json?\n?/,'').replace(/\n?```$/,'');
+    const w2 = JSON.parse(jsonStr);
+
+    populateFields(w2);
+    status.textContent = '✓ W-2 extracted successfully — review the fields below, then click Calculate.';
+    status.className = 'status saved';
+
+  } catch(err) {
+    status.textContent = 'Extraction failed: ' + err.message;
+    status.className = 'status error';
+    console.error(err);
+  }
+
+  btn.disabled = false;
+  document.getElementById('extract_label').textContent = '⚡ Extract W-2 Data';
+  checkExtractReady();
+}
+
+function populateFields(w2){
+  const setField = (id, val) => {
+    const el = document.getElementById(id);
+    if(el && val !== undefined && val !== null && val !== 0){
+      el.value = val;
+      el.classList.add('auto-filled');
+    }
+  };
+  setField('box1', w2.box1);
+  setField('box2', w2.box2);
+  setField('box12w', w2.box12_W);
+  setField('box12d', w2.box12_D);
+  setField('box16', w2.box16);
+  setField('box17', w2.box17);
+  // SDI: prefer box14, fall back to box19
+  const sdi = w2.box14_SDI || w2.box19 || 0;
+  setField('sdi', sdi);
+}
+
+// ─── TAX CALCULATION ─────────────────────────────────────────────────────────
+
+let lastCalc = null;
+
+function calculate(){
+  const status = document.getElementById('filing_status').value;
+  const age = n('age');
+  const blind = parseInt(document.getElementById('blind').value);
+
+  const wages    = n('box1');
+  const withheld = n('box2');
+  const sliRaw   = n('sli');
+  const otherAdj = n('other_agi');
+  const caWages  = n('box16') || wages;
+  const caWith   = n('box17');
+  const sdi      = n('sdi');
+
+  // Federal AGI
+  const provAGI = wages - otherAdj;
+  const sliDed  = sliDeduction(sliRaw, provAGI, status);
+  const agi     = Math.max(0, wages - sliDed - otherAdj);
+
+  // Standard deduction
+  let std = FED_STD[status];
+  if(age >= 65)  std += FED_STD_ADDL[status];
+  if(blind)      std += FED_STD_ADDL[status];
+
+  const taxable = Math.max(0, agi - std);
+  const fedTax  = brackets(taxable, FED_BRACKETS[status]);
+  const fedNet  = withheld - fedTax;
+
+  // California
+  const caStd     = CA_STD[status];
+  const caTaxable = Math.max(0, caWages - caStd);
+  let caTax       = brackets(caTaxable, CA_BRACKETS[status]);
+  if(caTaxable > 1000000) caTax += (caTaxable - 1000000) * 0.01; // MHST
+  const caNet = (caWith + sdi) - caTax;
+
+  // ── Render result cards ──
+  const fedCard = document.getElementById('fed_card');
+  fedCard.className = 'result-card ' + (fedNet >= 0 ? 'refund' : 'owed');
+  document.getElementById('fed_val').textContent = fmt(Math.abs(fedNet));
+  document.getElementById('fed_sub').textContent = fedNet >= 0 ? 'Federal refund' : 'Federal amount owed';
+
+  const caCard = document.getElementById('ca_card');
+  caCard.className = 'result-card ' + (caNet >= 0 ? 'refund' : 'owed');
+  document.getElementById('ca_val').textContent = fmt(Math.abs(caNet));
+  document.getElementById('ca_sub').textContent = caNet >= 0 ? 'CA refund' : 'CA amount owed';
+
+  // ── Federal lines ──
+  set('r_wages',    fmt(wages));
+  set('r_401k',     n('box12d') ? `${fmt(n('box12d'))} (pre-tax, already out of Box 1)` : '—');
+  set('r_hsa',      n('box12w') ? `${fmt(n('box12w'))} (pre-tax, already out of Box 1)` : '—');
+  set('r_sli',      sliDed > 0 ? `-${fmt(sliDed)}` : '—');
+  set('r_agi',      fmt(agi));
+  set('r_std',      `-${fmt(std)}`);
+  set('r_taxable',  fmt(taxable));
+  set('r_tax',      fmt(fedTax));
+  set('r_withheld', fmt(withheld));
+
+  const ff = document.getElementById('r_fed_final');
+  ff.textContent = fedNet >= 0 ? `Refund: ${fmt(fedNet)}` : `Owed: ${fmt(Math.abs(fedNet))}`;
+  ff.className = 'amt ' + (fedNet >= 0 ? 'green' : 'red');
+
+  // ── CA lines ──
+  set('r_cawages',   fmt(caWages));
+  set('r_castd',     `-${fmt(caStd)}`);
+  set('r_cataxable', fmt(caTaxable));
+  set('r_catax',     fmt(caTax));
+  set('r_sdi',       sdi > 0 ? fmt(sdi) : '—');
+  set('r_cawithheld',fmt(caWith));
+
+  const cf = document.getElementById('r_ca_final');
+  cf.textContent = caNet >= 0 ? `Refund: ${fmt(caNet)}` : `Owed: ${fmt(Math.abs(caNet))}`;
+  cf.className = 'amt ' + (caNet >= 0 ? 'green' : 'red');
+
+  lastCalc = {
+    status, age, blind,
+    wages, withheld, sliDed, agi, std, taxable, fedTax, fedNet,
+    caWages, caStd, caTaxable, caTax, caWith, sdi, caNet,
+    box12d: n('box12d'), box12w: n('box12w'),
+  };
+
+  const r = document.getElementById('results');
+  r.style.display = 'block';
+  r.scrollIntoView({behavior:'smooth'});
+}
+
+// ─── PDF GENERATION (pdf-lib) ────────────────────────────────────────────────
+
+async function ensurePdfLib(){
+  if(window.PDFLib) return;
+  await loadScript('https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js');
+}
+
+async function loadPdfDoc(url){
+  const bytes = await fetch(url).then(r => {
+    if(!r.ok) throw new Error(`Failed to load ${url}: HTTP ${r.status}`);
+    return r.arrayBuffer();
+  });
+  return PDFLib.PDFDocument.load(bytes);
+}
+
+// Try each candidate field name; set the first one that exists. Returns true if set.
+function trySetText(form, candidates, value){
+  const str = (value == null) ? '' : String(value);
+  for(const name of candidates){
+    try {
+      const f = form.getTextField(name);
+      f.setText(str);
+      return true;
+    } catch(e){ /* field doesn't exist, try next */ }
+  }
+  return false;
+}
+
+function trySetCheck(form, candidates){
+  for(const name of candidates){
+    try {
+      const f = form.getCheckBox(name);
+      f.check();
+      return true;
+    } catch(e){}
+  }
+  return false;
+}
+
+async function listPdfFields(){
+  await ensurePdfLib();
+  for(const [label, url] of [['1040','./f1040.pdf'],['CA 540','./ca540.pdf']]){
+    try {
+      const doc = await loadPdfDoc(url);
+      const fields = doc.getForm().getFields();
+      console.group(`${label} — ${fields.length} fields`);
+      fields.forEach(f => console.log(`${f.constructor.name.replace('PDF','')}  ${f.getName()}`));
+      console.groupEnd();
+    } catch(err){
+      console.error(`${label} load failed:`, err);
+    }
+  }
+  alert('Field names logged to browser console (Cmd+Opt+J). Paste them here so we can refine the mapping.');
+}
+
+function downloadBlob(bytes, filename){
+  const blob = new Blob([bytes], {type: 'application/pdf'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 100);
+}
+
+// Rounded whole-dollar string (IRS forms want whole dollars)
+function rd(v){ return String(Math.round(v)); }
+
+async function downloadFilled1040(){
+  if(!lastCalc){ alert('Calculate first.'); return; }
+  try {
+    await ensurePdfLib();
+    const doc = await loadPdfDoc('./f1040.pdf');
+    const form = doc.getForm();
+    const c = lastCalc;
+
+    // Common 2024 IRS 1040 field-name patterns. We try several variants because
+    // these names shift slightly between tax years. Unmatched fields are logged.
+    const unmatched = [];
+    const attempt = (label, candidates, value) => {
+      if(!trySetText(form, candidates, value)) unmatched.push(`${label} → tried ${candidates.join(', ')}`);
+    };
+
+    // Line 1a / 1z — Wages
+    attempt('Line 1a wages',
+      ['topmostSubform[0].Page1[0].Lines1-9_ReadOrder[0].f1_32[0]',
+       'topmostSubform[0].Page1[0].f1_32[0]',
+       'f1_32[0]'], rd(c.wages));
+    attempt('Line 1z total wages',
+      ['topmostSubform[0].Page1[0].Lines1-9_ReadOrder[0].f1_41[0]',
+       'topmostSubform[0].Page1[0].f1_41[0]'], rd(c.wages));
+
+    // Line 11 AGI
+    attempt('Line 11 AGI',
+      ['topmostSubform[0].Page1[0].f1_52[0]',
+       'topmostSubform[0].Page1[0].Lines10-11_ReadOrder[0].f1_52[0]'], rd(c.agi));
+    // Line 12 std deduction
+    attempt('Line 12 std ded',
+      ['topmostSubform[0].Page1[0].f1_53[0]'], rd(c.std));
+    // Line 15 taxable income
+    attempt('Line 15 taxable',
+      ['topmostSubform[0].Page1[0].f1_56[0]'], rd(c.taxable));
+    // Line 16 tax
+    attempt('Line 16 tax',
+      ['topmostSubform[0].Page2[0].f2_02[0]'], rd(c.fedTax));
+    // Line 24 total tax (same as 16 in simple case)
+    attempt('Line 24 total tax',
+      ['topmostSubform[0].Page2[0].f2_16[0]'], rd(c.fedTax));
+    // Line 25a federal withheld from W-2
+    attempt('Line 25a withheld',
+      ['topmostSubform[0].Page2[0].f2_17[0]'], rd(c.withheld));
+    // Line 25c total withheld
+    attempt('Line 25c total withheld',
+      ['topmostSubform[0].Page2[0].f2_19[0]'], rd(c.withheld));
+    // Line 33 total payments
+    attempt('Line 33 total payments',
+      ['topmostSubform[0].Page2[0].f2_27[0]'], rd(c.withheld));
+
+    if(c.fedNet >= 0){
+      // Refund: Line 34 = overpayment, Line 35a refund
+      attempt('Line 34 overpayment', ['topmostSubform[0].Page2[0].f2_28[0]'], rd(c.fedNet));
+      attempt('Line 35a refund',     ['topmostSubform[0].Page2[0].f2_29[0]'], rd(c.fedNet));
+    } else {
+      attempt('Line 37 amount owed', ['topmostSubform[0].Page2[0].f2_36[0]'], rd(-c.fedNet));
+    }
+
+    // Filing status checkbox (best-effort)
+    const fsMap = {
+      single: ['topmostSubform[0].Page1[0].c1_1[0]', 'topmostSubform[0].Page1[0].FilingStatus[0].c1_01[0]'],
+      mfj:    ['topmostSubform[0].Page1[0].c1_1[1]', 'topmostSubform[0].Page1[0].FilingStatus[0].c1_01[1]'],
+      mfs:    ['topmostSubform[0].Page1[0].c1_1[2]'],
+      hoh:    ['topmostSubform[0].Page1[0].c1_1[3]'],
+    };
+    if(!trySetCheck(form, fsMap[c.status] || [])) unmatched.push(`Filing status (${c.status}) checkbox`);
+
+    if(unmatched.length){
+      console.warn('Unmatched 1040 fields:', unmatched);
+      console.warn('Run "Log PDF field names" to see the real names in this PDF.');
+    }
+
+    const out = await doc.save();
+    downloadBlob(out, 'simplefile-1040-filled.pdf');
+  } catch(err){
+    alert('PDF generation failed: ' + err.message);
+    console.error(err);
+  }
+}
+
+async function downloadFilledCA540(){
+  if(!lastCalc){ alert('Calculate first.'); return; }
+  try {
+    await ensurePdfLib();
+    const doc = await loadPdfDoc('./ca540.pdf');
+    const form = doc.getForm();
+    const c = lastCalc;
+
+    const unmatched = [];
+    const attempt = (label, candidates, value) => {
+      if(!trySetText(form, candidates, value)) unmatched.push(`${label} → ${candidates.join(', ')}`);
+    };
+
+    // CA 540 field names (guesses — will refine after listPdfFields run)
+    attempt('Line 12 CA wages',      ['topmostSubform[0].Page1[0].f1_12[0]'], rd(c.caWages));
+    attempt('Line 18 CA std ded',    ['topmostSubform[0].Page1[0].f1_18[0]'], rd(c.caStd));
+    attempt('Line 19 CA taxable',    ['topmostSubform[0].Page1[0].f1_19[0]'], rd(c.caTaxable));
+    attempt('Line 31 CA tax',        ['topmostSubform[0].Page2[0].f2_31[0]'], rd(c.caTax));
+    attempt('Line 71 CA withheld',   ['topmostSubform[0].Page3[0].f3_71[0]'], rd(c.caWith));
+    attempt('Line 74 SDI excess',    ['topmostSubform[0].Page3[0].f3_74[0]'], rd(c.sdi));
+
+    if(c.caNet >= 0){
+      attempt('CA refund (line 115)', ['topmostSubform[0].Page3[0].f3_115[0]'], rd(c.caNet));
+    } else {
+      attempt('CA amount owed (line 111)', ['topmostSubform[0].Page3[0].f3_111[0]'], rd(-c.caNet));
+    }
+
+    if(unmatched.length){
+      console.warn('Unmatched CA 540 fields:', unmatched);
+      console.warn('Run "Log PDF field names" to see the real names in this PDF.');
+    }
+
+    const out = await doc.save();
+    downloadBlob(out, 'simplefile-ca540-filled.pdf');
+  } catch(err){
+    alert('CA PDF generation failed: ' + err.message);
+    console.error(err);
+  }
+}
+
+// ─── DRAG & DROP ─────────────────────────────────────────────────────────────
+
+const zone = document.getElementById('drop_zone');
+zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag'); });
+zone.addEventListener('dragleave', () => zone.classList.remove('drag'));
+zone.addEventListener('drop', e => {
+  e.preventDefault();
+  zone.classList.remove('drag');
+  const file = e.dataTransfer.files[0];
+  if(file){
+    document.getElementById('w2_file').files = e.dataTransfer.files;
+    handleFile({target:{files:[file]}});
+  }
+});
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+loadKey();
+</script>
+</body>
+</html>
