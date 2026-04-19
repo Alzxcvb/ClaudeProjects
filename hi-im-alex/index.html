@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hi, I'm Alex — Your Claude Code Expert</title>
+<meta name="description" content="I help individuals and small businesses get Claude AI running and automate their workflows. Personalized setup, real results, taught at Network School.">
+<meta property="og:title" content="Hi, I'm Alex — Your Claude Code Expert">
+<meta property="og:description" content="I get Claude running for your business. Not theory — real workflows, real automation, real results.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hiimalex.ai">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E👋%3C/text%3E%3C/svg%3E">
+<style>
+  :root{
+    --bg:#0b0d10;
+    --bg-elev:#12161b;
+    --ink:#f5f6f7;
+    --ink-dim:#a8b0b8;
+    --line:#1f262e;
+    --accent:#ff7a1a;
+    --accent-soft:#ffb37a;
+    --radius:14px;
+    --maxw:880px;
+    --font:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",Roboto,sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased;line-height:1.55}
+  a{color:var(--accent-soft);text-decoration:none}
+  a:hover{color:var(--accent);text-decoration:underline}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  header.top{padding:22px 0;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(11,13,16,.85);backdrop-filter:blur(8px);z-index:10}
+  header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .brand{font-weight:700;letter-spacing:-.01em}
+  .brand .wave{display:inline-block;transform-origin:70% 70%;animation:wave 2.4s ease-in-out infinite}
+  @keyframes wave{0%,60%,100%{transform:rotate(0)}10%{transform:rotate(14deg)}20%{transform:rotate(-8deg)}30%{transform:rotate(14deg)}40%{transform:rotate(-4deg)}50%{transform:rotate(10deg)}}
+  .nav a{margin-left:18px;color:var(--ink-dim);font-size:14px}
+  .nav a:hover{color:var(--ink);text-decoration:none}
+  .hero{padding:72px 0 40px}
+  .eyebrow{display:inline-block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);background:rgba(255,122,26,.1);border:1px solid rgba(255,122,26,.25);padding:6px 10px;border-radius:999px;margin-bottom:20px}
+  h1{font-size:clamp(34px,5.2vw,56px);line-height:1.08;letter-spacing:-.02em;margin:0 0 16px;font-weight:800}
+  h1 .accent{color:var(--accent)}
+  .lede{font-size:clamp(17px,2.1vw,20px);color:var(--ink-dim);max-width:640px;margin:0 0 28px}
+  .cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 20px;border-radius:10px;font-weight:600;font-size:15px;border:1px solid transparent;transition:transform .08s ease,background .2s;cursor:pointer}
+  .btn:active{transform:translateY(1px)}
+  .btn-primary{background:var(--accent);color:#0b0d10}
+  .btn-primary:hover{background:var(--accent-soft);text-decoration:none}
+  .btn-secondary{background:transparent;color:var(--ink);border-color:var(--line)}
+  .btn-secondary:hover{border-color:var(--ink-dim);text-decoration:none}
+  .trust{margin-top:28px;font-size:14px;color:var(--ink-dim)}
+  .trust b{color:var(--ink);font-weight:600}
+  section{padding:56px 0;border-top:1px solid var(--line)}
+  h2{font-size:clamp(24px,3vw,32px);letter-spacing:-.01em;margin:0 0 10px;font-weight:700}
+  .section-lede{color:var(--ink-dim);max-width:620px;margin:0 0 32px}
+  .services{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .card{background:var(--bg-elev);border:1px solid var(--line);border-radius:var(--radius);padding:22px;transition:border-color .2s,transform .2s}
+  .card:hover{border-color:rgba(255,122,26,.4);transform:translateY(-2px)}
+  .card .tag{font-size:12px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;font-weight:600;margin-bottom:8px}
+  .card h3{margin:0 0 8px;font-size:18px;font-weight:700}
+  .card p{margin:0 0 12px;color:var(--ink-dim);font-size:14.5px}
+  .card .price{font-family:var(--mono);color:var(--ink);font-size:14px;border-top:1px solid var(--line);padding-top:12px;margin-top:12px}
+  @media(max-width:720px){.services{grid-template-columns:1fr}}
+  .pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
+  .pillar{background:var(--bg-elev);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+  .pillar b{display:block;color:var(--accent);font-size:13px;letter-spacing:.05em;text-transform:uppercase;margin-bottom:4px}
+  .pillar span{color:var(--ink-dim);font-size:14px}
+  @media(max-width:720px){.pillars{grid-template-columns:repeat(2,1fr)}}
+  .testimonials{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .quote{background:var(--bg-elev);border:1px solid var(--line);border-radius:var(--radius);padding:22px;color:var(--ink-dim);font-style:italic}
+  .quote.placeholder{border-style:dashed;color:#6b7480;text-align:center}
+  .quote cite{display:block;margin-top:12px;font-style:normal;color:var(--ink);font-weight:600;font-size:14px}
+  @media(max-width:720px){.testimonials{grid-template-columns:1fr}}
+  .book{background:linear-gradient(135deg,rgba(255,122,26,.08),rgba(255,122,26,.02));border:1px solid rgba(255,122,26,.25);border-radius:var(--radius);padding:32px;text-align:center}
+  .book h2{margin-bottom:10px}
+  .book p{color:var(--ink-dim);margin:0 auto 22px;max-width:520px}
+  footer{padding:40px 0 60px;color:var(--ink-dim);font-size:14px;border-top:1px solid var(--line)}
+  footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:center}
+  footer a{color:var(--ink-dim)}
+  footer a:hover{color:var(--ink)}
+  .social a{margin-left:14px;display:inline-flex;align-items:center;gap:6px}
+  .social svg{vertical-align:middle}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand"><span class="wave">👋</span> Hi, I'm Alex</div>
+    <nav class="nav">
+      <a href="#services">Services</a>
+      <a href="#proof">Why me</a>
+      <a href="#book">Book</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Claude Code Expert · Available Now</span>
+    <h1>I get <span class="accent">Claude</span> running for your business.</h1>
+    <p class="lede">Not theory — real workflows, real automation, real results. I help individuals and small businesses go from "I've heard of Claude" to "this just saved me 8 hours a week."</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://calendly.com/calendly-email-77tk/30min" target="_blank" rel="noopener">Book a call →</a>
+      <a class="btn btn-secondary" href="#services">See services</a>
+    </div>
+    <p class="trust">Taught <b>Claude Code</b> at <b>Network School</b> (Balaji Srinivasan's program) · Claude Certified Architect candidate</p>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <h2>What I do</h2>
+    <p class="section-lede">Pick the entry point that matches where you are. Every engagement ends with Claude actually running in your workflow — not a pile of notes.</p>
+    <div class="services">
+      <div class="card">
+        <div class="tag">Tier 1 · Most Popular</div>
+        <h3>Quick Start Session</h3>
+        <p>60–90 min 1:1. I install, configure, and walk you through a workflow that solves a real task you do every week. You leave with Claude working and a cheat sheet.</p>
+        <div class="price">$200 · prepaid</div>
+      </div>
+      <div class="card">
+        <div class="tag">Tier 2</div>
+        <h3>Workflow Audit &amp; Build</h3>
+        <p>Discovery call, written report with 3–5 automation recommendations, then I build 1–2 of them and train your team. Two weeks of email support included.</p>
+        <div class="price">$1,000 audit · $2,000 audit + build</div>
+      </div>
+      <div class="card">
+        <div class="tag">Tier 3</div>
+        <h3>Custom Builds &amp; Retainers</h3>
+        <p>For teams that need ongoing Claude expertise: custom agents, deeper automation, priority support. Starts with a paid discovery and scoped statement of work.</p>
+        <div class="price">From $2,500 · retainers from $500/mo</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="proof">
+  <div class="wrap">
+    <h2>Why me</h2>
+    <p class="section-lede">There are a lot of people talking about AI. I'm one of a small number worldwide who has installed, configured, and shipped real Claude Code solutions for non-technical businesses.</p>
+    <div class="pillars">
+      <div class="pillar"><b>Practical</b><span>I open a terminal and make it work.</span></div>
+      <div class="pillar"><b>Patient</b><span>I've taught complete beginners — no jargon.</span></div>
+      <div class="pillar"><b>Proven</b><span>Classes, installs, and builds at Network School.</span></div>
+      <div class="pillar"><b>Global</b><span>Works across cultures, countries, time zones.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="wrap">
+    <h2>What clients say</h2>
+    <p class="section-lede">Fresh out of the gate — more testimonials landing every week.</p>
+    <div class="testimonials">
+      <div class="quote placeholder">Your testimonial could go here.<br>Work with me and let's change that.</div>
+      <div class="quote placeholder">Client testimonial · coming soon</div>
+    </div>
+  </div>
+</section>
+
+<section id="book">
+  <div class="wrap">
+    <div class="book">
+      <h2>Ready to get Claude running?</h2>
+      <p>Pick a time that works for you. Sessions happen over Zoom, payment is prepaid via Stripe, and you'll have Claude working on your machine by the end of the call.</p>
+      <a class="btn btn-primary" href="https://calendly.com/calendly-email-77tk/30min" target="_blank" rel="noopener">Book a call →</a>
+      <p style="margin-top:18px;font-size:13px">Or email me: <a href="mailto:hiimalex.ai@email.acoffman.org">hiimalex.ai@email.acoffman.org</a></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>© <span id="yr"></span> Hi, I'm Alex · Wyoming LLC</div>
+    <div class="social">
+      <a href="https://www.linkedin.com/in/alexdcoffman/" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
+        LinkedIn
+      </a>
+      <a href="mailto:hiimalex.ai@email.acoffman.org">Email</a>
+    </div>
+  </div>
+</footer>
+
+<script>document.getElementById('yr').textContent=new Date().getFullYear()</script>
+</body>
+</html>
