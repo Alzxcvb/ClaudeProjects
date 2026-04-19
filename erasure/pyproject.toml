@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "erasure"
+version = "0.1.0"
+description = "Open-source data-broker opt-out tool"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [
+    {name = "Alexander Coffman", email = "claude.com@email.acoffman.org"}
+]
+keywords = ["data-broker", "privacy", "opt-out", "gdpr"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: MacOS",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Internet :: WWW/HTTP",
+]
+
+dependencies = [
+    "playwright>=1.40.0",
+    "pydantic>=2.0.0",
+    "keyring>=24.0.0",
+    "click>=8.1.0",
+    "rich>=13.0.0",
+    "httpx>=0.25.0",
+    "pyyaml>=6.0",
+    "pytest>=7.4.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest-cov>=4.1.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+]
+
+[project.scripts]
+erasure = "erasure.cli:cli"
+
+[tool.setuptools]
+packages = ["erasure", "erasure.brokers", "erasure.browser", "erasure.drop", "erasure.verify", "erasure.legal", "erasure.scheduler", "erasure.report"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"
+python_files = ["test_*.py", "*_test.py"]
