@@ -1,7 +1,13 @@
 # Secret / Private projects — never push to public ClaudeProjects repo
 project-second-citizenship.md
+project-second-citizenship*
+second-citizenship-*
+market-timing-research/
 R-Bourne-FVG-Trading/
 Richard-Trading-Bot/
+
+# Session state — local only
+session_recovery_summary_*.md
 
 # Personal context file — sensitive, local only
 memory-master-file.md
