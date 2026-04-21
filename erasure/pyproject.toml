@@ -46,7 +46,7 @@ dev = [
 erasure = "erasure.cli:cli"
 
 [tool.setuptools]
-packages = ["erasure", "erasure.brokers", "erasure.browser", "erasure.drop", "erasure.verify", "erasure.legal", "erasure.scheduler", "erasure.report"]
+packages = ["erasure", "erasure.accounts", "erasure.brokers", "erasure.browser", "erasure.drop", "erasure.verify", "erasure.legal", "erasure.scheduler", "erasure.report"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

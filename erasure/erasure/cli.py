@@ -320,6 +320,53 @@ def drop_submit(profile_path, confirm):
     ))
 
 
+@cli.group()
+def accounts():
+    """Account-exposure scanning via Sherlock (install: `pipx install sherlock-project`)."""
+    pass
+
+
+@accounts.command("find")
+@click.argument("username")
+@click.option("--timeout-per-site", type=int, default=15, help="Per-site request timeout in seconds (default: 15)")
+@click.option("--overall-timeout", type=int, default=900, help="Overall timeout for the Sherlock run in seconds (default: 900)")
+def accounts_find(username, timeout_per_site, overall_timeout):
+    """Scan 400+ social networks for USERNAME and save results to state/accounts/."""
+    from erasure.accounts.sherlock import (
+        SherlockFailed,
+        SherlockNotInstalled,
+        scan_username,
+    )
+
+    try:
+        path = scan_username(
+            username,
+            timeout_per_site=timeout_per_site,
+            overall_timeout=overall_timeout,
+        )
+    except SherlockNotInstalled as exc:
+        console.print(f"[red]{exc}[/red]")
+        sys.exit(1)
+    except SherlockFailed as exc:
+        console.print(f"[red]Sherlock failed:[/red]\n{exc}")
+        sys.exit(1)
+    except ValueError as exc:
+        console.print(f"[red]{exc}[/red]")
+        sys.exit(1)
+
+    import json as _json
+
+    data = _json.loads(path.read_text(encoding="utf-8"))
+    console.print(Panel(
+        f"[bold]Account scan complete[/bold]\n\n"
+        f"Username: [cyan]{data['username']}[/cyan]\n"
+        f"Hits: [bold]{data['found_count']}[/bold]\n"
+        f"Manifest: {path}",
+        title="erasure accounts find",
+        expand=False,
+    ))
+
+
 @drop.command("status")
 def drop_status():
     """List DROP submission receipts."""
