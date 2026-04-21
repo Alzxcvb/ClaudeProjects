@@ -13,11 +13,19 @@ from erasure.accounts.sherlock import (
     ACCOUNTS_DIR,
     SherlockFailed,
     SherlockNotInstalled,
+    parse_csv_found,
     parse_found,
     run_sherlock,
     save_manifest,
     scan_username,
 )
+
+
+def _write_csv(path: Path, headers: list[str], rows: list[list[str]]) -> None:
+    lines = [",".join(headers)]
+    for row in rows:
+        lines.append(",".join(row))
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 SAMPLE_STDOUT = """\
@@ -82,16 +90,22 @@ def test_run_sherlock_passes_expected_flags(tmp_path, monkeypatch):
         captured["kwargs"] = kwargs
         return SimpleNamespace(stdout=SAMPLE_STDOUT, returncode=0)
 
-    stdout, rc = run_sherlock("alex", timeout_per_site=7, overall_timeout=60, _runner=_runner)
+    stdout, rc, csv_bytes = run_sherlock("alex", timeout_per_site=7, overall_timeout=60, _runner=_runner)
     assert rc == 0
     assert "alex" in captured["cmd"]
     assert "--print-found" in captured["cmd"]
     assert "--no-color" in captured["cmd"]
+    assert "--csv" in captured["cmd"]
     assert "--timeout" in captured["cmd"]
     assert "7" in captured["cmd"]
+    # cwd is set so Sherlock's incidental files don't pollute the user's working dir
+    assert "cwd" in captured["kwargs"]
+    assert captured["kwargs"]["cwd"] != str(tmp_path)
     # --output should point inside a temp dir (not CWD) so we don't litter the workdir
     i = captured["cmd"].index("--output")
     assert str(tmp_path) not in captured["cmd"][i + 1]
+    # No CSV file was created in the mocked runner, so csv_bytes is None
+    assert csv_bytes is None
 
 
 def test_save_manifest_writes_json(tmp_path):
@@ -137,3 +151,108 @@ def test_scan_username_empty_hits_with_zero_exit_is_fine(tmp_path, monkeypatch):
     path = scan_username("alex", _runner=_runner)
     data = json.loads(path.read_text(encoding="utf-8"))
     assert data["found_count"] == 0
+
+
+# ---- CSV parser tests -----------------------------------------------------
+
+
+def test_parse_csv_found_happy_path(tmp_path):
+    csv_path = tmp_path / "alex.csv"
+    _write_csv(
+        csv_path,
+        ["name", "url_user", "exists"],
+        [
+            ["GitHub", "https://github.com/alex", "Claimed"],
+            ["Twitter", "https://twitter.com/alex", "Claimed"],
+            ["Reddit", "https://reddit.com/u/alex", "Available"],
+        ],
+    )
+    hits = parse_csv_found(csv_path)
+    assert len(hits) == 2
+    assert hits[0].site == "GitHub"
+    assert hits[0].url == "https://github.com/alex"
+    assert all("Reddit" not in h.site for h in hits)
+
+
+def test_parse_csv_found_alias_fallback(tmp_path):
+    # Sherlock renames url_user → profile_url; we should still pick it up
+    csv_path = tmp_path / "alex.csv"
+    _write_csv(
+        csv_path,
+        ["site_name", "profile_url", "status"],
+        [["GitHub", "https://github.com/alex", "found"]],
+    )
+    hits = parse_csv_found(csv_path)
+    assert len(hits) == 1
+    assert hits[0].site == "GitHub"
+
+
+def test_parse_csv_found_no_filter_column_keeps_all(tmp_path):
+    # --print-found means the file only holds hits; no found/exists column present
+    csv_path = tmp_path / "alex.csv"
+    _write_csv(
+        csv_path,
+        ["name", "url"],
+        [["GitHub", "https://github.com/alex"], ["Twitter", "https://twitter.com/alex"]],
+    )
+    hits = parse_csv_found(csv_path)
+    assert len(hits) == 2
+
+
+def test_parse_csv_found_raises_on_missing_site_column(tmp_path):
+    csv_path = tmp_path / "alex.csv"
+    _write_csv(
+        csv_path,
+        ["platform", "url_user"],
+        [["GitHub", "https://github.com/alex"]],
+    )
+    with pytest.raises(ValueError, match="site column"):
+        parse_csv_found(csv_path)
+
+
+def test_parse_csv_found_raises_on_missing_url_column(tmp_path):
+    csv_path = tmp_path / "alex.csv"
+    _write_csv(
+        csv_path,
+        ["name", "link"],
+        [["GitHub", "https://github.com/alex"]],
+    )
+    with pytest.raises(ValueError, match="URL column"):
+        parse_csv_found(csv_path)
+
+
+def test_scan_username_prefers_csv_when_available(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+
+    def _runner(cmd, **kwargs):
+        # Simulate sherlock writing a CSV into its cwd (the temp dir it was given)
+        cwd = Path(kwargs["cwd"])
+        csv_file = cwd / "alex.csv"
+        csv_file.write_text(
+            "name,url_user,exists\n"
+            "Mastodon,https://mastodon.social/@alex,Claimed\n",
+            encoding="utf-8",
+        )
+        # Stdout deliberately reports a different site to prove CSV wins
+        return SimpleNamespace(stdout="[+] GitHub: https://github.com/alex\n", returncode=0)
+
+    path = scan_username("alex", _runner=_runner)
+    data = json.loads(path.read_text(encoding="utf-8"))
+    assert data["parse_source"] == "csv"
+    assert data["found_count"] == 1
+    assert data["hits"][0]["site"] == "Mastodon"
+
+
+def test_scan_username_falls_back_to_stdout_on_bad_csv(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+
+    def _runner(cmd, **kwargs):
+        # Unrecognized headers → parse_csv_found raises, stdout parser takes over
+        cwd = Path(kwargs["cwd"])
+        (cwd / "alex.csv").write_text("platform,link\nFoo,http://x\n", encoding="utf-8")
+        return SimpleNamespace(stdout=SAMPLE_STDOUT, returncode=0)
+
+    path = scan_username("alex", _runner=_runner)
+    data = json.loads(path.read_text(encoding="utf-8"))
+    assert data["parse_source"] == "stdout"
+    assert data["found_count"] == 3

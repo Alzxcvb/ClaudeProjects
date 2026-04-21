@@ -20,3 +20,4 @@ class AccountsManifest(BaseModel):
     found_count: int
     hits: List[AccountHit]
     sherlock_version: Optional[str] = None
+    parse_source: Optional[str] = None  # "csv" | "stdout" | None — which parser produced the hits
