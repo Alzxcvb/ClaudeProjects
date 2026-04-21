@@ -11,6 +11,7 @@ import pytest
 from erasure.report.html import (
     DASHBOARD_TEMPLATE,
     _EVIDENCE_MARKER,
+    latest_accounts_path,
     latest_receipt_path,
     latest_scan_path,
     latest_verify_path,
@@ -162,6 +163,47 @@ def test_latest_helpers_return_none_when_missing(tmp_path, monkeypatch):
     assert latest_scan_path() is None
     assert latest_receipt_path() is None
     assert latest_verify_path() is None
+    assert latest_accounts_path() is None
+
+
+def test_render_dashboard_with_accounts(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    scan_path = tmp_path / "scan.json"
+    scan_path.write_text(json.dumps(_scan_payload("scan_1", [_row("Spokeo", True)])), encoding="utf-8")
+
+    accounts_path = tmp_path / "accounts.json"
+    accounts_path.write_text(json.dumps({
+        "scan_id": "accounts_20260421T120000Z",
+        "username": "alex",
+        "generated_at": "2026-04-21T12:00:00Z",
+        "found_count": 2,
+        "hits": [
+            {"site": "GitHub", "url": "https://github.com/alex"},
+            {"site": "Twitter", "url": "https://twitter.com/alex"},
+        ],
+    }), encoding="utf-8")
+
+    out = render_dashboard(
+        profile_name="Test User",
+        scan_path=scan_path,
+        accounts_path=accounts_path,
+    )
+    content = out.read_text(encoding="utf-8")
+    assert "Account exposure" in content
+    assert "Sherlock" in content
+    assert "2 accounts found" in content
+    assert "https://github.com/alex" in content
+    assert "https://twitter.com/alex" in content
+
+
+def test_render_dashboard_without_accounts_omits_card(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    scan_path = tmp_path / "scan.json"
+    scan_path.write_text(json.dumps(_scan_payload("scan_1", [_row("A", True)])), encoding="utf-8")
+
+    out = render_dashboard(profile_name="T", scan_path=scan_path)
+    content = out.read_text(encoding="utf-8")
+    assert "Account exposure" not in content
 
 
 def test_latest_scan_picks_most_recent(tmp_path, monkeypatch):

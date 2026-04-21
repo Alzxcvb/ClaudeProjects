@@ -187,6 +187,11 @@ def latest_verify_path() -> Optional[Path]:
     return _latest(VERIFY_DIR, "verify_*.json")
 
 
+def latest_accounts_path() -> Optional[Path]:
+    from erasure.accounts.sherlock import ACCOUNTS_DIR
+    return _latest(ACCOUNTS_DIR, "accounts_*.json")
+
+
 def _render_evidence_block(
     *,
     profile_name: str,
@@ -194,6 +199,7 @@ def _render_evidence_block(
     scan_rel_dir: Path,
     receipt: Optional[dict],
     verify: Optional[dict],
+    accounts: Optional[dict],
     stamp: str,
 ) -> str:
     """Build the dark-themed evidence block injected into the dashboard template."""
@@ -240,6 +246,42 @@ def _render_evidence_block(
         </div>
         """
 
+    accounts_card = ""
+    accounts_details = ""
+    if accounts:
+        account_hits = accounts.get("hits", [])
+        hit_rows = []
+        for h in account_hits[:50]:
+            hit_rows.append(
+                f"<tr>"
+                f"<td>{esc(h['site'])}</td>"
+                f'<td><a href="{esc(h["url"])}" target="_blank" rel="noopener">{esc(h["url"])}</a></td>'
+                f"</tr>"
+            )
+        acct_truncated = ""
+        if len(account_hits) > 50:
+            acct_truncated = f'<p class="ev-muted">Showing top 50 of {len(account_hits)}.</p>'
+        accounts_card = f"""
+        <div class="ev-card">
+          <h3>Account exposure (Sherlock)</h3>
+          <p class="ev-muted">Username <code>{esc(accounts.get("username", "—"))}</code></p>
+          <div class="ev-stats">
+            <span class="ev-stat ev-persistent">{accounts.get("found_count", 0)} accounts found</span>
+          </div>
+        </div>
+        """
+        if account_hits:
+            accounts_details = f"""
+    <details class="ev-details">
+        <summary>Sherlock hits ({len(account_hits)})</summary>
+        <table class="ev-table">
+            <thead><tr><th>Site</th><th>URL</th></tr></thead>
+            <tbody>{''.join(hit_rows)}</tbody>
+        </table>
+        {acct_truncated}
+    </details>
+"""
+
     verify_card = ""
     if verify:
         verify_card = f"""
@@ -274,6 +316,7 @@ def _render_evidence_block(
         </div>
         {drop_card}
         {verify_card}
+        {accounts_card}
     </div>
 
     <details class="ev-details" open>
@@ -284,6 +327,7 @@ def _render_evidence_block(
         </table>
         {truncated_note}
     </details>
+    {accounts_details}
 </div>
 
 <style>
@@ -325,6 +369,7 @@ def render_dashboard(
     scan_path: Path,
     drop_receipt_path: Optional[Path] = None,
     verify_path: Optional[Path] = None,
+    accounts_path: Optional[Path] = None,
     out_path: Optional[Path] = None,
     template_path: Optional[Path] = None,
 ) -> Path:
@@ -345,6 +390,7 @@ def render_dashboard(
     scan = json.loads(scan_path.read_text(encoding="utf-8"))
     receipt = json.loads(drop_receipt_path.read_text(encoding="utf-8")) if drop_receipt_path else None
     verify = json.loads(verify_path.read_text(encoding="utf-8")) if verify_path else None
+    accounts = json.loads(accounts_path.read_text(encoding="utf-8")) if accounts_path else None
 
     evidence_html = _render_evidence_block(
         profile_name=profile_name,
@@ -352,6 +398,7 @@ def render_dashboard(
         scan_rel_dir=out.parent,
         receipt=receipt,
         verify=verify,
+        accounts=accounts,
         stamp=stamp,
     )
 

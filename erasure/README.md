@@ -64,6 +64,14 @@ Submit automated opt-out requests to identified brokers using headless browser a
 erasure opt-out [--brokers LIST] [--dry-run]
 ```
 
+### `erasure accounts find`
+Scan 400+ social networks for a username via the [Sherlock](https://github.com/sherlock-project/sherlock) OSINT tool. Erasure runs Sherlock as an external subprocess — install it separately with `pipx install sherlock-project` to keep its dependency tree (pandas, numpy, openpyxl) out of Erasure's environment. Results are persisted as an `AccountsManifest` JSON in `state/accounts/` and show up in `erasure report --dashboard`.
+
+**Usage:**
+```bash
+erasure accounts find USERNAME [--timeout-per-site SECONDS] [--overall-timeout SECONDS]
+```
+
 ### `erasure report`
 Generate a compliance report with scan results, opt-out status, and evidence artifacts.
 

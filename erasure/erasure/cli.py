@@ -217,6 +217,7 @@ def report(profile_path, scan_id, drop_receipt, verify_file, output_path, dashbo
         latest_scan_path,
         latest_receipt_path,
         latest_verify_path,
+        latest_accounts_path,
     )
 
     target = Path(profile_path) if profile_path else DEFAULT_PROFILE_PATH
@@ -230,18 +231,21 @@ def report(profile_path, scan_id, drop_receipt, verify_file, output_path, dashbo
             sys.exit(1)
         receipt_path = Path(drop_receipt) if drop_receipt else latest_receipt_path()
         verify_path_resolved = Path(verify_file) if verify_file else latest_verify_path()
+        accounts_path_resolved = latest_accounts_path()
         out = render_dashboard(
             profile_name=profile_name,
             scan_path=scan_path,
             drop_receipt_path=receipt_path,
             verify_path=verify_path_resolved,
+            accounts_path=accounts_path_resolved,
             out_path=Path(output_path) if output_path else None,
         )
         console.print(Panel(
             f"[green]Dashboard written:[/green] {out}\n\n"
-            f"Scan:    {scan_path}\n"
-            f"Receipt: {receipt_path or '—'}\n"
-            f"Verify:  {verify_path_resolved or '—'}\n\n"
+            f"Scan:     {scan_path}\n"
+            f"Receipt:  {receipt_path or '—'}\n"
+            f"Verify:   {verify_path_resolved or '—'}\n"
+            f"Accounts: {accounts_path_resolved or '—'}\n\n"
             f"[dim]Open in a browser: file://{out.resolve()}[/dim]",
             title="erasure report --dashboard",
             expand=False,
