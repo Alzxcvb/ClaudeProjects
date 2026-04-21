@@ -72,6 +72,23 @@ Scan 400+ social networks for a username via the [Sherlock](https://github.com/s
 erasure accounts find USERNAME [--timeout-per-site SECONDS] [--overall-timeout SECONDS]
 ```
 
+### `erasure breaches check`
+Check whether an email address appears in any known data breach via [HaveIBeenPwned](https://haveibeenpwned.com). Requires a HIBP API key (`$3.95/mo` minimum) — get one at [haveibeenpwned.com/API/Key](https://haveibeenpwned.com/API/Key) and export `HIBP_API_KEY`. Results persist as a `BreachesManifest` JSON in `state/breaches/` and show up in `erasure report --dashboard`.
+
+**Usage:**
+```bash
+export HIBP_API_KEY=your-key-here
+erasure breaches check EMAIL
+```
+
+### `erasure emails find`
+Scan 120+ sites to see where an email address has been used to sign up, via the [holehe](https://github.com/megadose/holehe) OSINT tool. Install it separately with `pipx install holehe`. Results persist as an `EmailsManifest` JSON in `state/emails/` and show up in `erasure report --dashboard`.
+
+**Usage:**
+```bash
+erasure emails find EMAIL [--overall-timeout SECONDS]
+```
+
 ### `erasure report`
 Generate a compliance report with scan results, opt-out status, and evidence artifacts.
 

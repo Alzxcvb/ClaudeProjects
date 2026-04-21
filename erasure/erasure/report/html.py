@@ -192,6 +192,16 @@ def latest_accounts_path() -> Optional[Path]:
     return _latest(ACCOUNTS_DIR, "accounts_*.json")
 
 
+def latest_breaches_path() -> Optional[Path]:
+    from erasure.breaches.hibp import BREACHES_DIR
+    return _latest(BREACHES_DIR, "breaches_*.json")
+
+
+def latest_emails_path() -> Optional[Path]:
+    from erasure.emails.holehe import EMAILS_DIR
+    return _latest(EMAILS_DIR, "emails_*.json")
+
+
 def _render_evidence_block(
     *,
     profile_name: str,
@@ -200,6 +210,8 @@ def _render_evidence_block(
     receipt: Optional[dict],
     verify: Optional[dict],
     accounts: Optional[dict],
+    breaches: Optional[dict],
+    emails: Optional[dict],
     stamp: str,
 ) -> str:
     """Build the dark-themed evidence block injected into the dashboard template."""
@@ -282,6 +294,84 @@ def _render_evidence_block(
     </details>
 """
 
+    breaches_card = ""
+    breaches_details = ""
+    if breaches:
+        breach_list = breaches.get("breaches", [])
+        b_rows = []
+        for b in breach_list[:50]:
+            classes = ", ".join(b.get("data_classes") or []) or "—"
+            domain = b.get("domain") or ""
+            b_rows.append(
+                f"<tr>"
+                f"<td>{esc(b.get('title') or b.get('name', ''))}</td>"
+                f"<td>{esc(domain)}</td>"
+                f"<td>{esc(b.get('breach_date') or '—')}</td>"
+                f"<td>{esc(classes)}</td>"
+                f"</tr>"
+            )
+        b_truncated = ""
+        if len(breach_list) > 50:
+            b_truncated = f'<p class="ev-muted">Showing top 50 of {len(breach_list)}.</p>'
+        breaches_card = f"""
+        <div class="ev-card">
+          <h3>Data breaches (HIBP)</h3>
+          <p class="ev-muted">Email <code>{esc(breaches.get("email", "—"))}</code></p>
+          <div class="ev-stats">
+            <span class="ev-stat ev-persistent">{breaches.get("found_count", 0)} breaches</span>
+          </div>
+        </div>
+        """
+        if breach_list:
+            breaches_details = f"""
+    <details class="ev-details">
+        <summary>HIBP breaches ({len(breach_list)})</summary>
+        <table class="ev-table">
+            <thead><tr><th>Breach</th><th>Domain</th><th>Date</th><th>Data classes</th></tr></thead>
+            <tbody>{''.join(b_rows)}</tbody>
+        </table>
+        {b_truncated}
+    </details>
+"""
+
+    emails_card = ""
+    emails_details = ""
+    if emails:
+        email_hits = emails.get("hits", [])
+        e_rows = []
+        for h in email_hits[:50]:
+            url = h.get("url") or ""
+            url_cell = (
+                f'<a href="{esc(url)}" target="_blank" rel="noopener">{esc(url)}</a>'
+                if url else "—"
+            )
+            e_rows.append(
+                f"<tr><td>{esc(h['site'])}</td><td>{url_cell}</td></tr>"
+            )
+        e_truncated = ""
+        if len(email_hits) > 50:
+            e_truncated = f'<p class="ev-muted">Showing top 50 of {len(email_hits)}.</p>'
+        emails_card = f"""
+        <div class="ev-card">
+          <h3>Email exposure (holehe)</h3>
+          <p class="ev-muted">Email <code>{esc(emails.get("email", "—"))}</code></p>
+          <div class="ev-stats">
+            <span class="ev-stat ev-persistent">{emails.get("found_count", 0)} sites</span>
+          </div>
+        </div>
+        """
+        if email_hits:
+            emails_details = f"""
+    <details class="ev-details">
+        <summary>holehe hits ({len(email_hits)})</summary>
+        <table class="ev-table">
+            <thead><tr><th>Site</th><th>URL</th></tr></thead>
+            <tbody>{''.join(e_rows)}</tbody>
+        </table>
+        {e_truncated}
+    </details>
+"""
+
     verify_card = ""
     if verify:
         verify_card = f"""
@@ -317,6 +407,8 @@ def _render_evidence_block(
         {drop_card}
         {verify_card}
         {accounts_card}
+        {breaches_card}
+        {emails_card}
     </div>
 
     <details class="ev-details" open>
@@ -328,6 +420,8 @@ def _render_evidence_block(
         {truncated_note}
     </details>
     {accounts_details}
+    {breaches_details}
+    {emails_details}
 </div>
 
 <style>
@@ -370,6 +464,8 @@ def render_dashboard(
     drop_receipt_path: Optional[Path] = None,
     verify_path: Optional[Path] = None,
     accounts_path: Optional[Path] = None,
+    breaches_path: Optional[Path] = None,
+    emails_path: Optional[Path] = None,
     out_path: Optional[Path] = None,
     template_path: Optional[Path] = None,
 ) -> Path:
@@ -391,6 +487,8 @@ def render_dashboard(
     receipt = json.loads(drop_receipt_path.read_text(encoding="utf-8")) if drop_receipt_path else None
     verify = json.loads(verify_path.read_text(encoding="utf-8")) if verify_path else None
     accounts = json.loads(accounts_path.read_text(encoding="utf-8")) if accounts_path else None
+    breaches = json.loads(breaches_path.read_text(encoding="utf-8")) if breaches_path else None
+    emails = json.loads(emails_path.read_text(encoding="utf-8")) if emails_path else None
 
     evidence_html = _render_evidence_block(
         profile_name=profile_name,
@@ -399,6 +497,8 @@ def render_dashboard(
         receipt=receipt,
         verify=verify,
         accounts=accounts,
+        breaches=breaches,
+        emails=emails,
         stamp=stamp,
     )
 

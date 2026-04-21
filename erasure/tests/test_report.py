@@ -12,6 +12,8 @@ from erasure.report.html import (
     DASHBOARD_TEMPLATE,
     _EVIDENCE_MARKER,
     latest_accounts_path,
+    latest_breaches_path,
+    latest_emails_path,
     latest_receipt_path,
     latest_scan_path,
     latest_verify_path,
@@ -164,6 +166,8 @@ def test_latest_helpers_return_none_when_missing(tmp_path, monkeypatch):
     assert latest_receipt_path() is None
     assert latest_verify_path() is None
     assert latest_accounts_path() is None
+    assert latest_breaches_path() is None
+    assert latest_emails_path() is None
 
 
 def test_render_dashboard_with_accounts(tmp_path, monkeypatch):
@@ -204,6 +208,63 @@ def test_render_dashboard_without_accounts_omits_card(tmp_path, monkeypatch):
     out = render_dashboard(profile_name="T", scan_path=scan_path)
     content = out.read_text(encoding="utf-8")
     assert "Account exposure" not in content
+
+
+def test_render_dashboard_with_breaches_and_emails(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    scan_path = tmp_path / "scan.json"
+    scan_path.write_text(json.dumps(_scan_payload("scan_1", [_row("Spokeo", True)])), encoding="utf-8")
+
+    breaches_path = tmp_path / "breaches.json"
+    breaches_path.write_text(json.dumps({
+        "scan_id": "breaches_20260421T120000Z",
+        "email": "alex@example.com",
+        "generated_at": "2026-04-21T12:00:00Z",
+        "found_count": 2,
+        "source": "hibp",
+        "breaches": [
+            {"name": "LinkedIn", "title": "LinkedIn", "domain": "linkedin.com",
+             "breach_date": "2012-05-05", "pwn_count": 164000000, "data_classes": ["Emails"]},
+            {"name": "Adobe", "title": "Adobe", "domain": "adobe.com",
+             "breach_date": "2013-10-04", "pwn_count": 152000000, "data_classes": ["Passwords"]},
+        ],
+    }), encoding="utf-8")
+
+    emails_path = tmp_path / "emails.json"
+    emails_path.write_text(json.dumps({
+        "scan_id": "emails_20260421T120000Z",
+        "email": "alex@example.com",
+        "generated_at": "2026-04-21T12:00:00Z",
+        "found_count": 2,
+        "source": "holehe",
+        "hits": [{"site": "github.com"}, {"site": "twitter.com"}],
+    }), encoding="utf-8")
+
+    out = render_dashboard(
+        profile_name="Test User",
+        scan_path=scan_path,
+        breaches_path=breaches_path,
+        emails_path=emails_path,
+    )
+    content = out.read_text(encoding="utf-8")
+    assert "Data breaches (HIBP)" in content
+    assert "2 breaches" in content
+    assert "LinkedIn" in content
+    assert "Adobe" in content
+    assert "Email exposure (holehe)" in content
+    assert "2 sites" in content
+    assert "github.com" in content
+
+
+def test_render_dashboard_without_breaches_and_emails_omits_cards(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    scan_path = tmp_path / "scan.json"
+    scan_path.write_text(json.dumps(_scan_payload("scan_1", [_row("A", True)])), encoding="utf-8")
+
+    out = render_dashboard(profile_name="T", scan_path=scan_path)
+    content = out.read_text(encoding="utf-8")
+    assert "Data breaches (HIBP)" not in content
+    assert "Email exposure (holehe)" not in content
 
 
 def test_latest_scan_picks_most_recent(tmp_path, monkeypatch):

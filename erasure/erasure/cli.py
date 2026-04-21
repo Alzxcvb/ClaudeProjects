@@ -218,6 +218,8 @@ def report(profile_path, scan_id, drop_receipt, verify_file, output_path, dashbo
         latest_receipt_path,
         latest_verify_path,
         latest_accounts_path,
+        latest_breaches_path,
+        latest_emails_path,
     )
 
     target = Path(profile_path) if profile_path else DEFAULT_PROFILE_PATH
@@ -232,12 +234,16 @@ def report(profile_path, scan_id, drop_receipt, verify_file, output_path, dashbo
         receipt_path = Path(drop_receipt) if drop_receipt else latest_receipt_path()
         verify_path_resolved = Path(verify_file) if verify_file else latest_verify_path()
         accounts_path_resolved = latest_accounts_path()
+        breaches_path_resolved = latest_breaches_path()
+        emails_path_resolved = latest_emails_path()
         out = render_dashboard(
             profile_name=profile_name,
             scan_path=scan_path,
             drop_receipt_path=receipt_path,
             verify_path=verify_path_resolved,
             accounts_path=accounts_path_resolved,
+            breaches_path=breaches_path_resolved,
+            emails_path=emails_path_resolved,
             out_path=Path(output_path) if output_path else None,
         )
         console.print(Panel(
@@ -245,7 +251,9 @@ def report(profile_path, scan_id, drop_receipt, verify_file, output_path, dashbo
             f"Scan:     {scan_path}\n"
             f"Receipt:  {receipt_path or '—'}\n"
             f"Verify:   {verify_path_resolved or '—'}\n"
-            f"Accounts: {accounts_path_resolved or '—'}\n\n"
+            f"Accounts: {accounts_path_resolved or '—'}\n"
+            f"Breaches: {breaches_path_resolved or '—'}\n"
+            f"Emails:   {emails_path_resolved or '—'}\n\n"
             f"[dim]Open in a browser: file://{out.resolve()}[/dim]",
             title="erasure report --dashboard",
             expand=False,
@@ -367,6 +375,89 @@ def accounts_find(username, timeout_per_site, overall_timeout):
         f"Hits: [bold]{data['found_count']}[/bold]\n"
         f"Manifest: {path}",
         title="erasure accounts find",
+        expand=False,
+    ))
+
+
+@cli.group()
+def breaches():
+    """Data-breach exposure checks via HaveIBeenPwned (requires HIBP_API_KEY)."""
+    pass
+
+
+@breaches.command("check")
+@click.argument("email")
+def breaches_check(email):
+    """Check EMAIL against HaveIBeenPwned. Saves manifest to state/breaches/."""
+    from erasure.breaches.hibp import (
+        HIBPFailed,
+        HIBPNotConfigured,
+        HIBPRateLimited,
+        check_and_save,
+    )
+
+    try:
+        path = check_and_save(email)
+    except HIBPNotConfigured as exc:
+        console.print(f"[red]{exc}[/red]")
+        sys.exit(1)
+    except HIBPRateLimited as exc:
+        console.print(f"[yellow]{exc}[/yellow]")
+        sys.exit(2)
+    except HIBPFailed as exc:
+        console.print(f"[red]HIBP failed:[/red] {exc}")
+        sys.exit(1)
+    except ValueError as exc:
+        console.print(f"[red]{exc}[/red]")
+        sys.exit(1)
+
+    data = json.loads(path.read_text(encoding="utf-8"))
+    console.print(Panel(
+        f"[bold]Breach check complete[/bold]\n\n"
+        f"Email: [cyan]{data['email']}[/cyan]\n"
+        f"Breaches: [bold]{data['found_count']}[/bold]\n"
+        f"Manifest: {path}",
+        title="erasure breaches check",
+        expand=False,
+    ))
+
+
+@cli.group()
+def emails():
+    """Email-registration scanning via holehe (install: `pipx install holehe`)."""
+    pass
+
+
+@emails.command("find")
+@click.argument("email")
+@click.option("--overall-timeout", type=int, default=900, help="Overall timeout in seconds (default: 900)")
+def emails_find(email, overall_timeout):
+    """Scan sites for EMAIL registrations and save results to state/emails/."""
+    from erasure.emails.holehe import (
+        HoleheFailed,
+        HoleheNotInstalled,
+        scan_email,
+    )
+
+    try:
+        path = scan_email(email, overall_timeout=overall_timeout)
+    except HoleheNotInstalled as exc:
+        console.print(f"[red]{exc}[/red]")
+        sys.exit(1)
+    except HoleheFailed as exc:
+        console.print(f"[red]holehe failed:[/red]\n{exc}")
+        sys.exit(1)
+    except ValueError as exc:
+        console.print(f"[red]{exc}[/red]")
+        sys.exit(1)
+
+    data = json.loads(path.read_text(encoding="utf-8"))
+    console.print(Panel(
+        f"[bold]Email scan complete[/bold]\n\n"
+        f"Email: [cyan]{data['email']}[/cyan]\n"
+        f"Hits: [bold]{data['found_count']}[/bold]\n"
+        f"Manifest: {path}",
+        title="erasure emails find",
         expand=False,
     ))
 
