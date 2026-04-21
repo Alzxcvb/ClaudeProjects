@@ -462,6 +462,35 @@ def emails_find(email, overall_timeout):
     ))
 
 
+@drop.command("residency-review")
+@click.option("--profile", "profile_path", required=True, type=click.Path(exists=True))
+@click.option(
+    "--reason",
+    default=(
+        "I am a California resident. The Identity Gateway could not verify "
+        "my identity automatically. Please review my residency and process "
+        "my deletion request under CCPA §1798.105."
+    ),
+    help="Text to enter into the 'How can we help?' field.",
+)
+def drop_residency_review(profile_path, reason):
+    """File the CA DROP residency-review fallback form."""
+    import asyncio
+    from erasure.drop.client import DropClient
+    from erasure.profile import UserProfile
+
+    profile = UserProfile.model_validate_json(open(profile_path).read())
+    receipt = asyncio.run(DropClient().file_residency_review(profile, reason=reason))
+    console.print(Panel(
+        f"[bold]Residency review submitted[/bold]\n\n"
+        f"ID: {receipt.submission_id}\n"
+        f"Status: {receipt.status}\n"
+        f"Screenshot: {receipt.screenshot_path}\n"
+        f"Notes: {receipt.notes}",
+        title="DROP residency review",
+    ))
+
+
 @drop.command("status")
 def drop_status():
     """List DROP submission receipts."""
