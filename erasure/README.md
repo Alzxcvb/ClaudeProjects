@@ -69,7 +69,11 @@ Generate a compliance report with scan results, opt-out status, and evidence art
 
 **Usage:**
 ```bash
-erasure report [--format json|html|pdf] [--output FILE]
+erasure report --scan SCAN_ID [--drop-receipt PATH] [--verify-file PATH] [--output FILE]
+
+# Or render the Cyber Hygiene Dashboard with live evidence injected
+# (auto-picks latest scan / receipt / verify from state/):
+erasure report --dashboard [--output FILE]
 ```
 
 ### `erasure schedule`

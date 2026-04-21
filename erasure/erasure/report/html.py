@@ -11,6 +11,7 @@ as a non-compliance complaint packet for CPPA.
 
 from __future__ import annotations
 
+import html as _html
 import json
 import os
 from datetime import datetime, timezone
@@ -18,6 +19,11 @@ from pathlib import Path
 from typing import Optional
 
 REPORTS_DIR = Path("state/reports")
+
+# erasure/erasure/report/html.py → repo root "erasure/"
+_REPO_ROOT = Path(__file__).resolve().parent.parent.parent
+DASHBOARD_TEMPLATE = _REPO_ROOT / "dashboard" / "index.html"
+_EVIDENCE_MARKER = "<!-- ERASURE_EVIDENCE_MARKER -->"
 
 _STATUS_COLORS = {
     "resolved": "#16a34a",
@@ -154,4 +160,204 @@ def render_report(
 </body></html>
 """
     out.write_text(html, encoding="utf-8")
+    return out
+
+
+def _latest(dir_path: Path, glob: str) -> Optional[Path]:
+    if not dir_path.exists():
+        return None
+    candidates = list(dir_path.glob(glob))
+    if not candidates:
+        return None
+    return max(candidates, key=lambda p: p.stat().st_mtime)
+
+
+def latest_scan_path() -> Optional[Path]:
+    from erasure.brokers.scan import SCANS_DIR
+    return _latest(SCANS_DIR, "scan_*.json")
+
+
+def latest_receipt_path() -> Optional[Path]:
+    from erasure.drop.client import RECEIPTS_DIR
+    return _latest(RECEIPTS_DIR, "drop_*.json")
+
+
+def latest_verify_path() -> Optional[Path]:
+    from erasure.verify.diff import VERIFY_DIR
+    return _latest(VERIFY_DIR, "verify_*.json")
+
+
+def _render_evidence_block(
+    *,
+    profile_name: str,
+    scan: dict,
+    scan_rel_dir: Path,
+    receipt: Optional[dict],
+    verify: Optional[dict],
+    stamp: str,
+) -> str:
+    """Build the dark-themed evidence block injected into the dashboard template."""
+    esc = _html.escape
+
+    # Scan rows (cap at 25 in the dashboard for readability — full list is in the standalone report)
+    scan_rows = []
+    for r in scan["results"][:25]:
+        shot_rel = os.path.relpath(r["screenshot_path"], start=scan_rel_dir) if r.get("screenshot_path") else ""
+        match_class = "match-yes" if r["name_match"] else "match-no"
+        match_text = "yes" if r["name_match"] else "no"
+        variants = ", ".join(r.get("matched_variants") or []) or "—"
+        screenshot_cell = (
+            f'<a href="{esc(shot_rel)}" target="_blank">screenshot</a>' if shot_rel else "—"
+        )
+        scan_rows.append(
+            f"<tr>"
+            f"<td>{esc(r['broker_name'])}</td>"
+            f'<td><a href="{esc(r["opt_out_url"])}" target="_blank" rel="noopener">opt-out</a></td>'
+            f'<td class="{match_class}">{match_text}</td>'
+            f"<td>{esc(variants)}</td>"
+            f"<td>{screenshot_cell}</td>"
+            f"</tr>"
+        )
+    truncated_note = ""
+    if len(scan["results"]) > 25:
+        truncated_note = (
+            f'<p class="ev-muted">Showing top 25 of {len(scan["results"])}. '
+            f"Full list in the standalone evidence report.</p>"
+        )
+
+    drop_card = ""
+    if receipt:
+        drop_card = f"""
+        <div class="ev-card">
+          <h3>DROP submission</h3>
+          <dl class="ev-dl">
+            <dt>ID</dt><dd><code>{esc(str(receipt.get("submission_id", "—")))}</code></dd>
+            <dt>Confirmation</dt><dd><code>{esc(str(receipt.get("confirmation_code") or "—"))}</code></dd>
+            <dt>Status</dt><dd><span class="ev-pill ev-pill-{esc(str(receipt.get("status", "pending")))}">{esc(str(receipt.get("status", "—")))}</span></dd>
+            <dt>Submitted</dt><dd>{esc(str(receipt.get("submitted_at", "—")))}</dd>
+            <dt>Portal</dt><dd><a href="{esc(str(receipt.get("portal_url", "")))}" target="_blank" rel="noopener">{esc(str(receipt.get("portal_url", "")))}</a></dd>
+          </dl>
+        </div>
+        """
+
+    verify_card = ""
+    if verify:
+        verify_card = f"""
+        <div class="ev-card">
+          <h3>Verification diff</h3>
+          <p class="ev-muted">Baseline <code>{esc(verify["baseline_id"])}</code> vs verify <code>{esc(verify["verify_id"])}</code>.</p>
+          <div class="ev-stats">
+            <span class="ev-stat ev-resolved">{verify["resolved"]} resolved</span>
+            <span class="ev-stat ev-persistent">{verify["persistent"]} persistent</span>
+            <span class="ev-stat ev-new">{verify["new"]} new</span>
+            <span class="ev-stat ev-errored">{verify["errored"]} errored</span>
+          </div>
+        </div>
+        """
+
+    return f"""
+<div class="evidence">
+    <div class="evidence-header">
+        <h2>Your live Erasure evidence</h2>
+        <p class="ev-muted">Profile <strong>{esc(profile_name)}</strong> · rendered {esc(stamp)}</p>
+    </div>
+
+    <div class="ev-cards">
+        <div class="ev-card">
+            <h3>Latest broker scan</h3>
+            <p class="ev-muted">Scan <code>{esc(scan["scan_id"])}</code></p>
+            <div class="ev-stats">
+                <span class="ev-stat">{scan["broker_count"]} brokers</span>
+                <span class="ev-stat ev-persistent">{scan["name_match_count"]} matches</span>
+                <span class="ev-stat ev-errored">{scan["error_count"]} errors</span>
+            </div>
+        </div>
+        {drop_card}
+        {verify_card}
+    </div>
+
+    <details class="ev-details" open>
+        <summary>Per-broker results</summary>
+        <table class="ev-table">
+            <thead><tr><th>Broker</th><th>Opt-out</th><th>Match</th><th>Variants</th><th>Evidence</th></tr></thead>
+            <tbody>{''.join(scan_rows)}</tbody>
+        </table>
+        {truncated_note}
+    </details>
+</div>
+
+<style>
+.evidence {{ max-width: 960px; margin: 0 auto 2rem; padding: 0 1rem; }}
+.evidence-header h2 {{ font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.05em; color: #8b949e; margin-bottom: 0.25rem; }}
+.ev-muted {{ color: #8b949e; font-size: 0.82rem; margin-top: 0.25rem; }}
+.ev-cards {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.8rem; margin-top: 1rem; }}
+.ev-card {{ background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 1rem 1.2rem; }}
+.ev-card h3 {{ font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em; color: #8b949e; margin-bottom: 0.5rem; }}
+.ev-dl {{ display: grid; grid-template-columns: 110px 1fr; gap: 0.25rem 0.8rem; font-size: 0.88rem; }}
+.ev-dl dt {{ color: #8b949e; }}
+.ev-dl dd {{ color: #e6edf3; word-break: break-word; }}
+.ev-stats {{ display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.4rem; }}
+.ev-stat {{ padding: 0.2rem 0.55rem; border-radius: 999px; font-size: 0.78rem; font-weight: 600; background: #0d1117; border: 1px solid #30363d; color: #e6edf3; }}
+.ev-stat.ev-resolved   {{ border-color: #238636; color: #3fb950; }}
+.ev-stat.ev-persistent {{ border-color: #da3633; color: #f85149; }}
+.ev-stat.ev-new        {{ border-color: #bd561d; color: #f0883e; }}
+.ev-stat.ev-errored    {{ border-color: #9e6a03; color: #e3b341; }}
+.ev-pill {{ padding: 0.15rem 0.5rem; border-radius: 6px; font-size: 0.78rem; font-weight: 600; background: #0d1117; border: 1px solid #30363d; }}
+.ev-pill-confirmed {{ border-color: #238636; color: #3fb950; }}
+.ev-pill-submitted {{ border-color: #1f6feb; color: #58a6ff; }}
+.ev-pill-pending   {{ border-color: #9e6a03; color: #e3b341; }}
+.ev-details {{ margin-top: 1rem; background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 0.8rem 1.2rem; }}
+.ev-details summary {{ cursor: pointer; color: #8b949e; text-transform: uppercase; font-size: 0.78rem; letter-spacing: 0.05em; }}
+.ev-table {{ width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.85rem; }}
+.ev-table th, .ev-table td {{ text-align: left; padding: 0.45rem 0.55rem; border-bottom: 1px solid #21262d; }}
+.ev-table th {{ color: #8b949e; font-weight: 600; }}
+.ev-table a {{ color: #58a6ff; text-decoration: none; }}
+.ev-table a:hover {{ text-decoration: underline; }}
+.ev-table .match-yes {{ color: #f85149; font-weight: 600; }}
+.ev-table .match-no  {{ color: #3fb950; font-weight: 600; }}
+</style>
+"""
+
+
+def render_dashboard(
+    *,
+    profile_name: str,
+    scan_path: Path,
+    drop_receipt_path: Optional[Path] = None,
+    verify_path: Optional[Path] = None,
+    out_path: Optional[Path] = None,
+    template_path: Optional[Path] = None,
+) -> Path:
+    """Render the Cyber Hygiene Dashboard with live Erasure evidence injected.
+
+    Reads the static dashboard template, replaces the ERASURE_EVIDENCE_MARKER
+    with a populated evidence block, and writes a new standalone HTML file.
+    The template itself is never modified — re-running is idempotent.
+    """
+    template = template_path or DASHBOARD_TEMPLATE
+    if not template.exists():
+        raise FileNotFoundError(f"Dashboard template not found at {template}")
+
+    REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    out = out_path or (REPORTS_DIR / f"dashboard_{stamp}.html")
+
+    scan = json.loads(scan_path.read_text(encoding="utf-8"))
+    receipt = json.loads(drop_receipt_path.read_text(encoding="utf-8")) if drop_receipt_path else None
+    verify = json.loads(verify_path.read_text(encoding="utf-8")) if verify_path else None
+
+    evidence_html = _render_evidence_block(
+        profile_name=profile_name,
+        scan=scan,
+        scan_rel_dir=out.parent,
+        receipt=receipt,
+        verify=verify,
+        stamp=stamp,
+    )
+
+    template_html = template.read_text(encoding="utf-8")
+    if _EVIDENCE_MARKER not in template_html:
+        raise ValueError(f"Template at {template} is missing {_EVIDENCE_MARKER}")
+    populated = template_html.replace(_EVIDENCE_MARKER, evidence_html, 1)
+    out.write_text(populated, encoding="utf-8")
     return out

@@ -202,19 +202,55 @@ def verify(baseline, verify_id):
 
 @cli.command()
 @click.option("--profile", "profile_path", type=click.Path(exists=True))
-@click.option("--scan", "scan_id", required=True, help="Scan ID to include")
+@click.option("--scan", "scan_id", default=None, help="Scan ID to include (default: latest for --dashboard)")
 @click.option("--drop-receipt", type=click.Path(exists=True), help="Path to DROP receipt JSON")
 @click.option("--verify-file", type=click.Path(exists=True), help="Path to verify JSON")
 @click.option("--output", "output_path", type=click.Path(), help="Output HTML path")
-def report(profile_path, scan_id, drop_receipt, verify_file, output_path):
+@click.option("--dashboard", is_flag=True, help="Render the Cyber Hygiene Dashboard (checklist + live evidence) instead of the standalone evidence report")
+def report(profile_path, scan_id, drop_receipt, verify_file, output_path, dashboard):
     """Generate HTML evidence report (DROP receipt + scan + verify)."""
     from erasure.brokers.scan import SCANS_DIR
     from erasure.profile import UserProfile
-    from erasure.report.html import render_report
+    from erasure.report.html import (
+        render_report,
+        render_dashboard,
+        latest_scan_path,
+        latest_receipt_path,
+        latest_verify_path,
+    )
 
     target = Path(profile_path) if profile_path else DEFAULT_PROFILE_PATH
     profile = UserProfile.model_validate_json(target.read_text()) if target.exists() else None
     profile_name = profile.name if profile else "unknown"
+
+    if dashboard:
+        scan_path = (SCANS_DIR / f"{scan_id}.json") if scan_id else latest_scan_path()
+        if scan_path is None or not scan_path.exists():
+            console.print("[red]No scan found. Run `erasure scan` first.[/red]")
+            sys.exit(1)
+        receipt_path = Path(drop_receipt) if drop_receipt else latest_receipt_path()
+        verify_path_resolved = Path(verify_file) if verify_file else latest_verify_path()
+        out = render_dashboard(
+            profile_name=profile_name,
+            scan_path=scan_path,
+            drop_receipt_path=receipt_path,
+            verify_path=verify_path_resolved,
+            out_path=Path(output_path) if output_path else None,
+        )
+        console.print(Panel(
+            f"[green]Dashboard written:[/green] {out}\n\n"
+            f"Scan:    {scan_path}\n"
+            f"Receipt: {receipt_path or '—'}\n"
+            f"Verify:  {verify_path_resolved or '—'}\n\n"
+            f"[dim]Open in a browser: file://{out.resolve()}[/dim]",
+            title="erasure report --dashboard",
+            expand=False,
+        ))
+        return
+
+    if not scan_id:
+        console.print("[red]--scan is required (or pass --dashboard for the live-dashboard view).[/red]")
+        sys.exit(1)
 
     scan_path = SCANS_DIR / f"{scan_id}.json"
     if not scan_path.exists():
