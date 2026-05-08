@@ -48,7 +48,7 @@ Headless ralph loop builds these one at a time. Pick the first `- [ ]` with all 
 
 - [x] **TASK-14**: Add a `@media print` block to `src/app/globals.css`: hide nav and buttons (`nav, button { display: none !important; }`), force light background, single-column body, page-break-inside avoid for habit list items.
 
-- [ ] **TASK-15**: Add a today-indicator visual cue on dashboard's date display — when the displayed date equals today's `YYYY-MM-DD`, render with a green dot or "Today" pill next to the date.
+- [x] **TASK-15**: Add a today-indicator visual cue on dashboard's date display — when the displayed date equals today's `YYYY-MM-DD`, render with a green dot or "Today" pill next to the date.
   Depends: TASK-10
 
 ---

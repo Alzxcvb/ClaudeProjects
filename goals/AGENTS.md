@@ -112,6 +112,13 @@ Discoveries and conventions accumulated across iterations. Append, don't rewrite
 - Hides `nav` and `button` elements; forces `body` to white background + black text; sets `li { page-break-inside: avoid }` for habit list items.
 - CSS-only change — no TypeScript involved; `npx tsc --noEmit` passes trivially (exit 0).
 
+## TASK-15 (2026-05-08)
+- Added a green dot (`w-3 h-3 rounded-full bg-green-500`) inside the h1 when `selectedDate === today`.
+- Used `flex items-center gap-2` on the h1 to align text and dot inline.
+- `flex-shrink-0` on the dot prevents it from being squashed in narrow layouts.
+- h1 already displayed "Today" text when on today — the green dot is the additional visual cue.
+- `npx tsc --noEmit` passes clean (exit 0).
+
 ## TASK-10 (2026-05-08)
 - Added `selectedDate` state (mutable, initialized to today) separate from the fixed `today` constant.
 - Kept `today` as an immutable reference for comparison (used in TASK-11/15 for "Today" pill logic).
