@@ -58,3 +58,8 @@ Hardcoded in `tracker.js`. Mirrors what each session page expects. If you add an
 - icon-512.svg: viewBox="0 0 512 512" — all coords scaled by 512/192 (≈2.667) from 192 version.
 - Symmetry check: center of inner plate pair = half of total width in both files. Bar center = half height.
 - Transparent background by default in SVG (no explicit `background` needed on the root element).
+
+### TASK-03 (service-worker.js)
+- Cache name `alex-workout-v1`, lists all 13 static assets explicitly.
+- Fetch handler skips non-GET by returning early (no `respondWith`), then cache-first with network fallback and dynamic cache insertion.
+- `node --check` validates service worker syntax fine (no DOM APIs used at parse time).

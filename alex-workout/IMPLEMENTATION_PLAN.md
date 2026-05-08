@@ -11,7 +11,7 @@ Headless ralph loop builds these one at a time. Pick the first `- [ ]` with all 
 - [x] **TASK-02**: Create `icon-192.svg` and `icon-512.svg` — simple barbell glyph (a horizontal bar with two plates on each side), color `#c9a227` on transparent background. Hand-write the SVG, no external assets. Both files should have proper `viewBox` matching their dimensions.
   Depends: TASK-01
 
-- [ ] **TASK-03**: Create `service-worker.js` that on `install` caches all current static assets (every `*.html`, `style.css`, `tracker.js`, `manifest.json`, both icon SVGs) under cache name `alex-workout-v1`, and on `fetch` serves cache-first with network fallback. Skip caching for non-GET requests.
+- [x] **TASK-03**: Create `service-worker.js` that on `install` caches all current static assets (every `*.html`, `style.css`, `tracker.js`, `manifest.json`, both icon SVGs) under cache name `alex-workout-v1`, and on `fetch` serves cache-first with network fallback. Skip caching for non-GET requests.
   Depends: TASK-02
 
 - [ ] **TASK-04**: Register the service worker in EVERY HTML page via inline `<script>` near `</body>`. Wrap in `if ('serviceWorker' in navigator)` AND a try/catch so it never throws on `file://`. Log success or failure to console. Use `navigator.serviceWorker.register('service-worker.js')`.
