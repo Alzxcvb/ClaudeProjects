@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import type { Goal, HabitLog } from '@/types'
+import EmptyState from '@/components/EmptyState'
 
 function getStreak(logs: HabitLog[]): number {
   if (!logs.length) return 0
@@ -79,6 +80,13 @@ export default function Home() {
         </div>
 
         <div className="space-y-8">
+          {goals.length === 0 && (
+            <EmptyState
+              title="No active goals"
+              description="Add goals from the dashboard to see them here."
+              icon="🎯"
+            />
+          )}
           {goals.map((goal) => (
             <div
               key={goal.id}

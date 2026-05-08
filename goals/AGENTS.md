@@ -79,3 +79,9 @@ Discoveries and conventions accumulated across iterations. Append, don't rewrite
 - Replaced the centered "Loading..." paragraph with `<Skeleton lines={5} />` inside a layout-matching wrapper (`min-h-screen bg-zinc-950`, `max-w-4xl mx-auto px-4 py-12`).
 - Imported `Skeleton` from `@/components/Skeleton` — default export, no destructuring needed.
 - `npx tsc --noEmit` passes clean (exit 0).
+
+## TASK-09 (2026-05-08)
+- Imported `EmptyState` from `@/components/EmptyState` in `src/app/page.tsx`.
+- Rendered `<EmptyState>` conditionally when `goals.length === 0`, placed inside the existing `space-y-8` div before the `goals.map(...)` call.
+- No need to change the map — it naturally produces nothing for an empty array; the EmptyState sits above as the visible fallback.
+- `npx tsc --noEmit` passes clean (exit 0).

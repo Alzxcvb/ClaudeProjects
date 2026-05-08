@@ -29,7 +29,7 @@ Headless ralph loop builds these one at a time. Pick the first `- [ ]` with all 
 - [x] **TASK-08**: Use `Skeleton` from TASK-04 in `src/app/dashboard/page.tsx` while the initial habits/goals fetch is loading (replace any current "Loading…" text). Show 5 skeleton lines.
   Depends: TASK-04
 
-- [ ] **TASK-09**: Use `EmptyState` from TASK-05 in `src/app/page.tsx` when the goals fetch returns an empty array. Title "No active goals", description "Add goals from the dashboard to see them here.", icon "🎯".
+- [x] **TASK-09**: Use `EmptyState` from TASK-05 in `src/app/page.tsx` when the goals fetch returns an empty array. Title "No active goals", description "Add goals from the dashboard to see them here.", icon "🎯".
   Depends: TASK-05
 
 ---
