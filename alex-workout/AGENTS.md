@@ -70,6 +70,13 @@ Hardcoded in `tracker.js`. Mirrors what each session page expects. If you add an
 - Pattern: `if ('serviceWorker' in navigator)` guard + try/catch + `.then/.catch` for console logging.
 - Validation shortcut: `grep -l "serviceWorker.register" *.html | wc -l` → must be 8.
 
+### TASK-06 (JSON Import)
+- Import button triggers a hidden `<input type="file" accept="application/json">` via `.click()` in the button handler.
+- FileReader + JSON.parse; validate array shape + required keys before showing confirm dialog.
+- De-dup by `id`: build a Set of existing ids, filter imported entries to only those not in the set, concat and save.
+- `importFileInput.value = ''` reset after import so the same file can be re-imported if needed.
+- `importBtn` and `importFileInput` guarded with null-check in case `progress.html` structure changes.
+
 ### TASK-05 (Install App button)
 - `beforeinstallprompt` only fires on HTTPS/localhost; on `file://` it never fires — button stays `display:none`, which is the correct graceful degradation.
 - Button placed inside `.hero` div in `index.html`, after the subtitle `<p>`.

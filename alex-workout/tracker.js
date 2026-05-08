@@ -63,6 +63,8 @@ function initTracker() {
   const chartCanvas = document.getElementById('progress-chart');
   const clearBtn = document.getElementById('clear-data');
   const exportBtn = document.getElementById('export-data');
+  const importBtn = document.getElementById('import-data');
+  const importFileInput = document.getElementById('import-file-input');
 
   if (!sessionSelect) return;
 
@@ -138,6 +140,40 @@ function initTracker() {
     a.click();
     URL.revokeObjectURL(url);
   });
+
+  // Import JSON
+  if (importBtn && importFileInput) {
+    importBtn.addEventListener('click', () => importFileInput.click());
+
+    importFileInput.addEventListener('change', () => {
+      const file = importFileInput.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        let imported;
+        try {
+          imported = JSON.parse(ev.target.result);
+        } catch {
+          alert('Invalid JSON file.');
+          return;
+        }
+        const required = ['id', 'timestamp', 'session', 'exercise', 'weight', 'reps', 'sets'];
+        if (!Array.isArray(imported) || !imported.every(e => required.every(k => k in e))) {
+          alert('File must be a JSON array where every entry has: ' + required.join(', ') + '.');
+          return;
+        }
+        if (!confirm('Import ' + imported.length + ' entries from file?')) return;
+        const log = getLog();
+        const existingIds = new Set(log.map(e => e.id));
+        const newEntries = imported.filter(e => !existingIds.has(e.id));
+        saveLog(log.concat(newEntries));
+        importFileInput.value = '';
+        updateHistory();
+        updateChart();
+      };
+      reader.readAsText(file);
+    });
+  }
 
   // Initial render
   updateHistory();
