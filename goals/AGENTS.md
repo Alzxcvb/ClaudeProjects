@@ -36,3 +36,8 @@ Discoveries and conventions accumulated across iterations. Append, don't rewrite
 ## Iteration discoveries
 
 (Ralph: append new findings below as you go.)
+
+## TASK-01 (2026-05-08)
+- Created `src/types/index.ts` with superset `Goal`, `Habit`, `HabitLog`, `Note` interfaces.
+- Key discrepancies resolved: `HabitLog.date` optional (present in page.tsx, absent in dashboard); `Habit.goalId` optional (present in dashboard, absent in page.tsx); `Habit.logs` optional (present in page.tsx, absent in dashboard); `Goal.description` and `Goal.notes` optional (present in page.tsx, absent in dashboard).
+- No callers updated yet — TASK-02 and TASK-03 will import from here.

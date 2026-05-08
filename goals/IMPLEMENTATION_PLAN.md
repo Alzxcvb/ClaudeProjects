@@ -6,7 +6,7 @@ Headless ralph loop builds these one at a time. Pick the first `- [ ]` with all 
 
 ## Phase 1 — Type & component extraction
 
-- [ ] **TASK-01**: Create `src/types/index.ts` exporting four interfaces: `Goal`, `Habit`, `HabitLog`, `Note`. Pull the canonical shapes from the inline interfaces currently duplicated in `src/app/page.tsx` and `src/app/dashboard/page.tsx`. Resolve discrepancies by taking the SUPERSET of fields (e.g. if one file has `value?: number` and the other doesn't, include it). Do NOT import from this file yet — TASK-02 and TASK-03 will.
+- [x] **TASK-01**: Create `src/types/index.ts` exporting four interfaces: `Goal`, `Habit`, `HabitLog`, `Note`. Pull the canonical shapes from the inline interfaces currently duplicated in `src/app/page.tsx` and `src/app/dashboard/page.tsx`. Resolve discrepancies by taking the SUPERSET of fields (e.g. if one file has `value?: number` and the other doesn't, include it). Do NOT import from this file yet — TASK-02 and TASK-03 will.
 
 - [ ] **TASK-02**: Refactor `src/app/page.tsx` to import `Goal`, `Habit`, `HabitLog`, `Note` from `src/types/index.ts` and remove the inline duplicates. Verify `npx tsc --noEmit` still passes — no behavior change.
   Depends: TASK-01
