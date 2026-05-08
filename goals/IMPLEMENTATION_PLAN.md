@@ -22,7 +22,7 @@ Headless ralph loop builds these one at a time. Pick the first `- [ ]` with all 
 
 ## Phase 2 — UI polish
 
-- [ ] **TASK-06**: Update `src/app/layout.tsx` `metadata` export with proper `title: "Goals — Personal Tracker"`, `description: "Daily habits, notes, and milestones across active and on-deck goals."`, and `themeColor: "#000000"`. Add `viewport` export with `width: 'device-width', initialScale: 1`.
+- [x] **TASK-06**: Update `src/app/layout.tsx` `metadata` export with proper `title: "Goals — Personal Tracker"`, `description: "Daily habits, notes, and milestones across active and on-deck goals."`, and `themeColor: "#000000"`. Add `viewport` export with `width: 'device-width', initialScale: 1`.
 
 - [ ] **TASK-07**: Replace any `alert()` calls in `src/app/dashboard/page.tsx` with an inline error banner (a div with `role="alert"`, Tailwind red styling, dismissable via state). If no `alert()` calls exist, prefix this task with `BLOCKED:` (no-op). The banner state should clear automatically after 4 seconds.
 

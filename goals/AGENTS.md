@@ -65,3 +65,9 @@ Discoveries and conventions accumulated across iterations. Append, don't rewrite
 - Created `src/components/EmptyState.tsx` — pure presentational, no state/hooks, no `'use client'`.
 - `ReactNode` imported as `import type { ReactNode } from 'react'` — type-only import sufficient for TSC.
 - `npx tsc --noEmit` passes clean (exit 0).
+
+## TASK-06 (2026-05-08)
+- Updated metadata in `src/app/layout.tsx` with descriptive title and description.
+- `themeColor` belongs in the `Viewport` export (not `Metadata`) in Next.js 14+/16 — the `Metadata` type does not include `themeColor`. Both `Viewport` and `Metadata` types imported from `"next"`.
+- `viewport` export includes `themeColor: "#000000"`, `width: "device-width"`, `initialScale: 1`.
+- `npx tsc --noEmit` passes clean (exit 0).
