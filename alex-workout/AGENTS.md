@@ -52,3 +52,9 @@ Hardcoded in `tracker.js`. Mirrors what each session page expects. If you add an
 - Validation loop `for f in *.js; do ...done` fails in sandbox due to "Unhandled node type: string" — run `node --check tracker.js` directly instead, then verify HTML with grep -l.
 - All 8 HTML files have identical `<head>` structure ending with `<link rel="stylesheet" href="style.css">` — manifest link goes immediately after.
 - CSS last char is `}` (+ newline), `tail -c 2 | xxd` shows `7d 0a` — valid.
+
+### TASK-02 (barbell SVGs)
+- icon-192.svg: viewBox="0 0 192 192" — bar centered at y=90 (h=12), 2 plates per side.
+- icon-512.svg: viewBox="0 0 512 512" — all coords scaled by 512/192 (≈2.667) from 192 version.
+- Symmetry check: center of inner plate pair = half of total width in both files. Bar center = half height.
+- Transparent background by default in SVG (no explicit `background` needed on the root element).

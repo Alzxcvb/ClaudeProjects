@@ -8,7 +8,7 @@ Headless ralph loop builds these one at a time. Pick the first `- [ ]` with all 
 
 - [x] **TASK-01**: Create `manifest.json` with `name` "Alex Workout", `short_name` "Workout", `start_url` ".", `display` "standalone", `theme_color` "#c9a227", `background_color` "#000", and an `icons` array referencing `icon-192.svg` (192×192, type `image/svg+xml`) and `icon-512.svg` (512×512). Link the manifest from EVERY HTML page (`<link rel="manifest" href="manifest.json">`).
 
-- [ ] **TASK-02**: Create `icon-192.svg` and `icon-512.svg` — simple barbell glyph (a horizontal bar with two plates on each side), color `#c9a227` on transparent background. Hand-write the SVG, no external assets. Both files should have proper `viewBox` matching their dimensions.
+- [x] **TASK-02**: Create `icon-192.svg` and `icon-512.svg` — simple barbell glyph (a horizontal bar with two plates on each side), color `#c9a227` on transparent background. Hand-write the SVG, no external assets. Both files should have proper `viewBox` matching their dimensions.
   Depends: TASK-01
 
 - [ ] **TASK-03**: Create `service-worker.js` that on `install` caches all current static assets (every `*.html`, `style.css`, `tracker.js`, `manifest.json`, both icon SVGs) under cache name `alex-workout-v1`, and on `fetch` serves cache-first with network fallback. Skip caching for non-GET requests.
