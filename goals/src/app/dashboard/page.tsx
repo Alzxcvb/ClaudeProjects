@@ -29,15 +29,17 @@ export default function DashboardPage() {
       try {
         // Fetch goals and habits for selectedDate
         const goalsResponse = await fetch('/api/goals')
-        const goalsData = await goalsResponse.json()
-        setGoals(goalsData)
+        const goalsData = goalsResponse.ok ? await goalsResponse.json() : []
+        const safeGoals = Array.isArray(goalsData) ? goalsData : []
+        setGoals(safeGoals)
 
         // Fetch habit logs for selectedDate
         const logsResponse = await fetch(`/api/habits/${selectedDate}`)
-        const logsData = await logsResponse.json()
+        const logsData = logsResponse.ok ? await logsResponse.json() : []
+        const safeLogs = Array.isArray(logsData) ? logsData : []
 
         const logsMap: Record<string, HabitLog> = {}
-        logsData.forEach((log: HabitLog) => {
+        safeLogs.forEach((log: HabitLog) => {
           logsMap[log.habitId] = log
         })
         setLogs(logsMap)
@@ -46,12 +48,15 @@ export default function DashboardPage() {
         const allGoalsResponse = await fetch('/api/goals?all=true')
         if (allGoalsResponse.ok) {
           const allGoalsData = await allGoalsResponse.json()
-          setAllGoals(allGoalsData)
+          setAllGoals(Array.isArray(allGoalsData) ? allGoalsData : safeGoals)
         } else {
-          setAllGoals(goalsData)
+          setAllGoals(safeGoals)
         }
       } catch (error) {
         console.error('Failed to fetch data:', error)
+        setGoals([])
+        setLogs({})
+        setAllGoals([])
       } finally {
         setLoading(false)
       }

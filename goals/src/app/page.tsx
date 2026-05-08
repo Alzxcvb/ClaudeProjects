@@ -43,10 +43,14 @@ export default function Home() {
     const fetchGoals = async () => {
       try {
         const response = await fetch('/api/goals')
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`)
+        }
         const data = await response.json()
-        setGoals(data)
+        setGoals(Array.isArray(data) ? data : [])
       } catch (error) {
         console.error('Failed to fetch goals:', error)
+        setGoals([])
       } finally {
         setLoading(false)
       }
