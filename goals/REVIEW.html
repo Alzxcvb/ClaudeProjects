@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Goals — Ralph Run Review</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --card: #18181b;
+    --card-hover: #1f1f23;
+    --border: #27272a;
+    --text: #f4f4f5;
+    --muted: #a1a1aa;
+    --dim: #71717a;
+    --accent: #22c55e;
+    --warn: #f59e0b;
+    --danger: #ef4444;
+    --info: #3b82f6;
+    --code-bg: #09090b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+  pre, code { font-family: 'SF Mono', 'Monaco', 'Menlo', monospace; }
+
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 32px 48px 24px;
+    background: linear-gradient(180deg, #18181b 0%, #0a0a0a 100%);
+  }
+  header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  header .meta {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  .stats {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .stat {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid var(--border);
+    background: var(--card);
+  }
+  .stat.success { border-color: rgba(34,197,94,.3); color: var(--accent); }
+  .stat.warn { border-color: rgba(245,158,11,.3); color: var(--warn); }
+  .stat.info { border-color: rgba(59,130,246,.3); color: var(--info); }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 32px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 32px 48px 64px;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; padding: 24px; }
+    nav.sidebar { position: static !important; }
+  }
+
+  nav.sidebar {
+    position: sticky;
+    top: 24px;
+    align-self: start;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+  }
+  nav.sidebar h3 {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--dim);
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    margin-top: 20px;
+  }
+  nav.sidebar h3:first-child { margin-top: 0; }
+  nav.sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+  }
+  nav.sidebar a:hover {
+    background: var(--card);
+    color: var(--text);
+  }
+  nav.sidebar a .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  nav.sidebar a .dot.ok { background: var(--accent); }
+  nav.sidebar a .dot.warn { background: var(--warn); }
+  nav.sidebar a .dot.skip { background: var(--dim); }
+
+  main { min-width: 0; }
+
+  .filter-bar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+    padding: 12px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  .filter-bar button {
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 13px;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .filter-bar button:hover { color: var(--text); border-color: var(--dim); }
+  .filter-bar button.active {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+  }
+
+  .tldr {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 32px;
+  }
+  .tldr h2 {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+  .tldr-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .tldr-item {
+    padding: 14px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .tldr-item h4 {
+    font-size: 13px;
+    margin-bottom: 6px;
+    color: var(--accent);
+  }
+  .tldr-item p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .concerns {
+    background: rgba(245,158,11,.08);
+    border: 1px solid rgba(245,158,11,.3);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 32px;
+  }
+  .concerns h3 {
+    color: var(--warn);
+    font-size: 15px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .concerns ol {
+    padding-left: 20px;
+    color: var(--muted);
+  }
+  .concerns ol li { margin-bottom: 8px; font-size: 14px; }
+  .concerns code { background: var(--code-bg); padding: 1px 5px; border-radius: 3px; font-size: 12px; color: var(--text); }
+
+  article.task {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  article.task:hover { border-color: var(--dim); }
+  article.task.hidden { display: none; }
+
+  .task-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .task-id {
+    font-family: 'SF Mono', monospace;
+    font-size: 12px;
+    color: var(--dim);
+    padding: 3px 8px;
+    background: var(--bg);
+    border-radius: 4px;
+  }
+  .task-title {
+    font-size: 19px;
+    font-weight: 600;
+    flex: 1;
+    min-width: 0;
+  }
+  .badge {
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .badge.ok { background: rgba(34,197,94,.15); color: var(--accent); }
+  .badge.warn { background: rgba(245,158,11,.15); color: var(--warn); }
+  .badge.info { background: rgba(59,130,246,.15); color: var(--info); }
+  .badge.skip { background: rgba(113,113,122,.15); color: var(--dim); }
+
+  .task p { color: var(--muted); margin-bottom: 12px; }
+  .task strong { color: var(--text); font-weight: 600; }
+  .task .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--dim);
+    margin-top: 18px;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .task .verdict {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 16px;
+    padding: 12px 16px;
+    background: var(--bg);
+    border-radius: 8px;
+    border-left: 3px solid var(--accent);
+  }
+  .task .verdict.warn { border-left-color: var(--warn); }
+  .task .verdict.skip { border-left-color: var(--dim); }
+  .task .verdict-icon { font-size: 16px; flex-shrink: 0; }
+  .task .verdict-text { font-size: 14px; color: var(--text); }
+  .task .verdict-text small { display: block; color: var(--muted); margin-top: 4px; }
+
+  pre {
+    background: var(--code-bg) !important;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px !important;
+    overflow-x: auto;
+    margin: 12px 0;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  code:not(pre code) {
+    background: var(--code-bg);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12.5px;
+    color: var(--text);
+  }
+  pre code { padding: 0 !important; background: transparent !important; }
+
+  footer {
+    text-align: center;
+    padding: 32px;
+    color: var(--dim);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+  }
+  footer a { color: var(--muted); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Goals — Ralph Run Review</h1>
+  <p class="meta">Autonomous code-review walkthrough · 2026-05-08 · 18 tasks attempted</p>
+  <div class="stats">
+    <span class="stat success">✓ 17 landed</span>
+    <span class="stat info">1 blocked (no-op)</span>
+    <span class="stat warn">⚠ 2 concerns flagged</span>
+    <span class="stat">~22 min runtime</span>
+  </div>
+</header>
+
+<div class="layout">
+  <nav class="sidebar">
+    <h3>Jump to task</h3>
+    <a href="#tldr"><span class="dot ok"></span>TL;DR + concerns</a>
+    <h3>Foundation</h3>
+    <a href="#task-01"><span class="dot ok"></span>01 · Shared types</a>
+    <a href="#task-02"><span class="dot ok"></span>02 · Refactor page.tsx</a>
+    <a href="#task-03"><span class="dot ok"></span>03 · Refactor dashboard</a>
+    <h3>UI Components</h3>
+    <a href="#task-04"><span class="dot warn"></span>04 · Skeleton</a>
+    <a href="#task-05"><span class="dot warn"></span>05 · EmptyState</a>
+    <h3>Polish</h3>
+    <a href="#task-06"><span class="dot ok"></span>06 · Layout metadata</a>
+    <a href="#task-07"><span class="dot skip"></span>07 · Skipped (no-op)</a>
+    <a href="#task-08"><span class="dot ok"></span>08 · Dashboard skeleton</a>
+    <a href="#task-09"><span class="dot ok"></span>09 · Public empty state</a>
+    <h3>Features</h3>
+    <a href="#task-10"><span class="dot ok"></span>10 · Date jump input</a>
+    <a href="#task-11"><span class="dot ok"></span>11 · Today button</a>
+    <a href="#task-12"><span class="dot ok"></span>12 · Keyboard shortcuts</a>
+    <a href="#task-13"><span class="dot ok"></span>13 · JSON export</a>
+    <a href="#task-14"><span class="dot ok"></span>14 · Print stylesheet</a>
+    <a href="#task-15"><span class="dot ok"></span>15 · Today indicator</a>
+    <h3>Quality</h3>
+    <a href="#task-16"><span class="dot warn"></span>16 · apiFetch (unused)</a>
+    <a href="#task-17"><span class="dot ok"></span>17 · ESM seed</a>
+    <a href="#task-18"><span class="dot ok"></span>18 · JSDoc</a>
+    <h3>Post-run</h3>
+    <a href="#defensive"><span class="dot ok"></span>Defensive fetch fix</a>
+  </nav>
+
+  <main>
+    <section id="tldr" class="tldr">
+      <h2>TL;DR</h2>
+      <p>Ralph spent ~22 minutes building 17 small features. They all type-check and the static stuff (metadata, layout, components) is verifiably correct. The interactive features (dashboard date-jump, keyboard shortcuts, JSON export, today indicator) need a working Postgres to verify visually — the code reads correctly but is unverified at runtime.</p>
+      <div class="tldr-grid">
+        <div class="tldr-item">
+          <h4>Cleanup</h4>
+          <p>Shared types extracted, ESM seed, JSDoc on lib helpers</p>
+        </div>
+        <div class="tldr-item">
+          <h4>Components</h4>
+          <p>Skeleton + EmptyState (small, reusable, used)</p>
+        </div>
+        <div class="tldr-item">
+          <h4>UX upgrades</h4>
+          <p>Tab title, loading skeleton, empty state, print CSS, today badge</p>
+        </div>
+        <div class="tldr-item">
+          <h4>Dashboard features</h4>
+          <p>Date picker, Today button, keyboard nav, JSON export</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="concerns">
+      <h3>⚠ Things I'd actually look at before merging</h3>
+      <ol>
+        <li><strong>Palette mismatch in new components</strong> — <code>Skeleton</code> and <code>EmptyState</code> use Tailwind <code>gray-*</code> and <code>dark:</code> variants. The app is hardcoded dark with the <code>zinc-*</code> palette. If your Mac is in <em>light</em> system mode, the EmptyState title (<code>text-gray-900</code>) renders dark gray on the app's near-black background — barely visible. <strong>You're seeing this state right now at localhost:3000.</strong></li>
+        <li><strong><code>apiFetch</code> helper is dead code</strong> — TASK-16 added a typed fetch wrapper but spec said don't update callers. Nothing imports it yet. Functional but inert until a follow-up wires it in.</li>
+        <li><strong>Spec deviation on TASK-14 print CSS</strong> — page-break-inside applied to <code>li</code> instead of the originally-spec'd <code>.phase-card</code> and <code>table</code>. Defensible (habits are list items) but worth knowing.</li>
+      </ol>
+    </div>
+
+    <div class="filter-bar">
+      <span style="color: var(--muted); padding: 6px 4px; font-size: 13px;">Filter:</span>
+      <button class="active" data-filter="all">All (18)</button>
+      <button data-filter="ok">Clean (15)</button>
+      <button data-filter="warn">Concerns (2)</button>
+      <button data-filter="skip">Skipped (1)</button>
+    </div>
+
+    <article class="task" id="task-01" data-tag="ok">
+      <div class="task-header">
+        <span class="task-id">TASK-01</span>
+        <h2 class="task-title">Shared types extracted</h2>
+        <span class="badge ok">Clean</span>
+      </div>
+      <p>Before, the <code>Goal</code>, <code>Habit</code>, <code>HabitLog</code>, and <code>Note</code> interfaces were defined twice — once in <code>page.tsx</code>, once in <code>dashboard/page.tsx</code> — with subtle drift between them. Now they live in one file.</p>
+      <div class="label">src/types/index.ts (new file)</div>
+<pre><code class="language-typescript">export interface HabitLog {
+  id: string
+  habitId: string
+  completed: boolean
+  value?: number
+  date?: string
+}
+
+export interface Habit {
+  id: string
+  name: string
+  order: number
+  goalId?: string
+  logs?: HabitLog[]
+}
+
+export interface Note {
+  id: string
+  content: string
+  milestone: boolean
+  date: string
+}
+
+export interface Goal {
+  id: string
+  title: string
+  emoji: string
+  habits: Habit[]
+  description?: string
+  notes?: Note[]
+}</code></pre>
+      <div class="verdict">
+        <span class="verdict-icon">✓</span>
+        <div class="verdict-text">Clean superset of both inline definitions. Optional fields (<code>?</code>) handle the cases where one file had a property and the other didn't.</div>
+      </div>
+    </article>
+
+    <article class="task" id="task-02" data-tag="ok">
+      <div class="task-header">
+        <span class="task-id">TASK-02</span>
+        <h2 class="task-title">page.tsx imports from shared types</h2>
+        <span class="badge ok">Clean</span>
+      </div>
+      <p>Removed the inline interface definitions from <code>src/app/page.tsx</code> and replaced them with one import line.</p>
+      <pre><code class="language-typescript">import type { Goal, Habit, HabitLog, Note } from '@/types'</code></pre>
+      <div class="verdict">
+        <span class="verdict-icon">✓</span>
+        <div class="verdict-text">Pure refactor, no behavior change, tsc still green.</div>
+      </div>
+    </article>
+
+    <article class="task" id="task-03" data-tag="ok">
+      <div class="task-header">
+        <span class="task-id">TASK-03</span>
+        <h2 class="task-title">dashboard/page.tsx imports from shared types</h2>
+        <span class="badge ok">Clean</span>
+      </div>
+      <p>Same shape as TASK-02, applied to the dashboard.</p>
+      <pre><code class="language-typescript">import type { Goal, Habit, HabitLog } from '@/types'</code></pre>
+      <div class="verdict">
+        <span class="verdict-icon">✓</span>
+        <div class="verdict-text">Pure refactor. Note <code>GoalWithNote</code> is a local interface for a different shape, kept inline — correct call.</div>
+      </div>
+    </article>
+
+    <article class="task" id="task-04" data-tag="warn">
+      <div class="task-header">
+        <span class="task-id">TASK-04</span>
+        <h2 class="task-title">&lt;Skeleton&gt; component</h2>
+        <span class="badge warn">Palette mismatch</span>
+      </div>
+      <p>Loading placeholder. Used on the dashboard while data is fetching.</p>
+      <div class="label">src/components/Skeleton.tsx (new file, 17 lines)</div>
+<pre><code class="language-tsx">interface SkeletonProps {
+  lines?: number;
+  className?: string;
+}
+
+export default function Skeleton({ lines = 3, className }: SkeletonProps) {
+  return (
+    &lt;div className={className}&gt;
+      {Array.from({ length: lines }).map((_, i) =&gt; (
+        &lt;div
+          key={i}
+          className="animate-pulse bg-gray-200 dark:bg-gray-700 rounded h-4 mb-2"
+        /&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}</code></pre>
+      <div class="verdict warn">
+        <span class="verdict-icon">⚠</span>
+        <div class="verdict-text">Works correctly but uses <code>bg-gray-200 dark:bg-gray-700</code>. The app is hardcoded dark and uses the <code>zinc-*</code> palette everywhere else. Visually fine but inconsistent with the rest of the codebase. <small>2-min fix: swap to <code>bg-zinc-800</code>.</small></div>
+      </div>
+    </article>
+
+    <article class="task" id="task-05" data-tag="warn">
+      <div class="task-header">
+        <span class="task-id">TASK-05</span>
+        <h2 class="task-title">&lt;EmptyState&gt; component</h2>
+        <span class="badge warn">Readability bug</span>
+      </div>
+      <p>Renders a centered "nothing here yet" block with title, description, optional icon, optional action button.</p>
+      <div class="label">src/components/EmptyState.tsx (new file, 22 lines)</div>
+<pre><code class="language-tsx">import type { ReactNode } from 'react';
+
+interface EmptyStateProps {
+  title: string;
+  description?: string;
+  icon?: string;
+  action?: ReactNode;
+}
+
+export default function EmptyState({ title, description, icon, action }: EmptyStateProps) {
+  return (
+    &lt;div className="flex flex-col items-center justify-center py-12 text-center"&gt;
+      {icon && &lt;span className="text-4xl mb-4"&gt;{icon}&lt;/span&gt;}
+      &lt;h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100"&gt;{title}&lt;/h3&gt;
+      {description && (
+        &lt;p className="mt-1 text-sm text-gray-500 dark:text-gray-400"&gt;{description}&lt;/p&gt;
+      )}
+      {action && &lt;div className="mt-4"&gt;{action}&lt;/div&gt;}
+    &lt;/div&gt;
+  );
+}</code></pre>
+      <div class="verdict warn">
+        <span class="verdict-icon">⚠</span>
+        <div class="verdict-text"><strong>Real issue:</strong> <code>text-gray-900</code> is dark gray (#111827). Without <code>dark:</code> kicking in, that's the rendered color when your system is in light mode. Body is hardcoded <code>bg-zinc-950</code> — dark text on near-black background, hard to read. <small>Fix: swap to <code>text-zinc-100</code> for the title and <code>text-zinc-400</code> for the description.</small></div>
+      </div>
+    </article>
+
+    <article class="task" id="task-06" data-tag="ok">
+      <div class="task-header">
+        <span class="task-id">TASK-06</span>
+        <h2 class="task-title">Layout metadata + viewport</h2>
+        <span class="badge ok">Clean</span>
+      </div>
+      <p>Browser tab title, description, theme color. Followed Next.js 15+/16 conventions (split between <code>metadata</code> and <code>viewport</code> exports).</p>
+<pre><code class="language-tsx">export const metadata: Metadata = {
+  title: "Goals — Personal Tracker",
+  description: "Daily habits, notes, and milestones across active and on-deck goals.",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#000000",
+  width: "device-width",
+  initialScale: 1,
+};</code></pre>
+      <div class="verdict">
+        <span class="verdict-icon">✓</span>
+        <div class="verdict-text">Tab title verifiable right now. Open localhost:3000 — the tab reads "Goals — Personal Tracker" instead of the generic Next default.</div>
+      </div>
+    </article>
+
+    <article class="task" id="task-07" data-tag="skip">
+      <div class="task-header">
+        <span class="task-id">TASK-07</span>
+        <h2 class="task-title">Replace alert() calls (skipped)</h2>
+        <span class="badge skip">No-op</span>
+      </div>
+      <p>The plan said: "if no <code>alert()</code> calls exist, prefix with BLOCKED:". Ralph correctly identified that the dashboard has zero <code>alert()</code> calls and marked the task blocked as a deliberate no-op.</p>
+      <div class="verdict skip">
+        <span class="verdict-icon">○</span>
+        <div class="verdict-text">Working as designed. The task was a defensive "do this if it applies" instruction, and it didn't apply.</div>
+      </div>
+    </article>
+
+    <article class="task" id="task-08" data-tag="ok">
+      <div class="task-header">
+        <span class="task-id">TASK-08</span>
+        <h2 class="task-title">Dashboard uses Skeleton on load</h2>
+        <span class="badge ok">Clean</span>
+      </div>
+      <p>Replaced the static "Loading..." text with the new Skeleton component, 5 bars.</p>
+<pre><code class="language-tsx">if (loading) {
+  return (
+    &lt;div className="min-h-screen bg-zinc-950"&gt;
+      &lt;div className="max-w-4xl mx-auto px-4 py-12"&gt;
+        &lt;Skeleton lines={5} /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+      <div class="verdict">
+        <span class="verdict-icon">✓</span>
+        <div class="verdict-text">Same wrapper, just skeleton bars inside. Same palette concern as TASK-04 (gray vs zinc).</div>
+      </div>
+    </article>
+
+    <article class="task" id="task-09" data-tag="ok">
+      <div class="task-header">
+        <span class="task-id">TASK-09</span>
+        <h2 class="task-title">Public page uses EmptyState when no goals</h2>
+        <span class="badge ok">Active right now</span>
+      </div>
+      <p>This is what's rendering on localhost:3000 right now — DB is down, API returns empty, EmptyState shows.</p>
+<pre><code class="language-tsx">{goals.length === 0 && (
+  &lt;EmptyState
+    title="No active goals"
+    description="Add goals from the dashboard to see them here."
+    icon="🎯"
+  /&gt;
+)}</code></pre>
+      <div class="verdict warn">
+        <span class="verdict-icon">⚠</span>
+        <div class="verdict-text">Renders correctly. Inherits the readability concern from TASK-05 — title may be hard to see in light system mode.</div>
+      </div>
+    </article>
+
+    <article class="task" id="task-10" data-tag="ok">
+      <div class="task-header">
+        <span class="task-id">TASK-10</span>
+        <h2 class="task-title">Date-jump input</h2>
+        <span class="badge ok">Clean</span>
+      </div>
+      <p>Native HTML date picker on the dashboard, with future dates blocked via <code>max</code>.</p>
+<pre><code class="language-tsx">&lt;input
+  type="date"
+  value={selectedDate}
+  max={today}
+  onChange={(e) =&gt; setSelectedDate(e.target.value)}
+  className="px-3 py-1.5 bg-zinc-800 border border-zinc-700 rounded-lg text-zinc-100 text-sm focus:outline-none focus:border-zinc-500"
+/&gt;</code></pre>
+      <div class="verdict">
+        <span class="verdict-icon">✓</span>
+        <div class="verdict-text"><code>max={today}</code> prevents picking future dates. When changed, <code>selectedDate</code> updates → data-fetch effect re-runs. Uses correct zinc palette.</div>
+      </div>
+    </article>
+
+    <article class="task" id="task-11" data-tag="ok">
+      <div class="task-header">
+        <span class="task-id">TASK-11</span>
+        <h2 class="task-title">Today button (disabled when on today)</h2>
+        <span class="badge ok">Clean</span>
+      </div>
+<pre><code class="language-tsx">&lt;button
+  onClick={() =&gt; setSelectedDate(today)}
+  disabled={selectedDate === today}
+  className="... disabled:bg-zinc-800 disabled:text-zinc-600 disabled:cursor-not-allowed ..."
+&gt;
+  Today
+&lt;/button&gt;</code></pre>
+      <div class="verdict">
+        <span class="verdict-icon">✓</span>
+        <div class="verdict-text">Disabled state cleanly styled including <code>cursor-not-allowed</code>.</div>
+      </div>
+    </article>
+
+    <article class="task" id="task-12" data-tag="ok">
+      <div class="task-header">
+        <span class="task-id">TASK-12</span>
+        <h2 class="task-title">Keyboard shortcuts (← → T)</h2>
+        <span class="badge ok">Clean</span>
+      </div>
+      <p>← previous day, → next day (gated by today), <code>T</code> jumps to today. Skips when typing in inputs.</p>
+<pre><code class="language-tsx">useEffect(() =&gt; {
+  const handleKeyDown = (e: KeyboardEvent) =&gt; {
+    const target = e.target as HTMLElement
+    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName)) return
+
+    if (e.key === 'ArrowLeft') {
+      const [y, m, d] = selectedDate.split('-').map(Number)
+      const prev = new Date(Date.UTC(y, m - 1, d - 1))
+      setSelectedDate(prev.toISOString().split('T')[0])
+    } else if (e.key === 'ArrowRight') {
+      const [y, m, d] = selectedDate.split('-').map(Number)
+      const next = new Date(Date.UTC(y, m - 1, d + 1))
+      const nextStr = next.toISOString().split('T')[0]
+      if (nextStr &lt;= today) setSelectedDate(nextStr)
+    } else if (e.key === 't' || e.key === 'T') {
+      setSelectedDate(today)
+    }
+  }
+
+  window.addEventListener('keydown', handleKeyDown)
+  return () =&gt; window.removeEventListener('keydown', handleKeyDown)
+}, [selectedDate, today])</code></pre>
+      <div class="verdict">
+        <span class="verdict-icon">✓</span>
+        <div class="verdict-text">All four boxes ticked: input-typing guard, UTC date math (no timezone bugs at month boundaries), future-date guard on →, cleanup on unmount.</div>
+      </div>
+    </article>
+
+    <article class="task" id="task-13" data-tag="ok">
+      <div class="task-header">
+        <span class="task-id">TASK-13</span>
+        <h2 class="task-title">JSON Export button</h2>
+        <span class="badge ok">Clean</span>
+      </div>
+      <p>Pure client-side download — packages current state into a JSON file.</p>
+<pre><code class="language-tsx">const handleExport = () =&gt; {
+  const data = {
+    exportedAt: new Date().toISOString(),
+    date: selectedDate,
+    goals,
+    habitsForDate: logs,
+    notes,
+  }
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = `goals-${selectedDate}.json`
+  a.click()
+  URL.revokeObjectURL(url)
+}</code></pre>
+      <div class="verdict">
+        <span class="verdict-icon">✓</span>
+        <div class="verdict-text">Standard download pattern. <code>URL.revokeObjectURL</code> correctly cleans up. Note: <code>notes</code> is the *unsaved draft* state from the textarea, per spec.</div>
+      </div>
+    </article>
+
+    <article class="task" id="task-14" data-tag="ok">
+      <div class="task-header">
+        <span class="task-id">TASK-14</span>
+        <h2 class="task-title">Print stylesheet</h2>
+        <span class="badge ok">Clean (minor spec drift)</span>
+      </div>
+      <p>Cmd+P on any page now hides nav and buttons, forces light background. Verifiable right now without DB.</p>
+<pre><code class="language-css">@media print {
+  nav,
+  button {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    max-width: 100% !important;
+    columns: 1 !important;
+  }
+
+  li {
+    page-break-inside: avoid;
+  }
+}</code></pre>
+      <div class="verdict">
+        <span class="verdict-icon">✓</span>
+        <div class="verdict-text">Spec asked for page-break on <code>.phase-card</code> and <code>table</code>; ralph applied it to <code>li</code> instead — defensible since habits render as list items, but a small spec deviation worth knowing.</div>
+      </div>
+    </article>
+
+    <article class="task" id="task-15" data-tag="ok">
+      <div class="task-header">
+        <span class="task-id">TASK-15</span>
+        <h2 class="task-title">Today indicator (green dot)</h2>
+        <span class="badge ok">Clean</span>
+      </div>
+      <p>Two changes in one block: header text flips between "Today" and the date string, and a green dot appears next to "Today".</p>
+<pre><code class="language-tsx">&lt;h1 className="text-4xl font-bold text-white flex items-center gap-2"&gt;
+  {selectedDate === today ? 'Today' : selectedDate}
+  {selectedDate === today && (
+    &lt;span className="w-3 h-3 rounded-full bg-green-500 flex-shrink-0" /&gt;
+  )}
+&lt;/h1&gt;</code></pre>
+      <div class="verdict">
+        <span class="verdict-icon">✓</span>
+        <div class="verdict-text">Concise. Both conditions guard on the same expression — could be DRYer but at this size it's fine.</div>
+      </div>
+    </article>
+
+    <article class="task" id="task-16" data-tag="warn">
+      <div class="task-header">
+        <span class="task-id">TASK-16</span>
+        <h2 class="task-title">apiFetch typed helper</h2>
+        <span class="badge warn">Dead code</span>
+      </div>
+      <p>Foundation for future error-handling unification. Spec said don't update callers in this task.</p>
+      <div class="label">src/lib/api.ts (new file, 7 lines)</div>
+<pre><code class="language-typescript">export async function apiFetch&lt;T&gt;(url: string, init?: RequestInit): Promise&lt;T&gt; {
+  const res = await fetch(url, init)
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  return res.json() as Promise&lt;T&gt;
+}</code></pre>
+      <div class="verdict warn">
+        <span class="verdict-icon">⚠</span>
+        <div class="verdict-text">Code is fine, but nothing imports it yet. Functional but inert until a follow-up task wires it into the existing <code>fetch()</code> calls in <code>page.tsx</code> and <code>dashboard/page.tsx</code>.</div>
+      </div>
+    </article>
+
+    <article class="task" id="task-17" data-tag="ok">
+      <div class="task-header">
+        <span class="task-id">TASK-17</span>
+        <h2 class="task-title">seed.js → seed.mjs (ESM)</h2>
+        <span class="badge ok">Clean</span>
+      </div>
+      <p>Renamed file to <code>.mjs</code>, swapped <code>require()</code> for <code>import</code>, updated <code>npm run seed</code> in package.json. Clears the eslint <code>no-require-imports</code> error.</p>
+<pre><code class="language-javascript">// seed.mjs
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
+async function main() {
+  await prisma.habitLog.deleteMany({})
+  ...
+}</code></pre>
+<pre><code class="language-json">// package.json
+"seed": "node seed.mjs"</code></pre>
+      <div class="verdict">
+        <span class="verdict-icon">✓</span>
+        <div class="verdict-text">Sensible call to use <code>.mjs</code> rather than adding <code>"type": "module"</code> to package.json (which would have rippled into other files).</div>
+      </div>
+    </article>
+
+    <article class="task" id="task-18" data-tag="ok">
+      <div class="task-header">
+        <span class="task-id">TASK-18</span>
+        <h2 class="task-title">JSDoc on auth + db helpers</h2>
+        <span class="badge ok">Clean (manual)</span>
+      </div>
+      <p>One-line docstrings on every export. Hover any of these in your editor and the description appears.</p>
+      <div class="label">src/lib/auth.ts</div>
+<pre><code class="language-typescript">/** Generate a fresh random 64-char hex session token. */
+export async function createSessionToken(): Promise&lt;string&gt; { ... }
+
+/** Persist a session token in the httpOnly session cookie (30-day max age). */
+export async function setSessionCookie(token: string): Promise&lt;void&gt; { ... }
+
+/** Read the current session token from cookies, or null if absent. */
+export async function getSessionToken(): Promise&lt;string | null&gt; { ... }
+
+/** Remove the session cookie, effectively logging the user out. */
+export async function clearSessionCookie(): Promise&lt;void&gt; { ... }
+
+/** Returns true when a session token is present in cookies. */
+export async function verifySession(): Promise&lt;boolean&gt; { ... }</code></pre>
+      <div class="label">src/lib/db.ts</div>
+<pre><code class="language-typescript">/**
+ * Shared Prisma client singleton. Reuses one instance across hot reloads in
+ * development and per-request invocations in production to avoid exhausting
+ * the database connection pool.
+ */
+export const prisma = ...</code></pre>
+      <div class="verdict">
+        <span class="verdict-icon">✓</span>
+        <div class="verdict-text">Hand-written after the loop's stall-detection bug exited prematurely. Tight, accurate.</div>
+      </div>
+    </article>
+
+    <article class="task" id="defensive" data-tag="ok">
+      <div class="task-header">
+        <span class="task-id">FIX</span>
+        <h2 class="task-title">Defensive fetch (post-loop)</h2>
+        <span class="badge ok">Critical fix</span>
+      </div>
+      <p>Without this, opening localhost:3000 with the DB down would have crashed with <code>goals.map is not a function</code>. Root cause: when the API 500s, <code>response.json()</code> returns the error object, then <code>setGoals(errorObj)</code> sets non-array state, then <code>.map</code> blows up.</p>
+<pre><code class="language-tsx">const response = await fetch('/api/goals')
+if (!response.ok) {
+  throw new Error(`HTTP ${response.status}`)
+}
+const data = await response.json()
+setGoals(Array.isArray(data) ? data : [])</code></pre>
+      <p>And the catch branch resets all list state to empty:</p>
+<pre><code class="language-tsx">} catch (error) {
+  console.error('Failed to fetch data:', error)
+  setGoals([])
+  setLogs({})
+  setAllGoals([])
+} finally {
+  setLoading(false)
+}</code></pre>
+      <div class="verdict">
+        <span class="verdict-icon">✓</span>
+        <div class="verdict-text">This is what's keeping localhost:3000 from crashing right now. Same shape applied to both <code>page.tsx</code> and <code>dashboard/page.tsx</code>.</div>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>
+  Generated 2026-05-08 · Open in browser via <code>open /Users/alexandercoffman/ClaudeProjects/goals/REVIEW.html</code>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/typescript.min.js"></script>
+<script>
+  hljs.highlightAll();
+
+  // Filter buttons
+  const buttons = document.querySelectorAll('.filter-bar button');
+  const tasks = document.querySelectorAll('article.task');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      tasks.forEach(t => {
+        if (f === 'all' || t.dataset.tag === f) {
+          t.classList.remove('hidden');
+        } else {
+          t.classList.add('hidden');
+        }
+      });
+    });
+  });
+
+  // Smooth scroll
+  document.querySelectorAll('nav.sidebar a').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
