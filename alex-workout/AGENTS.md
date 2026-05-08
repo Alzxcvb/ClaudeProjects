@@ -1,0 +1,54 @@
+# AGENTS.md — Alex Workout
+
+Discoveries and conventions accumulated across iterations. Append, don't rewrite.
+
+---
+
+## Initial knowledge (seeded 2026-05-08)
+
+### File map
+- `index.html` — Program landing
+- `push.html`, `pull.html`, `legs.html`, `abs.html`, `recovery.html` — session pages
+- `progress.html` — log + chart (uses `tracker.js`)
+- `references.html` — exercise references
+- `style.css` — dark theme, CSS vars
+- `tracker.js` — localStorage CRUD + canvas chart (~290 lines)
+
+### CSS variables
+Read top of `style.css` for the full list. Key vars referenced in tracker.js: `--text`, `--text-dim`. Match these when adding new UI.
+
+### localStorage shape
+- Key: `alex-workout-log`
+- Value: JSON array of `{ id, timestamp, session, exercise, weight, reps, sets, notes }`
+- Schema MUST stay backward-compatible. Add optional fields only.
+
+### EXERCISES constant
+Hardcoded in `tracker.js`. Mirrors what each session page expects. If you add an exercise to a session HTML, add it here too.
+
+### Color accents
+- Yellow `#c9a227` — chart line, primary accent
+- Grays `#888`, `#2a2a2a` — text-dim, grid lines
+- Background `#000`, body text near-white
+
+### Verification commands
+- JS: `node --check <file>.js`
+- HTML: confirm `<!DOCTYPE html>` + `</html>` present
+- CSS: confirm last char is `}` (no truncation)
+
+### Browser API gotchas
+- This site is opened via `file://`. Some APIs (service workers, install prompts) only work over HTTPS or localhost. PWA tasks MUST degrade gracefully when SW registration fails — wrap in try/catch, log to console, don't break the page.
+
+### Git staging
+- Commits land in parent `ClaudeProjects` repo (alex-workout has no own git).
+- Always `git add <specific-file>` from inside `alex-workout/`. Never `-A` or `.`.
+
+---
+
+## Iteration discoveries
+
+(Ralph: append new findings below as you go.)
+
+### TASK-01 (manifest.json)
+- Validation loop `for f in *.js; do ...done` fails in sandbox due to "Unhandled node type: string" — run `node --check tracker.js` directly instead, then verify HTML with grep -l.
+- All 8 HTML files have identical `<head>` structure ending with `<link rel="stylesheet" href="style.css">` — manifest link goes immediately after.
+- CSS last char is `}` (+ newline), `tail -c 2 | xxd` shows `7d 0a` — valid.
