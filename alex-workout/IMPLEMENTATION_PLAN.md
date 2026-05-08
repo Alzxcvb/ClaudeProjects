@@ -14,7 +14,7 @@ Headless ralph loop builds these one at a time. Pick the first `- [ ]` with all 
 - [x] **TASK-03**: Create `service-worker.js` that on `install` caches all current static assets (every `*.html`, `style.css`, `tracker.js`, `manifest.json`, both icon SVGs) under cache name `alex-workout-v1`, and on `fetch` serves cache-first with network fallback. Skip caching for non-GET requests.
   Depends: TASK-02
 
-- [ ] **TASK-04**: Register the service worker in EVERY HTML page via inline `<script>` near `</body>`. Wrap in `if ('serviceWorker' in navigator)` AND a try/catch so it never throws on `file://`. Log success or failure to console. Use `navigator.serviceWorker.register('service-worker.js')`.
+- [x] **TASK-04**: Register the service worker in EVERY HTML page via inline `<script>` near `</body>`. Wrap in `if ('serviceWorker' in navigator)` AND a try/catch so it never throws on `file://`. Log success or failure to console. Use `navigator.serviceWorker.register('service-worker.js')`.
   Depends: TASK-03
 
 - [ ] **TASK-05**: Add an "Install App" button on `index.html` that listens for `beforeinstallprompt`, captures the event, shows the button when available, hides after install or user dismiss. Style with existing CSS variables.

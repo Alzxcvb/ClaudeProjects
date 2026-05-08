@@ -63,3 +63,9 @@ Hardcoded in `tracker.js`. Mirrors what each session page expects. If you add an
 - Cache name `alex-workout-v1`, lists all 13 static assets explicitly.
 - Fetch handler skips non-GET by returning early (no `respondWith`), then cache-first with network fallback and dynamic cache insertion.
 - `node --check` validates service worker syntax fine (no DOM APIs used at parse time).
+
+### TASK-04 (SW registration in all HTML pages)
+- All 8 HTML files share the same footer pattern `</footer>\n</body>\n</html>` — inserted script block just before `</body>` in each.
+- `progress.html` already had `<script src="tracker.js"></script>` as the last script — inserted SW registration after it.
+- Pattern: `if ('serviceWorker' in navigator)` guard + try/catch + `.then/.catch` for console logging.
+- Validation shortcut: `grep -l "serviceWorker.register" *.html | wc -l` → must be 8.
