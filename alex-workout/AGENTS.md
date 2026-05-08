@@ -141,6 +141,14 @@ Hardcoded in `tracker.js`. Mirrors what each session page expects. If you add an
 - `.streak-banner` CSS: centered, `font-size: 0.85rem`, `color: var(--text-dim)`, `padding: 0.5rem 0 1.5rem`.
 - When log is empty, banner shows "0 workouts this week · 0 day streak".
 
+### TASK-15 (Print styles)
+- `@media print` block appended at end of style.css after `.streak-banner`.
+- Hides `nav` and `footer` with `display: none`.
+- Forces `body { background: #fff !important; color: #000 !important; font-size: 12pt; }`.
+- `.container` gets `max-width: 100%; padding: 0` so content fills the full print width.
+- `.phase-card` and `table` get `page-break-inside: avoid` to prevent mid-card/mid-table page breaks.
+- CSS last char remains `}` + newline (`7d 0a`) — validation still passes.
+
 ### TASK-05 (Install App button)
 - `beforeinstallprompt` only fires on HTTPS/localhost; on `file://` it never fires — button stays `display:none`, which is the correct graceful degradation.
 - Button placed inside `.hero` div in `index.html`, after the subtitle `<p>`.

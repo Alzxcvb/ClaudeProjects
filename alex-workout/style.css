@@ -565,3 +565,19 @@ footer {
   color: var(--text-dim);
   padding: 0.5rem 0 1.5rem;
 }
+
+/* PRINT */
+@media print {
+  nav, footer { display: none; }
+
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 12pt;
+    max-width: 100%;
+  }
+
+  .container { max-width: 100%; padding: 0; }
+
+  .phase-card, table { page-break-inside: avoid; }
+}

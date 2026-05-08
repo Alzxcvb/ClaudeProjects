@@ -51,7 +51,7 @@ Headless ralph loop builds these one at a time. Pick the first `- [ ]` with all 
 
 - [x] **TASK-14**: Add a streak banner to `index.html` — a small `<div>` under the hero section. Reads localStorage key `alex-workout-log`, computes (a) workouts logged this calendar week (Mon–Sun) by unique `YYYY-MM-DD` from `timestamp`, (b) current consecutive-day streak ending today or yesterday. Render: "X workouts this week · Y day streak". Inline `<script>`.
 
-- [ ] **TASK-15**: Add a `@media print` block to `style.css`. Hide `nav` and `footer` (`display: none`). Force black on white (`body { background: #fff !important; color: #000 !important; }`). Single column. Larger body font (`12pt`). `page-break-inside: avoid;` for `.phase-card` and `table`.
+- [x] **TASK-15**: Add a `@media print` block to `style.css`. Hide `nav` and `footer` (`display: none`). Force black on white (`body { background: #fff !important; color: #000 !important; }`). Single column. Larger body font (`12pt`). `page-break-inside: avoid;` for `.phase-card` and `table`.
 
 ---
 
