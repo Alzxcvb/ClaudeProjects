@@ -119,6 +119,13 @@ Discoveries and conventions accumulated across iterations. Append, don't rewrite
 - h1 already displayed "Today" text when on today — the green dot is the additional visual cue.
 - `npx tsc --noEmit` passes clean (exit 0).
 
+## TASK-16 (2026-05-08)
+- Created `src/lib/api.ts` with a generic `apiFetch<T>` helper.
+- Non-2xx responses throw `new Error(res.statusText)` — keeps error surfacing consistent for callers.
+- `res.json() as Promise<T>` — cast is safe because `fetch` returns `Promise<unknown>` in strict mode; callers supply the expected shape via the type parameter.
+- No callers updated in this task.
+- `npx tsc --noEmit` passes clean (exit 0).
+
 ## TASK-10 (2026-05-08)
 - Added `selectedDate` state (mutable, initialized to today) separate from the fixed `today` constant.
 - Kept `today` as an immutable reference for comparison (used in TASK-11/15 for "Today" pill logic).
