@@ -107,6 +107,11 @@ Discoveries and conventions accumulated across iterations. Append, don't rewrite
 - Export JSON button placed in header between "Manage Goals" and "Logout".
 - `npx tsc --noEmit` passes clean (exit 0).
 
+## TASK-14 (2026-05-08)
+- Added `@media print` block to `src/app/globals.css`.
+- Hides `nav` and `button` elements; forces `body` to white background + black text; sets `li { page-break-inside: avoid }` for habit list items.
+- CSS-only change — no TypeScript involved; `npx tsc --noEmit` passes trivially (exit 0).
+
 ## TASK-10 (2026-05-08)
 - Added `selectedDate` state (mutable, initialized to today) separate from the fixed `today` constant.
 - Kept `today` as an immutable reference for comparison (used in TASK-11/15 for "Today" pill logic).
