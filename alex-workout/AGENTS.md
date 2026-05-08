@@ -77,6 +77,15 @@ Hardcoded in `tracker.js`. Mirrors what each session page expects. If you add an
 - `importFileInput.value = ''` reset after import so the same file can be re-imported if needed.
 - `importBtn` and `importFileInput` guarded with null-check in case `progress.html` structure changes.
 
+### TASK-07 (chart-mode toggle)
+- Three buttons (Weight/Volume/Est. 1RM) inserted above `.chart-container` in a `.chart-mode-group` flex div.
+- Active state managed via `.active` class; initialized on page load from `localStorage.getItem('chart-mode')` (default 'weight').
+- Button IDs follow pattern `chart-mode-{mode}` where mode is 'weight', 'volume', or '1rm'.
+- `updateChart()` reads mode from localStorage each call — no global state needed.
+- Volume y-axis uses `padL = 70` (wider than default 50) and `.toFixed(0)` to prevent label overflow.
+- `·` in "kg·reps" is the literal Unicode middle dot — works fine in a JS string literal.
+- Added initial `updateChart()` call in `initTracker()` so the canvas shows the placeholder text on first load.
+
 ### TASK-05 (Install App button)
 - `beforeinstallprompt` only fires on HTTPS/localhost; on `file://` it never fires — button stays `display:none`, which is the correct graceful degradation.
 - Button placed inside `.hero` div in `index.html`, after the subtitle `<p>`.

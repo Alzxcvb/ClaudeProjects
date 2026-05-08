@@ -468,3 +468,32 @@ footer {
   display: none;
   margin: 1.5rem auto 0;
 }
+
+/* CHART MODE TOGGLE */
+.chart-mode-group {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.chart-mode-btn {
+  background: var(--bg-card);
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  flex: 1;
+}
+
+.chart-mode-btn + .chart-mode-btn {
+  border-left: none;
+}
+
+.chart-mode-btn:hover {
+  background: var(--bg-card);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.chart-mode-btn.active {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}

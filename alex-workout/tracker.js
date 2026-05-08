@@ -175,8 +175,25 @@ function initTracker() {
     });
   }
 
+  // Chart mode toggle
+  const chartModeBtns = document.querySelectorAll('.chart-mode-btn');
+  if (chartModeBtns.length) {
+    const savedMode = localStorage.getItem('chart-mode') || 'weight';
+    chartModeBtns.forEach(btn => {
+      const mode = btn.id.replace('chart-mode-', '');
+      if (mode === savedMode) btn.classList.add('active');
+      btn.addEventListener('click', () => {
+        chartModeBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        localStorage.setItem('chart-mode', mode);
+        updateChart();
+      });
+    });
+  }
+
   // Initial render
   updateHistory();
+  updateChart();
 }
 
 function updateHistory() {
@@ -260,12 +277,21 @@ function updateChart() {
     return;
   }
 
-  const weights = entries.map(e => e.weight);
-  const minW = Math.min(...weights) - 2;
-  const maxW = Math.max(...weights) + 2;
+  const mode = localStorage.getItem('chart-mode') || 'weight';
+  const values = entries.map(e => {
+    if (mode === 'volume') return e.weight * e.reps * e.sets;
+    if (mode === '1rm') return e.weight * (1 + e.reps / 30);
+    return e.weight;
+  });
+  const yUnit = mode === 'volume' ? 'kg·reps' : 'kg';
+  const yDecimals = mode === 'volume' ? 0 : 1;
+
+  const minW = Math.min(...values) - (mode === 'volume' ? 10 : 2);
+  const maxW = Math.max(...values) + (mode === 'volume' ? 10 : 2);
   const rangeW = maxW - minW || 1;
 
-  const padL = 50, padR = 20, padT = 20, padB = 40;
+  const padL = mode === 'volume' ? 70 : 50;
+  const padR = 20, padT = 20, padB = 40;
   const plotW = W - padL - padR;
   const plotH = H - padT - padB;
 
@@ -279,11 +305,11 @@ function updateChart() {
     ctx.lineTo(W - padR, y);
     ctx.stroke();
 
-    const val = (maxW - (rangeW * i / 4)).toFixed(1);
+    const val = (maxW - (rangeW * i / 4)).toFixed(yDecimals);
     ctx.fillStyle = '#888';
     ctx.font = '10px monospace';
     ctx.textAlign = 'right';
-    ctx.fillText(val + 'kg', padL - 5, y + 4);
+    ctx.fillText(val + yUnit, padL - 5, y + 4);
   }
 
   // Plot line
@@ -292,7 +318,7 @@ function updateChart() {
   ctx.beginPath();
   entries.forEach((e, i) => {
     const x = padL + (i / (entries.length - 1)) * plotW;
-    const y = padT + plotH - ((e.weight - minW) / rangeW) * plotH;
+    const y = padT + plotH - ((values[i] - minW) / rangeW) * plotH;
     if (i === 0) ctx.moveTo(x, y);
     else ctx.lineTo(x, y);
   });
@@ -301,7 +327,7 @@ function updateChart() {
   // Plot dots
   entries.forEach((e, i) => {
     const x = padL + (i / (entries.length - 1)) * plotW;
-    const y = padT + plotH - ((e.weight - minW) / rangeW) * plotH;
+    const y = padT + plotH - ((values[i] - minW) / rangeW) * plotH;
     ctx.fillStyle = '#c9a227';
     ctx.beginPath();
     ctx.arc(x, y, 4, 0, Math.PI * 2);
