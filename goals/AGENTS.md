@@ -85,3 +85,12 @@ Discoveries and conventions accumulated across iterations. Append, don't rewrite
 - Rendered `<EmptyState>` conditionally when `goals.length === 0`, placed inside the existing `space-y-8` div before the `goals.map(...)` call.
 - No need to change the map — it naturally produces nothing for an empty array; the EmptyState sits above as the visible fallback.
 - `npx tsc --noEmit` passes clean (exit 0).
+
+## TASK-10 (2026-05-08)
+- Added `selectedDate` state (mutable, initialized to today) separate from the fixed `today` constant.
+- Kept `today` as an immutable reference for comparison (used in TASK-11/15 for "Today" pill logic).
+- Changed `useEffect` dependency from `[today]` to `[selectedDate]`; added `setLoading(true)` at fetch start so skeleton shows on date change.
+- Updated all API calls (`/api/habits/${selectedDate}`, note `date: selectedDate`) to use `selectedDate`.
+- Date input placed inline with h1 in a flex row; h1 shows "Today" when `selectedDate === today`, otherwise shows the date string.
+- `max={today}` prevents selecting future dates.
+- `npx tsc --noEmit` passes clean (exit 0).

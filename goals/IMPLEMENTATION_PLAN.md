@@ -36,7 +36,7 @@ Headless ralph loop builds these one at a time. Pick the first `- [ ]` with all 
 
 ## Phase 3 — Features
 
-- [ ] **TASK-10**: Add a date-jump `<input type="date">` near the day-nav on `src/app/dashboard/page.tsx`. When changed, navigate the dashboard to show that date's habits (use the existing date-state pattern, whatever it is). Don't break existing prev/next-day navigation.
+- [x] **TASK-10**: Add a date-jump `<input type="date">` near the day-nav on `src/app/dashboard/page.tsx`. When changed, navigate the dashboard to show that date's habits (use the existing date-state pattern, whatever it is). Don't break existing prev/next-day navigation.
 
 - [ ] **TASK-11**: Add a "Today" button next to the date-jump that resets the dashboard's date to today's `YYYY-MM-DD`. Disabled when already on today.
   Depends: TASK-10

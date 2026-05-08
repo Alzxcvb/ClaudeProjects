@@ -21,17 +21,19 @@ export default function DashboardPage() {
   const [milestones, setMilestones] = useState<Record<string, boolean>>({})
   const [loading, setLoading] = useState(true)
   const [today] = useState(new Date().toISOString().split('T')[0])
+  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0])
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true)
       try {
-        // Fetch today's goals and habits
+        // Fetch goals and habits for selectedDate
         const goalsResponse = await fetch('/api/goals')
         const goalsData = await goalsResponse.json()
         setGoals(goalsData)
 
-        // Fetch today's habit logs
-        const logsResponse = await fetch(`/api/habits/${today}`)
+        // Fetch habit logs for selectedDate
+        const logsResponse = await fetch(`/api/habits/${selectedDate}`)
         const logsData = await logsResponse.json()
 
         const logsMap: Record<string, HabitLog> = {}
@@ -56,14 +58,14 @@ export default function DashboardPage() {
     }
 
     fetchData()
-  }, [today])
+  }, [selectedDate])
 
   const handleHabitToggle = async (habitId: string) => {
     const currentLog = logs[habitId]
     const newCompleted = !currentLog?.completed
 
     try {
-      const response = await fetch(`/api/habits/${today}`, {
+      const response = await fetch(`/api/habits/${selectedDate}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -89,7 +91,7 @@ export default function DashboardPage() {
     const currentLog = logs[habitId]
 
     try {
-      const response = await fetch(`/api/habits/${today}`, {
+      const response = await fetch(`/api/habits/${selectedDate}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -123,7 +125,7 @@ export default function DashboardPage() {
           goalId,
           content,
           milestone: milestones[goalId] || false,
-          date: today,
+          date: selectedDate,
         }),
       })
 
@@ -161,7 +163,18 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-zinc-950">
       <div className="max-w-4xl mx-auto px-4 py-12">
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-4xl font-bold text-white">Today</h1>
+          <div className="flex items-center gap-4">
+            <h1 className="text-4xl font-bold text-white">
+              {selectedDate === today ? 'Today' : selectedDate}
+            </h1>
+            <input
+              type="date"
+              value={selectedDate}
+              max={today}
+              onChange={(e) => setSelectedDate(e.target.value)}
+              className="px-3 py-1.5 bg-zinc-800 border border-zinc-700 rounded-lg text-zinc-100 text-sm focus:outline-none focus:border-zinc-500"
+            />
+          </div>
           <div className="flex items-center gap-4">
             <Link
               href="/dashboard/goals"
