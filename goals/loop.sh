@@ -127,11 +127,17 @@ while [ $ITERATION -lt $MAX_ITERATIONS ]; do
             exit 0
         fi
 
-        if [ "$BLOCKED" -gt 0 ] 2>/dev/null && [ "$INCOMPLETE" -eq "$BLOCKED" ] 2>/dev/null; then
-            log "All remaining tasks are blocked. Human intervention needed."
-            grep -E "^- (\[[x ]\] )?BLOCKED:" "$PLAN_FILE" | tee -a "$LOG_FILE"
+        # Detect a true stall: INCOMPLETE failed to drop across two consecutive iterations.
+        # This catches "all remaining are stuck" without the prior bug of comparing INCOMPLETE
+        # to BLOCKED — those are disjoint counts (BLOCKED lines lose their `- [ ]` checkbox)
+        # and equality between them was a numerical coincidence, not a stall signal.
+        if [ "$ITERATION" -gt 1 ] && [ "$INCOMPLETE" -gt 0 ] && [ "$INCOMPLETE" -eq "$LAST_INCOMPLETE" ] && [ "$LAST_INCOMPLETE" -eq "$PREV_INCOMPLETE" ]; then
+            log "No progress for 2 iterations ($INCOMPLETE remaining unchanged). Stopping for human review."
+            grep -E "^- (\[[x ]\] )?BLOCKED:" "$PLAN_FILE" 2>/dev/null | tee -a "$LOG_FILE"
             exit 1
         fi
+        PREV_INCOMPLETE=${LAST_INCOMPLETE:-$INCOMPLETE}
+        LAST_INCOMPLETE=$INCOMPLETE
     fi
 
     check_rate_limit

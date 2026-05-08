@@ -99,9 +99,10 @@ while [ $ITERATION -lt $MAX_ITERATIONS ]; do
         INCOMPLETE=${INCOMPLETE:-0}
         COMPLETE=$(grep -c "^- \[x\]" "$PLAN_FILE" 2>/dev/null | tr -cd '0-9' || echo "0")
         COMPLETE=${COMPLETE:-0}
-        # Anchor to list-item lines so the literal word "BLOCKED:" in the
-        # instructions header doesn't trip a false positive.
-        BLOCKED=$(grep -cE "^- .*BLOCKED:" "$PLAN_FILE" 2>/dev/null | tr -cd '0-9' || echo "0")
+        # Anchor to list-item lines, only counting BLOCKED: at the START of the task content
+        # (after the bullet, optionally after a checkbox). This avoids matching "BLOCKED:" that
+        # appears inside a task description (e.g. instructions saying "prefix with `BLOCKED:`").
+        BLOCKED=$(grep -cE "^- (\[[x ]\] )?BLOCKED:" "$PLAN_FILE" 2>/dev/null | tr -cd '0-9' || echo "0")
         BLOCKED=${BLOCKED:-0}
 
         log "Status: $COMPLETE complete, $INCOMPLETE remaining, $BLOCKED blocked"
@@ -125,11 +126,17 @@ while [ $ITERATION -lt $MAX_ITERATIONS ]; do
             exit 0
         fi
 
-        if [ "$BLOCKED" -gt 0 ] 2>/dev/null && [ "$INCOMPLETE" -eq "$BLOCKED" ] 2>/dev/null; then
-            log "All remaining tasks are blocked. Human intervention needed."
-            grep -E "^- .*BLOCKED:" "$PLAN_FILE" | tee -a "$LOG_FILE"
+        # Detect a true stall: INCOMPLETE failed to drop across two consecutive iterations.
+        # This catches "all remaining are stuck" without the prior bug of comparing INCOMPLETE
+        # to BLOCKED — those are disjoint counts (BLOCKED lines lose their `- [ ]` checkbox)
+        # and equality between them was a numerical coincidence, not a stall signal.
+        if [ "$ITERATION" -gt 1 ] && [ "$INCOMPLETE" -gt 0 ] && [ "$INCOMPLETE" -eq "$LAST_INCOMPLETE" ] && [ "$LAST_INCOMPLETE" -eq "$PREV_INCOMPLETE" ]; then
+            log "No progress for 2 iterations ($INCOMPLETE remaining unchanged). Stopping for human review."
+            grep -E "^- (\[[x ]\] )?BLOCKED:" "$PLAN_FILE" 2>/dev/null | tee -a "$LOG_FILE"
             exit 1
         fi
+        PREV_INCOMPLETE=${LAST_INCOMPLETE:-$INCOMPLETE}
+        LAST_INCOMPLETE=$INCOMPLETE
     fi
 
     check_rate_limit
