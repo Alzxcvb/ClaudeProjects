@@ -71,3 +71,11 @@ Discoveries and conventions accumulated across iterations. Append, don't rewrite
 - `themeColor` belongs in the `Viewport` export (not `Metadata`) in Next.js 14+/16 — the `Metadata` type does not include `themeColor`. Both `Viewport` and `Metadata` types imported from `"next"`.
 - `viewport` export includes `themeColor: "#000000"`, `width: "device-width"`, `initialScale: 1`.
 - `npx tsc --noEmit` passes clean (exit 0).
+
+## TASK-07 (2026-05-08)
+- BLOCKED: No `alert()` calls found anywhere in `src/app/dashboard/page.tsx`. Task is a no-op.
+
+## TASK-08 (2026-05-08)
+- Replaced the centered "Loading..." paragraph with `<Skeleton lines={5} />` inside a layout-matching wrapper (`min-h-screen bg-zinc-950`, `max-w-4xl mx-auto px-4 py-12`).
+- Imported `Skeleton` from `@/components/Skeleton` — default export, no destructuring needed.
+- `npx tsc --noEmit` passes clean (exit 0).

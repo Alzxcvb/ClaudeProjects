@@ -24,9 +24,9 @@ Headless ralph loop builds these one at a time. Pick the first `- [ ]` with all 
 
 - [x] **TASK-06**: Update `src/app/layout.tsx` `metadata` export with proper `title: "Goals — Personal Tracker"`, `description: "Daily habits, notes, and milestones across active and on-deck goals."`, and `themeColor: "#000000"`. Add `viewport` export with `width: 'device-width', initialScale: 1`.
 
-- [ ] **TASK-07**: Replace any `alert()` calls in `src/app/dashboard/page.tsx` with an inline error banner (a div with `role="alert"`, Tailwind red styling, dismissable via state). If no `alert()` calls exist, prefix this task with `BLOCKED:` (no-op). The banner state should clear automatically after 4 seconds.
+- BLOCKED: **TASK-07**: Replace any `alert()` calls in `src/app/dashboard/page.tsx` with an inline error banner (a div with `role="alert"`, Tailwind red styling, dismissable via state). If no `alert()` calls exist, prefix this task with `BLOCKED:` (no-op). The banner state should clear automatically after 4 seconds. — No `alert()` calls found in dashboard/page.tsx.
 
-- [ ] **TASK-08**: Use `Skeleton` from TASK-04 in `src/app/dashboard/page.tsx` while the initial habits/goals fetch is loading (replace any current "Loading…" text). Show 5 skeleton lines.
+- [x] **TASK-08**: Use `Skeleton` from TASK-04 in `src/app/dashboard/page.tsx` while the initial habits/goals fetch is loading (replace any current "Loading…" text). Show 5 skeleton lines.
   Depends: TASK-04
 
 - [ ] **TASK-09**: Use `EmptyState` from TASK-05 in `src/app/page.tsx` when the goals fetch returns an empty array. Title "No active goals", description "Add goals from the dashboard to see them here.", icon "🎯".

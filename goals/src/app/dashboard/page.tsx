@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import type { Goal, Habit, HabitLog } from '@/types'
+import Skeleton from '@/components/Skeleton'
 
 interface GoalWithNote {
   id: string
@@ -148,8 +149,10 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
-        <p className="text-zinc-400">Loading...</p>
+      <div className="min-h-screen bg-zinc-950">
+        <div className="max-w-4xl mx-auto px-4 py-12">
+          <Skeleton lines={5} />
+        </div>
       </div>
     )
   }
