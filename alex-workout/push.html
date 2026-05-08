@@ -28,91 +28,31 @@
             <p class="subtitle">Monday (Push A + Abs) &amp; Thursday (Push B)</p>
         </div>
 
-        <div class="rest-timer">
-            <h2>Rest Timer</h2>
-            <div class="rest-timer-controls">
-                <input type="number" id="rest-secs" value="90" min="10" max="600" aria-label="Seconds">
-                <button id="rest-start">Start</button>
-                <button id="rest-reset">Reset</button>
-            </div>
-            <div id="rest-display" class="rest-display">01:30</div>
-        </div>
+        <div id="rest-timer-mount"></div>
         <script>
           (function() {
-            var input = document.getElementById('rest-secs');
-            var startBtn = document.getElementById('rest-start');
-            var resetBtn = document.getElementById('rest-reset');
-            var display = document.getElementById('rest-display');
-            var interval = null;
-            var remaining = 90;
-            var running = false;
-
-            function fmt(s) {
-              var m = Math.floor(s / 60);
-              var sec = s % 60;
-              return (m < 10 ? '0' : '') + m + ':' + (sec < 10 ? '0' : '') + sec;
-            }
-
-            function beep() {
-              try {
-                var ctx = new (window.AudioContext || window.webkitAudioContext)();
-                var osc = ctx.createOscillator();
-                var gain = ctx.createGain();
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.frequency.value = 440;
-                osc.type = 'sine';
-                gain.gain.setValueAtTime(0.5, ctx.currentTime);
-                osc.start(ctx.currentTime);
-                osc.stop(ctx.currentTime + 0.3);
-                osc.onended = function() { ctx.close(); };
-              } catch(e) {}
-            }
-
-            function tick() {
-              remaining--;
-              display.textContent = fmt(remaining);
-              if (remaining <= 0) {
-                clearInterval(interval);
-                interval = null;
-                running = false;
-                startBtn.textContent = 'Start';
-                beep();
-              }
-            }
-
-            startBtn.addEventListener('click', function() {
-              if (running) {
-                clearInterval(interval);
-                interval = null;
-                running = false;
-                startBtn.textContent = 'Start';
-              } else {
-                if (interval === null && remaining <= 0) {
-                  remaining = Math.min(600, Math.max(10, parseInt(input.value, 10) || 90));
-                  display.textContent = fmt(remaining);
-                }
-                running = true;
-                startBtn.textContent = 'Pause';
-                interval = setInterval(tick, 1000);
-              }
-            });
-
-            resetBtn.addEventListener('click', function() {
-              clearInterval(interval);
-              interval = null;
-              running = false;
-              startBtn.textContent = 'Start';
-              remaining = Math.min(600, Math.max(10, parseInt(input.value, 10) || 90));
-              display.textContent = fmt(remaining);
-            });
-
-            input.addEventListener('change', function() {
-              if (!running) {
-                remaining = Math.min(600, Math.max(10, parseInt(input.value, 10) || 90));
-                display.textContent = fmt(remaining);
-              }
-            });
+            var mount = document.getElementById('rest-timer-mount');
+            if (!mount) return;
+            try {
+              fetch('rest-timer.html')
+                .then(function(r) { return r.text(); })
+                .then(function(html) {
+                  var parser = new DOMParser();
+                  var doc = parser.parseFromString(html, 'text/html');
+                  var children = Array.prototype.slice.call(doc.body.childNodes);
+                  for (var i = 0; i < children.length; i++) {
+                    mount.appendChild(document.adoptNode(children[i]));
+                  }
+                  var scripts = mount.querySelectorAll('script');
+                  for (var j = 0; j < scripts.length; j++) {
+                    var s = scripts[j];
+                    var ns = document.createElement('script');
+                    ns.textContent = s.textContent;
+                    s.parentNode.replaceChild(ns, s);
+                  }
+                })
+                .catch(function() {});
+            } catch(e) {}
           })();
         </script>
 

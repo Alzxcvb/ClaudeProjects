@@ -44,7 +44,7 @@ Headless ralph loop builds these one at a time. Pick the first `- [ ]` with all 
 
 - [x] **TASK-11**: Add a rest timer section at the TOP of `push.html` (under the nav, above the exercises). Markup: input for seconds (default 90, min 10, max 600), Start button, Reset button, big countdown display "MM:SS". On Start, count down. On done, play a 440 Hz sine wave for 0.3 seconds via Web Audio API (no external file). Inline `<script>` is fine.
 
-- [ ] **TASK-12**: Extract the rest-timer markup + script from TASK-11 into a single shared file `rest-timer.html` (HTML fragment + inline `<script>`) and load it via a small fetch+inject snippet at the top of `pull.html`, `legs.html`, `abs.html`. Replace the inline timer in `push.html` with the same fetch+inject. The fetch must degrade gracefully on `file://` (try/catch; if fetch fails, just skip).
+- [x] **TASK-12**: Extract the rest-timer markup + script from TASK-11 into a single shared file `rest-timer.html` (HTML fragment + inline `<script>`) and load it via a small fetch+inject snippet at the top of `pull.html`, `legs.html`, `abs.html`. Replace the inline timer in `push.html` with the same fetch+inject. The fetch must degrade gracefully on `file://` (try/catch; if fetch fails, just skip).
   Depends: TASK-11
 
 - [ ] **TASK-13**: Create `plates.html` — plate calculator. Inputs: target total weight (kg), bar weight (kg, default 20). Output: list of plates per side, e.g. "Per side: 20 + 10 + 5 + 2.5 (= 37.5 kg)". Use a greedy algorithm with available plates [25, 20, 15, 10, 5, 2.5, 1.25] kg. Style with existing CSS. Add it to the Quick Links table on `index.html`.

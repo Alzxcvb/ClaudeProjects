@@ -117,6 +117,14 @@ Hardcoded in `tracker.js`. Mirrors what each session page expects. If you add an
 - CSS: `.rest-timer`, `.rest-timer-controls`, `.rest-display` added at end of style.css after toast block.
 - `.rest-display` font-size: 3rem with `var(--accent)` color matches the gold accent system.
 
+### TASK-12 (Shared rest-timer fragment)
+- `rest-timer.html` is a full valid HTML file (DOCTYPE + html/body tags) so it passes the `*.html` validation loop.
+- Fetch+inject uses `DOMParser` to parse the fetched HTML, then moves `doc.body.childNodes` into the mount div via `document.adoptNode`.
+- Scripts from innerHTML/adoptNode don't auto-execute — must query `.querySelectorAll('script')` in the mount, create new `<script>` elements with the same `.textContent`, and call `replaceChild` to force execution.
+- Fetch is wrapped in try/catch; `.catch()` is a no-op — both paths ensure graceful degradation on `file://` where fetch is blocked.
+- Mount div `<div id="rest-timer-mount">` placed inside `.container` after the hero, before the first `<section>`.
+- In `abs.html` the first section is "Schedule" (not "Exercises") — that's the correct insertion point.
+
 ### TASK-05 (Install App button)
 - `beforeinstallprompt` only fires on HTTPS/localhost; on `file://` it never fires — button stays `display:none`, which is the correct graceful degradation.
 - Button placed inside `.hero` div in `index.html`, after the subtitle `<p>`.

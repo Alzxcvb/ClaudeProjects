@@ -28,6 +28,34 @@
             <p class="subtitle">Wednesday (Legs A) &amp; Saturday (Legs B)</p>
         </div>
 
+        <div id="rest-timer-mount"></div>
+        <script>
+          (function() {
+            var mount = document.getElementById('rest-timer-mount');
+            if (!mount) return;
+            try {
+              fetch('rest-timer.html')
+                .then(function(r) { return r.text(); })
+                .then(function(html) {
+                  var parser = new DOMParser();
+                  var doc = parser.parseFromString(html, 'text/html');
+                  var children = Array.prototype.slice.call(doc.body.childNodes);
+                  for (var i = 0; i < children.length; i++) {
+                    mount.appendChild(document.adoptNode(children[i]));
+                  }
+                  var scripts = mount.querySelectorAll('script');
+                  for (var j = 0; j < scripts.length; j++) {
+                    var s = scripts[j];
+                    var ns = document.createElement('script');
+                    ns.textContent = s.textContent;
+                    s.parentNode.replaceChild(ns, s);
+                  }
+                })
+                .catch(function() {});
+            } catch(e) {}
+          })();
+        </script>
+
         <section>
             <h2>Exercises</h2>
 
