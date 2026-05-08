@@ -94,6 +94,12 @@ Hardcoded in `tracker.js`. Mirrors what each session page expects. If you add an
 - No new CSS needed — existing `table/th/td` rules supply correct dark styling.
 - Section inserted in progress.html between "Log Entry" and "Progress Chart" sections.
 
+### TASK-09 (PR detection)
+- `addEntry` filters `log` by `entry.exercise`, reduces to max `weight` (default 0 if no prior entries).
+- New entry gets `is_pr = true` only when `entry.weight > prevBest` (strict greater-than, not >=).
+- `is_pr` is an optional field — older entries that lack it load fine; no schema migration needed.
+- No UI changes in this task; TASK-10 handles the toast notification.
+
 ### TASK-05 (Install App button)
 - `beforeinstallprompt` only fires on HTTPS/localhost; on `file://` it never fires — button stays `display:none`, which is the correct graceful degradation.
 - Button placed inside `.hero` div in `index.html`, after the subtitle `<p>`.

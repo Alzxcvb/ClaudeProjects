@@ -33,7 +33,12 @@ function saveLog(log) {
 
 function addEntry(entry) {
   const log = getLog();
-  log.push({ ...entry, id: Date.now(), timestamp: new Date().toISOString() });
+  const prevBest = log
+    .filter(e => e.exercise === entry.exercise)
+    .reduce((max, e) => Math.max(max, e.weight), 0);
+  const newEntry = { ...entry, id: Date.now(), timestamp: new Date().toISOString() };
+  if (entry.weight > prevBest) newEntry.is_pr = true;
+  log.push(newEntry);
   saveLog(log);
 }
 

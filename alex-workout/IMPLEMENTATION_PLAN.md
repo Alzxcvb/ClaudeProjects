@@ -32,7 +32,7 @@ Headless ralph loop builds these one at a time. Pick the first `- [ ]` with all 
 - [x] **TASK-08**: Add a "Weekly Volume" summary card on `progress.html` (above the chart, below the log form). Compute total volume per session category (push/pull/legs/abs) for the last 7 days from localStorage entries. Render as a 4-row table with columns: Session, Total Volume (kg), Entries.
   Depends: TASK-07
 
-- [ ] **TASK-09**: Add PR detection in `tracker.js`. When `addEntry` is called, check if the new entry's weight is the highest ever logged for that exercise. If so, set `entry.is_pr = true` before saving. Don't break loading of older entries that lack `is_pr`. Don't change rendering yet — TASK-10 handles UI.
+- [x] **TASK-09**: Add PR detection in `tracker.js`. When `addEntry` is called, check if the new entry's weight is the highest ever logged for that exercise. If so, set `entry.is_pr = true` before saving. Don't break loading of older entries that lack `is_pr`. Don't change rendering yet — TASK-10 handles UI.
   Depends: TASK-08
 
 - [ ] **TASK-10**: Add a toast notification system to `tracker.js` + `style.css`. When `is_pr` is set on a newly added entry, show a toast "🏆 New PR — {exercise}: {weight}kg × {reps}" for 4 seconds, fades out. Bottom-right corner. Use yellow accent `#c9a227`. Pure DOM (no library).
