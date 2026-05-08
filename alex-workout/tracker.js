@@ -40,6 +40,18 @@ function addEntry(entry) {
   if (entry.weight > prevBest) newEntry.is_pr = true;
   log.push(newEntry);
   saveLog(log);
+  return newEntry;
+}
+
+function showToast(message) {
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(() => {
+    toast.classList.add('fade-out');
+    toast.addEventListener('transitionend', () => toast.remove(), { once: true });
+  }, 4000);
 }
 
 function deleteEntry(id) {
@@ -127,10 +139,13 @@ function initTracker() {
     if (!exercise) return alert('Select an exercise');
     if (isNaN(weight) || isNaN(reps) || isNaN(sets)) return alert('Fill in weight, reps, and sets');
 
-    addEntry({
+    const newEntry = addEntry({
       session: sessionSelect.value,
       exercise, weight, reps, sets, notes
     });
+    if (newEntry.is_pr) {
+      showToast(`🏆 New PR — ${newEntry.exercise}: ${newEntry.weight}kg \xD7 ${newEntry.reps}`);
+    }
 
     document.getElementById('weight-input').value = '';
     document.getElementById('reps-input').value = '';
@@ -381,5 +396,6 @@ window.deleteEntry = deleteEntry;
 window.updateHistory = updateHistory;
 window.updateChart = updateChart;
 window.renderWeeklyVolume = renderWeeklyVolume;
+window.showToast = showToast;
 
 document.addEventListener('DOMContentLoaded', initTracker);

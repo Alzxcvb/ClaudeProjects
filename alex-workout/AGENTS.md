@@ -100,6 +100,14 @@ Hardcoded in `tracker.js`. Mirrors what each session page expects. If you add an
 - `is_pr` is an optional field — older entries that lack it load fine; no schema migration needed.
 - No UI changes in this task; TASK-10 handles the toast notification.
 
+### TASK-10 (PR toast notification)
+- `addEntry` now returns the new entry object — allows caller to inspect `is_pr` without re-reading localStorage.
+- `showToast(message)` creates a `<div class="toast">`, appends to body, waits 4000ms, adds `.fade-out` class (CSS `opacity: 0; transition: opacity 0.5s`), then removes on `transitionend` (uses `{ once: true }` listener).
+- Toast positioned `fixed; bottom: 1.5rem; right: 1.5rem` so it never blocks the form.
+- `pointer-events: none` on `.toast` so it doesn't block clicks on underlying elements.
+- The `×` reps symbol is written as `\xD7` (Unicode multiplication sign) inside a template literal to avoid a raw non-ASCII character in the JS source.
+- Toast CSS appended at end of style.css after the chart-mode block.
+
 ### TASK-05 (Install App button)
 - `beforeinstallprompt` only fires on HTTPS/localhost; on `file://` it never fires — button stays `display:none`, which is the correct graceful degradation.
 - Button placed inside `.hero` div in `index.html`, after the subtitle `<p>`.
