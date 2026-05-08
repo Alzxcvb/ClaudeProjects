@@ -54,3 +54,9 @@ Discoveries and conventions accumulated across iterations. Append, don't rewrite
 - `GoalWithNote` kept as a local interface — it's not a duplicate of any shared type (subset of `Goal` used for the all-goals dropdown state).
 - Shared `Habit.goalId` is optional vs. the old local `goalId: string` (required). No runtime impact — `goalId` is never accessed in the dashboard JSX, only `habit.id` and `habit.name`.
 - `npx tsc --noEmit` passes clean (exit 0).
+
+## TASK-04 (2026-05-08)
+- Created `src/components/Skeleton.tsx` — no `'use client'` needed (pure presentational, no state or hooks).
+- `src/components/` directory did not previously exist; this is the first component file.
+- `Array.from({ length: lines })` used for indexed rendering without a range utility.
+- `npx tsc --noEmit` passes clean (exit 0).
