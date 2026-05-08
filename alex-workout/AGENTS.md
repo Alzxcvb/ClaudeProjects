@@ -125,6 +125,14 @@ Hardcoded in `tracker.js`. Mirrors what each session page expects. If you add an
 - Mount div `<div id="rest-timer-mount">` placed inside `.container` after the hero, before the first `<section>`.
 - In `abs.html` the first section is "Schedule" (not "Exercises") — that's the correct insertion point.
 
+### TASK-13 (Plate calculator)
+- Greedy algorithm uses `Math.floor(Math.round(remaining / plate * 1000) / 1000)` to avoid floating-point drift when dividing.
+- Remaining is tracked with `Math.round(x * 1000) / 1000` after each plate deduction to keep values clean.
+- "Bar only" edge case: show friendly message when no plates are needed rather than empty output.
+- `plates.html` added to Quick Links in index.html; nav on plates.html includes self-link with `.active` class.
+- service-worker.js was NOT updated to cache plates.html — its explicit asset list now lags behind. Update TASK-03 cache list when touching the SW.
+- Validation confirmed: `<!DOCTYPE html>` + `</html>` present; CSS ends `7d 0a`; `tracker.js` syntax clean.
+
 ### TASK-05 (Install App button)
 - `beforeinstallprompt` only fires on HTTPS/localhost; on `file://` it never fires — button stays `display:none`, which is the correct graceful degradation.
 - Button placed inside `.hero` div in `index.html`, after the subtitle `<p>`.

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plate Calculator // Alex Workout</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="nav-logo">Alex Workout</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Program</a></li>
+            <li><a href="push.html">Push</a></li>
+            <li><a href="pull.html">Pull</a></li>
+            <li><a href="legs.html">Legs</a></li>
+            <li><a href="abs.html">Abs</a></li>
+            <li><a href="recovery.html">Recovery</a></li>
+            <li><a href="progress.html">Log</a></li>
+            <li><a href="plates.html" class="active">Plates</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="hero">
+            <h1>Plate Calculator</h1>
+            <p class="subtitle">Greedy plate loading &mdash; per side</p>
+        </div>
+
+        <section>
+            <h2>Calculate</h2>
+            <div class="log-form">
+                <div class="form-row">
+                    <label for="target-weight">Target (kg)</label>
+                    <input type="number" id="target-weight" min="0" step="0.25" placeholder="e.g. 100">
+                </div>
+                <div class="form-row">
+                    <label for="bar-weight">Bar (kg)</label>
+                    <input type="number" id="bar-weight" min="0" step="0.5" value="20">
+                </div>
+                <div class="form-row">
+                    <button id="calc-btn">Calculate</button>
+                    <button id="clear-btn" class="secondary">Clear</button>
+                </div>
+            </div>
+
+            <div id="plates-result" style="display:none;">
+                <div class="phase-card" id="result-card">
+                    <h3 id="result-heading"></h3>
+                    <p id="result-plates" style="color:var(--accent);font-size:1.1rem;letter-spacing:1px;margin-bottom:0.5rem;"></p>
+                    <p id="result-warn" style="color:var(--red);font-size:0.8rem;margin-bottom:0;display:none;"></p>
+                </div>
+
+                <section>
+                    <h2>Available Plates</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Plate (kg)</th>
+                                <th>Count per side</th>
+                            </tr>
+                        </thead>
+                        <tbody id="plate-breakdown"></tbody>
+                    </table>
+                </section>
+            </div>
+        </section>
+
+        <section>
+            <h2>Standard Plates</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Plate (kg)</th>
+                        <th>Common use</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>25</td><td>Heavy compound lifts</td></tr>
+                    <tr><td>20</td><td>Heavy compound lifts</td></tr>
+                    <tr><td>15</td><td>Intermediate loading</td></tr>
+                    <tr><td>10</td><td>General loading</td></tr>
+                    <tr><td>5</td><td>Small jumps</td></tr>
+                    <tr><td>2.5</td><td>Microloading</td></tr>
+                    <tr><td>1.25</td><td>Fractional loading</td></tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <footer>
+        <p>Alex Workout &mdash; Built with Claude</p>
+    </footer>
+
+    <script>
+      (function() {
+        var PLATES = [25, 20, 15, 10, 5, 2.5, 1.25];
+
+        function calcPlates(target, bar) {
+          var perSide = (target - bar) / 2;
+          if (perSide < 0) return null;
+          var remaining = Math.round(perSide * 1000) / 1000;
+          var counts = {};
+          for (var i = 0; i < PLATES.length; i++) {
+            var p = PLATES[i];
+            var n = Math.floor(Math.round(remaining / p * 1000) / 1000);
+            if (n > 0) {
+              counts[p] = n;
+              remaining = Math.round((remaining - n * p) * 1000) / 1000;
+            }
+          }
+          return { counts: counts, perSide: perSide, remaining: remaining };
+        }
+
+        function render() {
+          var targetEl = document.getElementById('target-weight');
+          var barEl = document.getElementById('bar-weight');
+          var resultDiv = document.getElementById('plates-result');
+          var heading = document.getElementById('result-heading');
+          var platesEl = document.getElementById('result-plates');
+          var warnEl = document.getElementById('result-warn');
+          var breakdownEl = document.getElementById('plate-breakdown');
+
+          var target = parseFloat(targetEl.value);
+          var bar = parseFloat(barEl.value);
+
+          if (isNaN(target) || isNaN(bar) || target < 0 || bar < 0) {
+            resultDiv.style.display = 'none';
+            return;
+          }
+
+          var res = calcPlates(target, bar);
+          if (!res) {
+            heading.textContent = 'Target is less than bar weight';
+            platesEl.textContent = '';
+            warnEl.style.display = 'none';
+            breakdownEl.innerHTML = '';
+            resultDiv.style.display = 'block';
+            return;
+          }
+
+          // Build plate label string: "20 + 10 + 5 + 2.5 (= 37.5 kg)"
+          var parts = [];
+          for (var i = 0; i < PLATES.length; i++) {
+            var p = PLATES[i];
+            if (res.counts[p]) {
+              for (var j = 0; j < res.counts[p]; j++) parts.push(p);
+            }
+          }
+
+          heading.textContent = 'Per side — ' + res.perSide.toFixed(2).replace(/\.?0+$/, '') + ' kg';
+
+          if (parts.length === 0) {
+            platesEl.textContent = 'Bar only (no plates needed)';
+          } else {
+            var sum = parts.reduce(function(a, b) { return a + b; }, 0);
+            platesEl.textContent = parts.join(' + ') + ' (= ' + sum + ' kg)';
+          }
+
+          if (res.remaining > 0.001) {
+            warnEl.textContent = 'Note: ' + res.remaining.toFixed(3) + ' kg per side cannot be loaded with standard plates.';
+            warnEl.style.display = 'block';
+          } else {
+            warnEl.style.display = 'none';
+          }
+
+          // Breakdown table
+          var rows = '';
+          var hasPlates = false;
+          for (var i = 0; i < PLATES.length; i++) {
+            var p = PLATES[i];
+            var count = res.counts[p] || 0;
+            if (count > 0) {
+              hasPlates = true;
+              rows += '<tr><td>' + p + ' kg</td><td>' + count + '</td></tr>';
+            }
+          }
+          breakdownEl.innerHTML = hasPlates ? rows : '<tr><td colspan="2" style="color:var(--text-dim)">None</td></tr>';
+
+          resultDiv.style.display = 'block';
+        }
+
+        document.getElementById('calc-btn').addEventListener('click', render);
+
+        document.getElementById('clear-btn').addEventListener('click', function() {
+          document.getElementById('target-weight').value = '';
+          document.getElementById('bar-weight').value = '20';
+          document.getElementById('plates-result').style.display = 'none';
+        });
+
+        // Calculate on Enter key in inputs
+        ['target-weight', 'bar-weight'].forEach(function(id) {
+          document.getElementById(id).addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') render();
+          });
+        });
+      })();
+    </script>
+
+    <script>
+      if ('serviceWorker' in navigator) {
+        try {
+          navigator.serviceWorker.register('service-worker.js')
+            .then(function(reg) { console.log('SW registered:', reg.scope); })
+            .catch(function(err) { console.log('SW registration failed:', err); });
+        } catch (e) {
+          console.log('SW registration threw:', e);
+        }
+      }
+    </script>
+</body>
+</html>
