@@ -100,6 +100,13 @@ Discoveries and conventions accumulated across iterations. Append, don't rewrite
 - useEffect depends on `[selectedDate, today]` — re-registers on date change so handler always closes over the current value.
 - `npx tsc --noEmit` passes clean (exit 0).
 
+## TASK-13 (2026-05-08)
+- Added `handleExport` to `src/app/dashboard/page.tsx` — builds JSON blob from `{ exportedAt, date, goals, habitsForDate: logs, notes }` and triggers download as `goals-YYYY-MM-DD.json`.
+- Pattern: create `<a>` element, set `href` + `download`, `.click()`, then `URL.revokeObjectURL` — no DOM side effects left behind.
+- `notes` state is the draft-note input map (`Record<string, string>`), not persisted notes. That's the only notes-like state available client-side; acceptable per task spec ("using whatever client-side state already exists").
+- Export JSON button placed in header between "Manage Goals" and "Logout".
+- `npx tsc --noEmit` passes clean (exit 0).
+
 ## TASK-10 (2026-05-08)
 - Added `selectedDate` state (mutable, initialized to today) separate from the fixed `today` constant.
 - Kept `today` as an immutable reference for comparison (used in TASK-11/15 for "Today" pill logic).

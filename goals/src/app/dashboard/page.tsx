@@ -167,6 +167,23 @@ export default function DashboardPage() {
     }
   }
 
+  const handleExport = () => {
+    const data = {
+      exportedAt: new Date().toISOString(),
+      date: selectedDate,
+      goals,
+      habitsForDate: logs,
+      notes,
+    }
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `goals-${selectedDate}.json`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' })
     router.push('/login')
@@ -212,6 +229,12 @@ export default function DashboardPage() {
             >
               Manage Goals
             </Link>
+            <button
+              onClick={handleExport}
+              className="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-lg text-zinc-100 text-sm transition-colors"
+            >
+              Export JSON
+            </button>
             <button
               onClick={handleLogout}
               className="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-lg text-zinc-100 text-sm transition-colors"
