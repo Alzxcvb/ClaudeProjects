@@ -28,6 +28,8 @@
             <button id="install-btn" class="install-btn">Install App</button>
         </div>
 
+        <div id="streak-banner" class="streak-banner"></div>
+
         <section>
             <h2>Weekly Schedule</h2>
             <table>
@@ -186,6 +188,41 @@
           deferredPrompt = null;
           btn.style.display = 'none';
         });
+      })();
+    </script>
+    <script>
+      (function() {
+        function pad(n) { return String(n).padStart(2, '0'); }
+        function localDate(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+        var log;
+        try { log = JSON.parse(localStorage.getItem('alex-workout-log') || '[]'); } catch(e) { log = []; }
+        if (!Array.isArray(log)) log = [];
+        var workoutDays = new Set(log.map(function(e) { return localDate(new Date(e.timestamp)); }));
+        var now = new Date();
+        var dow = now.getDay();
+        var mondayOffset = dow === 0 ? -6 : 1 - dow;
+        var weekWorkouts = 0;
+        for (var i = 0; i < 7; i++) {
+          var d = new Date(now);
+          d.setDate(now.getDate() + mondayOffset + i);
+          if (workoutDays.has(localDate(d))) weekWorkouts++;
+        }
+        var todayStr = localDate(now);
+        var yest = new Date(now);
+        yest.setDate(now.getDate() - 1);
+        var streak = 0;
+        var startStr = workoutDays.has(todayStr) ? todayStr : (workoutDays.has(localDate(yest)) ? localDate(yest) : null);
+        if (startStr) {
+          var check = new Date(startStr);
+          while (workoutDays.has(localDate(check))) {
+            streak++;
+            check.setDate(check.getDate() - 1);
+          }
+        }
+        var banner = document.getElementById('streak-banner');
+        if (banner) {
+          banner.textContent = weekWorkouts + ' workout' + (weekWorkouts !== 1 ? 's' : '') + ' this week · ' + streak + ' day streak';
+        }
       })();
     </script>
 </body>

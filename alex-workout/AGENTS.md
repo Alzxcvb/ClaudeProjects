@@ -133,6 +133,14 @@ Hardcoded in `tracker.js`. Mirrors what each session page expects. If you add an
 - service-worker.js was NOT updated to cache plates.html — its explicit asset list now lags behind. Update TASK-03 cache list when touching the SW.
 - Validation confirmed: `<!DOCTYPE html>` + `</html>` present; CSS ends `7d 0a`; `tracker.js` syntax clean.
 
+### TASK-14 (Streak banner on index.html)
+- Banner div `<div id="streak-banner" class="streak-banner">` placed after `.hero` div, before first `<section>`.
+- Script uses `localDate(d)` helper (getFullYear/getMonth/getDate) for local-timezone dates — avoids UTC midnight drift vs `toISOString().slice(0,10)`.
+- Week workouts: compute Monday offset (`dow === 0 ? -6 : 1 - dow`), loop 7 days, check Set of workout days.
+- Streak: starts from today if worked out, else yesterday, else 0. Walks backward while Set has that date.
+- `.streak-banner` CSS: centered, `font-size: 0.85rem`, `color: var(--text-dim)`, `padding: 0.5rem 0 1.5rem`.
+- When log is empty, banner shows "0 workouts this week · 0 day streak".
+
 ### TASK-05 (Install App button)
 - `beforeinstallprompt` only fires on HTTPS/localhost; on `file://` it never fires — button stays `display:none`, which is the correct graceful degradation.
 - Button placed inside `.hero` div in `index.html`, after the subtitle `<p>`.
