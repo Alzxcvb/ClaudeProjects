@@ -103,6 +103,27 @@ function initTracker() {
   const exportBtn = document.getElementById('export-data');
   const importBtn = document.getElementById('import-data');
   const importFileInput = document.getElementById('import-file-input');
+  const duplicateBtn = document.getElementById('duplicate-last');
+
+  function updateDuplicateButtonState() {
+    if (!duplicateBtn) return;
+    const ex = exerciseSelect.value;
+    duplicateBtn.disabled = !(ex && getExerciseHistory(ex).length > 0);
+  }
+
+  if (duplicateBtn) {
+    duplicateBtn.addEventListener('click', () => {
+      const ex = exerciseSelect.value;
+      if (!ex) return;
+      const history = getExerciseHistory(ex);
+      if (!history.length) return;
+      const last = history[history.length - 1];
+      document.getElementById('weight-input').value = last.weight;
+      document.getElementById('reps-input').value = last.reps;
+      document.getElementById('sets-input').value = last.sets;
+      document.getElementById('notes-input').value = last.notes || '';
+    });
+  }
 
   if (!sessionSelect) return;
 
@@ -120,11 +141,13 @@ function initTracker() {
     }
     updateHistory();
     updateChart();
+    updateDuplicateButtonState();
   });
 
   exerciseSelect.addEventListener('change', () => {
     updateHistory();
     updateChart();
+    updateDuplicateButtonState();
   });
 
   // Log form submit
@@ -155,6 +178,7 @@ function initTracker() {
     updateHistory();
     updateChart();
     renderWeeklyVolume();
+    updateDuplicateButtonState();
   });
 
   // Clear all data

@@ -62,5 +62,5 @@ Headless ralph loop builds these one at a time. Pick the first `- [ ]` with all 
 - [x] **TASK-17**: Add keyboard shortcuts to `progress.html` via `tracker.js`. Esc clears all log-form inputs (weight, reps, sets, notes). Ctrl+E (or Cmd+E) triggers the existing export. Don't break existing handlers; attach with `addEventListener` and respect `event.target` (don't trigger when typing in textarea).
   Depends: TASK-10
 
-- [ ] **TASK-18**: Add a "Duplicate last entry" button on the log form in `progress.html`. When clicked: if an exercise is selected, pre-fill weight, reps, sets, notes from the most recent entry for that exercise. If no prior entry, button stays disabled. Reuses `getExerciseHistory()` in `tracker.js`.
+- [x] **TASK-18**: Add a "Duplicate last entry" button on the log form in `progress.html`. When clicked: if an exercise is selected, pre-fill weight, reps, sets, notes from the most recent entry for that exercise. If no prior entry, button stays disabled. Reuses `getExerciseHistory()` in `tracker.js`.
   Depends: TASK-17
