@@ -86,6 +86,12 @@ Discoveries and conventions accumulated across iterations. Append, don't rewrite
 - No need to change the map — it naturally produces nothing for an empty array; the EmptyState sits above as the visible fallback.
 - `npx tsc --noEmit` passes clean (exit 0).
 
+## TASK-11 (2026-05-08)
+- Added "Today" button inline with the date input, after it in the flex row.
+- `disabled={selectedDate === today}` uses the existing `today` constant — no new state needed.
+- Disabled styling: `disabled:bg-zinc-800 disabled:text-zinc-600 disabled:cursor-not-allowed` matches existing button patterns.
+- `npx tsc --noEmit` passes clean (exit 0).
+
 ## TASK-10 (2026-05-08)
 - Added `selectedDate` state (mutable, initialized to today) separate from the fixed `today` constant.
 - Kept `today` as an immutable reference for comparison (used in TASK-11/15 for "Today" pill logic).

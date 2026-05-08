@@ -174,6 +174,13 @@ export default function DashboardPage() {
               onChange={(e) => setSelectedDate(e.target.value)}
               className="px-3 py-1.5 bg-zinc-800 border border-zinc-700 rounded-lg text-zinc-100 text-sm focus:outline-none focus:border-zinc-500"
             />
+            <button
+              onClick={() => setSelectedDate(today)}
+              disabled={selectedDate === today}
+              className="px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 disabled:bg-zinc-800 disabled:text-zinc-600 disabled:cursor-not-allowed rounded-lg text-zinc-100 text-sm transition-colors"
+            >
+              Today
+            </button>
           </div>
           <div className="flex items-center gap-4">
             <Link
