@@ -60,6 +60,29 @@ export default function DashboardPage() {
     fetchData()
   }, [selectedDate])
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName)) return
+
+      if (e.key === 'ArrowLeft') {
+        const [y, m, d] = selectedDate.split('-').map(Number)
+        const prev = new Date(Date.UTC(y, m - 1, d - 1))
+        setSelectedDate(prev.toISOString().split('T')[0])
+      } else if (e.key === 'ArrowRight') {
+        const [y, m, d] = selectedDate.split('-').map(Number)
+        const next = new Date(Date.UTC(y, m - 1, d + 1))
+        const nextStr = next.toISOString().split('T')[0]
+        if (nextStr <= today) setSelectedDate(nextStr)
+      } else if (e.key === 't' || e.key === 'T') {
+        setSelectedDate(today)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [selectedDate, today])
+
   const handleHabitToggle = async (habitId: string) => {
     const currentLog = logs[habitId]
     const newCompleted = !currentLog?.completed

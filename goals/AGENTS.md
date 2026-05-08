@@ -92,6 +92,14 @@ Discoveries and conventions accumulated across iterations. Append, don't rewrite
 - Disabled styling: `disabled:bg-zinc-800 disabled:text-zinc-600 disabled:cursor-not-allowed` matches existing button patterns.
 - `npx tsc --noEmit` passes clean (exit 0).
 
+## TASK-12 (2026-05-08)
+- Added `keydown` useEffect after the fetch useEffect in `src/app/dashboard/page.tsx`.
+- Handler skips when `event.target.tagName` is INPUT, TEXTAREA, or SELECT — prevents nav triggering while typing in habit value inputs or note textareas.
+- ArrowLeft/ArrowRight use `Date.UTC(y, m-1, d±1)` + `.toISOString().split('T')[0]` to avoid local-timezone off-by-one errors.
+- ArrowRight blocked by `nextStr <= today` guard (same boundary as the date input's `max={today}`).
+- useEffect depends on `[selectedDate, today]` — re-registers on date change so handler always closes over the current value.
+- `npx tsc --noEmit` passes clean (exit 0).
+
 ## TASK-10 (2026-05-08)
 - Added `selectedDate` state (mutable, initialized to today) separate from the fixed `today` constant.
 - Kept `today` as an immutable reference for comparison (used in TASK-11/15 for "Today" pill logic).

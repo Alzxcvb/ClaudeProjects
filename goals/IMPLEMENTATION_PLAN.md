@@ -41,7 +41,7 @@ Headless ralph loop builds these one at a time. Pick the first `- [ ]` with all 
 - [x] **TASK-11**: Add a "Today" button next to the date-jump that resets the dashboard's date to today's `YYYY-MM-DD`. Disabled when already on today.
   Depends: TASK-10
 
-- [ ] **TASK-12**: Add keyboard shortcuts to `src/app/dashboard/page.tsx`: ArrowLeft = previous day, ArrowRight = next day, `T` key = today. Attach via `addEventListener('keydown')` in a useEffect with proper cleanup. Skip the handler when `event.target` is an input/textarea/select.
+- [x] **TASK-12**: Add keyboard shortcuts to `src/app/dashboard/page.tsx`: ArrowLeft = previous day, ArrowRight = next day, `T` key = today. Attach via `addEventListener('keydown')` in a useEffect with proper cleanup. Skip the handler when `event.target` is an input/textarea/select.
   Depends: TASK-11
 
 - [ ] **TASK-13**: Add a JSON Export button on `src/app/dashboard/page.tsx`. On click, builds a `Blob` from `{ exportedAt, date, goals, habitsForDate, notes }` (using whatever client-side state already exists) and triggers a download as `goals-YYYY-MM-DD.json`. Pure client-side, no API call.
