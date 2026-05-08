@@ -42,7 +42,7 @@ Headless ralph loop builds these one at a time. Pick the first `- [ ]` with all 
 
 ## Phase 3 — Gym utilities
 
-- [ ] **TASK-11**: Add a rest timer section at the TOP of `push.html` (under the nav, above the exercises). Markup: input for seconds (default 90, min 10, max 600), Start button, Reset button, big countdown display "MM:SS". On Start, count down. On done, play a 440 Hz sine wave for 0.3 seconds via Web Audio API (no external file). Inline `<script>` is fine.
+- [x] **TASK-11**: Add a rest timer section at the TOP of `push.html` (under the nav, above the exercises). Markup: input for seconds (default 90, min 10, max 600), Start button, Reset button, big countdown display "MM:SS". On Start, count down. On done, play a 440 Hz sine wave for 0.3 seconds via Web Audio API (no external file). Inline `<script>` is fine.
 
 - [ ] **TASK-12**: Extract the rest-timer markup + script from TASK-11 into a single shared file `rest-timer.html` (HTML fragment + inline `<script>`) and load it via a small fetch+inject snippet at the top of `pull.html`, `legs.html`, `abs.html`. Replace the inline timer in `push.html` with the same fetch+inject. The fetch must degrade gracefully on `file://` (try/catch; if fetch fails, just skip).
   Depends: TASK-11

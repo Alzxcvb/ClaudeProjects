@@ -108,6 +108,15 @@ Hardcoded in `tracker.js`. Mirrors what each session page expects. If you add an
 - The `×` reps symbol is written as `\xD7` (Unicode multiplication sign) inside a template literal to avoid a raw non-ASCII character in the JS source.
 - Toast CSS appended at end of style.css after the chart-mode block.
 
+### TASK-11 (Rest timer on push.html)
+- Timer placed as `.rest-timer` div inside `.container`, before the Exercises `<section>`.
+- Inline IIFE script immediately after the markup (before exercises section) — avoids polluting global scope.
+- Start button toggles to "Pause" while running; Reset always resets remaining to the input value.
+- Web Audio API: create `AudioContext`, connect `OscillatorNode → GainNode → destination`, `osc.start()` + `osc.stop(currentTime + 0.3)`, close context in `onended`. Whole call wrapped in try/catch — fails silently if audio API unavailable.
+- `input.change` handler only syncs `remaining` when not running (avoids mid-session disruption).
+- CSS: `.rest-timer`, `.rest-timer-controls`, `.rest-display` added at end of style.css after toast block.
+- `.rest-display` font-size: 3rem with `var(--accent)` color matches the gold accent system.
+
 ### TASK-05 (Install App button)
 - `beforeinstallprompt` only fires on HTTPS/localhost; on `file://` it never fires — button stays `display:none`, which is the correct graceful degradation.
 - Button placed inside `.hero` div in `index.html`, after the subtitle `<p>`.
