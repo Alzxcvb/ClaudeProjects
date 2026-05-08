@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "seed": "node seed.js"
+    "seed": "node seed.mjs"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

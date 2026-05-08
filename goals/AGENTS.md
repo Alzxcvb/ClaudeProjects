@@ -126,6 +126,12 @@ Discoveries and conventions accumulated across iterations. Append, don't rewrite
 - No callers updated in this task.
 - `npx tsc --noEmit` passes clean (exit 0).
 
+## TASK-17 (2026-05-08)
+- Renamed `seed.js` → `seed.mjs` to use ESM `import` syntax without adding `"type": "module"` to package.json (which would affect all `.js` files and risk breaking the Next.js setup).
+- Updated `package.json` `"seed"` script from `"node seed.js"` to `"node seed.mjs"`.
+- Clears the `@typescript-eslint/no-require-imports` error that was pre-existing on `seed.js`.
+- `npx tsc --noEmit` passes clean (exit 0) — `seed.mjs` is outside TypeScript's `include` globs so it's not type-checked, which is correct behavior.
+
 ## TASK-10 (2026-05-08)
 - Added `selectedDate` state (mutable, initialized to today) separate from the fixed `today` constant.
 - Kept `today` as an immutable reference for comparison (used in TASK-11/15 for "Today" pill logic).

@@ -57,6 +57,6 @@ Headless ralph loop builds these one at a time. Pick the first `- [ ]` with all 
 
 - [x] **TASK-16**: Create `src/lib/api.ts` exporting a typed `apiFetch<T>(url: string, init?: RequestInit): Promise<T>` helper. On non-2xx, throws an Error with the response status text. JSON parses the body. Used as a foundation — no callers updated in this task.
 
-- [ ] **TASK-17**: Refactor `seed.js` to use ESM imports (`import` instead of `require`). The file uses `require('@prisma/client')` and similar. Convert to `import { PrismaClient } from '@prisma/client'`. Add `"type": "module"` to package.json ONLY if needed — otherwise rename to `seed.mjs` (and update `npm run seed` script accordingly). Goal: clear the `@typescript-eslint/no-require-imports` error.
+- [x] **TASK-17**: Refactor `seed.js` to use ESM imports (`import` instead of `require`). The file uses `require('@prisma/client')` and similar. Convert to `import { PrismaClient } from '@prisma/client'`. Add `"type": "module"` to package.json ONLY if needed — otherwise rename to `seed.mjs` (and update `npm run seed` script accordingly). Goal: clear the `@typescript-eslint/no-require-imports` error.
 
 - [ ] **TASK-18**: Add JSDoc comments to every exported function in `src/lib/auth.ts` and `src/lib/db.ts`. One- or two-line `/** ... */` describing what the function does and its return shape. Don't change function bodies.
