@@ -156,6 +156,13 @@ Hardcoded in `tracker.js`. Mirrors what each session page expects. If you add an
 - Wrapped all `<table>` elements in HTML files with `<div class="table-wrap">`. Files: index.html (2 tables), abs.html, references.html, recovery.html (2 tables), plates.html (2 tables).
 - Table inside `.protocol-card` in recovery.html still wrapped — inner div indentation kept consistent with sibling elements.
 
+### TASK-17 (Keyboard shortcuts)
+- Single `keydown` listener added inside `initTracker()`, attached to `document`.
+- Guard: `if (e.target.tagName === 'TEXTAREA') return` — prevents firing when typing in a textarea (future-proof; no textarea exists in the form currently).
+- Esc: iterates `['weight-input','reps-input','sets-input','notes-input']` and sets `.value = ''` on each (null-checked with getElementById).
+- Ctrl+E / Cmd+E: `e.preventDefault()` then `exportBtn.click()` — reuses the existing export handler without duplicating logic. `exportBtn` is already in scope from the `initTracker` closure.
+- No changes to `progress.html` needed — handler is entirely in `tracker.js`.
+
 ### TASK-05 (Install App button)
 - `beforeinstallprompt` only fires on HTTPS/localhost; on `file://` it never fires — button stays `display:none`, which is the correct graceful degradation.
 - Button placed inside `.hero` div in `index.html`, after the subtitle `<p>`.

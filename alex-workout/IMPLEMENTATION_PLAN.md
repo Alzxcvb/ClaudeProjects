@@ -59,7 +59,7 @@ Headless ralph loop builds these one at a time. Pick the first `- [ ]` with all 
 
 - [x] **TASK-16**: Add a `@media (max-width: 700px)` block to `style.css`. Nav becomes vertical stack with reduced font; tables get `overflow-x: auto` wrapper class `.table-wrap`; `.container` padding reduces; hero `h1` shrinks to `1.8rem`; nav links smaller. Apply `.table-wrap` to all `<table>` parents in HTML where horizontal scroll on small screens is needed.
 
-- [ ] **TASK-17**: Add keyboard shortcuts to `progress.html` via `tracker.js`. Esc clears all log-form inputs (weight, reps, sets, notes). Ctrl+E (or Cmd+E) triggers the existing export. Don't break existing handlers; attach with `addEventListener` and respect `event.target` (don't trigger when typing in textarea).
+- [x] **TASK-17**: Add keyboard shortcuts to `progress.html` via `tracker.js`. Esc clears all log-form inputs (weight, reps, sets, notes). Ctrl+E (or Cmd+E) triggers the existing export. Don't break existing handlers; attach with `addEventListener` and respect `event.target` (don't trigger when typing in textarea).
   Depends: TASK-10
 
 - [ ] **TASK-18**: Add a "Duplicate last entry" button on the log form in `progress.html`. When clicked: if an exercise is selected, pre-fill weight, reps, sets, notes from the most recent entry for that exercise. If no prior entry, button stays disabled. Reuses `getExerciseHistory()` in `tracker.js`.

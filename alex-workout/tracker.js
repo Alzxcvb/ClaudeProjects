@@ -235,6 +235,21 @@ function initTracker() {
     });
   }
 
+  // Keyboard shortcuts
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'Escape') {
+      ['weight-input', 'reps-input', 'sets-input', 'notes-input'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+    }
+    if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
+      e.preventDefault();
+      if (exportBtn) exportBtn.click();
+    }
+  });
+
   // Initial render
   updateHistory();
   updateChart();
