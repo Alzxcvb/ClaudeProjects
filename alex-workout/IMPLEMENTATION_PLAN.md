@@ -29,7 +29,7 @@ Headless ralph loop builds these one at a time. Pick the first `- [ ]` with all 
 - [x] **TASK-07**: Add a chart-mode toggle on `progress.html` above the canvas — three buttons in a button group: "Weight", "Volume", "Est. 1RM". Update `updateChart()` in `tracker.js` to plot the selected metric: weight = `e.weight`; volume = `e.weight * e.reps * e.sets`; 1RM = `e.weight * (1 + e.reps/30)` (Epley formula). Default to "Weight". Persist selection in localStorage key `chart-mode`. Adjust the y-axis label format ("kg", "kg·reps", "kg") accordingly.
   Depends: TASK-06
 
-- [ ] **TASK-08**: Add a "Weekly Volume" summary card on `progress.html` (above the chart, below the log form). Compute total volume per session category (push/pull/legs/abs) for the last 7 days from localStorage entries. Render as a 4-row table with columns: Session, Total Volume (kg), Entries.
+- [x] **TASK-08**: Add a "Weekly Volume" summary card on `progress.html` (above the chart, below the log form). Compute total volume per session category (push/pull/legs/abs) for the last 7 days from localStorage entries. Render as a 4-row table with columns: Session, Total Volume (kg), Entries.
   Depends: TASK-07
 
 - [ ] **TASK-09**: Add PR detection in `tracker.js`. When `addEntry` is called, check if the new entry's weight is the highest ever logged for that exercise. If so, set `entry.is_pr = true` before saving. Don't break loading of older entries that lack `is_pr`. Don't change rendering yet — TASK-10 handles UI.

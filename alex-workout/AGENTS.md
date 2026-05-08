@@ -86,6 +86,14 @@ Hardcoded in `tracker.js`. Mirrors what each session page expects. If you add an
 - `·` in "kg·reps" is the literal Unicode middle dot — works fine in a JS string literal.
 - Added initial `updateChart()` call in `initTracker()` so the canvas shows the placeholder text on first load.
 
+### TASK-08 (Weekly Volume card)
+- `renderWeeklyVolume()` added to tracker.js; renders a 4-row table into `#weekly-volume` div.
+- Uses `Date.now() - 7*24*60*60*1000` for 7-day cutoff; volume = weight × reps × sets.
+- Called on initial render, after form submit, after clear, and after import JSON.
+- Exposed globally via `window.renderWeeklyVolume`.
+- No new CSS needed — existing `table/th/td` rules supply correct dark styling.
+- Section inserted in progress.html between "Log Entry" and "Progress Chart" sections.
+
 ### TASK-05 (Install App button)
 - `beforeinstallprompt` only fires on HTTPS/localhost; on `file://` it never fires — button stays `display:none`, which is the correct graceful degradation.
 - Button placed inside `.hero` div in `index.html`, after the subtitle `<p>`.

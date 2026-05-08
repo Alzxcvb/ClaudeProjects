@@ -53,6 +53,27 @@ function formatDate(iso) {
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
 
+function renderWeeklyVolume() {
+  const el = document.getElementById('weekly-volume');
+  if (!el) return;
+  const cutoff = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+  const log = getLog().filter(e => new Date(e.timestamp) >= cutoff);
+  const sessions = ['push', 'pull', 'legs', 'abs'];
+  const stats = {};
+  sessions.forEach(s => { stats[s] = { volume: 0, entries: 0 }; });
+  log.forEach(e => {
+    if (stats[e.session]) {
+      stats[e.session].volume += e.weight * e.reps * e.sets;
+      stats[e.session].entries += 1;
+    }
+  });
+  const rows = sessions.map(s => {
+    const { volume, entries } = stats[s];
+    return `<tr><td>${s.charAt(0).toUpperCase() + s.slice(1)}</td><td>${volume.toFixed(0)}</td><td>${entries}</td></tr>`;
+  }).join('');
+  el.innerHTML = `<table><thead><tr><th>Session</th><th>Total Volume (kg)</th><th>Entries</th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+
 // --- UI ---
 
 function initTracker() {
@@ -113,6 +134,7 @@ function initTracker() {
 
     updateHistory();
     updateChart();
+    renderWeeklyVolume();
   });
 
   // Clear all data
@@ -121,6 +143,7 @@ function initTracker() {
       localStorage.removeItem(STORAGE_KEY);
       updateHistory();
       updateChart();
+      renderWeeklyVolume();
     }
   });
 
@@ -170,6 +193,7 @@ function initTracker() {
         importFileInput.value = '';
         updateHistory();
         updateChart();
+        renderWeeklyVolume();
       };
       reader.readAsText(file);
     });
@@ -194,6 +218,7 @@ function initTracker() {
   // Initial render
   updateHistory();
   updateChart();
+  renderWeeklyVolume();
 }
 
 function updateHistory() {
@@ -350,5 +375,6 @@ function updateChart() {
 window.deleteEntry = deleteEntry;
 window.updateHistory = updateHistory;
 window.updateChart = updateChart;
+window.renderWeeklyVolume = renderWeeklyVolume;
 
 document.addEventListener('DOMContentLoaded', initTracker);
