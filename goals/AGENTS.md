@@ -60,3 +60,8 @@ Discoveries and conventions accumulated across iterations. Append, don't rewrite
 - `src/components/` directory did not previously exist; this is the first component file.
 - `Array.from({ length: lines })` used for indexed rendering without a range utility.
 - `npx tsc --noEmit` passes clean (exit 0).
+
+## TASK-05 (2026-05-08)
+- Created `src/components/EmptyState.tsx` — pure presentational, no state/hooks, no `'use client'`.
+- `ReactNode` imported as `import type { ReactNode } from 'react'` — type-only import sufficient for TSC.
+- `npx tsc --noEmit` passes clean (exit 0).

@@ -16,7 +16,7 @@ Headless ralph loop builds these one at a time. Pick the first `- [ ]` with all 
 
 - [x] **TASK-04**: Create `src/components/Skeleton.tsx` — a client component (`'use client'` not needed if no state) that renders animated placeholder bars. Props: `lines?: number` (default 3), `className?: string`. Use Tailwind `animate-pulse bg-gray-200 dark:bg-gray-700 rounded h-4`.
 
-- [ ] **TASK-05**: Create `src/components/EmptyState.tsx` — a presentational component. Props: `title: string`, `description?: string`, `icon?: string` (emoji), `action?: ReactNode`. Centers content with Tailwind, gray-500 text. Used as fallback when collections are empty.
+- [x] **TASK-05**: Create `src/components/EmptyState.tsx` — a presentational component. Props: `title: string`, `description?: string`, `icon?: string` (emoji), `action?: ReactNode`. Centers content with Tailwind, gray-500 text. Used as fallback when collections are empty.
 
 ---
 
