@@ -48,3 +48,9 @@ Discoveries and conventions accumulated across iterations. Append, don't rewrite
 - `@/*` alias resolves to `./src/*` (confirmed in tsconfig.json).
 - Optional field guard: `habit.logs ?? []` for `getStreak`/`getCompletionRate` calls; `goal.notes?.length` and `goal.notes?.map(...)` for render guard.
 - `npx tsc --noEmit` passes clean (exit 0).
+
+## TASK-03 (2026-05-08)
+- Removed inline `HabitLog`, `Habit`, `Goal` interfaces from `src/app/dashboard/page.tsx`; replaced with `import type { Goal, Habit, HabitLog } from '@/types'`.
+- `GoalWithNote` kept as a local interface — it's not a duplicate of any shared type (subset of `Goal` used for the all-goals dropdown state).
+- Shared `Habit.goalId` is optional vs. the old local `goalId: string` (required). No runtime impact — `goalId` is never accessed in the dashboard JSX, only `habit.id` and `habit.name`.
+- `npx tsc --noEmit` passes clean (exit 0).

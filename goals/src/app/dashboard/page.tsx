@@ -3,27 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-
-interface HabitLog {
-  id: string
-  habitId: string
-  completed: boolean
-  value?: number
-}
-
-interface Habit {
-  id: string
-  goalId: string
-  name: string
-  order: number
-}
-
-interface Goal {
-  id: string
-  title: string
-  emoji: string
-  habits: Habit[]
-}
+import type { Goal, Habit, HabitLog } from '@/types'
 
 interface GoalWithNote {
   id: string
