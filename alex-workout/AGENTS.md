@@ -69,3 +69,10 @@ Hardcoded in `tracker.js`. Mirrors what each session page expects. If you add an
 - `progress.html` already had `<script src="tracker.js"></script>` as the last script — inserted SW registration after it.
 - Pattern: `if ('serviceWorker' in navigator)` guard + try/catch + `.then/.catch` for console logging.
 - Validation shortcut: `grep -l "serviceWorker.register" *.html | wc -l` → must be 8.
+
+### TASK-05 (Install App button)
+- `beforeinstallprompt` only fires on HTTPS/localhost; on `file://` it never fires — button stays `display:none`, which is the correct graceful degradation.
+- Button placed inside `.hero` div in `index.html`, after the subtitle `<p>`.
+- `.install-btn` CSS class only sets `display: none` and `margin`; the existing global `button` rule supplies gold/dark styling (no duplication needed).
+- `appinstalled` event hides the button after install (covers the auto-install path without a click).
+- Added second `<script>` block in index.html after the SW registration script — keeps concerns separate.

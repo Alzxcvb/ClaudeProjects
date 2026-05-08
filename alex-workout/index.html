@@ -25,6 +25,7 @@
         <div class="hero">
             <h1>The Program</h1>
             <p class="subtitle">6-Day Push/Pull/Legs &mdash; Built for Mass</p>
+            <button id="install-btn" class="install-btn">Install App</button>
         </div>
 
         <section>
@@ -159,6 +160,29 @@
           console.log('SW registration threw:', e);
         }
       }
+    </script>
+    <script>
+      (function() {
+        var deferredPrompt = null;
+        var btn = document.getElementById('install-btn');
+        window.addEventListener('beforeinstallprompt', function(e) {
+          e.preventDefault();
+          deferredPrompt = e;
+          btn.style.display = 'inline-block';
+        });
+        btn.addEventListener('click', function() {
+          if (!deferredPrompt) return;
+          deferredPrompt.prompt();
+          deferredPrompt.userChoice.then(function() {
+            deferredPrompt = null;
+            btn.style.display = 'none';
+          });
+        });
+        window.addEventListener('appinstalled', function() {
+          deferredPrompt = null;
+          btn.style.display = 'none';
+        });
+      })();
     </script>
 </body>
 </html>
