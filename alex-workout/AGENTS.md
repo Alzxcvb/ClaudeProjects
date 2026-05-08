@@ -149,6 +149,13 @@ Hardcoded in `tracker.js`. Mirrors what each session page expects. If you add an
 - `.phase-card` and `table` get `page-break-inside: avoid` to prevent mid-card/mid-table page breaks.
 - CSS last char remains `}` + newline (`7d 0a`) — validation still passes.
 
+### TASK-16 (Responsive mobile styles + table-wrap)
+- Expanded existing `@media (max-width: 600px)` to `@media (max-width: 700px)` — wider breakpoint catches more tablet-sized viewports.
+- Added `.nav-links a { font-size: 0.7rem; }` inside the mobile block (base is 0.8rem).
+- Added `.table-wrap { overflow-x: auto; }` as a utility class in the base styles (not inside media query) — works at all sizes but only activates when content overflows.
+- Wrapped all `<table>` elements in HTML files with `<div class="table-wrap">`. Files: index.html (2 tables), abs.html, references.html, recovery.html (2 tables), plates.html (2 tables).
+- Table inside `.protocol-card` in recovery.html still wrapped — inner div indentation kept consistent with sibling elements.
+
 ### TASK-05 (Install App button)
 - `beforeinstallprompt` only fires on HTTPS/localhost; on `file://` it never fires — button stays `display:none`, which is the correct graceful degradation.
 - Button placed inside `.hero` div in `index.html`, after the subtitle `<p>`.

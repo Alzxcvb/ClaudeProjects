@@ -57,7 +57,7 @@ Headless ralph loop builds these one at a time. Pick the first `- [ ]` with all 
 
 ## Phase 4 — Polish
 
-- [ ] **TASK-16**: Add a `@media (max-width: 700px)` block to `style.css`. Nav becomes vertical stack with reduced font; tables get `overflow-x: auto` wrapper class `.table-wrap`; `.container` padding reduces; hero `h1` shrinks to `1.8rem`; nav links smaller. Apply `.table-wrap` to all `<table>` parents in HTML where horizontal scroll on small screens is needed.
+- [x] **TASK-16**: Add a `@media (max-width: 700px)` block to `style.css`. Nav becomes vertical stack with reduced font; tables get `overflow-x: auto` wrapper class `.table-wrap`; `.container` padding reduces; hero `h1` shrinks to `1.8rem`; nav links smaller. Apply `.table-wrap` to all `<table>` parents in HTML where horizontal scroll on small screens is needed.
 
 - [ ] **TASK-17**: Add keyboard shortcuts to `progress.html` via `tracker.js`. Esc clears all log-form inputs (weight, reps, sets, notes). Ctrl+E (or Cmd+E) triggers the existing export. Don't break existing handlers; attach with `addEventListener` and respect `event.target` (don't trigger when typing in textarea).
   Depends: TASK-10
