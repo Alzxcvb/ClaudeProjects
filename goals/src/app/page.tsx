@@ -2,37 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-
-interface HabitLog {
-  id: string
-  habitId: string
-  date: string
-  completed: boolean
-  value?: number
-}
-
-interface Habit {
-  id: string
-  name: string
-  order: number
-  logs: HabitLog[]
-}
-
-interface Note {
-  id: string
-  content: string
-  milestone: boolean
-  date: string
-}
-
-interface Goal {
-  id: string
-  title: string
-  emoji: string
-  description: string
-  habits: Habit[]
-  notes: Note[]
-}
+import type { Goal, HabitLog } from '@/types'
 
 function getStreak(logs: HabitLog[]): number {
   if (!logs.length) return 0
@@ -129,8 +99,8 @@ export default function Home() {
                   </h3>
                   <div className="space-y-2">
                     {goal.habits.map((habit) => {
-                      const streak = getStreak(habit.logs)
-                      const rate = getCompletionRate(habit.logs)
+                      const streak = getStreak(habit.logs ?? [])
+                      const rate = getCompletionRate(habit.logs ?? [])
 
                       return (
                         <div
@@ -153,13 +123,13 @@ export default function Home() {
                 </div>
               )}
 
-              {goal.notes.length > 0 && (
+              {(goal.notes?.length ?? 0) > 0 && (
                 <div>
                   <h3 className="text-sm font-semibold text-zinc-400 uppercase mb-3">
                     Recent
                   </h3>
                   <div className="space-y-2">
-                    {goal.notes.map((note) => (
+                    {goal.notes?.map((note) => (
                       <div
                         key={note.id}
                         className={`px-4 py-3 rounded text-sm ${

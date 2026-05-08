@@ -41,3 +41,10 @@ Discoveries and conventions accumulated across iterations. Append, don't rewrite
 - Created `src/types/index.ts` with superset `Goal`, `Habit`, `HabitLog`, `Note` interfaces.
 - Key discrepancies resolved: `HabitLog.date` optional (present in page.tsx, absent in dashboard); `Habit.goalId` optional (present in dashboard, absent in page.tsx); `Habit.logs` optional (present in page.tsx, absent in dashboard); `Goal.description` and `Goal.notes` optional (present in page.tsx, absent in dashboard).
 - No callers updated yet — TASK-02 and TASK-03 will import from here.
+
+## TASK-02 (2026-05-08)
+- Removed 4 inline interfaces from `src/app/page.tsx`; replaced with `import type { Goal, HabitLog } from '@/types'`.
+- `Habit` and `Note` not needed as explicit annotations — accessed via `Goal.habits` and `Goal.notes`.
+- `@/*` alias resolves to `./src/*` (confirmed in tsconfig.json).
+- Optional field guard: `habit.logs ?? []` for `getStreak`/`getCompletionRate` calls; `goal.notes?.length` and `goal.notes?.map(...)` for render guard.
+- `npx tsc --noEmit` passes clean (exit 0).
