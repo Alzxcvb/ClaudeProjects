@@ -35,6 +35,19 @@
             <div class="project-grid">
 
                 <div class="project-card">
+                    <div class="project-status wip">In Progress</div>
+                    <h3>hanta2026 — MV Hondius outbreak tracker</h3>
+                    <p>Independent, source-linked tracker for the 2026 MV Hondius Andes hantavirus cluster. Modeled after the original ncov2019.live: single static HTML file, dark theme, fast load. Shows case totals, ship route, sortable case line list, and Polymarket pandemic-2026 odds.</p>
+                    <ul class="project-features">
+                        <li>11 cases, 3 deaths, 7 countries (as of 12 May 2026)</li>
+                        <li>Sources: WHO DON599, ECDC, CDC HAN00528</li>
+                        <li>Single HTML + JSON, no frameworks, ~28 KB total page weight</li>
+                        <li>Domain: hanta2026.org (DNS propagation pending)</li>
+                    </ul>
+                    <a href="https://github.com/Alzxcvb/hanta2026" target="_blank" rel="noopener" class="project-link">View on GitHub &rarr;</a>
+                </div>
+
+                <div class="project-card">
                     <div class="project-status live">Live</div>
                     <h3>Hi, I'm Alex Consulting</h3>
                     <p>Claude Code consulting business — Wyoming LLC, working with investment firms (hedge funds, family offices, PE, VC) on agentic coding adoption. Network School teaching footprint: 300+ taught, 50+ 1-on-1s.</p>
@@ -81,6 +94,19 @@
                         <li>Deployed on Railway, in daily use</li>
                         <li>Replaced the failed Bob/OpenClaw attempt (2026-04-13)</li>
                     </ul>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-status live">Live</div>
+                    <h3>Amplify</h3>
+                    <p>Multi-platform organic outreach bot — monitors seven social platforms for pain-point signals matching a product, classifies them with Groq (Llama 3.3 70B), and queues natural replies. Browser-driven via Chrome CDP, so it reuses logged-in sessions instead of paid platform APIs. Every match is persisted to <code>pending_replies</code> first so nothing is ever dropped on a post failure.</p>
+                    <ul class="project-features">
+                        <li>Platforms: Reddit, Twitter, LinkedIn, Instagram, Quora, Threads, BlueSky</li>
+                        <li>Per-product campaigns with confidence thresholds (JSON-driven)</li>
+                        <li>Auto-tuner adjusts post age, comment caps, subreddit set — never the confidence threshold</li>
+                        <li>Stack: Node + Playwright (CDP) + SQLite + Groq API</li>
+                    </ul>
+                    <a href="https://github.com/Alzxcvb/amplify" target="_blank" rel="noopener" class="project-link">View on GitHub &rarr;</a>
                 </div>
 
                 <div class="project-card">
