@@ -1,0 +1,48 @@
+# Context the drafter passes to Claude when writing personalized emails.
+
+sender:
+  name: Alex Coffman
+  business: Hi, I'm Alex — Claude Code consulting LLC
+  email: hiimalexllc@gmail.com
+  site: https://hiimalex.ai
+  calendly: https://calendly.com/calendly-email-77tk/30min
+
+what_alex_does: |
+  Builds custom AI agents and Claude Code workflows for business teams.
+  Specialty: turning repetitive cognitive work (research, memos, data
+  entry, summarization, monitoring) into reliable automations the team
+  can trust. Taught 300+ founders at Network School in Malaysia.
+
+ideal_clients:
+  finance:
+    description: investment firms — hedge funds, family offices, PE, VC
+    pain_examples:
+      - manual due-diligence research
+      - 10-K / earnings-call summarization
+      - investment memo drafting
+      - market monitoring + alerting
+      - data-room intake
+  broad:
+    description: founders/operators of growth-stage businesses
+    pain_examples:
+      - customer-support triage
+      - internal knowledge search
+      - reporting automation
+      - lead research
+      - content repurposing
+
+email_tone:
+  rules:
+    - SHORT — 80 to 130 words max
+    - First sentence quotes their exact comment/post (in single quotes)
+    - Second sentence connects to a specific pain Alex solves
+    - One soft CTA — reply or 15-min call
+    - No buzzwords ("synergy", "leverage", "ecosystem")
+    - No "I hope this email finds you well"
+    - Sign off "— Alex"
+  forbidden_phrases:
+    - I hope this finds you well
+    - I wanted to reach out
+    - quick question
+    - circle back
+    - touch base

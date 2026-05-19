@@ -1,0 +1,27 @@
+# Search keywords. INTENTIONALLY LOOSE — most subreddits get scanned with
+# /new (no keyword filter); these run as targeted search.json queries.
+
+# Direct AI/automation interest
+- AI agent
+- AI workflow
+- automate
+- automation
+- ChatGPT
+- Claude
+- MCP
+
+# Pain signals (what users actually say when stuck)
+- repetitive
+- manual work
+- save time
+- streamline
+- spreadsheet hell
+- copy paste
+
+# Tasks the consulting business actually solves
+- data entry
+- research assistant
+- summarize
+- memo
+- scrape
+- web scraper

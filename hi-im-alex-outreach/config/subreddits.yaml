@@ -1,0 +1,34 @@
+# Reddit communities to scan. INTENTIONALLY BROAD — anti-overfilter directive.
+# Lesson from Amplify: over-filtering at source kills the funnel before the
+# classifier even gets a look. Let the classifier (with its loose threshold)
+# do the work.
+
+# Business / founder pain
+- smallbusiness
+- Entrepreneur
+- startups
+- sidehustle
+- freelance
+- consulting
+- SaaS
+- microsaas
+
+# Finance / ICP-direct (investment firm focus)
+- algotrading
+- SecurityAnalysis
+- financialcareers
+- hedgefund
+- quant
+
+# Automation / AI tooling adjacent
+- automation
+- nocode
+- ChatGPT
+- ClaudeAI
+- OpenAI
+- LangChain
+- LocalLLaMA
+
+# Ops / "I want to automate this" venues
+- productivity
+- ExperiencedDevs
