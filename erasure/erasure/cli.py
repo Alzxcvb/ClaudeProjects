@@ -379,6 +379,73 @@ def accounts_find(username, timeout_per_site, overall_timeout):
     ))
 
 
+def _latest_manifest(dir_path):
+    if not dir_path.exists():
+        return None
+    candidates = sorted(dir_path.glob("*.json"))
+    return candidates[-1] if candidates else None
+
+
+@accounts.command("deletion-links")
+@click.option("--manifest", "manifest_path", type=click.Path(exists=True), help="Accounts/emails manifest JSON (default: latest in state/)")
+@click.option("--include-emails/--no-emails", default=True, help="Also fold in the latest holehe emails manifest")
+@click.option("--scrub-only", is_flag=True, help="Only show sites you should scrub before deleting")
+def accounts_deletion_links(manifest_path, include_emails, scrub_only):
+    """Map discovered accounts to deletion difficulty + direct delete links."""
+    from rich.table import Table
+    from erasure.accounts.justdelete import enrich_hits
+
+    hits: list[dict] = []
+    if manifest_path:
+        data = json.loads(Path(manifest_path).read_text(encoding="utf-8"))
+        hits.extend(data.get("hits", []))
+    else:
+        acc = _latest_manifest(Path("state/accounts"))
+        if acc:
+            hits.extend(json.loads(acc.read_text(encoding="utf-8")).get("hits", []))
+        if include_emails:
+            eml = _latest_manifest(Path("state/emails"))
+            if eml:
+                hits.extend(json.loads(eml.read_text(encoding="utf-8")).get("hits", []))
+
+    if not hits:
+        console.print(
+            "[yellow]No account hits found.[/yellow] Run `erasure accounts find <username>` "
+            "or `erasure emails find <email>` first, or pass --manifest."
+        )
+        sys.exit(0)
+
+    enriched = enrich_hits(hits)
+    if scrub_only:
+        enriched = [e for e in enriched if e.scrub_first]
+
+    diff_color = {"easy": "green", "medium": "yellow", "hard": "red", "impossible": "magenta"}
+    table = Table(title="erasure accounts deletion-links")
+    for col in ("Site", "Difficulty", "Scrub first?", "Delete link / notes"):
+        table.add_column(col, overflow="fold")
+    matched_n = 0
+    for e in enriched:
+        if e.matched:
+            matched_n += 1
+            d = e.matched.difficulty
+            link = e.matched.url or "-"
+            note = f"\n[dim]{e.matched.notes}[/dim]" if e.matched.notes else ""
+            table.add_row(
+                e.site,
+                f"[{diff_color.get(d, 'white')}]{d}[/{diff_color.get(d, 'white')}]",
+                "[red]yes[/red]" if e.scrub_first else "no",
+                f"{link}{note}",
+            )
+        elif not scrub_only:
+            table.add_row(e.site, "[dim]unknown[/dim]", "no", f"[dim]Not in directory. Try: {e.site} delete account / justdelete.me[/dim]")
+
+    console.print(table)
+    console.print(
+        f"[dim]{matched_n}/{len(enriched)} hits mapped to a known deletion path. "
+        "Scrub-first sites: overwrite name/email/profile with junk before deleting (deleted != erased).[/dim]"
+    )
+
+
 @cli.group()
 def breaches():
     """Data-breach exposure checks via HaveIBeenPwned (requires HIBP_API_KEY)."""
