@@ -4,6 +4,7 @@ __pycache__/
 *.pyc
 state/
 samples/
+prospects/
 *.sqlite
 *.sqlite-journal
 .DS_Store

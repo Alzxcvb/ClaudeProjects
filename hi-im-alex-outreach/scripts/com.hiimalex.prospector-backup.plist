@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.hiimalex.prospector-backup</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/alexandercoffman/ClaudeProjects/hi-im-alex-outreach/scripts/backup.sh</string>
+    </array>
+
+    <!-- run once a day at 12:00 local time; if the Mac is asleep, runs on next wake -->
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>12</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+
+    <key>RunAtLoad</key>
+    <false/>
+
+    <key>StandardOutPath</key>
+    <string>/Users/alexandercoffman/ClaudeProjects/hi-im-alex-outreach/scripts/backup.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/alexandercoffman/ClaudeProjects/hi-im-alex-outreach/scripts/backup.log</string>
+</dict>
+</plist>
