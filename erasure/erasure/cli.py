@@ -529,6 +529,129 @@ def legal_request(jurisdiction, recipient, profile_path, deadline_days, include_
     )
 
 
+@cli.group()
+def tracker():
+    """Opt-out tracking ledger: site / URL / date / status / follow-up."""
+    pass
+
+
+def _render_tracker_table(ledger, title="erasure tracker"):
+    from rich.table import Table
+
+    table = Table(title=title)
+    for col in ("Site", "Status", "Requested", "Follow-up", "Method", "Opt-out URL"):
+        table.add_column(col, overflow="fold")
+    status_color = {
+        "pending": "dim",
+        "requested": "yellow",
+        "confirmed": "green",
+        "denied": "red",
+        "relisted": "magenta",
+    }
+    for e in ledger.entries:
+        color = status_color.get(e.status, "white")
+        table.add_row(
+            e.site,
+            f"[{color}]{e.status}[/{color}]",
+            e.date_requested.isoformat() if e.date_requested else "-",
+            e.follow_up_date.isoformat() if e.follow_up_date else "-",
+            e.method,
+            e.opt_out_url or "-",
+        )
+    console.print(table)
+
+
+@tracker.command("init")
+@click.option("--priority", type=click.Choice(["crucial", "high", "normal"]), default="crucial")
+@click.option("--ca-registered/--all", default=True, help="Limit to CA-registered (DROP-covered) brokers")
+@click.option("--limit", type=int, default=25, help="Max brokers to seed")
+def tracker_init(priority, ca_registered, limit):
+    """Seed the ledger with pending rows from the broker registry."""
+    from erasure.brokers.registry import load_brokers, filter_brokers
+    from erasure.tracker import load_ledger, save_ledger, seed_from_brokers
+
+    brokers = filter_brokers(
+        load_brokers(),
+        priority=priority,
+        ca_registered=ca_registered if ca_registered else None,
+        limit=limit,
+    )
+    ledger = load_ledger()
+    before = len(ledger.entries)
+    seed_from_brokers(brokers, ledger)
+    path = save_ledger(ledger)
+    console.print(f"[green]Seeded {len(ledger.entries) - before} new rows[/green] ({len(ledger.entries)} total). Ledger: {path}")
+
+
+@tracker.command("add")
+@click.argument("site")
+@click.option("--url", "opt_out_url", default=None, help="Opt-out URL")
+@click.option("--method", default="unknown", help="form | email | portal | unknown")
+@click.option("--notes", default=None)
+def tracker_add(site, opt_out_url, method, notes):
+    """Add a site to the ledger."""
+    from erasure.tracker import add_entry, load_ledger, save_ledger
+
+    ledger = load_ledger()
+    add_entry(ledger, site, opt_out_url=opt_out_url, method=method, notes=notes)
+    save_ledger(ledger)
+    console.print(f"[green]Tracked:[/green] {site}")
+
+
+@tracker.command("update")
+@click.argument("site")
+@click.option(
+    "--status",
+    required=True,
+    type=click.Choice(["pending", "requested", "confirmed", "denied", "relisted"]),
+)
+@click.option("--notes", default=None)
+def tracker_update(site, status, notes):
+    """Update a site's status. 'requested' stamps today + a follow-up date."""
+    from erasure.tracker import load_ledger, save_ledger, update_status
+
+    ledger = load_ledger()
+    try:
+        entry = update_status(ledger, site, status, notes=notes)
+    except KeyError as exc:
+        console.print(f"[red]{exc}[/red]")
+        sys.exit(1)
+    save_ledger(ledger)
+    follow = f" (follow up {entry.follow_up_date.isoformat()})" if entry.follow_up_date else ""
+    console.print(f"[green]{site} -> {status}[/green]{follow}")
+
+
+@tracker.command("show")
+@click.option("--due", is_flag=True, help="Only show entries whose follow-up date has arrived")
+def tracker_show(due):
+    """Show the tracking ledger as a table."""
+    from erasure.tracker import due_followups, load_ledger, Ledger
+
+    ledger = load_ledger()
+    if not ledger.entries:
+        console.print("[dim]Ledger is empty. Run `erasure tracker init` to seed it.[/dim]")
+        return
+    if due:
+        items = due_followups(ledger)
+        if not items:
+            console.print("[green]Nothing due for follow-up.[/green]")
+            return
+        _render_tracker_table(Ledger(entries=items), title="erasure tracker — due for follow-up")
+    else:
+        _render_tracker_table(ledger)
+
+
+@tracker.command("export")
+@click.option("--output", "output_path", type=click.Path(), default=None, help="CSV path (default: state/tracker/ledger.csv)")
+def tracker_export(output_path):
+    """Export the ledger to CSV."""
+    from erasure.tracker import export_csv, load_ledger
+
+    ledger = load_ledger()
+    path = export_csv(ledger, Path(output_path) if output_path else None)
+    console.print(f"[green]Exported {len(ledger.entries)} rows:[/green] {path}")
+
+
 @drop.command("residency-review")
 @click.option("--profile", "profile_path", required=True, type=click.Path(exists=True))
 @click.option(
