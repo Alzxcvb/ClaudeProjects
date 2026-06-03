@@ -141,6 +141,53 @@ def opt_out(dry_run):
 
 @cli.command()
 @click.option("--profile", "profile_path", type=click.Path(exists=True), help="Profile JSON (default: ~/.erasure/profile.json)")
+@click.option("--output", "output_path", type=click.Path(), help="Write the playbook as Markdown to this path")
+def playbook(profile_path, output_path):
+    """Your personalized 9-step privacy playbook: what Erasure has done, what's left."""
+    from erasure.playbook import STEPS, checkbox, gather_status, render_markdown
+
+    name = None
+    target = Path(profile_path) if profile_path else DEFAULT_PROFILE_PATH
+    if target.exists():
+        from erasure.profile import UserProfile
+
+        try:
+            name = UserProfile.model_validate_json(target.read_text()).name
+        except Exception:
+            name = None
+
+    if output_path:
+        Path(output_path).write_text(render_markdown(name), encoding="utf-8")
+        console.print(f"[green]Playbook written:[/green] {output_path}")
+        return
+
+    status = gather_status()
+    console.print(Panel(
+        f"[bold]Your privacy playbook[/bold]{(' for ' + name) if name else ''}\n"
+        f"[dim][x] done   [ ] not started   [~] ongoing / manual[/dim]",
+        title="erasure playbook",
+        expand=False,
+    ))
+    for s in STEPS:
+        st = status.get(s.probe_key) if s.probe_key else None
+        mark = checkbox(st.done if st else None)
+        color = "green" if (st and st.done is True) else ("yellow" if (st and st.done is None) else "white")
+        body = s.summary
+        if st and st.detail:
+            body += f"\n\n[dim]Status: {st.detail}[/dim]"
+        if s.commands:
+            body += "\n\n[cyan]Erasure automates this:[/cyan]"
+            for c in s.commands:
+                body += f"\n  • {c}"
+        if s.manual:
+            body += "\n\n[magenta]Do by hand:[/magenta]"
+            for m in s.manual:
+                body += f"\n  • {m}"
+        console.print(Panel(body, title=f"[{color}]{mark} Step {s.number}. {s.title}[/{color}]", expand=False))
+
+
+@cli.command()
+@click.option("--profile", "profile_path", type=click.Path(exists=True), help="Profile JSON (default: ~/.erasure/profile.json)")
 @click.option("--priority", type=click.Choice(["crucial", "high", "normal"]), default="crucial", help="Priority filter")
 @click.option("--ca-registered/--all", default=True, help="Limit to CA-registered brokers (DROP-covered)")
 @click.option("--limit", type=int, default=10, help="Max brokers to scan")
