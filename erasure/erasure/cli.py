@@ -462,6 +462,73 @@ def emails_find(email, overall_timeout):
     ))
 
 
+@cli.group()
+def legal():
+    """Generate CCPA/GDPR/generic data-deletion request letters."""
+    pass
+
+
+@legal.command("list")
+def legal_list():
+    """List the deletion-request jurisdictions and what each one cites."""
+    from erasure.legal.templates import JURISDICTIONS
+
+    lines = []
+    for key, j in JURISDICTIONS.items():
+        lines.append(
+            f"[cyan]{key}[/cyan] — {j.label}\n"
+            f"  Cites: {', '.join(j.statutes)}\n"
+            f"  Default deadline: {j.default_deadline_days} days"
+        )
+    console.print(Panel("\n\n".join(lines), title="erasure legal — jurisdictions", expand=False))
+
+
+@legal.command("request")
+@click.option(
+    "--jurisdiction",
+    type=click.Choice(["ccpa", "gdpr", "generic"]),
+    default="ccpa",
+    help="Which law to cite (default: ccpa).",
+)
+@click.option("--recipient", default=None, help="Broker/company name addressed in the letter.")
+@click.option("--profile", "profile_path", type=click.Path(exists=True), help="Profile JSON (default: ~/.erasure/profile.json)")
+@click.option("--deadline-days", type=int, default=None, help="Override the statutory response deadline.")
+@click.option("--include-dob", is_flag=True, help="Include date of birth as an identifier (off by default).")
+@click.option("--output", "output_path", type=click.Path(), default=None, help="Save the letter to this path.")
+@click.option("--save", "save_to_state", is_flag=True, help="Save the letter under state/legal/.")
+def legal_request(jurisdiction, recipient, profile_path, deadline_days, include_dob, output_path, save_to_state):
+    """Render a deletion-request letter for the active profile."""
+    from erasure.legal.generator import render_request, save_request
+    from erasure.profile import UserProfile
+
+    target = Path(profile_path) if profile_path else DEFAULT_PROFILE_PATH
+    if not target.exists():
+        console.print(f"[red]No profile at {target}. Run `erasure init` first.[/red]")
+        sys.exit(1)
+
+    profile = UserProfile.model_validate_json(target.read_text())
+    text = render_request(
+        profile=profile,
+        jurisdiction=jurisdiction,
+        recipient=recipient,
+        deadline_days=deadline_days,
+        include_dob=include_dob,
+    )
+
+    if output_path:
+        Path(output_path).write_text(text, encoding="utf-8")
+        console.print(f"[green]Letter written:[/green] {output_path}")
+    if save_to_state:
+        saved = save_request(text, jurisdiction=jurisdiction, recipient=recipient)
+        console.print(f"[green]Saved to state:[/green] {saved}")
+
+    console.print(Panel(text, title=f"erasure legal request ({jurisdiction})", expand=False))
+    console.print(
+        "[dim]Paste this into the broker's contact form or privacy email. "
+        "Share only the identifiers needed to locate your record.[/dim]"
+    )
+
+
 @drop.command("residency-review")
 @click.option("--profile", "profile_path", required=True, type=click.Path(exists=True))
 @click.option(
