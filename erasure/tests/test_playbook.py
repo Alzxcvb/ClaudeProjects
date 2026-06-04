@@ -108,3 +108,46 @@ def test_playbook_writes_markdown(runner, tmp_path, monkeypatch):
     assert result.exit_code == 0
     assert out.exists()
     assert "# Your privacy playbook" in out.read_text()
+
+
+# --- the commands the playbook recommends must actually exist ---------------
+
+def _resolve(tokens):
+    """Walk the Click tree consuming leading non-flag tokens; return the
+    command path and the remaining (arg/flag) tokens."""
+    import click
+
+    cmd = cli
+    path = []
+    i = 0
+    while i < len(tokens) and not tokens[i].startswith("-"):
+        if isinstance(cmd, click.Group) and tokens[i] in cmd.commands:
+            path.append(tokens[i])
+            cmd = cmd.commands[tokens[i]]
+            i += 1
+        else:
+            break
+    return path, tokens[i:]
+
+
+def test_playbook_commands_resolve_to_real_cli(runner):
+    """Every 'erasure ...' the playbook tells the user to run must be a real
+    command with real options. Guards against documenting a stale/wrong API
+    (e.g. the legal '--to' vs '--recipient' regression)."""
+    import shlex
+
+    for s in STEPS:
+        for raw in s.commands:
+            raw = raw.split("#")[0].strip()  # strip inline comments
+            tokens = shlex.split(raw)
+            assert tokens and tokens[0] == "erasure", f"bad command: {raw!r}"
+            path, rest = _resolve(tokens[1:])
+            assert path, f"no command resolved for: {raw!r}"
+            help_res = runner.invoke(cli, path + ["--help"])
+            assert help_res.exit_code == 0, f"`{' '.join(path)}` is not a real command: {raw!r}"
+            for tok in rest:
+                if tok.startswith("--"):
+                    flag = tok.split("=")[0]
+                    assert flag in help_res.output, (
+                        f"`{flag}` is not an option of `erasure {' '.join(path)}`: {raw!r}"
+                    )

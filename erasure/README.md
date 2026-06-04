@@ -32,7 +32,7 @@ erasure scan
 erasure tracker init
 
 # Draft a statute-citing deletion letter for one broker
-erasure legal request --to "Spokeo" --jurisdiction ccpa
+erasure legal request --recipient "Spokeo" --jurisdiction ccpa
 
 # Submit opt-out requests to identified brokers
 erasure opt-out
@@ -123,8 +123,8 @@ Draft statute-citing deletion / opt-out letters off your profile. A request that
 
 **Usage:**
 ```bash
-erasure legal jurisdictions                 # list what each regime cites
-erasure legal request --to "Spokeo" --jurisdiction ccpa --type both [--output letter.txt]
+erasure legal list                          # list what each regime cites
+erasure legal request --recipient "Spokeo" --jurisdiction ccpa [--save] [--output letter.txt]
 ```
 
 ### `erasure tracker`

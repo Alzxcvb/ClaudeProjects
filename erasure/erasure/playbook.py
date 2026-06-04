@@ -74,7 +74,7 @@ STEPS: tuple[StepSpec, ...] = (
         "Use your legal leverage",
         "Cite the law. A request that names CCPA section 1798.105 or GDPR Article "
         "17 and sets a response clock moves far faster than a polite ask.",
-        ("erasure legal request --to '<Broker>' --jurisdiction ccpa",),
+        ("erasure legal request --recipient '<Broker>' --jurisdiction ccpa",),
         (),
         "legal",
     ),
