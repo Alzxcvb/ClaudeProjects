@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Erasure — Privacy Playbook</title>
+<!--
+  Phase A static site (see ../WEBSITE-VISION.md). Everything runs in the
+  browser; nothing is sent to a server. The step text, legal templates, and
+  tracker columns are ported faithfully from the Python CLI:
+    - steps:   erasure/erasure/playbook.py  (STEPS)
+    - letters: erasure/erasure/legal/templates.py  (CCPA/GDPR/GENERIC bodies)
+    - tracker: erasure/erasure/tracker.py  (columns + 45-day follow-up)
+  Keep them in sync if the Python changes.
+-->
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0d1117; --panel: #161b22; --panel2: #1c2128;
+    --border: #30363d; --text: #e6edf3; --muted: #8b949e; --dim: #484f58;
+    --green: #238636; --green-br: #2ea043; --green-tx: #3fb950;
+    --blue: #58a6ff; --red: #f85149; --orange: #f0883e; --yellow: #e3b341;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.5;
+    padding: 0 0 4rem;
+  }
+  a { color: var(--blue); }
+  code, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+  header {
+    text-align: center; padding: 2.2rem 1rem 1.2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  header h1 { font-size: 1.7rem; letter-spacing: -0.5px; }
+  header h1 .x { color: var(--green-tx); }
+  header p { color: var(--muted); margin-top: 0.35rem; font-size: 0.95rem; }
+
+  .privacy-banner {
+    max-width: 880px; margin: 1rem auto 0; padding: 0.7rem 1rem;
+    background: rgba(35,134,54,0.12); border: 1px solid var(--green);
+    border-radius: 8px; font-size: 0.85rem; color: var(--green-tx);
+    display: flex; align-items: center; gap: 0.6rem; justify-content: center;
+    flex-wrap: wrap;
+  }
+  .privacy-banner span { color: var(--muted); }
+
+  nav {
+    position: sticky; top: 0; z-index: 10; background: rgba(13,17,23,0.92);
+    backdrop-filter: blur(8px); border-bottom: 1px solid var(--border);
+    display: flex; gap: 0.3rem; justify-content: center; flex-wrap: wrap;
+    padding: 0.6rem 1rem;
+  }
+  nav a {
+    color: var(--muted); text-decoration: none; font-size: 0.88rem;
+    padding: 0.35rem 0.8rem; border-radius: 6px; transition: 0.15s;
+  }
+  nav a:hover { color: var(--text); background: var(--panel2); }
+
+  main { max-width: 880px; margin: 0 auto; padding: 0 1rem; }
+  section { margin-top: 2.5rem; }
+  section > h2 {
+    font-size: 1.25rem; margin-bottom: 0.3rem;
+    display: flex; align-items: baseline; gap: 0.6rem;
+  }
+  section > .sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 1rem; }
+
+  .card {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1.1rem 1.2rem; margin-bottom: 0.9rem;
+  }
+
+  /* profile */
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+  label { display: block; font-size: 0.8rem; color: var(--muted); margin-bottom: 0.3rem; }
+  input, select, textarea {
+    width: 100%; background: var(--bg); border: 1px solid var(--border);
+    color: var(--text); border-radius: 6px; padding: 0.5rem 0.6rem;
+    font-size: 0.9rem; font-family: inherit;
+  }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--blue); }
+  .hint { font-size: 0.75rem; color: var(--dim); margin-top: 0.25rem; }
+  textarea { resize: vertical; }
+
+  button {
+    background: var(--green); border: 1px solid var(--green-br); color: #fff;
+    border-radius: 6px; padding: 0.5rem 0.9rem; font-size: 0.88rem;
+    cursor: pointer; font-family: inherit; transition: 0.15s;
+  }
+  button:hover { background: var(--green-br); }
+  button.secondary { background: var(--panel2); border-color: var(--border); color: var(--text); }
+  button.secondary:hover { background: var(--border); }
+  button.danger { background: transparent; border-color: var(--red); color: var(--red); }
+  button.danger:hover { background: rgba(248,81,73,0.12); }
+  .btn-row { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.9rem; }
+  .saved-flash { color: var(--green-tx); font-size: 0.82rem; margin-left: 0.5rem; opacity: 0; transition: 0.3s; }
+  .saved-flash.show { opacity: 1; }
+
+  /* playbook */
+  .progress-wrap { margin-bottom: 1.2rem; }
+  .progress-bar { height: 8px; background: var(--panel2); border-radius: 5px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--green-tx); width: 0; transition: width 0.4s; }
+  .progress-label { font-size: 0.82rem; color: var(--muted); margin-top: 0.4rem; }
+
+  .step { display: flex; gap: 0.9rem; }
+  .step-check { padding-top: 0.15rem; }
+  .step-check input { width: 20px; height: 20px; cursor: pointer; accent-color: var(--green-tx); }
+  .step-body { flex: 1; }
+  .step-title { font-weight: 600; font-size: 1.02rem; }
+  .step.done .step-title { color: var(--green-tx); }
+  .step-num { color: var(--dim); font-weight: 600; margin-right: 0.4rem; }
+  .step-summary { color: var(--muted); font-size: 0.9rem; margin: 0.35rem 0 0.6rem; }
+  .step-auto, .step-manual { font-size: 0.84rem; margin-top: 0.5rem; }
+  .step-auto .tag { color: var(--green-tx); }
+  .step-manual .tag { color: var(--orange); }
+  .step-auto code {
+    display: inline-block; background: var(--bg); border: 1px solid var(--border);
+    border-radius: 5px; padding: 0.1rem 0.45rem; margin: 0.15rem 0.3rem 0.15rem 0;
+    color: var(--text); font-size: 0.82rem;
+  }
+  .step-status { font-size: 0.78rem; color: var(--dim); margin-top: 0.4rem; }
+  .step-manual ul { margin: 0.3rem 0 0 1.1rem; color: var(--muted); }
+
+  /* legal */
+  .letter-out { margin-top: 1rem; }
+  #letter {
+    width: 100%; min-height: 320px; background: var(--bg); color: var(--text);
+    border: 1px solid var(--border); border-radius: 8px; padding: 0.9rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.82rem;
+    white-space: pre-wrap;
+  }
+
+  /* tracker */
+  table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin-top: 0.5rem; }
+  th, td { text-align: left; padding: 0.5rem 0.55rem; border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.4px; }
+  td select { padding: 0.25rem 0.4rem; font-size: 0.8rem; }
+  td a { word-break: break-all; }
+  .pill { font-size: 0.72rem; padding: 0.1rem 0.45rem; border-radius: 20px; border: 1px solid; }
+  .due { color: var(--orange); border-color: var(--orange); }
+  .empty { color: var(--dim); font-size: 0.85rem; padding: 0.8rem 0; }
+  .tbl-scroll { overflow-x: auto; }
+
+  footer { text-align: center; color: var(--dim); font-size: 0.8rem; margin-top: 3rem; }
+  footer a { color: var(--muted); }
+  @media (max-width: 620px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Erasure <span class="x">Privacy Playbook</span></h1>
+  <p>Map your exposure, send the requests, lock the doors. One focused afternoon.</p>
+  <div class="privacy-banner">
+    🔒 100% local.
+    <span>No account, no server. Your details never leave this browser (saved only in this device's localStorage).</span>
+  </div>
+</header>
+
+<nav>
+  <a href="#profile">Profile</a>
+  <a href="#playbook">Playbook</a>
+  <a href="#legal">Legal letter</a>
+  <a href="#tracker">Tracker</a>
+</nav>
+
+<main>
+  <!-- PROFILE -->
+  <section id="profile">
+    <h2>Your profile</h2>
+    <p class="sub">Used to fill in the legal letters and tracker below. Stored only on this device.</p>
+    <div class="card">
+      <div class="grid">
+        <div>
+          <label>Legal name (as on ID)</label>
+          <input id="p-name" placeholder="Jane Q. Public">
+        </div>
+        <div>
+          <label>Aliases / maiden name (comma separated)</label>
+          <input id="p-aliases" placeholder="Jane Public, J. Public">
+        </div>
+        <div>
+          <label>Emails (comma separated)</label>
+          <input id="p-emails" placeholder="jane@example.com, jane.work@example.com">
+        </div>
+        <div>
+          <label>Phones (comma separated)</label>
+          <input id="p-phones" placeholder="+1 415 555 0123">
+        </div>
+        <div style="grid-column: 1 / -1">
+          <label>Addresses (one per line)</label>
+          <textarea id="p-addresses" rows="2" placeholder="123 Main St, Springfield, CA 90001"></textarea>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button onclick="saveProfile()">Save profile</button>
+        <button class="danger" onclick="clearAll()">Clear all my data</button>
+        <span id="profile-flash" class="saved-flash">Saved</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAYBOOK -->
+  <section id="playbook">
+    <h2>The 9-step playbook</h2>
+    <p class="sub">Check off each step as you go. Progress is saved on this device.</p>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="progress-label" id="progress-label">0 of 9 complete</div>
+    </div>
+    <div id="steps"></div>
+  </section>
+
+  <!-- LEGAL -->
+  <section id="legal">
+    <h2>Legal leverage letter</h2>
+    <p class="sub">A request that cites the law and sets a clock moves faster than a polite ask. Generated locally from your profile.</p>
+    <div class="card">
+      <div class="grid">
+        <div>
+          <label>Recipient (broker / company)</label>
+          <input id="l-recipient" placeholder="Spokeo, Inc." value="Data Privacy Officer">
+        </div>
+        <div>
+          <label>Jurisdiction</label>
+          <select id="l-jurisdiction" onchange="renderLetter()">
+            <option value="ccpa">CCPA / CPRA (California, 45-day clock)</option>
+            <option value="gdpr">GDPR (EU, 30-day clock)</option>
+            <option value="generic">Generic (cites all, 45-day clock)</option>
+          </select>
+        </div>
+        <div>
+          <label>Response deadline (days)</label>
+          <input id="l-deadline" type="number" min="1" placeholder="auto by jurisdiction">
+        </div>
+        <div style="display:flex; align-items:flex-end; gap:0.5rem; padding-bottom:0.3rem;">
+          <input type="checkbox" id="l-dob" style="width:auto;" onchange="renderLetter()">
+          <label for="l-dob" style="margin:0;">Include date of birth as an identifier</label>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button onclick="renderLetter(true)">Generate letter</button>
+        <button class="secondary" onclick="copyLetter()">Copy</button>
+        <button class="secondary" onclick="downloadLetter()">Download .txt</button>
+        <span id="legal-flash" class="saved-flash">Copied</span>
+      </div>
+      <div class="letter-out">
+        <textarea id="letter" readonly placeholder="Fill in your profile, pick a jurisdiction, and the letter appears here."></textarea>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRACKER -->
+  <section id="tracker">
+    <h2>Opt-out tracker</h2>
+    <p class="sub">The unglamorous sheet that actually works: site, status, and a 45-day follow-up date (brokers relist you in 6 to 12 months).</p>
+    <div class="card">
+      <div class="grid">
+        <div><label>Site</label><input id="t-site" placeholder="Spokeo"></div>
+        <div><label>Opt-out URL</label><input id="t-url" placeholder="https://www.spokeo.com/optout"></div>
+        <div>
+          <label>Method</label>
+          <select id="t-method">
+            <option value="form">form</option>
+            <option value="email">email</option>
+            <option value="portal">portal</option>
+            <option value="unknown">unknown</option>
+          </select>
+        </div>
+        <div style="display:flex; align-items:flex-end;">
+          <button onclick="addSite()">Add site</button>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="secondary" onclick="seedStarters()">Seed common brokers</button>
+        <button class="secondary" onclick="exportCsv()">Export CSV</button>
+      </div>
+      <div class="tbl-scroll">
+        <table id="tracker-table">
+          <thead>
+            <tr><th>Site</th><th>URL</th><th>Method</th><th>Requested</th><th>Status</th><th>Follow-up</th><th></th></tr>
+          </thead>
+          <tbody id="tracker-body"></tbody>
+        </table>
+      </div>
+      <div id="tracker-empty" class="empty">No sites yet. Add one above or seed the common brokers.</div>
+    </div>
+  </section>
+
+  <footer>
+    Erasure is open-source (MIT). This page is Phase A: a fully local front end.
+    The <a href="https://github.com/Alzxcvb/ClaudeProjects/tree/main/erasure" target="_blank" rel="noopener">CLI</a>
+    runs the steps that need your own browser session.
+  </footer>
+</main>
+
+<script>
+"use strict";
+
+/* ---------- data: ported from the Python CLI ---------- */
+
+const STEPS = [
+  { n:1, title:"Map your exposure",
+    summary:"Find everywhere you appear: data brokers, social accounts, breached sites, and email-linked signups. Brokers are the source, so they come first.",
+    commands:["erasure scan","erasure accounts find <username>","erasure emails find <email>","erasure breaches check <email>"],
+    manual:["Google your own name plus your city in an incognito window and log every site that shows you."] },
+  { n:2, title:"Build the tracking sheet",
+    summary:"For every broker, record site, opt-out URL, date requested, status, and follow-up date. This is the unglamorous part that actually works.",
+    commands:["erasure tracker init","erasure tracker show","erasure tracker export"],
+    manual:[], statusKey:"tracker" },
+  { n:3, title:"Submit removals",
+    summary:"Send the opt-out and deletion requests. In California, DROP fans a single request out to every registered broker. Elsewhere, submit per broker.",
+    commands:["erasure drop submit --profile ~/.erasure/profile.json"],
+    manual:["Per-broker forms ask you to confirm the listing and verify by email. If one demands a photo ID, cover everything but your name and photo."] },
+  { n:4, title:"Use your legal leverage",
+    summary:"Cite the law. A request that names CCPA section 1798.105 or GDPR Article 17 and sets a response clock moves far faster than a polite ask.",
+    commands:["erasure legal request --recipient '<Broker>' --jurisdiction ccpa"],
+    manual:["Use the generator above to draft one in seconds."], statusKey:"legal" },
+  { n:5, title:"Kill the dead accounts",
+    summary:"Find old logins and delete them, not just deactivate. Erasure turns your account-discovery hits into direct deletion links and difficulty ratings.",
+    commands:["erasure accounts deletion-links"],
+    manual:["Search your inbox for 'welcome', 'verify your account', and 'your receipt' to surface forgotten signups."] },
+  { n:6, title:"Scrub before you delete",
+    summary:"Some companies keep 'deleted' data. Before deleting a hard-to-remove account, overwrite it first: junk name, alias email, blanked profile.",
+    commands:["erasure accounts deletion-links --scrub-only"],
+    manual:["For each flagged site: change the name to junk, swap the email to an alias, blank the profile, and only then delete."] },
+  { n:7, title:"Clean your search results",
+    summary:"Broker removals slowly clean Google, but stubborn cached results remain. Request removal of pages exposing your phone, address, or email.",
+    commands:[],
+    manual:["Use Google's 'Results about you' tool: <a href='https://myactivity.google.com/results-about-you' target='_blank' rel='noopener'>myactivity.google.com/results-about-you</a>"] },
+  { n:8, title:"Suppress what you cannot remove",
+    summary:"For results you do not control, such as old forum posts and mentions, fight visibility rather than existence. Pages you own rank higher.",
+    commands:[],
+    manual:["Build and maintain pages you control (LinkedIn, a personal site) so they outrank the junk. Nobody checks page 2."] },
+  { n:9, title:"Lock the doors behind you",
+    summary:"A wipe is pointless if you re-leak. Privacy is maintenance: brokers relist you within 6 to 12 months, so re-check on a schedule.",
+    commands:["erasure tracker show --due","erasure scan"],
+    manual:["Use email aliases for new signups (<a href='https://simplelogin.io' target='_blank' rel='noopener'>SimpleLogin</a>, iCloud Hide My Email). Stop posting your real-time location. Audit app permissions. Set a quarterly reminder to re-check the brokers."], statusKey:"followups" },
+];
+
+// Legal templates, ported verbatim from erasure/legal/templates.py
+const JURISDICTIONS = {
+  ccpa: { deadline:45, body:
+`{date}
+
+To: {recipient}
+Re: Request to Delete and Stop the Sale of My Personal Information
+
+To Whom It May Concern,
+
+I am a California resident exercising my rights under the California Consumer Privacy Act (CCPA), as amended by the California Privacy Rights Act (CPRA). Under California Civil Code section 1798.105, I request that you delete all personal information you have collected about me. Under California Civil Code section 1798.120, I direct you to stop selling and sharing my personal information with third parties.
+
+You can identify me using the following information:
+
+{identifiers}
+
+Under California Civil Code section 1798.130, please confirm completion of this request in writing within {deadline} days. If you are a registered data broker, this request is also made under the California Delete Act (SB 362), and I ask that you forward this deletion request to any third parties and service providers with whom you have shared my information.
+
+If you deny any part of this request, please state the specific statutory exemption you are relying on.
+
+Sincerely,
+{requester}` },
+  gdpr: { deadline:30, body:
+`{date}
+
+To: {recipient}
+Re: Request for Erasure and Objection to Processing
+
+To Whom It May Concern,
+
+I am exercising my rights under the EU General Data Protection Regulation (GDPR). Under Article 17, I request the erasure of all personal data you hold concerning me. Under Article 21, I object to the processing of my personal data, including any processing for direct marketing or for the sale of my data to third parties.
+
+You can identify me using the following information:
+
+{identifiers}
+
+Under Article 12(3), please confirm completion of this request without undue delay and in any event within {deadline} days. Where you have made my personal data public or shared it with other controllers, Article 17(2) requires you to inform those controllers of this erasure request.
+
+If you refuse to act on this request, Article 12(4) requires you to inform me of the reasons and of my right to lodge a complaint with a supervisory authority.
+
+Sincerely,
+{requester}` },
+  generic: { deadline:45, body:
+`{date}
+
+To: {recipient}
+Re: Request to Delete My Personal Information
+
+To Whom It May Concern,
+
+I request that you delete all personal information you hold about me and that you stop selling or sharing it with third parties. Depending on my jurisdiction, this request is made under applicable data protection law, which may include the California Consumer Privacy Act, the California Delete Act, or the EU General Data Protection Regulation.
+
+You can identify me using the following information:
+
+{identifiers}
+
+Please confirm completion of this request in writing within {deadline} days. If you share my information with third parties, please forward this request to them as well.
+
+If you deny this request, please state the specific legal basis for the denial.
+
+Sincerely,
+{requester}` },
+};
+
+const STARTER_BROKERS = [
+  { site:"Spokeo", url:"https://www.spokeo.com/optout", method:"form" },
+  { site:"Whitepages", url:"https://www.whitepages.com/suppression-requests", method:"form" },
+  { site:"BeenVerified", url:"https://www.beenverified.com/app/optout/search", method:"form" },
+  { site:"Radaris", url:"https://radaris.com/control/privacy", method:"form" },
+  { site:"MyLife", url:"https://www.mylife.com/ccpa/index.pubview", method:"form" },
+  { site:"Intelius", url:"https://www.intelius.com/opt-out", method:"form" },
+];
+
+/* ---------- storage ---------- */
+const KEY = "erasure.phaseA.v1";
+function load() {
+  try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; }
+}
+function save(state) { localStorage.setItem(KEY, JSON.stringify(state)); }
+let S = Object.assign({ profile:{}, checks:{}, tracker:[], lettersGenerated:0 }, load());
+
+/* ---------- profile ---------- */
+function readProfile() {
+  return {
+    name: val("p-name"),
+    aliases: splitList(val("p-aliases")),
+    emails: splitList(val("p-emails")),
+    phones: splitList(val("p-phones")),
+    addresses: val("p-addresses").split("\n").map(s => s.trim()).filter(Boolean),
+  };
+}
+function fillProfile() {
+  const p = S.profile || {};
+  set("p-name", p.name || "");
+  set("p-aliases", (p.aliases || []).join(", "));
+  set("p-emails", (p.emails || []).join(", "));
+  set("p-phones", (p.phones || []).join(", "));
+  set("p-addresses", (p.addresses || []).join("\n"));
+}
+function saveProfile() {
+  S.profile = readProfile();
+  save(S);
+  flash("profile-flash");
+  renderLetter();
+  renderSteps();
+}
+
+/* ---------- playbook ---------- */
+function stepStatus(key) {
+  if (key === "tracker") {
+    const n = S.tracker.length;
+    return n ? `${n} site${n>1?"s":""} tracked` : "ledger empty";
+  }
+  if (key === "legal") {
+    return S.lettersGenerated ? `${S.lettersGenerated} letter${S.lettersGenerated>1?"s":""} generated` : "no letters yet";
+  }
+  if (key === "followups") {
+    const due = S.tracker.filter(isDue).length;
+    return due ? `${due} follow-up${due>1?"s":""} due now` : "no follow-ups due";
+  }
+  return "";
+}
+function renderSteps() {
+  const root = document.getElementById("steps");
+  root.innerHTML = "";
+  STEPS.forEach(s => {
+    const done = !!S.checks[s.n];
+    const div = document.createElement("div");
+    div.className = "card step" + (done ? " done" : "");
+    const cmds = s.commands.map(c => `<code>${escapeHtml(c)}</code>`).join("");
+    const manual = s.manual.map(m => `<li>${m}</li>`).join("");
+    const status = s.statusKey ? `<div class="step-status">Status: ${stepStatus(s.statusKey)}</div>` : "";
+    div.innerHTML = `
+      <div class="step">
+        <div class="step-check"><input type="checkbox" ${done?"checked":""} onchange="toggleStep(${s.n}, this.checked)"></div>
+        <div class="step-body">
+          <div class="step-title"><span class="step-num">${s.n}.</span>${escapeHtml(s.title)}</div>
+          <div class="step-summary">${escapeHtml(s.summary)}</div>
+          ${cmds ? `<div class="step-auto"><span class="tag">Erasure automates this:</span><br>${cmds}</div>` : ""}
+          ${manual ? `<div class="step-manual"><span class="tag">Do by hand:</span><ul>${manual}</ul></div>` : ""}
+          ${status}
+        </div>
+      </div>`;
+    root.appendChild(div);
+  });
+  updateProgress();
+}
+function toggleStep(n, checked) {
+  S.checks[n] = checked; save(S);
+  document.querySelectorAll(".step")[n-1].classList.toggle("done", checked);
+  updateProgress();
+}
+function updateProgress() {
+  const done = STEPS.filter(s => S.checks[s.n]).length;
+  document.getElementById("progress-fill").style.width = (done/STEPS.length*100) + "%";
+  document.getElementById("progress-label").textContent = `${done} of ${STEPS.length} complete`;
+}
+
+/* ---------- legal ---------- */
+function fmtDate(d) {
+  const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${months[d.getMonth()]} ${day}, ${d.getFullYear()}`;
+}
+function identifiersBlock(p, includeDob) {
+  const lines = [];
+  if (p.name) lines.push(`Name: ${p.name}`);
+  (p.aliases||[]).forEach(a => lines.push(`Also known as: ${a}`));
+  (p.emails||[]).forEach(e => lines.push(`Email: ${e}`));
+  (p.phones||[]).forEach(ph => lines.push(`Phone: ${ph}`));
+  (p.addresses||[]).forEach(a => lines.push(`Address: ${a}`));
+  if (includeDob && p.dob) lines.push(`Date of birth: ${p.dob}`);
+  if (!lines.length) lines.push("(add your details in the Profile section above)");
+  return lines.map(l => "  - " + l).join("\n");
+}
+function renderLetter(bump) {
+  const p = S.profile || {};
+  const j = val("l-jurisdiction");
+  const tpl = JURISDICTIONS[j];
+  const deadline = parseInt(val("l-deadline"), 10) || tpl.deadline;
+  const recipient = val("l-recipient") || "Data Privacy Officer";
+  const text = tpl.body
+    .replace("{date}", fmtDate(new Date()))
+    .replace("{recipient}", recipient)
+    .replace("{identifiers}", identifiersBlock(p, document.getElementById("l-dob").checked))
+    .replace("{deadline}", deadline)
+    .replace("{requester}", p.name || "[your name]");
+  document.getElementById("letter").value = text;
+  if (bump) { S.lettersGenerated = (S.lettersGenerated||0) + 1; save(S); renderSteps(); }
+}
+function copyLetter() {
+  const t = document.getElementById("letter");
+  if (!t.value) return;
+  navigator.clipboard.writeText(t.value).then(() => flash("legal-flash"));
+}
+function downloadLetter() {
+  const t = document.getElementById("letter").value;
+  if (!t) return;
+  const recip = (val("l-recipient") || "letter").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  download(`deletion-request-${recip}.txt`, t);
+}
+
+/* ---------- tracker ---------- */
+function isDue(e) {
+  return e.status === "requested" && e.follow_up_date && new Date(e.follow_up_date) <= new Date();
+}
+function addSite(site, url, method) {
+  site = site || val("t-site"); url = url || val("t-url"); method = method || val("t-method");
+  if (!site) return;
+  if (S.tracker.some(e => e.site.toLowerCase() === site.toLowerCase())) return;
+  S.tracker.push({ site, opt_out_url:url||"", method:method||"unknown", status:"pending", date_requested:"", follow_up_date:"", notes:"" });
+  save(S);
+  set("t-site",""); set("t-url","");
+  renderTracker(); renderSteps();
+}
+function seedStarters() {
+  STARTER_BROKERS.forEach(b => addSite(b.site, b.url, b.method));
+}
+function setStatus(i, status) {
+  const e = S.tracker[i];
+  e.status = status;
+  if (status === "requested") {
+    const today = new Date();
+    e.date_requested = today.toISOString().slice(0,10);
+    const f = new Date(today); f.setDate(f.getDate() + 45);
+    e.follow_up_date = f.toISOString().slice(0,10);
+  }
+  save(S); renderTracker(); renderSteps();
+}
+function removeSite(i) { S.tracker.splice(i,1); save(S); renderTracker(); renderSteps(); }
+function renderTracker() {
+  const body = document.getElementById("tracker-body");
+  const empty = document.getElementById("tracker-empty");
+  body.innerHTML = "";
+  empty.style.display = S.tracker.length ? "none" : "block";
+  const STATUSES = ["pending","requested","confirmed","denied","relisted"];
+  S.tracker.forEach((e, i) => {
+    const due = isDue(e);
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${escapeHtml(e.site)}</td>
+      <td>${e.opt_out_url ? `<a href="${escapeAttr(e.opt_out_url)}" target="_blank" rel="noopener">link</a>` : "<span style='color:var(--dim)'>none</span>"}</td>
+      <td>${escapeHtml(e.method)}</td>
+      <td>${e.date_requested || "<span style='color:var(--dim)'>-</span>"}</td>
+      <td><select onchange="setStatus(${i}, this.value)">${STATUSES.map(s => `<option ${s===e.status?"selected":""}>${s}</option>`).join("")}</select></td>
+      <td>${e.follow_up_date ? `${e.follow_up_date} ${due?'<span class="pill due">due</span>':''}` : "<span style='color:var(--dim)'>-</span>"}</td>
+      <td><button class="danger" style="padding:0.2rem 0.5rem;font-size:0.75rem;" onclick="removeSite(${i})">x</button></td>`;
+    body.appendChild(tr);
+  });
+}
+function exportCsv() {
+  const cols = ["site","opt_out_url","method","date_requested","status","follow_up_date","notes"];
+  const rows = [cols.join(",")];
+  S.tracker.forEach(e => rows.push(cols.map(c => csvCell(e[c])).join(",")));
+  download("erasure-tracker.csv", rows.join("\n"));
+}
+
+/* ---------- utilities ---------- */
+function val(id){ return document.getElementById(id).value.trim(); }
+function set(id,v){ document.getElementById(id).value = v; }
+function splitList(s){ return s.split(",").map(x=>x.trim()).filter(Boolean); }
+function escapeHtml(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function escapeAttr(s){ return escapeHtml(s).replace(/"/g,"&quot;"); }
+function csvCell(v){ v = v==null?"":String(v); return /[",\n]/.test(v) ? '"'+v.replace(/"/g,'""')+'"' : v; }
+function flash(id){ const el=document.getElementById(id); el.classList.add("show"); setTimeout(()=>el.classList.remove("show"),1200); }
+function download(name, text){
+  const blob = new Blob([text], {type:"text/plain"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = name; a.click();
+  URL.revokeObjectURL(a.href);
+}
+function clearAll(){
+  if (!confirm("Delete everything stored on this device (profile, checklist, tracker)?")) return;
+  localStorage.removeItem(KEY);
+  S = { profile:{}, checks:{}, tracker:[], lettersGenerated:0 };
+  fillProfile(); renderSteps(); renderTracker(); renderLetter();
+}
+
+/* ---------- init ---------- */
+fillProfile();
+renderSteps();
+renderTracker();
+renderLetter();
+</script>
+</body>
+</html>

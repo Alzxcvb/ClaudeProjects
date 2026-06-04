@@ -44,11 +44,16 @@ lives.
 
 ## Phased plan
 
-**Phase A: static playbook site (fastest, no backend).**
-Render `erasure playbook` as a web checklist with the legal-letter generator and
-a client-side tracker (localStorage + CSV export). Everything runs in the
-browser; nothing is stored server-side. This is shippable from the existing pure
-functions alone and is the lowest-risk demo / launch artifact.
+**Phase A: static playbook site (fastest, no backend). [SHIPPED 2026-06-04]**
+Lives at `erasure/web/index.html` as a single self-contained file. Renders the
+9-step playbook as an interactive checklist, generates CCPA/GDPR/generic legal
+letters off a local profile, and runs a client-side tracker with a 45-day
+follow-up clock and CSV export. Everything runs in the browser; state is held in
+localStorage and never leaves the device (with a "clear all my data" button).
+The step text, legal templates, and tracker columns are ported faithfully from
+the Python CLI (`playbook.py`, `legal/templates.py`, `tracker.py`); a node
+harness verifies the ported logic matches. Open it directly (file://) or host it
+on any static host (GitHub Pages / Vercel).
 
 **Phase B: accounts + local runner handoff.**
 Add the account-discovery results (Sherlock / holehe) and the justdelete.me
