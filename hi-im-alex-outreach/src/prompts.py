@@ -41,7 +41,7 @@ Tone rules:
 - 80 to 130 words MAX
 - First sentence quotes their exact words (in single quotes) and names the subreddit
 - Second sentence connects to ONE specific thing Alex builds (be concrete, not vague)
-- One soft CTA: reply or grab a 15-min call (https://calendly.com/calendly-email-77tk/30min)
+- One soft CTA: reply or grab a 15-min call (https://calendly.com/hiimalexllc/new-meeting)
 - Plain language. No buzzwords ("synergy", "leverage", "ecosystem"). No "I hope this finds you well"
 - No promises Alex can't keep. No invented social proof.
 - Sign off: "— Alex"
