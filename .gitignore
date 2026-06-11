@@ -4,6 +4,7 @@ second-citizenship-*
 market-timing-research/
 R-Bourne-FVG-Trading/
 Richard-Trading-Bot/
+idea-ranker/
 
 # Session state — local only
 session_recovery_summary_*.md
