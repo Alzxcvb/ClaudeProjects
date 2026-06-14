@@ -491,6 +491,63 @@
         </div>
     </div>
 
+    <!-- PHONE DATA & LOCATION -->
+    <div class="category">
+        <div class="category-header">
+            <div class="category-title">
+                <span class="category-icon">📍</span> Phone Data &amp; Location
+            </div>
+            <span class="category-pts" id="pts-phonedata">0 / 20 pts</span>
+        </div>
+        <div class="category-body">
+            <label class="check-item" data-pts="6" data-cat="phonedata">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>Cleared and turned off location history</strong>
+                    <small>iPhone: Settings → Privacy &amp; Security → Location Services → System Services → Significant Locations → Clear History, then off. Android: Google Maps → profile → Your Timeline → delete all, then turn Timeline off. Your phone logs where you go thousands of times a day.</small>
+                </div>
+                <div class="check-pts">+6</div>
+            </label>
+            <label class="check-item" data-pts="5" data-cat="phonedata">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>Wiped Google My Activity and set auto delete</strong>
+                    <small>myactivity.google.com → Delete → All time, then set Auto delete to every 3 months so the record stops rebuilding. This is every search, video, and voice query tied to your account.</small>
+                </div>
+                <div class="check-pts">+5</div>
+            </label>
+            <label class="check-item" data-pts="4" data-cat="phonedata">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>Reset the advertising ID and blocked app tracking</strong>
+                    <small>iPhone: Settings → Privacy &amp; Security → Tracking → turn off Allow Apps to Request to Track. Android: Settings → Privacy → Ads → Delete advertising ID. One ID is what stitches your separate apps into a single profile.</small>
+                </div>
+                <div class="check-pts">+4</div>
+            </label>
+            <label class="check-item" data-pts="3" data-cat="phonedata">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>Reviewed which apps touched location, mic, and camera</strong>
+                    <small>iPhone: Settings → Privacy &amp; Security → App Privacy Report. Android: Settings → Privacy → Privacy Dashboard. Set anything with no reason to know your location to While Using or Never. Always is for maps only.</small>
+                </div>
+                <div class="check-pts">+3</div>
+            </label>
+            <label class="check-item" data-pts="2" data-cat="phonedata">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>Deleted Siri and Assistant voice history</strong>
+                    <small>iPhone: Settings → Siri → Siri &amp; Dictation History → Delete, then Analytics &amp; Improvements → turn off Improve Siri &amp; Dictation. Android: myactivity.google.com → Web &amp; App Activity → untick Include audio recordings, then delete existing audio.</small>
+                </div>
+                <div class="check-pts">+2</div>
+            </label>
+        </div>
+    </div>
+
 </div>
 
 <!-- ERASURE_EVIDENCE_MARKER -->
@@ -526,7 +583,8 @@
         '2fa': 25,
         network: 20,
         device: 20,
-        accounts: 15
+        accounts: 15,
+        phonedata: 20
     };
 
     const catScores = {
@@ -534,7 +592,8 @@
         '2fa': 0,
         network: 0,
         device: 0,
-        accounts: 0
+        accounts: 0,
+        phonedata: 0
     };
 
     function getTier(score) {
@@ -547,7 +606,10 @@
 
     function updateScore() {
         const total = Object.values(catScores).reduce((a, b) => a + b, 0);
-        const pct = Math.round(total);
+        const maxTotal = Object.values(catMaxes).reduce((a, b) => a + b, 0);
+        // Score is a percentage of the max so the checklist can grow past 100
+        // raw points without breaking the 0-100 ring and tier thresholds.
+        const pct = maxTotal ? Math.round(100 * total / maxTotal) : 0;
 
         // Ring
         const offset = CIRCUMFERENCE - (CIRCUMFERENCE * pct / 100);
