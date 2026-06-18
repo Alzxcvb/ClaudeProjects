@@ -548,6 +548,63 @@
         </div>
     </div>
 
+    <!-- GOOGLE AI & EMAIL PRIVACY -->
+    <div class="category">
+        <div class="category-header">
+            <div class="category-title">
+                <span class="category-icon">🤖</span> Google AI &amp; Email Privacy
+            </div>
+            <span class="category-pts" id="pts-googleai">0 / 23 pts</span>
+        </div>
+        <div class="category-body">
+            <label class="check-item" data-pts="6" data-cat="googleai">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>Turned off Gmail smart features (main switch)</strong>
+                    <small>Gmail desktop → Settings (gear icon) → See all settings → General tab → Smart features and personalization → uncheck "Turn on smart features in Gmail, Chat, and Meet" → Save Changes. Google AI reads your emails including bank statements, medical letters, and tax docs. On by default in most countries.</small>
+                </div>
+                <div class="check-pts">+6</div>
+            </label>
+            <label class="check-item" data-pts="6" data-cat="googleai">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>Turned off the hidden Google Workspace smart features toggle</strong>
+                    <small>Same Gmail settings page → scroll to "Google Workspace smart features" → Manage Workspace smart feature settings → turn off both checkboxes → Save. Most people miss this second switch. Both must be off — they work independently and the first one is not enough.</small>
+                </div>
+                <div class="check-pts">+6</div>
+            </label>
+            <label class="check-item" data-pts="4" data-cat="googleai">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>Turned off smart features on Gmail mobile</strong>
+                    <small>Gmail app → Menu (three lines) → Settings → tap your account → turn off "Smart features and personalization." Desktop and mobile settings do not sync — you have to do both.</small>
+                </div>
+                <div class="check-pts">+4</div>
+            </label>
+            <label class="check-item" data-pts="4" data-cat="googleai">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>Deleted Gemini history and turned off future saving</strong>
+                    <small>myactivity.google.com → Gemini Apps Activity → Turn off → Delete activity → All time. Google confirms some saved Gemini chats are reviewed by humans. This wipes past conversations and stops new ones from being saved.</small>
+                </div>
+                <div class="check-pts">+4</div>
+            </label>
+            <label class="check-item" data-pts="3" data-cat="googleai">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>Moved sensitive emails to Proton Mail</strong>
+                    <small>proton.me — free account. Use it for medical, legal, and financial emails. Proton Mail uses end-to-end encryption and does not scan email content. Keep Gmail for newsletters and low-stakes messages.</small>
+                </div>
+                <div class="check-pts">+3</div>
+            </label>
+        </div>
+    </div>
+
 </div>
 
 <!-- ERASURE_EVIDENCE_MARKER -->
@@ -568,6 +625,8 @@
         <a class="resource-link" href="https://ublockorigin.com" target="_blank" rel="noopener">🛡 uBlock Origin</a>
         <a class="resource-link" href="https://privacyguides.org" target="_blank" rel="noopener">📖 Privacy Guides</a>
         <a class="resource-link" href="https://2fa.directory" target="_blank" rel="noopener">📱 2FA Directory</a>
+        <a class="resource-link" href="https://proton.me" target="_blank" rel="noopener">📧 Proton Mail (free, E2E encrypted)</a>
+        <a class="resource-link" href="https://myactivity.google.com/product/gemini" target="_blank" rel="noopener">🤖 Delete Gemini History</a>
     </div>
 </div>
 
@@ -584,7 +643,8 @@
         network: 20,
         device: 20,
         accounts: 15,
-        phonedata: 20
+        phonedata: 20,
+        googleai: 23
     };
 
     const catScores = {
@@ -593,7 +653,8 @@
         network: 0,
         device: 0,
         accounts: 0,
-        phonedata: 0
+        phonedata: 0,
+        googleai: 0
     };
 
     function getTier(score) {
