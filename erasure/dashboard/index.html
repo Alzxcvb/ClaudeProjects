@@ -548,6 +548,45 @@
         </div>
     </div>
 
+    <!-- SOCIAL FOOTPRINT DISCOVERY -->
+    <div class="category">
+        <div class="category-header">
+            <div class="category-title">
+                <span class="category-icon">🔍</span> Social Footprint Discovery
+            </div>
+            <span class="category-pts" id="pts-footprint">0 / 15 pts</span>
+        </div>
+        <div class="category-body">
+            <label class="check-item" data-pts="6" data-cat="footprint">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>Scanned my username across 600+ platforms</strong>
+                    <small>Run <code style="background:#0d1117;padding:1px 4px;border-radius:3px;font-size:0.75rem">blackbird --username yourusername --json</code> (install: pip install git+https://github.com/p1ngul1n0/blackbird) or use Sherlock. You cannot remove accounts you do not know exist.</small>
+                </div>
+                <div class="check-pts">+6</div>
+            </label>
+            <label class="check-item" data-pts="5" data-cat="footprint">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>Removed myself from people-search data broker sites</strong>
+                    <small>Spokeo, BeenVerified, WhitePages, Intelius, and 100+ others sell your name, address, relatives, and phone. Use Erasure CLI or opt out manually at each site. California residents can use the CA DROP process for a legal right to deletion.</small>
+                </div>
+                <div class="check-pts">+5</div>
+            </label>
+            <label class="check-item" data-pts="4" data-cat="footprint">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>Deleted or deactivated old accounts found in the scan</strong>
+                    <small>Every dormant account is a forgotten breach target with a stale password you probably reused. Delete it if you are done with it. JustDeleteMe (justdeleteme.xyz) rates how hard each site makes this.</small>
+                </div>
+                <div class="check-pts">+4</div>
+            </label>
+        </div>
+    </div>
+
     <!-- GOOGLE AI & EMAIL PRIVACY -->
     <div class="category">
         <div class="category-header">
@@ -644,6 +683,7 @@
         device: 20,
         accounts: 15,
         phonedata: 20,
+        footprint: 15,
         googleai: 23
     };
 
@@ -654,6 +694,7 @@
         device: 0,
         accounts: 0,
         phonedata: 0,
+        footprint: 0,
         googleai: 0
     };
 

@@ -6,8 +6,7 @@ Alternative: Blackbird (github.com/p1ngul1n0/blackbird), 600+ platforms, usernam
 Switch backends by setting the environment variable before any erasure command:
     ERASURE_ACCOUNTS_BACKEND=blackbird erasure accounts find <username>
 
-Blackbird backend is stubbed (NotImplementedError). See erasure/accounts/blackbird.py
-for the implementation guide. Sherlock remains the active default.
+Blackbird also exposes scan_email, which has no Sherlock equivalent (replaces holehe).
 """
 
 import os as _os
@@ -16,5 +15,6 @@ _BACKEND = _os.environ.get("ERASURE_ACCOUNTS_BACKEND", "sherlock").lower()
 
 if _BACKEND == "blackbird":
     from erasure.accounts.blackbird import scan_username as scan_username  # noqa: F401
+    from erasure.accounts.blackbird import scan_email as scan_email  # noqa: F401
 else:
     from erasure.accounts.sherlock import scan_username as scan_username  # noqa: F401
