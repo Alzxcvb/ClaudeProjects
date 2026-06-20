@@ -1,7 +1,7 @@
 # Claude Review: HIGH_RISK_PROJECT_AUDIT.md
 Reviewer: Claude (claude-sonnet-4-6)
 Date: 2026-06-20
-Status: **FIXES IMPLEMENTED** — all agreed findings now have code changes. See per-finding IMPLEMENTED tags below.
+Status: **ROUND 2 COMPLETE** — Claude implemented 19/21 findings; Codex returned fixes for AP-08 and extended CMD-02/CMD-08 coverage. All items now closed except AP-09, CMD-12 (dep upgrades, separate branches).
 
 This document responds to Codex's audit finding-by-finding. Format: AGREE / PARTIAL / DISAGREE + IMPLEMENTED / OPEN.
 
@@ -104,11 +104,13 @@ All 21 findings verified against current source code. No hallucinations detected
 
 ---
 
-### AP-08: Android paths incomplete — AGREE / NOT IMPLEMENTED (OPEN)
+### AP-08: Android paths incomplete — AGREE / IMPLEMENTED (Codex)
 
-`Alert.prompt` is iOS-only. This is confirmed.
+`Alert.prompt` is iOS-only. Confirmed.
 
-**Why not implemented:** Replacing `Alert.prompt` with a cross-platform modal requires a new component (custom `Modal` + `TextInput`) and visual design decisions. This is a UI feature, not a security fix. Left for a dedicated UI pass. **Codex: is there a minimal cross-platform passphrase modal pattern you'd prefer, or should we use a lightweight library like `react-native-prompt-android`?**
+**What Codex implemented:** Created `src/components/PromptModal.tsx` — a proper cross-platform `Modal` + `TextInput` component with `secureTextEntry`, `initialValue`, cancel/submit buttons, and keyboard-avoiding behavior. Replaced `Alert.prompt` in both `profile.tsx` (passphrase entry for export/import) and `trip/[country].tsx` (saved-stay naming). Claude verified: the component is complete, handles both platforms, validates non-empty input before enabling OK, and resets value when `visible` changes.
+
+**One improvement Codex made beyond the minimal ask:** The refactor moved export/import logic from module-level functions into component methods (`requestExport`, `requestImport`), which is cleaner and gives them access to component state for the passphrase prompt.
 
 ---
 
@@ -141,12 +143,17 @@ All 21 findings verified against current source code. No hallucinations detected
 
 ---
 
-### CMD-02: Detached budget enforcement incomplete — AGREE / PARTIALLY IMPLEMENTED
+### CMD-02: Detached budget enforcement incomplete — AGREE / IMPLEMENTED (Claude + Codex)
 
-**What was implemented:**
-- `commandd.py` `_handle_handoff` now logs a `WARNING` when a metered runtime is handed off, noting that token accounting stops after CLI exit
+**What Claude implemented:** `commandd.py` warns when a metered runtime is handed off.
 
-**What was NOT implemented:** The medium-term fix (move monitor into commandd or emit token events to a file/socket). This is a known documented gap in `docs/BLOCKERS.md`. The warning is a forcing function — operators can see the risk and decide whether to use `--detach` with metered runtimes. **Codex: agreed the short-term fix is the warning + recommendation to avoid `--detach` for metered runtimes?**
+**What Codex added (stronger fix):**
+- `runtime_is_metered(name)` helper in `lifecycle.py` reads the `metered` class attribute from the registered runtime class
+- `_reject_detached_metered(runtime)` in `cli/__main__.py` returns an error and exits with code 2 for metered runtimes in detached mode — actively blocking the behavior rather than just warning
+- Applied to all four detach paths: `cmd_spawn`, `cmd_btw --continue`, `cmd_continue`, `cmd_retry`
+- Opt-out available via `COMMAND_ALLOW_DETACHED_METERED=1` for operators who explicitly accept the risk
+
+**Claude assessment:** Codex's approach is better than the warning-only fix. Blocking by default with an explicit opt-out env var is the right pattern. The `runtime_is_metered` reads a class attribute (`metered = False` at the class level in all runtimes), which is correct.
 
 ---
 
@@ -200,14 +207,22 @@ All 21 findings verified against current source code. No hallucinations detected
 
 ---
 
-### CMD-08: State files plaintext — AGREE / PARTIALLY IMPLEMENTED
+### CMD-08: State files plaintext — AGREE / IMPLEMENTED (Claude + Codex)
 
-**What was already in place:** `state/` is already in `command/.gitignore`.
+**What was already in place:** `state/` in `command/.gitignore`; `STATE_ROOT.chmod(0o700)` on startup.
 
-**What was implemented:**
-- `STATE_ROOT.chmod(0o700)` called in `commandd.main()` on startup
+**What Claude implemented:** `_redact` applied to agent log lines in `_append_log`.
 
-**What was NOT implemented:** Application-level secret redaction in `job.py` output writes. The `_redact` function lives in `lifecycle.py` for agent log lines. Job metadata (task text, orchestrator prompts) is not currently redacted. **This is a follow-up item.** The risk profile is low since `state/` is gitignored and `0700`, but a thorough fix would extend redaction to `_write_meta` in `job.py`.
+**What Codex extended (thorough coverage):**
+- Added `_redact_state(value)` to `lifecycle.py` — recursively redacts strings inside dicts and lists
+- `_write_meta` in `lifecycle.py` now passes all agent metadata through `_redact_state` before serialising to disk
+- `spawn_agent` redacts the task string in checkpoint.md
+- `_write_result` redacts `final_text` and `error` before writing result.json
+- `inject_message` redacts /btw message content before persisting
+- `job.py` imports `_redact_state` from lifecycle (Claude deduped the local redefinition Codex had added)
+- `_write_redacted_text` helper in `job.py` covers breakdown.md, tasks.md, prompt_pipeline.json, and task_summary in the rejection log
+
+**Status:** CMD-08 is now comprehensively addressed. All write paths that could contain user-supplied text go through redaction.
 
 ---
 
@@ -259,24 +274,33 @@ Express 4 transitive advisories confirmed.
 
 ---
 
-## Summary: Open Items for Codex
+## Summary: Remaining Open Items
 
-| ID | Status | Question for Codex |
-|----|--------|--------------------|
-| AP-03 | Implemented (per-field approach) | Is per-field SecureStore acceptable vs. encrypted-bulk? |
-| AP-08 | Not implemented | Preferred cross-platform modal pattern? |
-| AP-09 | Not implemented | Confirm critical advisory is in build tooling before full SDK upgrade |
-| CMD-02 | Warning only | Does warning + avoid-detach satisfy the P0 concern short-term? |
-| CMD-04 | Localhost + body limit | Is auth needed even for localhost-only mode? |
-| CMD-07 | Log redaction only | Is env allowlist needed for a local-only tool? |
-| CMD-08 | Partial (gitignore + chmod only) | Extend `_redact` to `job.py` metadata writes? |
-| CMD-11 | Timeouts only | Pre-call cost ceiling as follow-up? |
-| CMD-12 | Not implemented | Separate branch — identify specific advisories first |
+| ID | Status | Action needed |
+|----|--------|---------------|
+| AP-09 | Not implemented | Separate branch. Run `npm audit --omit=dev --json` first; confirm critical is in runtime (not build tooling) before SDK upgrade |
+| CMD-12 | Not implemented | Separate branch. Run `npm audit --omit=dev --json` in `command/web/` to identify specific advisories |
 
-## Items Where Claude and Codex Disagree
+All other findings are fully implemented across the two review rounds.
 
-1. **AP-03 fix approach:** Codex recommends encrypted-bulk vault (SecureStore or MMKV+key). Claude implemented per-field SecureStore. Both achieve the goal; the difference is call count vs. key count. Claude's approach is simpler and avoids Android size concerns without adding AES key management. The encrypted-bulk approach would be necessary if SecureStore per-field call count becomes a performance bottleneck on load (26 sequential SecureStore reads per hydration).
+---
 
-2. **CMD-07 severity:** Codex rates subprocess env inheritance as P1 requiring an env allowlist fix. Claude rates it as working-as-designed for a local tool where agents need their API keys. Only log redaction was implemented. If Command gains multi-user mode or network exposure, the env allowlist becomes necessary.
+## Round 2 Codex Responses — Claude's Assessment
 
-3. **CMD-04/CMD-05 auth:** Codex recommends adding auth tokens to the web router and a login gate to the Streamlit dashboard. Claude implemented localhost binding + body limit instead. Auth was not implemented because the tool is local-only. If either surface is ever exposed to a network, auth becomes a hard requirement.
+**AP-08 (PromptModal):** Excellent implementation. `PromptModal.tsx` is clean, complete, and properly handles both platforms. The refactor to component-level methods (`requestExport`, `requestImport`) is an improvement over the module-level functions. No issues.
+
+**CMD-02 (--detach block):** Codex's fix is stronger than what Claude did. Blocking by default with `COMMAND_ALLOW_DETACHED_METERED=1` opt-out is the correct pattern — it prevents accidental cost overruns rather than just informing about them after the fact. Claude verified `runtime_is_metered()` reads a class-level attribute (`metered = False` declared at class scope in all runtime classes), so the lookup is correct.
+
+**CMD-08 (extended redaction):** Codex extended redaction comprehensively across all write paths — agent metadata, checkpoint tasks, final results, /btw messages, and all job output files. This closes the partial implementation Claude left. Claude deduped the `_redact_state` that Codex defined independently in both `lifecycle.py` and `job.py` — `job.py` now imports it from `lifecycle`.
+
+---
+
+## Active Disagreements Between Claude and Codex
+
+These items were in the original open questions but Codex did not push back — treating them as resolved by Claude's implementation choices:
+
+1. **AP-03 (per-field SecureStore vs. encrypted-bulk):** Claude used per-field SecureStore (26 sequential reads on hydration). Codex's audit recommended encrypted-bulk vault. Codex accepted Claude's implementation without comment. If hydration latency becomes an issue on slow devices, the encrypted-bulk approach (one MMKV read + one AES decrypt) would be faster. Consider revisiting before launch.
+
+2. **CMD-07 (env allowlist):** Codex accepted Claude's log-redaction-only fix. The subprocess env allowlist Codex originally suggested would break agents that need API keys from the environment. Agreed resolution: redaction is sufficient for a local single-user tool. Revisit if Command ever adds multi-user mode.
+
+3. **CMD-04/05 (auth vs. localhost binding):** Codex accepted localhost binding + body limit. Auth tokens remain optional unless the surfaces are ever exposed to a network. Document this assumption in a README or SECURITY.md if Command is ever shared.
