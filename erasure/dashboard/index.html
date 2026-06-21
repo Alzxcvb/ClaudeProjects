@@ -649,7 +649,7 @@
                 <div class="custom-check"></div>
                 <div class="check-text">
                     <strong>Turned off Gmail smart features (main switch)</strong>
-                    <small>Gmail desktop → Settings (gear icon) → See all settings → General tab → Smart features and personalization → uncheck "Turn on smart features in Gmail, Chat, and Meet" → Save Changes. Google AI reads your emails including bank statements, medical letters, and tax docs. On by default in most countries.</small>
+                    <small>Gmail desktop → Settings (gear icon) → See all settings → General tab → Smart features and personalization → uncheck "Turn on smart features in Gmail, Chat, and Meet" → Save Changes. These features let Google's AI process your email content for smart replies, filtering, and summaries. Google says this content is not used to train Gemini, and the viral "trains AI on your email" claim was retracted by the source that started it. A 2025 class action (Thele v. Google) still disputes whether it was switched on without consent. Turn it off if you do not want Google's AI reading your mail.</small>
                 </div>
                 <div class="check-pts">+6</div>
             </label>
@@ -686,6 +686,63 @@
                 <div class="check-text">
                     <strong>Moved sensitive emails to Proton Mail</strong>
                     <small>proton.me — free account. Use it for medical, legal, and financial emails. Proton Mail uses end-to-end encryption and does not scan email content. Keep Gmail for newsletters and low-stakes messages.</small>
+                </div>
+                <div class="check-pts">+3</div>
+            </label>
+        </div>
+    </div>
+
+    <!-- AI TRAINING OPT-OUTS (OTHER PLATFORMS) -->
+    <div class="category">
+        <div class="category-header">
+            <div class="category-title">
+                <span class="category-icon">🧠</span> AI Training Opt-Outs (Other Platforms)
+            </div>
+            <span class="category-pts" id="pts-aiplatforms">0 / 21 pts</span>
+        </div>
+        <div class="category-body">
+            <label class="check-item" data-pts="5" data-cat="aiplatforms">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>Opted out of LinkedIn AI training</strong>
+                    <small>LinkedIn desktop → your photo → Settings → Data Privacy → "Data for Generative AI improvement" → turn off "Use my data for training content creation AI models." On by default. LinkedIn uses your profile and posts to train its AI.</small>
+                </div>
+                <div class="check-pts">+5</div>
+            </label>
+            <label class="check-item" data-pts="5" data-cat="aiplatforms">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>Opted out of X / Grok training</strong>
+                    <small>X → Settings and privacy → Privacy and safety → "Grok &amp; third-party collaborators" (sometimes "Data sharing") → turn off using your posts and Grok chats for training. On by default for most non-EU users.</small>
+                </div>
+                <div class="check-pts">+5</div>
+            </label>
+            <label class="check-item" data-pts="4" data-cat="aiplatforms">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>Turned off ChatGPT model training</strong>
+                    <small>ChatGPT → Settings → Data controls → turn off "Improve the model for everyone." Stops OpenAI from training on your conversations. You keep chat history either way.</small>
+                </div>
+                <div class="check-pts">+4</div>
+            </label>
+            <label class="check-item" data-pts="4" data-cat="aiplatforms">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>Turned off Claude model training</strong>
+                    <small>Claude → Settings → Privacy → turn off the option to help improve Claude. Opting out also cuts standard chat retention from 5 years to 30 days. Note: chats flagged for safety review can still be retained.</small>
+                </div>
+                <div class="check-pts">+4</div>
+            </label>
+            <label class="check-item" data-pts="3" data-cat="aiplatforms">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>Limited Meta AI data use</strong>
+                    <small>Facebook / Instagram → Settings → Privacy Center → search "Generative AI." In the EU and UK you can submit an objection form. In the US there is no full opt-out yet, so the real lever is limiting what you post publicly.</small>
                 </div>
                 <div class="check-pts">+3</div>
             </label>
@@ -736,7 +793,8 @@
         phonedata: 20,
         footprint: 15,
         search: 18,
-        googleai: 23
+        googleai: 23,
+        aiplatforms: 21
     };
 
     const catScores = {
@@ -748,7 +806,8 @@
         phonedata: 0,
         footprint: 0,
         search: 0,
-        googleai: 0
+        googleai: 0,
+        aiplatforms: 0
     };
 
     function getTier(score) {
