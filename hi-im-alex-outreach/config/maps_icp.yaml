@@ -1,0 +1,86 @@
+# Google Maps sourcing ICP filter — feeds src/maps_ingest.py
+#
+# Purpose: turn an Apify Google Maps export into a ranked list of small,
+# owner-operated service businesses that match the "Hi I'm Alex" ICP
+# (non-technical owners who'd pay to have AI working for them).
+#
+# This layer SOURCES targets only. Outreach still happens LinkedIn-first,
+# personalized, via the chrome-mcp flow. Nothing here emails anyone.
+
+# Categories that map to the ICP. Matching is case-insensitive substring,
+# so "bookkeep" catches "Bookkeeping service", "Bookkeeper", etc.
+icp_categories:
+  - bookkeep
+  - account          # accountant / accounting (not "account manager")
+  - tax
+  - financial
+  - insurance
+  - marketing
+  - advertising
+  - agency
+  - consultant
+  - coach
+  - real estate
+  - mortgage
+  - law             # solo / small law firms
+  - attorney
+  - notary
+  - dentist
+  - dental
+  - chiropractor
+  - med spa
+  - medical spa
+  - salon
+  - clinic
+  - physical therap
+  - veterinar
+  - contractor
+  - plumb
+  - electric
+  - hvac
+  - roofing
+  - landscap
+  - cleaning
+  - pest control
+  - interior design
+  - architect
+  - photographer
+  - event planner
+  - travel agency
+  - fitness
+  - gym
+  - wellness
+  - nutrition
+  - recruit
+  - staffing
+  - property management
+
+# Hard skips — chains, transient, or non-buyer categories. Any substring
+# match here drops the row even if an icp_category also matched.
+skip_categories:
+  - gas station
+  - atm
+  - tourist
+  - government
+  - public school
+  - hospital            # too big / procurement-driven
+  - university
+  - airport
+  - bank                # branch of a national, not an owner
+  - post office
+  - grocery
+  - supermarket
+  - fast food
+  - gas
+
+# Name fragments that flag a chain / franchise (national brands rarely have a
+# local owner to pitch). Light heuristic; reviews_max below does most of the work.
+chain_name_flags:
+  - franchise
+  - "#"               # "Store #1234"
+
+# Qualification thresholds
+reviews_min: 4         # below this: too new / inactive to have admin pain worth automating
+reviews_max: 600       # above this: likely a chain or too big for the owner-operator pitch
+rating_min: 3.5        # reputation floor; reputable owners are likelier to value tools
+require_website: true  # a website means a findable, real business (and an owner to find)
