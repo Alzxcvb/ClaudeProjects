@@ -1,43 +1,30 @@
-# Erasure — "all-encompassing" build (thread-driven)
+# DROP post-OTP recon → implement `_click_submit` (2026-07-03)
 
-Source playbook: hrswatigupta_official Threads thread (9-step manual digital-footprint wipe).
-Goal: cover the whole thread in the engine; keep every output JSON/web-consumable so a
-front-facing website can wrap the CLI later.
+Blocker being fixed: `submit()` has no pause point for human OTP entry, so nobody
+has ever seen the post-OTP screens and `_click_submit` is still a stub.
 
 ## Plan
 
-- [ ] **Phase 1 — `legal/` deletion-letter generator** (thread Step 4)
-  - `erasure/legal/templates.py` — CCPA / GDPR / generic deletion-request bodies, citing the law.
-  - `erasure/legal/generator.py` — `render_request(profile, jurisdiction, recipient, ...)`.
-  - CLI: `erasure legal request --jurisdiction ccpa|gdpr|generic [--recipient ...]`, `erasure legal list`.
-  - Tests: render each jurisdiction, profile substitution, law citation present, no em-dashes.
-
-- [ ] **Phase 2 — `tracker` ledger** (thread Step 2)
-  - `erasure/tracker.py` — rows: site, opt_out_url, method, date_requested, status, follow_up_date.
-  - Seed from broker registry + scan manifest; update status; CSV/JSON export.
-  - CLI: `erasure tracker init|add|update|show|export`.
-  - Tests.
-
-- [ ] **Phase 3 — justdelete.me bridge** (thread Steps 5 + 6)
-  - `erasure/accounts/justdelete.py` — bundled curated directory (name, domain, difficulty, delete URL/notes).
-  - Cross-ref latest accounts/emails manifest → deletion difficulty + direct link; flag scrub-first for hard/impossible.
-  - CLI: `erasure accounts deletion-links`.
-  - Tests.
-
-- [ ] **Phase 4 — `playbook` + wire `schedule`** (thread Steps 1,7,8,9)
-  - `erasure/playbook.py` — full 9-step playbook with the exact command for each step.
-  - CLI: `erasure playbook`.
-  - Wire stubbed `schedule` → emit a real quarterly re-check reminder (crontab/launchd line).
-  - Tests.
-
-- [ ] **Phase 5 — docs / web roadmap / memory**
-  - README new commands; `ROADMAP-web.md` (thin web layer over engine); update project-erasure memory; portfolio if needed.
+- [x] Read client.py / test_drop.py / project-erasure.md resume point
+- [x] Write `scripts/drop_post_otp_recon.py` — headed browser, reuses
+      BrowserSession + `_fill_form` to reach "Send code", then human-paced
+      capture loop (screenshot + HTML per screen) into `state/drop/snapshots/`
+- [x] Tell Alex what to run and what to expect (profile via
+      `python3 -m erasure.cli init` first; Tailscale "boxy" exit node ON)
+- [ ] **WAITING ON ALEX** — walk the live flow, enter OTP, capture each screen
+- [ ] Read saved HTML snapshots → extract accessible labels/roles per screen
+- [ ] Implement `_click_submit` (get_by_label / get_by_role pattern, return
+      Optional[str] confirmation code)
+- [ ] Extend `_FakePage` + add `_click_submit` tests in tests/test_drop.py;
+      full pytest green (baseline: 143 passing)
+- [ ] NO live `--confirm` run unless Alex explicitly says go
+- [ ] Update NEXT SESSION RESUME POINT in project-erasure.md with findings
 
 ## Conventions to honor
-- Stage by explicit path; inspect `git diff --cached` before commit (shared parent repo).
-- Commit + push after each phase.
-- No em dashes in any user-facing copy (legal letters included) — AI tell.
-- Keep tests green (baseline 97/97).
+- Stage by explicit path; inspect `git diff --cached` before commit
+- Commit + push after each logical piece
+- If the Gateway rejects Alex before "Send code": stop, report exact rejection
+  point (IP or phone precondition unsolved), do not guess selectors
 
 ## Review
-(filled in as phases complete)
+(filled in when done)
