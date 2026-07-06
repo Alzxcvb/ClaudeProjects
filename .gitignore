@@ -29,3 +29,22 @@ openclaw-deploy/
 jarvis/
 thoughtleader/
 hi-im-alex/
+pomodoro-calisthenics/
+
+# Personal, machine-specific Claude Code settings (absolute paths, local hooks)
+.claude/settings.local.json
+
+# Catch-all: never commit real env files from any subfolder (defense-in-depth)
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.sample
+!**/.env.template
+.env.backup
+
+# fvg-options-bot: trading strategy — keep out of public repo (nested repo today; belt-and-suspenders)
+fvg-options-bot/
+
+# Security audit docs — keep private
+HIGH_RISK_PROJECT_AUDIT_CLAUDE_REVIEW.md
+HIGH_RISK_PROJECT_AUDIT.md
