@@ -8,20 +8,37 @@ The core bet: much of what separates a stronger model from a weaker one on real 
 
 ```
 fabel-files/
-├── CLAUDE-FABEL.md          ← the core manual (load this whole)
+├── CLAUDE-FABEL.md          ← the core manual (load this whole, always)
 ├── protocols/               ← deep dives, loaded on trigger
 │   ├── failure-modes.md     ← catalog of weak-model anti-patterns + countermeasures
 │   ├── decomposition.md     ← breaking work down, risk-first ordering
 │   ├── verification.md      ← proving work is actually done
 │   ├── debugging.md         ← fault isolation procedure
 │   └── self-review.md       ← hostile review pass before "done"
-└── templates/               ← fill-in files the manual references
-    ├── task-plan.md
-    ├── debug-log.md
-    └── decision-log.md
+├── templates/               ← fill-in files the manual references
+│   ├── task-plan.md
+│   ├── debug-log.md
+│   └── decision-log.md
+├── domains/                 ← 13 per-specialty standards files (one per specialist)
+│   └── README.md            ← the assignment model + catalog
+├── agents/
+│   └── coach.md             ← strong-model grading agent: rubric, prompt, coaching loop
+└── evals/                   ← 5 fixed benchmark tasks with verified fixtures
+    └── README.md            ← run protocol + scoring
 ```
 
 `CLAUDE-FABEL.md` is self-contained — a model that reads only it gets most of the value. The protocols add depth on trigger (the manual says when to read each one), which keeps the always-loaded context small.
+
+## The specialist architecture
+
+The pieces compose into a training loop for a fleet of cheap specialists:
+
+1. **Specialize**: give each weak model `CLAUDE-FABEL.md` + exactly ONE `domains/<x>.md` (see `domains/README.md` for why one, and the catalog of 13). That pair is the specialist's whole identity.
+2. **Measure**: run it on the fixed tasks in `evals/` (fixtures verified, answer keys included) under identical conditions — control vs. manual vs. coached — and log scores in `evals/results-log.md`.
+3. **Coach**: one Opus-class model grades each transcript against the manual (`agents/coach.md`) and emits exactly ONE corrective rule per run, appended to that specialist's `learned-rules.md`.
+4. **Repeat**: rules compound; eval scores tell you whether they're working. The coach prunes the rule list when it grows past ~10.
+
+The economics: violations are cheap to detect after the fact but expensive to avoid in the moment, so the strong model does the easy judging and the cheap models do the hard doing.
 
 ## How to wire it up
 
@@ -45,14 +62,9 @@ Pick one:
 
 ## How to experiment
 
-The clean test is A/B on the same model:
+Use the benchmark: `evals/README.md` has the full protocol (copy fixtures out, fixed wrapper prompt, never show the model a RUBRIC.md) and a two-axis score — outcome (task-specific answer key) and process (generic, from the transcript). The five tasks were chosen to expose the manual's levers: red-before-green debugging, build-to-spec edge cases, data reconciliation, blame-order config debugging, and hostile review against a planted answer key.
 
-1. Pick a task with a checkable outcome (a bug with a failing test, a small feature with a spec).
-2. Run it with a cheap model, no manual. Save the transcript and diff.
-3. Fresh session, same model + manual. Same prompt.
-4. Compare: did it verify before claiming done? Did it thrash or stop at 3 attempts? Is the diff smaller and scoped? Did the report label verified vs. guess?
-
-Tasks where the manual should visibly help: debugging (the tripwires), multi-step builds (risk-first ordering + task file), anything where the model usually says "this should work now."
+The quick informal version is still valid: same model, same prompt, with vs. without the manual, and compare — did it verify before claiming done? Did it stop at 3 attempts or thrash? Is the diff scoped? Are the report's claims labeled and true?
 
 ## Honest limits
 

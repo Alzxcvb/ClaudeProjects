@@ -1,0 +1,7 @@
+order_id,customer,date,quantity,amount_usd
+1001,Alice Johnson,2026-03-05,2,49.99
+1002,Bob Smith,2026-03-07,1,1205.00
+1003,José García,2026-03-09,3,15.75
+1006,Grace Kim,2026-03-12,10,2000.50
+1007,Henri Müller,2026-03-14,1,7.20
+1009,Jack O'Neil,2026-03-16,4,88.40

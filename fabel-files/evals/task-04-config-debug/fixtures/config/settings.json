@@ -1,0 +1,4 @@
+{
+  "databaseUrl": "postgress://db.internal.example:5433/orders",
+  "pool_size": "10"
+}

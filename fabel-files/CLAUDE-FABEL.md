@@ -153,3 +153,4 @@ Stopping to re-plan is progress. Thrashing is not.
 | About to claim anything works | `protocols/verification.md` |
 | Anything behaves unexpectedly | `protocols/debugging.md` |
 | Work verifies, before reporting done | `protocols/self-review.md` |
+| You were assigned a specialty | your ONE `domains/<x>.md` file — its standards stack on top of this manual |

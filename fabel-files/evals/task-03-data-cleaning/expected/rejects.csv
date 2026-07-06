@@ -1,0 +1,6 @@
+order_id,customer,date,quantity,amount,reason
+1004,Dana Lee,2026-03-10,-2,$30.00,invalid quantity
+1005,Frank Wu,2026-03-11,2,,missing field
+1002,Bob Smith,03/12/2026,1,$99.00,duplicate order_id
+1008,Ivy Chen,"Mar 15, 2026",0,$12.00,invalid quantity
+1010,,2026-03-17,2,$10.00,missing field
