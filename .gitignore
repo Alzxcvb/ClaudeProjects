@@ -48,3 +48,6 @@ fvg-options-bot/
 # Security audit docs — keep private
 HIGH_RISK_PROJECT_AUDIT_CLAUDE_REVIEW.md
 HIGH_RISK_PROJECT_AUDIT.md
+
+# Bear Engine: private repo (Alzxcvb/bear-engine), never track here
+bear-engine/
