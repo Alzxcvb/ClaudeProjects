@@ -1,0 +1,52 @@
+{
+  "db_path": "content.db",
+  "default_platform": "linkedin",
+  "score_weights": {
+    "bookings": 100,
+    "link_clicks": 10,
+    "profile_visits": 5,
+    "reposts": 4,
+    "comments": 3,
+    "reactions": 1,
+    "impressions": 0.01
+  },
+  "cooldown_days": {
+    "linkedin": 90,
+    "x": 30,
+    "instagram": 120
+  },
+  "min_effect_pct": 40,
+  "decision_metric": "efficiency",
+  "checkpoints": {
+    "24h": 24,
+    "72h": 72,
+    "7d": 168
+  },
+  "slots": {
+    "early-am": [
+      5,
+      8
+    ],
+    "mid-am": [
+      8,
+      11
+    ],
+    "midday": [
+      11,
+      14
+    ],
+    "afternoon": [
+      14,
+      18
+    ],
+    "evening": [
+      18,
+      23
+    ],
+    "night": [
+      23,
+      5
+    ]
+  },
+  "status_window_days": 14
+}
