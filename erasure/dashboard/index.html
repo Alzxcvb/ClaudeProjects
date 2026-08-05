@@ -9,10 +9,18 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #0d1117;
             color: #e6edf3;
             min-height: 100vh;
             padding: 2rem 1rem;
+        }
+
+        #matrix-bg {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
         }
 
         header {
@@ -284,6 +292,8 @@
 </head>
 <body>
 
+<canvas id="matrix-bg" aria-hidden="true"></canvas>
+
 <header>
     <h1>Cyber Hygiene Score</h1>
     <p>Check what you have. See where you stand.</p>
@@ -454,7 +464,7 @@
                 <div class="custom-check"></div>
                 <div class="check-text">
                     <strong>Enabled Advanced Data Protection for iCloud (or the Android/Microsoft equivalent)</strong>
-                    <small>iPhone: Settings → your name → iCloud → Advanced Data Protection → turn on. Set up a recovery contact or recovery key first (Settings → your name → Sign-In &amp; Security → Account Recovery) since Apple cannot recover this data for you if you lose access, and update every device on the account first. This raises iCloud's end-to-end encrypted categories from 14 to 23, so Apple no longer holds the keys and cannot hand over iCloud content in response to a warrant. It does not cover Mail, Contacts, or Calendar, and it does not stop a subpoena for account metadata or a search of an unlocked device.</small>
+                    <small>iPhone: Settings → your name → iCloud → Advanced Data Protection → turn on. Set up a recovery contact or recovery key first (Settings → your name → Sign-In &amp; Security → Account Recovery) since Apple cannot recover this data for you if you lose access, and update every device on the account first. This raises iCloud's end-to-end encrypted categories from 15 to 25, so Apple no longer holds the keys and cannot hand over that content in response to a warrant. Still not covered even with it on: Mail, Contacts, Calendar, Shared Albums, anything shared by "anyone with a link", real time collaboration in Pages, Numbers and Keynote, and file metadata such as modification dates and checksums. It also does not stop a subpoena for account metadata or connection logs, and it does not stop a search of an unlocked device. Side effect worth knowing: iCloud.com web access is switched off when you turn this on, and each session has to be approved from one of your devices.</small>
                 </div>
                 <div class="check-pts">+6</div>
             </label>
@@ -792,6 +802,44 @@
 </footer>
 
 <script>
+    /* ---------- matrix rain (fixed full-page background, decorative only) ---------- */
+    (function initMatrixRain() {
+        const canvas = document.getElementById('matrix-bg');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const chars = 'アイウエオカキクケコサシスセソ01アイウエオ0123456789';
+        const fontSize = 16;
+        let cols, drops;
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            cols = Math.max(1, Math.floor(canvas.width / fontSize));
+            drops = new Array(cols).fill(0).map(() => Math.random() * -40);
+            ctx.fillStyle = '#0d1117';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function draw() {
+            ctx.fillStyle = 'rgba(13,17,23,0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#2ea043';
+            ctx.font = fontSize + 'px monospace';
+            for (let i = 0; i < cols; i++) {
+                const ch = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(ch, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+            requestAnimationFrame(draw);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        if (!reduceMotion) draw();
+    })();
+
     const CIRCUMFERENCE = 2 * Math.PI * 80; // 502.65
 
     const catMaxes = {
