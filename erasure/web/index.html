@@ -152,6 +152,86 @@
   .empty { color: var(--dim); font-size: 0.85rem; padding: 0.8rem 0; }
   .tbl-scroll { overflow-x: auto; }
 
+  /* emergency */
+  .em-trigger {
+    background: var(--red); border: 1px solid var(--red); color: #fff;
+    font-weight: 600; letter-spacing: 0.2px;
+  }
+  .em-trigger:hover { background: #ff6a63; border-color: #ff6a63; }
+  nav a.nav-emergency {
+    color: var(--red); border: 1px solid var(--red); font-weight: 600;
+  }
+  nav a.nav-emergency:hover { background: var(--red); color: #fff; }
+  .header-actions { margin-top: 1rem; display: flex; justify-content: center; }
+
+  .em-overlay {
+    display: none; position: fixed; inset: 0; z-index: 100;
+    background: rgba(1,4,9,0.82); backdrop-filter: blur(3px);
+    overflow-y: auto; padding: 1.2rem 1rem 3rem;
+  }
+  .em-overlay.open { display: block; }
+  .em-modal {
+    max-width: 880px; margin: 0 auto; background: var(--bg);
+    border: 1px solid var(--red); border-radius: 12px; padding: 1.4rem 1.3rem 1.8rem;
+  }
+  .em-top { display: flex; align-items: flex-start; gap: 1rem; }
+  .em-top h2 { font-size: 1.35rem; color: var(--red); flex: 1; }
+  .em-close {
+    background: transparent; border: 1px solid var(--border); color: var(--muted);
+    padding: 0.3rem 0.7rem;
+  }
+  .em-close:hover { background: var(--panel2); color: var(--text); }
+  .em-lede { color: var(--muted); font-size: 0.92rem; margin-top: 0.4rem; }
+
+  .em-rules {
+    margin-top: 1.1rem; border: 1px solid var(--red); border-radius: 9px;
+    background: rgba(248,81,73,0.09); padding: 0.9rem 1rem;
+  }
+  .em-rules h3 { font-size: 0.95rem; color: var(--red); margin-bottom: 0.5rem; }
+  .em-rules p { font-size: 0.88rem; margin-bottom: 0.5rem; }
+  .em-rules p:last-child { margin-bottom: 0; }
+  .em-rules b { color: var(--text); }
+
+  .em-progress { margin: 1.2rem 0 0.4rem; }
+  .em-phase {
+    margin-top: 1.5rem; padding-top: 0.9rem; border-top: 1px solid var(--border);
+  }
+  .em-phase-title { font-size: 1.02rem; font-weight: 700; color: var(--orange); }
+  .em-phase-sub { font-size: 0.85rem; color: var(--muted); margin-top: 0.2rem; }
+  .em-item {
+    display: flex; gap: 0.8rem; background: var(--panel);
+    border: 1px solid var(--border); border-radius: 9px;
+    padding: 0.8rem 0.9rem; margin-top: 0.7rem;
+  }
+  .em-item.done { opacity: 0.62; }
+  .em-item.done .em-item-title { color: var(--green-tx); text-decoration: line-through; }
+  .em-item input[type=checkbox] { width: 20px; height: 20px; cursor: pointer; accent-color: var(--green-tx); margin-top: 0.15rem; }
+  .em-item-title { font-weight: 600; font-size: 0.98rem; }
+  .em-item-num { color: var(--dim); margin-right: 0.4rem; }
+  .em-item-why { color: var(--yellow); font-size: 0.84rem; margin-top: 0.25rem; }
+  .em-item-detail { color: var(--muted); font-size: 0.88rem; margin-top: 0.4rem; }
+  .em-item-detail a { word-break: break-word; }
+
+  .em-donot {
+    margin-top: 1.6rem; border: 1px solid var(--orange); border-radius: 9px;
+    background: rgba(240,136,62,0.08); padding: 0.9rem 1rem;
+  }
+  .em-donot h3 { font-size: 0.95rem; color: var(--orange); margin-bottom: 0.5rem; }
+  .em-donot ul { margin-left: 1.1rem; font-size: 0.88rem; color: var(--text); }
+  .em-donot li { margin-bottom: 0.3rem; }
+
+  .em-foot { margin-top: 1.4rem; font-size: 0.84rem; color: var(--dim); }
+
+  @media print {
+    body > *:not(.em-overlay) { display: none !important; }
+    .em-overlay { display: block !important; position: static; background: #fff; padding: 0; }
+    .em-modal { max-width: none; border: none; background: #fff; }
+    .em-overlay, .em-modal, .em-item, .em-item-title, .em-item-detail,
+    .em-rules, .em-rules p, .em-donot, .em-donot ul { color: #000; background: #fff; }
+    .em-close, .em-print, .em-progress { display: none !important; }
+    .em-item { border: 1px solid #999; page-break-inside: avoid; }
+  }
+
   footer { text-align: center; color: var(--dim); font-size: 0.8rem; margin-top: 3rem; }
   footer a { color: var(--muted); }
   @media (max-width: 620px) { .grid { grid-template-columns: 1fr; } }
@@ -166,6 +246,9 @@
     🔒 100% local.
     <span>No account, no server. Your details never leave this browser (saved only in this device's localStorage).</span>
   </div>
+  <div class="header-actions">
+    <button class="em-trigger" onclick="openEmergency()">🚨 Help, I think I am being hacked</button>
+  </div>
 </header>
 
 <nav>
@@ -174,6 +257,7 @@
   <a href="#legal">Legal letter</a>
   <a href="#tracker">Tracker</a>
   <a class="nav-cross" href="https://erasure-privacy.vercel.app/dashboard">✅ Hygiene checklist</a>
+  <a class="nav-emergency" href="#emergency" onclick="openEmergency()">🚨 Being hacked right now</a>
 </nav>
 
 <main>
@@ -305,6 +389,60 @@
     runs the steps that need your own browser session.
   </footer>
 </main>
+
+<!-- EMERGENCY: device or accounts compromised -->
+<div class="em-overlay" id="emergency" role="dialog" aria-modal="true" aria-labelledby="em-title">
+  <div class="em-modal">
+    <div class="em-top">
+      <h2 id="em-title">🚨 My device or accounts may be compromised</h2>
+      <button class="em-close" id="em-close" onclick="closeEmergency()">Close ✕</button>
+    </div>
+    <p class="em-lede">
+      Work top to bottom. The order matters more than the speed, because each phase protects the one after it.
+      Everything here is free and you can do all of it yourself. Your ticks are saved on this device only.
+    </p>
+
+    <div class="em-rules">
+      <h3>Two rules before you touch anything</h3>
+      <p><b>1. Do all of this from a clean device.</b> A phone or laptop you do not suspect, or one you have just
+      reset. If you type a new password on a machine that is recording your keystrokes, you have handed over the
+      new password too.</p>
+      <p><b>2. Never use a phone number, link, or QR code from the message that scared you.</b> Type the address
+      yourself, or call the number printed on the back of your card.</p>
+    </div>
+
+    <div class="em-progress">
+      <div class="progress-bar"><div class="progress-fill" id="em-progress-fill"></div></div>
+      <div class="progress-label" id="em-progress-label">0 of 18 done</div>
+    </div>
+
+    <div id="em-steps"></div>
+
+    <div class="em-donot">
+      <h3>Do not do these, they make it worse</h3>
+      <ul>
+        <li>Do not type new passwords on the device you suspect.</li>
+        <li>Do not call numbers or open links from the warning message, popup, or email.</li>
+        <li>Do not wipe the device before the accounts are secured. A wipe destroys the proof and saves nothing.</li>
+        <li>Do not restore a full system backup taken after the trouble started. You will reinstall the problem.</li>
+        <li>Do not pay anyone who promises to trace or recover stolen funds.</li>
+        <li>Do not keep the compromised email as the recovery address for anything.</li>
+      </ul>
+    </div>
+
+    <div class="btn-row">
+      <button class="em-print secondary" onclick="window.print()">Print this list</button>
+      <button class="secondary" onclick="closeEmergency()">Back to the playbook</button>
+    </div>
+
+    <p class="em-foot">
+      General guidance for individuals, not legal advice. If an employer, a client's data, or a large sum is
+      involved, get a professional incident responder on it today and keep the affected device switched on but
+      offline. Once you are stable, the <a href="#playbook" onclick="closeEmergency()">privacy playbook</a>
+      reduces how much of you is findable next time.
+    </p>
+  </div>
+</div>
 
 <script>
 "use strict";
@@ -467,7 +605,8 @@ function load() {
   try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; }
 }
 function save(state) { localStorage.setItem(KEY, JSON.stringify(state)); }
-let S = Object.assign({ profile:{}, checks:{}, tracker:[], lettersGenerated:0 }, load());
+let S = Object.assign({ profile:{}, checks:{}, tracker:[], lettersGenerated:0, emergency:{} }, load());
+if (!S.emergency || typeof S.emergency !== "object") S.emergency = {};
 
 /* ---------- profile ---------- */
 function readProfile() {
@@ -545,6 +684,141 @@ function updateProgress() {
   document.getElementById("progress-fill").style.width = (done/STEPS.length*100) + "%";
   document.getElementById("progress-label").textContent = `${done} of ${STEPS.length} complete`;
 }
+
+/* ---------- emergency: device or accounts compromised ---------- */
+
+const EMERGENCY = [
+  { phase:"First 15 minutes: stop the bleeding",
+    sub:"Cut off the two things that give access to everything else, the device itself and your email.",
+    items:[
+      { n:1, title:"Get to a clean device",
+        why:"Anything you type on a compromised machine can be read by whoever is on it.",
+        detail:"Borrow a phone or laptop, or use one that has never been near the problem. If you have no clean device at all, keep going anyway, then change every password a second time after the rebuild in step 13." },
+      { n:2, title:"Take the suspect device off the network",
+        why:"This ends live remote control and stops files being copied out, without destroying proof.",
+        detail:"Turn wifi off, unplug the cable, put the phone in airplane mode. Leave it powered on. Do not wipe it yet." },
+      { n:3, title:"Lost phone signal for no reason? Call your carrier now",
+        why:"A SIM swap sends every text code to the attacker, which breaks most recovery paths at once.",
+        detail:"From another phone, ask them to lock the number, set a port out PIN, and check for a recent SIM or eSIM change. Then move anything still using text message codes onto an app or a hardware key." },
+      { n:4, title:"Take your email back first",
+        why:"Email is the master key. Every password reset lands there, so nothing else is safe until it is.",
+        detail:"From the clean device: change the password, sign out of every session and device, then read the settings. Attackers leave a forwarding rule or a filter that auto deletes bank alerts, so a password change on its own still leaves them inside. Check forwarding, filters, recovery email, recovery phone, and app passwords. Google: <a href='https://myaccount.google.com/security-checkup' target='_blank' rel='noopener'>Security Checkup</a>. Apple: <a href='https://appleid.apple.com/' target='_blank' rel='noopener'>appleid.apple.com</a>. Microsoft: <a href='https://account.microsoft.com/security' target='_blank' rel='noopener'>account.microsoft.com/security</a>." },
+      { n:5, title:"Re enroll two factor on that email and regenerate the backup codes",
+        why:"Old backup codes and old enrolments may already be copied.",
+        detail:"Use an authenticator app or a hardware key. Text message codes are the weakest option and are exactly what a SIM swap steals. Store the new backup codes offline, on paper is fine." },
+    ]},
+  { phase:"First hour: the money",
+    sub:"Money moves faster than logins. Do the branch that matches your situation, not both.",
+    items:[
+      { n:6, title:"Crypto, case A: your keys touched that device",
+        why:"A stolen seed phrase lets the attacker sign anything. Revoking approvals does nothing here.",
+        detail:"If a seed phrase or private key was ever typed, pasted, photographed, screenshotted, or stored on that machine, treat it as public. Generate a new wallet on a clean device or a hardware wallet and move funds there, highest value first. Never type the old seed into the suspect machine again for any reason. If a drainer is already watching the address it can sweep new gas the moment it lands, so move what matters most first and expect to lose the rest." },
+      { n:7, title:"Crypto, case B: you only signed an approval",
+        why:"Here the keys are still yours, so revoking is the fix and moving funds is not.",
+        detail:"If you only clicked connect or approve on a bad site and your keys never touched a compromised machine, revoke the token approvals from the clean device, using your wallet's own approvals screen or <a href='https://revoke.cash' target='_blank' rel='noopener'>revoke.cash</a>, typing the address by hand. Hardware wallet owners: your keys are usually still safe, and the common trap is a swapped receiving address, so confirm the full address on the hardware screen every time. If you cannot tell which case you are in, act on case A." },
+      { n:8, title:"Freeze the cards and lock the transfers",
+        why:"Card fraud is reversible for a short window. Wires usually are not.",
+        detail:"Call the number printed on your card, or on the bank site you typed yourself. Freeze the cards, ask for a fraud hold, and ask them to require a phone callback before any wire, ACH change, or new payee. While you have them, check pending transfers and any payee added in the last month." },
+      { n:9, title:"Reset the password manager",
+        why:"If the vault was unlocked on that machine, every password in it is a password they have.",
+        detail:"Change the master password from the clean device and sign out of all sessions. Then rotate the stored passwords in value order: email, bank, phone carrier, cloud storage, then everything else." },
+    ]},
+  { phase:"First day: close the doors",
+    sub:"Stop new damage in your name, and remove the ways back in.",
+    items:[
+      { n:10, title:"Freeze your credit at all three bureaus",
+        why:"This is the strongest free block on new accounts opened in your name.",
+        detail:"Free by law, lasts until you lift it, roughly ten minutes each: <a href='https://www.equifax.com/personal/credit-report-services/credit-freeze/' target='_blank' rel='noopener'>Equifax</a>, <a href='https://www.experian.com/help/credit-freeze/' target='_blank' rel='noopener'>Experian</a>, <a href='https://www.transunion.com/credit-freeze' target='_blank' rel='noopener'>TransUnion</a>, plus optional <a href='https://www.innovis.com/personal/securityFreeze' target='_blank' rel='noopener'>Innovis</a>. A freeze is stronger than a fraud alert; the FTC explains the difference at <a href='https://consumer.ftc.gov/articles/credit-freezes-and-fraud-alerts' target='_blank' rel='noopener'>consumer.ftc.gov</a>." },
+      { n:11, title:"Kick out sessions and connected apps everywhere",
+        why:"A password change does not always end an existing session or cut off a linked app.",
+        detail:"On every account that matters, Google, Apple, Microsoft, social, code hosting, cloud storage, check three separate lists: signed in devices, apps with account access, and app passwords or API tokens. Remove anything you do not recognize." },
+      { n:12, title:"Find how they stay in, before you wipe",
+        why:"Most reinfections come from a door left open, not from the original file.",
+        detail:"Check for admin accounts you did not create, remote desktop or screen sharing switched on, a device management profile you did not install, browser extensions you did not add, and SSH keys you do not know. Then the home router: a changed DNS server, a new admin password, and pending firmware updates." },
+      { n:13, title:"Rebuild the device properly",
+        why:"Deleting the malware you can see is not the same as removing the one you cannot.",
+        detail:"Full erase, then reinstall the operating system from installation media made on a clean machine. Copy back documents and photos only, never a whole system backup taken after the trouble started. Then change any password you had to type on the dirty device." },
+      { n:14, title:"Tell the people who share the risk",
+        why:"Silence is the attacker's best asset, and fast reporting is what makes losses recoverable.",
+        detail:"Your IT or security team at work, your accountant or business partner if company money is involved, and family who share accounts with you. Nobody is judging you." },
+    ]},
+  { phase:"First week: paperwork and the second wave",
+    sub:"Make it official, then defend against the people who prey on victims.",
+    items:[
+      { n:15, title:"Report it and keep the case numbers",
+        why:"Banks, insurers, and credit bureaus ask for a report number before they act.",
+        detail:"In the US: <a href='https://www.identitytheft.gov/' target='_blank' rel='noopener'>IdentityTheft.gov</a> builds an official recovery plan and affidavit, <a href='https://www.ic3.gov/' target='_blank' rel='noopener'>IC3.gov</a> is the FBI channel and the one that matters for stolen crypto, and a local police report is often required by banks. Elsewhere, use your national cybercrime unit and your bank's fraud team." },
+      { n:16, title:"Warn your contacts",
+        why:"Your accounts will be used to attack the people who trust you.",
+        detail:"One short message on a channel they know is really yours: which account was hit, and that any request for money or codes coming from you today is fake." },
+      { n:17, title:"Expect recovery scammers",
+        why:"Victim lists get resold, and the second hit targets people who are already desperate.",
+        detail:"Within days someone may offer to trace or recover your funds for a fee. Treat every one of them as a second theft. No legitimate service asks for money up front to recover stolen crypto." },
+      { n:18, title:"Turn on the monitoring you will actually keep",
+        why:"The follow up attack often lands weeks later, once everyone has stopped watching.",
+        detail:"Transaction alerts on every card and account, breach notifications at <a href='https://haveibeenpwned.com/' target='_blank' rel='noopener'>haveibeenpwned.com</a>, a free report check at <a href='https://www.annualcreditreport.com/' target='_blank' rel='noopener'>annualcreditreport.com</a>, and a reminder in 90 days to read this list again." },
+    ]},
+];
+const EM_TOTAL = EMERGENCY.reduce((t, p) => t + p.items.length, 0);
+let emLastFocus = null;
+
+function renderEmergency() {
+  const root = document.getElementById("em-steps");
+  root.innerHTML = "";
+  EMERGENCY.forEach(p => {
+    const wrap = document.createElement("div");
+    wrap.className = "em-phase";
+    wrap.innerHTML =
+      `<div class="em-phase-title">${escapeHtml(p.phase)}</div>` +
+      `<div class="em-phase-sub">${escapeHtml(p.sub)}</div>` +
+      p.items.map(it => {
+        const done = !!S.emergency[it.n];
+        return `<div class="em-item${done ? " done" : ""}" id="em-item-${it.n}">
+          <input type="checkbox" ${done ? "checked" : ""} aria-label="Mark step ${it.n} done"
+                 onchange="toggleEmergency(${it.n}, this.checked)">
+          <div>
+            <div class="em-item-title"><span class="em-item-num">${it.n}.</span>${escapeHtml(it.title)}</div>
+            <div class="em-item-why">Why: ${escapeHtml(it.why)}</div>
+            <div class="em-item-detail">${it.detail}</div>
+          </div>
+        </div>`;
+      }).join("");
+    root.appendChild(wrap);
+  });
+  updateEmergencyProgress();
+}
+function toggleEmergency(n, checked) {
+  S.emergency[n] = checked; save(S);
+  const el = document.getElementById("em-item-" + n);
+  if (el) el.classList.toggle("done", checked);
+  updateEmergencyProgress();
+}
+function updateEmergencyProgress() {
+  const done = Object.keys(S.emergency).filter(k => S.emergency[k]).length;
+  document.getElementById("em-progress-fill").style.width = (done / EM_TOTAL * 100) + "%";
+  document.getElementById("em-progress-label").textContent = `${done} of ${EM_TOTAL} done`;
+}
+function openEmergency() {
+  const ov = document.getElementById("emergency");
+  if (ov.classList.contains("open")) return;
+  emLastFocus = document.activeElement;
+  ov.classList.add("open");
+  document.body.style.overflow = "hidden";
+  ov.scrollTop = 0;
+  document.getElementById("em-close").focus();
+}
+function closeEmergency() {
+  const ov = document.getElementById("emergency");
+  if (!ov.classList.contains("open")) return;
+  ov.classList.remove("open");
+  document.body.style.overflow = "";
+  if (location.hash === "#emergency") history.replaceState(null, "", location.pathname + location.search);
+  if (emLastFocus && emLastFocus.focus) emLastFocus.focus();
+}
+window.addEventListener("hashchange", () => {
+  if (location.hash === "#emergency") openEmergency(); else closeEmergency();
+});
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeEmergency(); });
 
 /* ---------- legal ---------- */
 function fmtDate(d) {
@@ -660,10 +934,10 @@ function download(name, text){
   URL.revokeObjectURL(a.href);
 }
 function clearAll(){
-  if (!confirm("Delete everything stored on this device (profile, checklist, tracker)?")) return;
+  if (!confirm("Delete everything stored on this device (profile, checklist, tracker, emergency checklist)?")) return;
   localStorage.removeItem(KEY);
-  S = { profile:{}, checks:{}, tracker:[], lettersGenerated:0 };
-  fillProfile(); renderSteps(); renderTracker(); renderLetter();
+  S = { profile:{}, checks:{}, tracker:[], lettersGenerated:0, emergency:{} };
+  fillProfile(); renderSteps(); renderTracker(); renderLetter(); renderEmergency();
 }
 
 /* ---------- init ---------- */
@@ -671,6 +945,8 @@ fillProfile();
 renderSteps();
 renderTracker();
 renderLetter();
+renderEmergency();
+if (location.hash === "#emergency") openEmergency();
 </script>
 </body>
 </html>
