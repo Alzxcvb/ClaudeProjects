@@ -222,14 +222,19 @@
 
   .em-foot { margin-top: 1.4rem; font-size: 0.84rem; color: var(--dim); }
 
+  /* Print rules apply ONLY while the panel is open, so printing a letter or
+     the tracker with the panel closed still prints the page normally. */
   @media print {
-    body > *:not(.em-overlay) { display: none !important; }
-    .em-overlay { display: block !important; position: static; background: #fff; padding: 0; }
-    .em-modal { max-width: none; border: none; background: #fff; }
-    .em-overlay, .em-modal, .em-item, .em-item-title, .em-item-detail,
-    .em-rules, .em-rules p, .em-donot, .em-donot ul { color: #000; background: #fff; }
-    .em-close, .em-print, .em-progress { display: none !important; }
-    .em-item { border: 1px solid #999; page-break-inside: avoid; }
+    body.em-open > *:not(.em-overlay) { display: none !important; }
+    body.em-open .em-overlay { display: block !important; position: static; background: #fff; padding: 0; }
+    body.em-open .em-modal { max-width: none; border: none; background: #fff; }
+    body.em-open .em-overlay, body.em-open .em-modal, body.em-open .em-item,
+    body.em-open .em-item-title, body.em-open .em-item-detail, body.em-open .em-rules,
+    body.em-open .em-rules p, body.em-open .em-donot,
+    body.em-open .em-donot ul { color: #000; background: #fff; }
+    body.em-open .em-close, body.em-open .em-print,
+    body.em-open .em-progress { display: none !important; }
+    body.em-open .em-item { border: 1px solid #999; page-break-inside: avoid; }
   }
 
   footer { text-align: center; color: var(--dim); font-size: 0.8rem; margin-top: 3rem; }
@@ -803,6 +808,7 @@ function openEmergency() {
   if (ov.classList.contains("open")) return;
   emLastFocus = document.activeElement;
   ov.classList.add("open");
+  document.body.classList.add("em-open");
   document.body.style.overflow = "hidden";
   ov.scrollTop = 0;
   document.getElementById("em-close").focus();
@@ -811,6 +817,7 @@ function closeEmergency() {
   const ov = document.getElementById("emergency");
   if (!ov.classList.contains("open")) return;
   ov.classList.remove("open");
+  document.body.classList.remove("em-open");
   document.body.style.overflow = "";
   if (location.hash === "#emergency") history.replaceState(null, "", location.pathname + location.search);
   if (emLastFocus && emLastFocus.focus) emLastFocus.focus();
