@@ -64,14 +64,20 @@ Run `./li setup` to get this same list with your current state filled in.
    callback page live, because LinkedIn requires an HTTPS redirect URL.
    On the Auth tab add exactly:
    ```
+   https://www.hiimalex.ai/li/callback
+   ```
+   Register the apex form as a second entry too, so either host works:
+   ```
    https://hiimalex.ai/li/callback
    ```
-   It must match exactly and cannot contain a `#`. The page already exists in
-   the `hi-im-alex` repo at `li/callback/index.html` but **is not deployed
-   yet**. Then put the Client ID and Secret in `.li-app.json` here:
+   It must match exactly and cannot contain a `#`. The www form is the default
+   because the apex answers with a 307 to www, and while a browser follows that,
+   LinkedIn matches the registered string exactly.
+
+   **Both pages are already deployed and verified live** (HTTP 200). Then put the Client ID and Secret in `.li-app.json` here:
    ```json
    {"client_id": "...", "client_secret": "...",
-    "redirect_uri": "https://hiimalex.ai/li/callback"}
+    "redirect_uri": "https://www.hiimalex.ai/li/callback"}
    ```
    That file is gitignored. Do not paste the secret into a chat window.
    Then run `./li auth`.

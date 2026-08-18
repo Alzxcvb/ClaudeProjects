@@ -35,7 +35,12 @@ USERINFO_URL = "https://api.linkedin.com/v2/userinfo"
 
 # The redirect target. Static page on Alex's own domain, so it satisfies the
 # HTTPS requirement using infrastructure that already exists.
-DEFAULT_REDIRECT_URI = "https://hiimalex.ai/li/callback"
+#
+# Deliberately the www host. The apex redirects to www with a 307, and while a
+# browser follows that happily, LinkedIn matches the registered redirect URL
+# exactly and the token exchange has to send back a byte identical string.
+# Pointing at the canonical host removes the redirect from the path entirely.
+DEFAULT_REDIRECT_URI = "https://www.hiimalex.ai/li/callback"
 
 # w_member_social  -> publish to the member's own feed   (Share on LinkedIn)
 # openid, profile  -> identify the member, giving the id needed to build
