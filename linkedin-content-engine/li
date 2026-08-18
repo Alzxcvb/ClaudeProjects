@@ -1,0 +1,5 @@
+#!/bin/sh
+# LinkedIn publisher. Uses the project venv without needing activation,
+# from any working directory.
+DIR="$(cd "$(dirname "$0")" && pwd)"
+PYTHONPATH="$DIR${PYTHONPATH:+:$PYTHONPATH}" exec "$DIR/.venv/bin/python" -m liapi.cli "$@"
