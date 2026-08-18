@@ -3,3 +3,9 @@ __pycache__/
 *.pyc
 .env
 content.db
+.li-token.json
+.li-app.json
+liapi/__pycache__/
+vaultsync/vault-clean/
+content.db.bak-*
+liapi/endpoint-probe-report.json

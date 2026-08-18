@@ -47,6 +47,7 @@ CREATE TABLE IF NOT EXISTS runs (
     slot_bucket         TEXT,                     -- config slot name; NULL when time unknown
     followers_at_post   INTEGER,                  -- NULL = not recorded; kills normalised reach
     post_url            TEXT,
+    post_urn            TEXT,                     -- urn:li:share:... captured at publish; NULL = published by hand
     comment_authors     TEXT NOT NULL DEFAULT '[]',
     legacy_post_id      TEXT UNIQUE,
     created_at          TEXT NOT NULL,
@@ -74,3 +75,6 @@ CREATE INDEX IF NOT EXISTS idx_variants_parent ON variants(derived_from_variant_
 CREATE INDEX IF NOT EXISTS idx_runs_variant    ON runs(variant_id);
 CREATE INDEX IF NOT EXISTS idx_runs_platform   ON runs(platform, posted_at);
 CREATE INDEX IF NOT EXISTS idx_metrics_run     ON metrics(run_id, captured_at);
+-- One live post maps to exactly one run. This is the database-level guard
+-- against the duplicate-repost failure that has happened three times.
+CREATE UNIQUE INDEX IF NOT EXISTS idx_runs_post_urn ON runs(post_urn) WHERE post_urn IS NOT NULL;

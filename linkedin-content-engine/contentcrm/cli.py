@@ -147,10 +147,12 @@ def cmd_ran(conn, cfg, args):
 
     cur = conn.execute(
         "INSERT INTO runs (variant_id, platform, posted_at, posted_at_precision,"
-        " dow_bucket, slot_bucket, followers_at_post, post_url, created_at, notes)"
-        " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        " dow_bucket, slot_bucket, followers_at_post, post_url, post_urn,"
+        " created_at, notes)"
+        " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
         (variant["id"], platform, posted_at, precision, dow, slot,
-         args.followers, args.url, now_iso(), args.note or ""),
+         args.followers, args.url, getattr(args, "urn", None) or None,
+         now_iso(), args.note or ""),
     )
     conn.commit()
     run_id = cur.lastrowid
@@ -165,6 +167,10 @@ def cmd_ran(conn, cfg, args):
         print("  warning: no posting time, so slot comparisons with this run will be inconclusive")
     if variant["body"] is None:
         print("  warning: this variant has no body on record")
+    if getattr(args, "urn", None):
+        print(f"  urn {args.urn} recorded, so post analytics can read this run")
+    else:
+        print("  note: no --urn, so the analytics API cannot ever read this run")
     if prev is not None:
         since = int(elapsed_hours(prev["posted_at"]) / 24)
         print(f"  retest: V{variant['id']} last ran R{prev['id']} on"
@@ -571,6 +577,7 @@ def build_parser():
     p.add_argument("--at", help="'YYYY-MM-DD HH:MM' (default: now)")
     p.add_argument("--followers", type=int, help="your follower count right now")
     p.add_argument("--url", help="link to the live post")
+    p.add_argument("--urn", help="urn:li:share:... if you have it; required for API analytics")
     p.add_argument("--note")
     p.set_defaults(func=cmd_ran)
 
