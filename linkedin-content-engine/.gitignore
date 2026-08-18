@@ -9,3 +9,4 @@ liapi/__pycache__/
 vaultsync/vault-clean/
 content.db.bak-*
 liapi/endpoint-probe-report.json
+vaultsync/_duplicates/

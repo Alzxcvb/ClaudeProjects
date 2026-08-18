@@ -3,14 +3,23 @@
 Two tracks. Posting is buildable today and needs no LinkedIn review. Analytics
 is gated behind an application that cannot be submitted yet.
 
-**Read this first: version one publishes text only, and that matters more than
-it sounds.** 14 of the 27 variants with a body are tagged `image`, so slightly
-over half the queue cannot go out through this tool until the Images API work
-is done. Attaching a visual needs a separate upload step to get a
-`urn:li:image`, which is not built. The publisher refuses image tagged
-variants rather than silently dropping the picture. Two more variants, V12 and
-V13, are 14,077 and 21,980 characters against LinkedIn's 3,000 limit, so they
-are refused too. "The publisher works" does not mean "the queue can go out".
+**The queue, as of 19 August 2026.** The swipe file has been imported, so the
+library is 164 variants across 156 active ideas. Running every gate over all of
+them:
+
+| | count |
+|---|---|
+| ready to post right now | **131** |
+| blocked, inside the 90 day cooldown | 17 |
+| blocked, tagged for an image | 6 |
+| blocked, over the 3,000 character limit | 7 |
+| blocked, no body recorded | 3 |
+
+Version one publishes **text only**. Attaching a visual needs a separate upload
+step to obtain a `urn:li:image`, which is not built, so the publisher refuses an
+image tagged variant rather than silently dropping the picture. Seven variants
+are simply too long, the largest being 22,642 characters after escaping against
+a 3,000 limit. Those need editing, not code.
 
 Everything below was checked against LinkedIn's own documentation on
 2026-08-18. Where the docs are silent, it says so instead of guessing.
