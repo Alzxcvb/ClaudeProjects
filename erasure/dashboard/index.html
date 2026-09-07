@@ -283,6 +283,62 @@
 
         .resource-link:hover { border-color: #58a6ff; }
 
+        .toolkit-group { margin-bottom: 1.2rem; }
+        .toolkit-group:last-child { margin-bottom: 0; }
+
+        .toolkit-group h3 {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: #8b949e;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .toolkit-note {
+            font-size: 0.75rem;
+            color: #8b949e;
+            line-height: 1.5;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-card {
+            display: block;
+            padding: 0.65rem 0.8rem;
+            margin-bottom: 0.45rem;
+            background: #0d1117;
+            border: 1px solid #21262d;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: border-color 0.2s;
+        }
+
+        .tool-card:last-child { margin-bottom: 0; }
+        .tool-card:hover { border-color: #58a6ff; }
+
+        .tool-card strong {
+            display: block;
+            color: #58a6ff;
+            font-size: 0.84rem;
+            font-weight: 600;
+        }
+
+        .tool-card small {
+            display: block;
+            color: #8b949e;
+            font-size: 0.75rem;
+            line-height: 1.5;
+            margin-top: 0.25rem;
+        }
+
+        .tool-card .tool-flag {
+            display: block;
+            color: #e3b341;
+            font-size: 0.74rem;
+            line-height: 1.5;
+            margin-top: 0.35rem;
+        }
+
         footer {
             text-align: center;
             color: #484f58;
@@ -809,24 +865,101 @@
     </div>
 </div>
 
-<div class="resources">
-    <h2>Recommended Tools &amp; Resources</h2>
-    <div class="resource-grid">
-        <a class="resource-link" href="https://bitwarden.com" target="_blank" rel="noopener">🔑 Bitwarden (free)</a>
-        <a class="resource-link" href="https://haveibeenpwned.com" target="_blank" rel="noopener">🔍 Have I Been Pwned</a>
-        <a class="resource-link" href="https://mullvad.net" target="_blank" rel="noopener">🌐 Mullvad VPN</a>
-        <a class="resource-link" href="https://ublockorigin.com" target="_blank" rel="noopener">🛡 uBlock Origin</a>
-        <a class="resource-link" href="https://www.privacyguides.org/en/tools/" target="_blank" rel="noopener">📖 Privacy Guides (vetted tool directory)</a>
-        <a class="resource-link" href="https://2fa.directory" target="_blank" rel="noopener">📱 2FA Directory</a>
-        <a class="resource-link" href="https://proton.me" target="_blank" rel="noopener">📧 Proton Mail (free, E2E encrypted)</a>
-        <a class="resource-link" href="https://myactivity.google.com/product/gemini" target="_blank" rel="noopener">🤖 Delete Gemini History</a>
-        <a class="resource-link" href="https://support.google.com/websearch/troubleshooter/9685456" target="_blank" rel="noopener">🔎 Google Personal Info Removal</a>
-        <a class="resource-link" href="https://search.google.com/search-console/remove-outdated-content" target="_blank" rel="noopener">🗑 Google Outdated Content Tool</a>
-        <a class="resource-link" href="https://google.com/alerts" target="_blank" rel="noopener">🔔 Google Alerts (name monitoring)</a>
+<div class="resources" id="toolkit">
+    <h2>Privacy Toolkit: Tools, Services and Hardware</h2>
+    <p class="toolkit-note">Nobody here pays to be listed. Work down the list. Everything above the phone section is free or close to it and protects the most people for the least money. The phone and the SIM cost real money and only make sense once the free things are done. The last group is for cleaning up what is already out there about you.</p>
+
+    <div class="toolkit-group">
+        <h3>🔑 Passwords and login keys</h3>
+        <a class="tool-card" href="https://bitwarden.com" target="_blank" rel="noopener">
+            <strong>Bitwarden (free)</strong>
+            <small>Open source password manager. Syncs between your phone and your computer, so every site can have its own long password and you only remember one.</small>
+        </a>
+        <a class="tool-card" href="https://www.yubico.com/products/" target="_blank" rel="noopener">
+            <strong>YubiKey and Yubico Security Key</strong>
+            <small>A small key you plug in or tap to log in. It checks the web address for you, so a fake login page cannot trick you into handing over a code. The plain Security Key is the cheap one and covers most people. The YubiKey 5 series adds login codes, smart card and OpenPGP. Buy two and register both, because one key with no backup is a lockout waiting to happen.</small>
+            <span class="tool-flag">Worth knowing: the firmware cannot be updated. If a flaw turns up in your version, the fix is a new key.</span>
+        </a>
+        <a class="tool-card" href="https://ente.com/auth" target="_blank" rel="noopener">
+            <strong>Ente Auth (free code app)</strong>
+            <small>Free and open source app for the six digit login codes, with encrypted backup so a lost phone does not lock you out of everything. Aegis is the offline Android option if you would rather keep the backup entirely in your own hands.</small>
+        </a>
+        <a class="tool-card" href="https://2fa.directory" target="_blank" rel="noopener">
+            <strong>2FA Directory</strong>
+            <small>A public directory, kept by the non profit 2factorauth, of which websites offer stronger login than a password alone. Worth checking before you buy a key, so you know which of your accounts can use one. The data is crowdsourced and some of it goes out of date, so confirm on the site itself.</small>
+        </a>
+    </div>
+
+    <div class="toolkit-group">
+        <h3>📧 Email</h3>
+        <a class="tool-card" href="https://proton.me" target="_blank" rel="noopener">
+            <strong>Proton Mail (free tier)</strong>
+            <small>Swiss end to end encrypted mail that does not read your messages to sell ads. Move medical, legal and money mail here and leave newsletters on the old address. The free plan gives you 1 GB and one address. Proton also makes a VPN and a password manager that use the same login.</small>
+        </a>
+    </div>
+
+    <div class="toolkit-group">
+        <h3>🌐 VPN</h3>
+        <p class="toolkit-note">A VPN moves your traffic from your internet company to the VPN company. That is worth doing on hotel and cafe WiFi, and it keeps your home address away from the sites you visit. It does not make your browsing anonymous, and a no logs claim is a promise, not proof. All three below take cash and crypto and publish outside audits.</p>
+        <a class="tool-card" href="https://protonvpn.com" target="_blank" rel="noopener">
+            <strong>Proton VPN</strong>
+            <small>Recommended by Privacy Guides. The free plan is a real plan rather than a trial, with no data cap and no time limit, though it reaches 10 countries against 127 on the paid one. Takes cash and Bitcoin. Infrastructure audited every year by Securitum since 2022, and the apps and browser add ons audited separately in 2024 and 2025.</small>
+        </a>
+        <a class="tool-card" href="https://www.ivpn.net" target="_blank" rel="noopener">
+            <strong>IVPN</strong>
+            <small>Takes Monero, Bitcoin and cash. Independently audited since 2019, with a public commitment to keep doing it yearly.</small>
+        </a>
+        <a class="tool-card" href="https://mullvad.net" target="_blank" rel="noopener">
+            <strong>Mullvad VPN</strong>
+            <small>Takes Monero, Bitcoin, Bitcoin Cash and cash. Several independent audits and a public commitment to yearly ones.</small>
+        </a>
+    </div>
+
+    <div class="toolkit-group">
+        <h3>🛡 Browsing</h3>
+        <a class="tool-card" href="https://ublockorigin.com" target="_blank" rel="noopener">
+            <strong>uBlock Origin</strong>
+            <small>Free and open source browser add on that blocks ads, trackers and a good share of malicious scripts.</small>
+        </a>
+    </div>
+
+    <div class="toolkit-group">
+        <h3>📱 Phone software and hardware</h3>
+        <a class="tool-card" href="https://grapheneos.org" target="_blank" rel="noopener">
+            <strong>GrapheneOS (needs a Google Pixel)</strong>
+            <small>A hardened version of Android that ships without Google services and boxes them in if you choose to add them back. It runs on Pixel phones only, from the Pixel 6 up. Pixel 8 and newer add memory tagging, a hardware protection against a whole class of attack. Buy as new a Pixel as your budget allows, because GrapheneOS treats the older ones as a stopgap while you move to a current model. Privacy Guides recommends no other Android build, because the rest are weaker on security or lose their maintainer.</small>
+        </a>
+        <a class="tool-card" href="https://www.fairphone.com/the-fairphone-gen-6-e-operating-system" target="_blank" rel="noopener">
+            <strong>Fairphone (Gen. 6) with /e/OS, 649 euro</strong>
+            <small>The repairable pick, and the reason it belongs here is that a phone you keep for years is a phone you are not handing to a recycler with your data still on it. Twelve parts you can swap yourself with the screwdriver in the box, and Fairphone says the battery takes nothing more than that and a few minutes. Five year warranty. It comes with /e/OS from Murena in place of Google's Android.</small>
+            <span class="tool-flag">Worth knowing: GrapheneOS does not run on a Fairphone, so the security sits a step below a Pixel. /e/OS also leaves out Google Play Services, so some banking and government apps will not run, and Fairphone publishes compatibility lists worth reading before you spend the money. Fairphone promises eight years of updates on the Android version but only says multiple years for this /e/OS one. It does not ship to the USA directly.</span>
+        </a>
+    </div>
+
+    <div class="toolkit-group">
+        <h3>📶 SIM and second phone number</h3>
+        <a class="tool-card" href="https://silent.link" target="_blank" rel="noopener">
+            <strong>Silent Link (eSIM, no signup)</strong>
+            <small>A data eSIM you pay for with Bitcoin, Lightning, Monero or USDT. No account, no email address, no identity check. It works in 160 plus countries and data starts around $1.50 a GB. The paid number plan adds a US +1 or UK +44 number that receives text messages, leased a year at a time, which makes a second line for signups you would rather not tie to your main number.</small>
+            <span class="tool-flag">Read this part before you buy. Save the order page link the moment you pay, because there is no account and no email address, so that link is your only route back to your balance, your number and support. Texts and calls come in but do not go out, and both are meant for signup codes rather than everyday use. Only the NO NUMBER and IDENTITY plans install once; DATA.PLUS and US.PLUS can be reinstalled from your order page. If you do get stuck, Silent Link says to buy a new eSIM and contact support with both order links to move the balance across. All traffic leaves through gateways in Poland, so it can be slow, and banks and other strict sites sometimes read the address as a proxy. Renew the number every year from your order page or you lose it, which matters if anything still sends codes to it. Users on kycnot.me report that credit never expires; Silent Link does not say either way. Your phone has to be eSIM capable and not locked to a single carrier.</span>
+        </a>
+    </div>
+
+    <div class="toolkit-group">
+        <h3>🔎 Find and clean up what is already out there</h3>
+        <div class="resource-grid">
+            <a class="resource-link" href="https://haveibeenpwned.com" target="_blank" rel="noopener">🔍 Have I Been Pwned</a>
+            <a class="resource-link" href="https://www.privacyguides.org/en/tools/" target="_blank" rel="noopener">📖 Privacy Guides (vetted tool directory)</a>
+            <a class="resource-link" href="https://support.google.com/websearch/troubleshooter/9685456" target="_blank" rel="noopener">🔎 Google Personal Info Removal</a>
+            <a class="resource-link" href="https://search.google.com/search-console/remove-outdated-content" target="_blank" rel="noopener">🗑 Google Outdated Content Tool</a>
+            <a class="resource-link" href="https://google.com/alerts" target="_blank" rel="noopener">🔔 Google Alerts (name monitoring)</a>
+            <a class="resource-link" href="https://myactivity.google.com/product/gemini" target="_blank" rel="noopener">🤖 Delete Gemini History</a>
+        </div>
     </div>
 </div>
 
 <footer>
+    <p>General guidance for individuals, not legal advice. Nothing on this page is a paid placement.</p>
     <p>Built with Claude &mdash; ClaudeProjects &mdash; 2026</p>
 </footer>
 
