@@ -56,7 +56,7 @@ harness verifies the ported logic matches. Open it directly (file://) or host it
 on any static host (GitHub Pages / Vercel).
 
 **Phase B: accounts + local runner handoff.**
-Add the account-discovery results (Sherlock / holehe) and the justdelete.me
+Add the account-discovery results (Sherlock / holehe) and the JustDeleteMe
 deletion directory as a web view, with a one-command local runner
 (`pipx install erasure` or a packaged binary) for the steps that need the user's
 session. The site generates a personalized run file; the local tool consumes it.

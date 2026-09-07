@@ -1,0 +1,4 @@
+{
+  "note": "Local additions and corrections layered on top of the upstream JustDeleteMe dataset by scripts/refresh_deletion_directory.py. Entries here win over upstream, matched by name (case-insensitive). Keep this file small: if an entry belongs in the public directory, send it upstream as a pull request to jdm-contrib/jdm instead of parking it here. Empty is the healthy state.",
+  "services": []
+}

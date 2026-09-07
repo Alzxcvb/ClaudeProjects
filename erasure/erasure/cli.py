@@ -466,31 +466,54 @@ def accounts_deletion_links(manifest_path, include_emails, scrub_only):
     if scrub_only:
         enriched = [e for e in enriched if e.scrub_first]
 
-    diff_color = {"easy": "green", "medium": "yellow", "hard": "red", "impossible": "magenta"}
+    diff_color = {
+        "easy": "green",
+        "medium": "yellow",
+        "hard": "red",
+        "limited": "cyan",
+        "impossible": "magenta",
+    }
     table = Table(title="erasure accounts deletion-links")
-    for col in ("Site", "Difficulty", "Scrub first?", "Delete link / notes"):
+    for col in ("Site", "Difficulty", "Do first", "Delete link / notes"):
         table.add_column(col, overflow="fold")
     matched_n = 0
+    legal_n = 0
     for e in enriched:
         if e.matched:
             matched_n += 1
             d = e.matched.difficulty
+            color = diff_color.get(d, "white")
             link = e.matched.url or "-"
             note = f"\n[dim]{e.matched.notes}[/dim]" if e.matched.notes else ""
+            if e.matched.email:
+                subject = e.matched.email_subject or "Account Deletion Request"
+                note += f"\n[dim]Email {e.matched.email} (subject: {subject})[/dim]"
+            if e.scrub_first:
+                action = "[red]scrub[/red]"
+            elif e.legal_request:
+                legal_n += 1
+                action = "[cyan]legal request[/cyan]"
+            else:
+                action = "no"
+            table.add_row(e.site, f"[{color}]{d}[/{color}]", action, f"{link}{note}")
+        elif not scrub_only:
             table.add_row(
                 e.site,
-                f"[{diff_color.get(d, 'white')}]{d}[/{diff_color.get(d, 'white')}]",
-                "[red]yes[/red]" if e.scrub_first else "no",
-                f"{link}{note}",
+                "[dim]unknown[/dim]",
+                "no",
+                f"[dim]Not in directory. Try: {e.site} delete account / justdeleteme.xyz[/dim]",
             )
-        elif not scrub_only:
-            table.add_row(e.site, "[dim]unknown[/dim]", "no", f"[dim]Not in directory. Try: {e.site} delete account / justdelete.me[/dim]")
 
     console.print(table)
     console.print(
         f"[dim]{matched_n}/{len(enriched)} hits mapped to a known deletion path. "
         "Scrub-first sites: overwrite name/email/profile with junk before deleting (deleted != erased).[/dim]"
     )
+    if legal_n:
+        console.print(
+            f"[dim]{legal_n} site(s) delete only for people covered by a privacy law and will ask you "
+            "to prove it. Generate the letter with `erasure legal request`.[/dim]"
+        )
 
 
 @cli.group()

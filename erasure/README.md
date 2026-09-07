@@ -82,12 +82,17 @@ erasure accounts find USERNAME [--timeout-per-site SECONDS] [--overall-timeout S
 ```
 
 ### `erasure accounts deletion-links`
-Turn account-discovery hits into action. Matches the sites found by `accounts find` / `emails find` against a bundled directory of services (adapted from [justdelete.me](https://justdeleteme.xyz)), attaching each one's deletion difficulty and a direct delete URL. Sites rated `hard` or `impossible` are flagged to scrub first (junk name, alias email, blanked profile) before you delete, since some companies retain "deleted" data.
+Turn account-discovery hits into action. Matches the sites found by `accounts find` / `emails find` against a bundled directory of 2,600+ services from [JustDeleteMe](https://justdeleteme.xyz) (MIT), attaching each one's deletion difficulty, a direct delete URL, and the deletion email template where a service only accepts requests that way. Two flags come out of the difficulty rating:
+
+- `hard` and `impossible` are flagged **scrub first**: overwrite the profile with a junk name, an alias email, and blank fields before you delete, since some companies retain "deleted" data.
+- `limited` is flagged **legal request**: the service deletes only for people covered by a privacy law and will ask for proof. Generate that letter with `erasure legal request`.
 
 **Usage:**
 ```bash
 erasure accounts deletion-links [--manifest PATH] [--no-emails] [--scrub-only]
 ```
+
+The directory ships as a committed snapshot so the command works offline. Refresh it from upstream with `python3 scripts/refresh_deletion_directory.py`; local additions live in `erasure/accounts/deletion_directory_overrides.json` and are layered on top.
 
 ### `erasure breaches check`
 Check whether an email address appears in any known data breach via [HaveIBeenPwned](https://haveibeenpwned.com). Requires a HIBP API key (`$3.95/mo` minimum) — get one at [haveibeenpwned.com/API/Key](https://haveibeenpwned.com/API/Key) and export `HIBP_API_KEY`. Results persist as a `BreachesManifest` JSON in `state/breaches/` and show up in `erasure report --dashboard`.
@@ -173,7 +178,7 @@ erasure/
   legal/        # CCPA / GDPR / generic deletion-letter generator
   tracker.py    # Opt-out tracking ledger + CSV export
   playbook.py   # The stateful 9-step privacy checklist
-  accounts/     # Sherlock username scan + justdelete.me deletion directory
+  accounts/     # Sherlock username scan + JustDeleteMe deletion directory
   emails/       # holehe email-exposure scan
   breaches/     # HaveIBeenPwned breach checks
   report/       # Standalone HTML report + Cyber Hygiene Dashboard injection
