@@ -7,7 +7,7 @@ Runtime: Python 3.11, per the brief. JARVIS pins 3.12 in `jarvis/.python-version
 Inference, revision 3, replacing the paid API model layer entirely. Alex has ruled out all API spend, so there is no Anthropic API key anywhere in this repo and no pay per token call at any tier.
 
 - **Tier 0, no model.** Lane keyword match, remote flag, residency eligibility and all three pay floors run as ordinary code over the structured ATS fields. Most of the 400 daily postings are cut here. Every avoided call is subscription capacity kept.
-- **Tier 1, free tier provider, bulk classification.** Lane fit and first pass automation potential on whatever survives tier 0. Groq at 30 requests a minute and 1,000 a day, or Google Gemini Flash Lite at 15 a minute and 1,000 a day, behind one interface in `llm.py` so a provider can be swapped when a free tier moves. Cerebras at 5 a minute is too slow for this volume. Verify the chosen provider's current documented limits against its own page in Phase 3, where `llm.py` and the tier 1 prompts are actually built, and record the numbers and the retrieval date in the README. Phase 1 is too early: nothing tier 1 exists yet.
+- **Tier 1, free tier provider, bulk classification.** Lane fit and first pass automation potential on whatever survives tier 0. Groq, Google Gemini Flash Lite, or a local Ollama model, behind one interface in `llm.py`. Their free tier limits are UNKNOWN and could not be verified on 2026-09-07: Groq renders its limits table client side so a fetch returns only audio model rows, and Google publishes no fixed numbers, showing per account limits inside AI Studio. Hardcode no rate assumption. After the account exists, read the real limits from the console and record them with the date in the README. `llm.py` paces requests, backs off on 429, degrades to fewer candidates rather than failing, and supports a local Ollama backend on equal footing since it is the only option whose ceiling is known in advance.
 - **Tier 2, Claude Code, low volume and high judgment.** Deep scoring, company notes and the writing, roughly 25 and 8 a day. This does NOT call the Messages API. It runs as a scheduled Claude Code routine that invokes this repo's functions as tools. Subscription credentials are not API credits, and consumer terms restrict OAuth to Claude Code and claude.ai; Claude Code and its routines are explicitly permitted native use.
 
 Standing rule: usage credits are never enabled on Alex's account. That one setting is what keeps the budget at zero if Anthropic reactivates the paused Agent SDK credit, whose documented behaviour without usage credits is a hard stop rather than a rollover into billing.
@@ -77,7 +77,7 @@ job-engine/
       workonclimate.py           reader (Phase 7), only if terms allow
       ats_detect.py              apply_url to (ats_kind, slug, job_id); company name to slug probing; apply_surface classification
     ingest.py                    runs allowed sources, saves raw bodies, normalises, dedupes, upserts jobs and companies, records per source counts
-    llm.py                       tier 1 free tier provider interface (Groq or Gemini), structured output call, MAX_MODEL_CALLS_PER_RUN before every call, prompt content guard, call counting, prompt_log writes
+    llm.py                       tier 1 provider interface (Groq, Gemini or local Ollama), structured output call, MAX_MODEL_CALLS_PER_RUN before every call, prompt content guard, call counting, prompt_log writes
     prompts/
       triage.md                  tier 1 system prompt
       triage_examples.md         12 illustrative postings with lane labels, hours and automation scores, always included
@@ -877,11 +877,11 @@ Assumed steady state day: about 1,200 postings ingested, most cut by tier 0 at z
 
 Tier 0, no model, unlimited. Every filter that can be code is code. This is the single biggest lever in the whole design, and any work moved from tier 1 down to tier 0 is free capacity.
 
-Tier 1, free tier provider, roughly 410 calls a day against a documented 1,000 a day and 30 a minute on Groq, or 1,000 a day and 15 a minute on Gemini Flash Lite. Headroom is real but not large, and a heavy first day of 2,000 postings would breach it, so `MAX_MODEL_CALLS_PER_RUN["tier1"]` is set to 450 and the first run is deliberately capped lower. Rate limiting matters as much as the daily quota: at 15 requests a minute, 400 calls takes about 27 minutes of wall clock, so the stage must pace itself and not burst.
+Tier 1, roughly 410 calls a day against a ceiling that is currently UNKNOWN, because neither Groq nor Google publishes a verifiable free tier number without an account. Plan for the ceiling being low. Headroom cannot be assumed, and a heavy first day of 2,000 postings would breach it, so `MAX_MODEL_CALLS_PER_RUN["tier1"]` is set to 450 and the first run is deliberately capped lower. Rate limiting matters as much as the daily quota: at 15 requests a minute, 400 calls takes about 27 minutes of wall clock, so the stage must pace itself and not burst.
 
 Tier 2, Claude Code, roughly 33 substantive units of work a day. These draw on the same subscription limits as Alex's own sessions, so the honest statement is that this competes with his other work rather than costing him money. Keeping tier 2 small is the entire reason tiers 0 and 1 exist.
 
-Two figures that are genuinely unverified and must be checked in Phase 1 against each vendor's own page rather than trusted from a research pass: the Groq and Gemini free tier limits quoted above. Free tiers change without notice, which is why tier 1 sits behind one interface.
+The tier 1 ceiling is unverified and unverifiable without an account, which is why no number appears above. Read it from the provider console in Phase 3 and record it with the date. This is also why tier 0 matters more than first assumed: every posting cut by code is one that never tests an unknown limit. Free tiers change without notice, which is why tier 1 sits behind one interface.
 
 What was removed and why it is worth remembering: the earlier revision priced this at about $2 a day and about $60 a month of Anthropic API usage, with the arithmetic verified against real rates of $1 and $5 per million for Haiku 4.5 and $2 and $10 for Sonnet 5. That is what the free tier design is saving, and it is also the fallback cost if Alex ever decides the free tiers are too constraining.
 
@@ -949,7 +949,7 @@ Definition of done window: `.venv/bin/python scripts/verify_window.py --start <d
 
 8. Aggregator links bouncing through LinkedIn or Indeed. Every hop is logged and checked; the browser route aborts those hosts; such postings drop with `denylisted_host`.
 
-9. Board terms. Every source carries a verdict before it runs; Climatebase and Terra.do are expected to fail and are reached through employer ATS boards instead; Adzuna's real free tier limit is read from Adzuna's own page and capped regardless.
+9. Board terms. Every source carries a verdict before it runs. Climatebase and Terra.do were CHECKED on 2026-09-07 and both FAILED: their terms explicitly forbid any automated system, spider, robot or scraper accessing the site, so no adapter exists for either and neither may be added later without new written permission. Climate employers are reached through their own Greenhouse, Lever and Ashby boards instead, which is where applications get submitted anyway. inclimate.com, ClimateTechList and Work on Climate passed with permissive robots files and no prohibition found; Adzuna's real free tier limit is read from Adzuna's own page and capped regardless.
 
 10. One bad source or stage breaking the morning streak. Every stage is wrapped, every failure is a named degradation row, and the report always goes out. A stage with zero items to do is a clean run, not a degradation.
 
@@ -970,5 +970,5 @@ Not in the brief's list; each absence degrades one feature, none blocks the buil
 * Provider caveat on brief human item 3 (inbox access): Gmail works with an app password over IMAP; Proton needs Bridge, which is paid.
 * A real Recruitee company slug to confirm its API shape. Absent: Recruitee is DOM only.
 * `DEFAULT_TIMEZONE` in `.env`, the zone the 07:00 run follows. Required; the process refuses to start without it.
-* A free tier provider API key for tier 1, from Groq or Google AI Studio. Free to register, no card required, but it is an account signup so it is Alex's to do. Blocks tier 1 entirely, which means no classification at all. This belongs on the brief's human only list and is not currently on it; it replaces the void API key item.
+* A free tier provider API key for tier 1, from Groq or Google AI Studio, or else a local Ollama install which needs no account at all. Free either way, but a signup is Alex's to do. Blocks tier 1 entirely, which means no classification at all. This belongs on the brief's human only list and is not currently on it; it replaces the void API key item.
 * Values the brief names but does not number, set here as assumptions and marked as such in `config.py`: `MAX_SUBMISSIONS_PER_DAY = 5`, `APPLICATION_COOLDOWN_DAYS = 90`, `QUIET_DAYS = 10`, `MAX_MODEL_CALLS_PER_RUN = {tier1: 450, tier2: 60}`.
