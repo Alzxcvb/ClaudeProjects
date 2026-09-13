@@ -709,9 +709,11 @@ def legal_request(
     services only delete on request by email and ship their own wording, and for
     those this prints a ready to send message with your details merged in.
     Anything the tool cannot fill safely is marked in the text and listed below
-    it, so nothing is ever guessed on your behalf. Measured on the 2026-09-07
-    snapshot, 84 of the 109 bundled templates come out with every blank filled
-    when you pass --username, and 74 without one.
+    it, so nothing is ever guessed on your behalf. A blank written as a bare word
+    is always left for you, since a word can end in a field name and still be
+    ordinary prose. Measured on the 2026-09-07 snapshot, 79 of the 109 bundled
+    templates come out with every blank filled when you pass --username, and 69
+    without one.
 
     When two directory entries claim the same domain and would be contacted in
     different places, nothing is written and both are listed, so you choose
@@ -765,9 +767,10 @@ def legal_request(
             for candidate in candidates:
                 console.print(f"  {candidate.name}: {_contact_path(candidate)}")
             console.print(
-                "[yellow]Run it again with the exact name, for example "
-                f"--service \"{candidates[0].name}\".[/yellow]"
+                "[yellow]Run it again with one of those names exactly:[/yellow]"
             )
+            for candidate in candidates:
+                console.print(f'[yellow]  --service "{candidate.name}"[/yellow]')
             sys.exit(1)
         entry = match_entry(service, _domain_candidate(service), directory)
         console.print(f"[dim]Matched directory entry: {entry.name}[/dim]")

@@ -35,6 +35,7 @@ from erasure.accounts.justdelete import (
 from erasure.cli import cli
 from erasure.legal.email_templates import (
     ACCOUNT_ID,
+    _PLACEHOLDER_RE,
     DEFAULT_SUBJECT,
     EMAIL,
     NAME,
@@ -438,6 +439,33 @@ def test_no_bundled_template_leaks_any_blank_shape():
                     continue
                 raise AssertionError(
                     f"{entry.name} {where} still contains an unhandled blank: {hit!r}"
+                )
+
+
+def test_every_span_the_tool_calls_a_blank_is_recognised_independently():
+    """The converse of the scan above, and the direction it cannot see.
+
+    The stripped scan finds a blank the tool missed. It cannot find a blank the
+    tool invented: a marker is removed before the scan runs, and a filled value
+    is skipped by name, so a false blank and a false fill both come back clean.
+    This walks the production pattern over the raw template instead and asserts
+    that the independent scan agrees each span it acts on really is a blank. A
+    span the tool acts on that the wide scan does not recognise is either a
+    false blank or, worse, a value about to be pasted over ordinary prose.
+    """
+    for entry in load_directory():
+        if not has_email_template(entry):
+            continue
+        fields = (("subject", entry.email_subject or ""), ("body", entry.email_body or ""))
+        for where, raw in fields:
+            text = decode_mailto_escapes(raw)
+            for match in _PLACEHOLDER_RE.finditer(text):
+                span = match.group(0)
+                if span in _DELIBERATELY_LITERAL:
+                    continue
+                assert _WIDE_BLANK_SCAN.search(span), (
+                    f"{entry.name} {where}: the tool treats {span!r} as a blank "
+                    "but an independent reading does not see one there"
                 )
 
 
@@ -1019,15 +1047,17 @@ def test_jurisdiction_is_still_used_when_there_is_no_template(fake_setup):
 # --- round 3, finding 1: blanks written as bare undelimited tokens ----------
 
 
-def test_screaming_snake_token_is_filled_from_the_profile():
+def test_screaming_snake_token_is_marked_and_never_filled():
+    """Found, labelled and handed back to the user, not guessed at."""
     out, filled, missing = fill_template_text(
         "Please delete the account for YOUR_EMAIL belonging to FULL_NAME.", _fields()
     )
+    assert filled == []
+    assert missing == [EMAIL, NAME]
     assert out == (
-        "Please delete the account for jane@example.com belonging to Jane Q Public."
+        "Please delete the account for <<FILL IN: your email address>> "
+        "belonging to <<FILL IN: your full name>>."
     )
-    assert filled == [EMAIL, NAME]
-    assert missing == []
 
 
 def test_screaming_snake_account_token_is_marked_not_filled():
@@ -1043,10 +1073,47 @@ def test_bare_caps_token_without_an_underscore_is_caught():
     out, filled, missing = fill_template_text(
         "My address is LEETIFYEMAILADDRESS and my ID is LEETIFYACCOUNTID.", _fields()
     )
-    assert filled == [EMAIL]
-    assert missing == [ACCOUNT_ID]
-    assert "jane@example.com" in out
+    assert filled == []
+    assert missing == [EMAIL, ACCOUNT_ID]
     assert "LEETIFY" not in out
+    assert out.count(MARKER) == 2
+
+
+def test_a_bare_token_is_never_filled_however_it_reads():
+    """A word can end in a field word and still be ordinary prose.
+
+    This is the reason bare tokens are marked rather than read. Filling any of
+    these would paste the user's legal name or phone number over a real word
+    and still report the letter complete.
+    """
+    cases = {
+        "PLEASE CONFIRM SURNAME NOW.": NAME,
+        "PLEASE CONFIRM IPHONE NOW.": PHONE,
+        "NICKNAME": NAME,
+        "HOSTNAME": NAME,
+        "DEVICE_NAME": NAME,
+        "PHONE_MODEL": PHONE,
+    }
+    for text, kind in cases.items():
+        out, filled, missing = fill_template_text(text, _fields())
+        assert filled == [], text
+        assert missing == [kind], text
+        assert MARKER in out, text
+        for value in ("Jane Q Public", "jane@example.com", "+1-555-0100", "jqpublic"):
+            assert value not in out, f"{text} leaked {value}"
+
+
+def test_a_delimited_token_still_fills():
+    """The fix withholds the bare shapes only. A delimiter says it is a blank."""
+    for text in (
+        "Delete the account for <YOUR_EMAIL>, thanks.",
+        "Die E-Mail-Adresse lautet: 'your.mail@address.tld'",
+        "Write to me at your-email@address.here please.",
+    ):
+        out, filled, missing = fill_template_text(text, _fields())
+        assert filled == [EMAIL], text
+        assert missing == [], text
+        assert "jane@example.com" in out, text
 
 
 def test_all_caps_prose_is_left_alone():
@@ -1084,31 +1151,30 @@ def test_real_bundled_entries_with_bare_tokens_are_handled():
     """
     profile = _profile()
     by_name = {e.name: e for e in load_directory()}
-    fills_from_the_profile = (
-        "Basilica di San Pietro",
-        "Boulanger",
-        "DFCG",
-        "TED",
-        "VirtCloud",
-    )
-    for name in fills_from_the_profile:
-        rendered = render_email_request(by_name[name], profile=profile, username="jqpublic")
-        assert rendered.ready_to_send is True, name
-        assert "jane@example.com" in rendered.body, name
-        for token in ("YOUR_EMAIL", "FULL_NAME", "EMAIL_ADDRESS"):
-            assert token not in rendered.body, f"{name} still ships {token}"
-    virtcloud = render_email_request(by_name["VirtCloud"], profile=profile)
-    assert "Jane Q Public" in virtcloud.body
-
-    marked_never_filled = {
-        "Musei Italiani": "YOUR_ACCOUNT",
-        "Leetify": "LEETIFYACCOUNTID",
+    tokens = {
+        "Basilica di San Pietro": ("YOUR_EMAIL",),
+        "Boulanger": ("YOUR_EMAIL",),
+        "DFCG": ("YOUR_EMAIL",),
+        "TED": ("YOUR_EMAIL",),
+        "Musei Italiani": ("YOUR_ACCOUNT",),
+        "VirtCloud": ("FULL_NAME", "EMAIL_ADDRESS"),
+        "Leetify": ("LEETIFYEMAILADDRESS", "LEETIFYACCOUNTID"),
     }
-    for name, token in marked_never_filled.items():
+    for name, shipped in tokens.items():
         rendered = render_email_request(by_name[name], profile=profile, username="jqpublic")
+        whole = rendered.subject + rendered.body
+        for token in shipped:
+            assert token not in whole, f"{name} still ships {token}"
+        # Every one is marked, none is filled: the token had no delimiter, so
+        # reading it would be a guess.
         assert rendered.ready_to_send is False, name
-        assert token not in rendered.body, f"{name} still ships {token}"
-        assert ACCOUNT_ID in rendered.missing, name
+        assert len(rendered.blanks) == len(shipped), name
+        assert MARKER in rendered.body, name
+        for value in ("Jane Q Public", "jane@example.com", "+1-555-0100", "jqpublic"):
+            assert value not in whole, f"{name} filled a bare token with {value}"
+    assert ACCOUNT_ID in render_email_request(
+        by_name["Musei Italiani"], profile=profile
+    ).missing
 
     # The caps prose in the same dataset survives untouched.
     basilica = render_email_request(
@@ -1156,7 +1222,11 @@ def test_domain_tie_with_different_contact_paths_asks(twin_setup):
     assert "matches 2 directory entries that are contacted in different places" in flat
     assert "Twin A: web form at https://twin.example/delete" in flat
     assert "Twin B: email to p@twin.example" in flat
-    assert "Run it again with the exact name" in flat
+    # Every candidate is offered by name, so the hint cannot steer the user
+    # towards the entry that happens to sort first.
+    assert "Run it again with one of those names exactly:" in flat
+    assert '--service "Twin A"' in flat
+    assert '--service "Twin B"' in flat
     # Nothing was rendered: no message, and none of the user's details.
     assert "To: p@twin.example" not in flat
     assert "Jane Q Public" not in flat

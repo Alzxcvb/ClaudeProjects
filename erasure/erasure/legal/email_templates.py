@@ -22,9 +22,13 @@ deletion request is worse than a blank the user fills in themselves, and a
 sample address left in place is worse still, because the request cannot
 succeed and the user has no way to tell.
 
-Measured on the 2026-09-07 snapshot: 84 of the 109 bundled templates come out
+A blank written as a bare token is marked and never filled, whatever it seems
+to name, because without a delimiter the reading is a guess and a word can end
+in a field word and still be prose.
+
+Measured on the 2026-09-07 snapshot: 79 of the 109 bundled templates come out
 with every blank filled from a profile holding a name, an email and a phone
-number plus a username passed on the command line, and 74 without a username.
+number plus a username passed on the command line, and 69 without a username.
 """
 
 from __future__ import annotations
@@ -99,6 +103,10 @@ _LITERAL_CAPS_GUARD = "(?!(?:" + "|".join(_LITERAL_CAPS) + r")(?![A-Za-z0-9_]))"
 # never is, or a single all caps token that names a field. The allow list above
 # is applied as a lookahead rather than after the match, so a protected word
 # never becomes a match at all and cannot push the reading of the next blank.
+#
+# Nothing matched here is ever filled, only marked. Without a delimiter the
+# reading is a guess, and a word can end in a field word and still be prose.
+# See _NEVER_FILLED_GROUPS.
 _BARE_TOKEN = (
     r"(?<![A-Za-z0-9_])"
     + _LITERAL_CAPS_GUARD
@@ -134,9 +142,17 @@ _PLACEHOLDER_RE = re.compile(
     r"|\[(?!\s)[^\]]{1,140}(?<!\s)\])"
 )
 
-# Shapes that are instructions written for a person to read and act on. They
-# are labelled so the report says what is being asked for, but never filled.
-_NEVER_FILLED_GROUPS = ("paren", "bracket")
+# Shapes that are labelled so the report can say what is being asked for, and
+# then left for the user. Two reasons sit behind this list. A parenthetical or
+# a bracket note is an instruction written for a person to read and act on, and
+# filling inside one makes nonsense of the sentence. A bare token has nothing
+# around it saying it is a blank, so reading one is a guess about a word that
+# may simply be prose: SURNAME, IPHONE, NICKNAME and HOSTNAME all end in a
+# field word, and pasting a legal name or a phone number over any of them would
+# be worse than asking. Everything the dataset writes as a bare token is still
+# found and marked, so the user is told; it is only the automatic fill that is
+# withheld. Delimited shapes say what they are and still fill.
+_NEVER_FILLED_GROUPS = ("paren", "bracket", "bare_token")
 
 # How much text before a blank is read when deciding what it stands for.
 _CONTEXT_CHARS = 70
@@ -381,7 +397,7 @@ def _read_blank(match: "re.Match[str]", text: str, *, floor: int) -> tuple[str, 
     for group in _NEVER_FILLED_GROUPS:
         if match.group(group):
             return classify_token_text(match.group(group)), False
-    for group in ("angle", "bare_token", "quoted_sample", "sample_email"):
+    for group in ("angle", "quoted_sample", "sample_email"):
         if match.group(group):
             kind = classify_token_text(match.group(group))
             return kind, kind in FILLABLE
