@@ -1,18 +1,25 @@
 """Tests for filling the deletion email templates that ship with the directory.
 
-Every test builds its own fake profile and its own fake directory entries. The
-one test that touches the bundled dataset only checks that it renders, so a
-refresh from upstream cannot turn a wording change into a failing assertion.
+Every test builds its own fake profile. Most build their own fake directory
+entries too, so a wording change upstream cannot turn into a failing assertion.
+
+The exceptions are the tests that guard the bundled dataset. Those scan every
+shipped template with a deliberately wider pattern than the one the tool uses,
+and assert that nothing it flags survives into the rendered message. They are
+written that way on purpose: a blank shape the tool does not recognise is the
+one failure that matters here, because the user is told the message is ready
+and sends a sample address to a real company.
 """
 
 from __future__ import annotations
 
 import json
+import re
 
 import pytest
 from click.testing import CliRunner
 
-from erasure.accounts.justdelete import DeletionEntry, load_directory
+from erasure.accounts.justdelete import DeletionEntry, load_directory, match_entry
 from erasure.cli import cli
 from erasure.legal.email_templates import (
     ACCOUNT_ID,
@@ -305,16 +312,20 @@ def test_has_email_template_needs_both_address_and_wording():
 
 def test_marker_and_labels_carry_no_dash_characters():
     """House style: no dash of any kind in prose the tool writes."""
+    from erasure.legal.email_templates import LABELS, _MARKER_CLOSE, _MARKER_OPEN
+
+    # Built from the real constants, so a future edit that adds a dash fails.
+    for kind, label in LABELS.items():
+        marker = _MARKER_OPEN + label + _MARKER_CLOSE
+        for bad in ("-", "--", "\u2014", "\u2013"):
+            assert bad not in marker, f"dash in the marker for {kind}"
     rendered = render_email_request(
         _entry(email_body="Username: XXXX Reason: XXXX UID: XXXX"),
         profile=_profile(),
     )
-    prose = " ".join(missing_field_lines(rendered))
-    for bad in ("--", "—", "–"):
-        assert bad not in prose
-    # The markers themselves are prose too.
-    for bad in ("-", "—", "–"):
-        assert bad not in "<<FILL IN: your username on the service>>"
+    for line in missing_field_lines(rendered):
+        for bad in ("-", "--", "\u2014", "\u2013"):
+            assert bad not in line, line
 
 
 # --- the bundled dataset ----------------------------------------------------
@@ -332,18 +343,72 @@ def test_every_bundled_template_renders_without_error():
         assert rendered.body
 
 
-def test_no_bundled_template_leaks_an_unfilled_x_run():
-    """Every placeholder is either filled or replaced by a visible marker."""
-    import re
+# Deliberately wider than the production detector, and written independently of
+# it, so that an upstream refresh introducing a blank shape the tool does not
+# know about fails here instead of shipping a sample value to a real company.
+_WIDE_BLANK_SCAN = re.compile(
+    r"'[^']{1,60}'"  # any single quoted span, which upstream uses for samples
+    r"|[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}"  # any address literal
+    r"|\[[^\]]{1,140}\]"  # any bracket note
+    r"|(?<![A-Za-z0-9])[XxYy]{2,}(?![A-Za-z0-9])"  # any letter run
+    r"|<[A-Za-z][A-Za-z_]{2,30}>"  # any angle token
+    r"|\((?i:put|state|insert|enter|add|include|sign|type)\b[^)]{0,90}\)"
+)
 
+# Spans the wide scan flags that are genuinely literal text, not blanks. Keep
+# this list tiny. A new entry here is a decision a person has to make.
+_DELIBERATELY_LITERAL = {
+    # CoinBR/Stratum decorates its subject line. The padding spaces inside the
+    # brackets are what separates decoration from an instruction.
+    "[ Permanently Account Deletion Request ]",
+}
+
+
+def test_no_bundled_template_leaks_any_blank_shape():
+    """Every blank is either filled with a real value or visibly marked.
+
+    This is the guard that finding 1 slipped past: three entries shipped
+    'your.mail@address.tld' and 'Firstname Lastname' as ordinary prose and the
+    old narrow regex only looked for XXX runs.
+    """
     profile = _profile()
-    leftover = re.compile(r"(?<![A-Za-z0-9])(?:[Xx]{3,}|[Yy]{3,})(?![A-Za-z0-9])")
+    marker = re.compile(r"<<FILL IN: [^>]*>>")
+    filled_values = {profile.name, profile.emails[0], profile.phones[0], "jqpublic"}
     for entry in load_directory():
         if not has_email_template(entry):
             continue
         rendered = render_email_request(entry, profile=profile, username="jqpublic")
-        assert not leftover.search(rendered.body), entry.name
-        assert not leftover.search(rendered.subject), entry.name
+        for where, text in (("subject", rendered.subject), ("body", rendered.body)):
+            stripped = marker.sub("", text)
+            for hit in _WIDE_BLANK_SCAN.findall(stripped):
+                if hit in _DELIBERATELY_LITERAL or hit in filled_values:
+                    continue
+                raise AssertionError(
+                    f"{entry.name} {where} still contains an unhandled blank: {hit!r}"
+                )
+
+
+def test_ready_to_send_agrees_with_an_independent_scan():
+    """ready_to_send must never be True while a blank shape survives.
+
+    Checked against the wide scan rather than against the tool's own detector,
+    so the two cannot agree by sharing the same mistake.
+    """
+    profile = _profile()
+    marker = re.compile(r"<<FILL IN: [^>]*>>")
+    filled_values = {profile.name, profile.emails[0], profile.phones[0], "jqpublic"}
+    for entry in load_directory():
+        if not has_email_template(entry):
+            continue
+        rendered = render_email_request(entry, profile=profile, username="jqpublic")
+        text = marker.sub("", rendered.subject + "\n" + rendered.body)
+        survivors = [
+            h
+            for h in _WIDE_BLANK_SCAN.findall(text)
+            if h not in _DELIBERATELY_LITERAL and h not in filled_values
+        ]
+        if rendered.ready_to_send:
+            assert not survivors, f"{entry.name} claims complete but holds {survivors}"
 
 
 # --- the CLI ----------------------------------------------------------------
@@ -536,3 +601,350 @@ def test_cli_service_accepts_a_domain_as_well_as_a_name(fake_setup):
     assert result.exit_code == 0
     assert "Matched directory entry: Fakebook" in result.output
     assert "To: privacy@fakebook.example" in result.output
+
+
+# --- finding 1: literal sample values read like ordinary prose --------------
+
+
+def test_quoted_sample_email_is_treated_as_a_blank():
+    """Check24 ships 'your.mail@address.tld'. It is a slot, not the user's address."""
+    out, filled, missing = fill_template_text(
+        "Die betreffende E-Mail-Adresse lautet: 'your.mail@address.tld'", _fields()
+    )
+    assert "address.tld" not in out
+    assert "jane@example.com" in out
+    assert filled == [EMAIL] and missing == []
+
+
+def test_quoted_sample_name_is_treated_as_a_blank():
+    out, filled, _ = fill_template_text("Mit freundlichen Grüßen 'Your name'", _fields())
+    assert out == "Mit freundlichen Grüßen Jane Q Public"
+    assert filled == [NAME]
+
+
+def test_quoted_firstname_lastname_is_treated_as_a_blank():
+    """Momox ships 'Firstname Lastname' with no XXX run anywhere."""
+    out, filled, _ = fill_template_text("mit freundlichen Grüßen, 'Firstname Lastname'", _fields())
+    assert "Firstname" not in out and "Lastname" not in out
+    assert "Jane Q Public" in out
+    assert filled == [NAME]
+
+
+def test_quoted_sample_username_is_treated_as_a_blank():
+    """PythonAnywhere ships 'your-username' in both the subject and the body."""
+    out, filled, _ = fill_template_text("delete my account 'your-username' now", _fields())
+    assert out == "delete my account jqpublic now"
+    assert filled == [USERNAME]
+
+
+def test_sample_value_is_marked_when_the_user_has_no_value_for_it():
+    out, filled, missing = fill_template_text(
+        "Adresse lautet: 'your.mail@address.tld'", TemplateFields()
+    )
+    assert "address.tld" not in out
+    assert MARKER in out
+    assert filled == [] and missing == [EMAIL]
+
+
+def test_unquoted_sample_address_is_treated_as_a_blank():
+    out, filled, _ = fill_template_text("My address is your.name@sample.tld here", _fields())
+    assert "your.name@sample.tld" not in out
+    assert out == "My address is jane@example.com here"
+    assert filled == [EMAIL]
+
+
+def test_sentence_case_bracket_instruction_is_a_blank():
+    """Stardock ships [Give details of what personal data you want erased/deleted.]."""
+    out, filled, missing = fill_template_text(
+        "I wish to exercise my right to erasure.\n\n"
+        "[Give details of what personal data you want erased/deleted.]",
+        _fields(),
+    )
+    assert "Give details" not in out
+    assert MARKER in out
+    assert filled == [] and missing == [OTHER]
+
+
+def test_padded_bracket_decoration_is_still_left_alone():
+    """The padding spaces are what separate decoration from an instruction."""
+    out, _, missing = fill_template_text("[ Permanently Account Deletion Request ]", _fields())
+    assert out == "[ Permanently Account Deletion Request ]"
+    assert missing == []
+
+
+def test_real_bundled_entries_with_sample_values_are_handled():
+    """The four dataset entries that carry sample values rather than XXX runs."""
+    profile = _profile()
+    by_name = {e.name: e for e in load_directory()}
+    for name in ("Check24 Deutschland", "Momox Fashion", "PythonAnywhere"):
+        rendered = render_email_request(by_name[name], profile=profile, username="jqpublic")
+        whole = rendered.subject + rendered.body
+        for sample in ("address.tld", "address.here", "your-username", "Firstname Lastname"):
+            assert sample not in whole, f"{name} still ships {sample}"
+    check24 = render_email_request(
+        by_name["Check24 Deutschland"], profile=profile, username="jqpublic"
+    )
+    assert "jane@example.com" in check24.body
+    assert "Jane Q Public" in check24.body
+    stardock = render_email_request(by_name["Stardock"], profile=profile, username="jqpublic")
+    assert stardock.ready_to_send is False
+    assert MARKER in stardock.body
+
+
+# --- finding 2: a blank must not inherit the previous blank's cue -----------
+
+
+def test_second_blank_does_not_inherit_the_first_blanks_kind():
+    out, filled, missing = fill_template_text(
+        "My email is XXXX and my account number is XXXX.", _fields()
+    )
+    assert out.count("jane@example.com") == 1
+    assert out.endswith("<<FILL IN: a detail this service asks for>>.")
+    assert filled == [EMAIL] and missing == [UNKNOWN]
+
+
+def test_phone_does_not_bleed_into_date_of_birth():
+    out, filled, missing = fill_template_text(
+        "My phone number is XXXX and my date of birth is XXXX.", _fields()
+    )
+    assert out.count("+1-555-0100") == 1
+    assert filled == [PHONE] and missing == [UNKNOWN]
+
+
+def test_username_does_not_bleed_into_order_reference():
+    out, filled, missing = fill_template_text(
+        "My username is XXXX, my order reference is XXXX.", _fields()
+    )
+    assert out.count("jqpublic") == 1
+    assert filled == [USERNAME] and missing == [UNKNOWN]
+
+
+def test_name_compounds_are_not_filled_with_the_legal_name():
+    """A display name or a surname is not the full name on the account."""
+    for body in (
+        "My display name is XXXX",
+        "My screen name is XXXX",
+        "My first name is XXXX",
+        "My last name is XXXX",
+        "My surname is XXXX",
+    ):
+        out, filled, missing = fill_template_text(body, _fields())
+        assert filled == [], body
+        assert missing == [UNKNOWN], body
+        assert "Jane Q Public" not in out, body
+
+
+def test_full_name_still_fills_after_the_compound_cues_were_added():
+    out, filled, _ = fill_template_text("My full name is XXXX", _fields())
+    assert out == "My full name is Jane Q Public"
+    assert filled == [NAME]
+
+
+# --- finding 5: an ambiguous label stays blank ------------------------------
+
+
+def test_account_name_is_ambiguous_and_stays_blank():
+    """Could be a handle or a display name, so by the module's own rule, neither."""
+    out, filled, missing = fill_template_text("Account Name: XXXX", _fields())
+    assert filled == [] and missing == [UNKNOWN]
+    assert "jqpublic" not in out and "Jane Q Public" not in out
+
+
+# --- finding 7: the report counts spots, not kinds --------------------------
+
+
+def test_every_blank_spot_is_listed_with_its_position():
+    rendered = render_email_request(
+        _entry(email_body="First: [SOMETHING A] then second: [SOMETHING B]"),
+        profile=_profile(),
+    )
+    lines = missing_field_lines(rendered)
+    assert len(lines) == 2
+    assert "blank 1 in the body" in lines[0]
+    assert "blank 2 in the body" in lines[1]
+
+
+def test_subject_and_body_blanks_are_reported_separately():
+    rendered = render_email_request(
+        _entry(email_subject="Reference [SOME REF]", email_body="Reason: XXXX"),
+        profile=_profile(),
+    )
+    wheres = {b.where for b in rendered.blanks}
+    assert wheres == {"subject", "body"}
+    assert len(rendered.blanks) == 2
+
+
+# --- finding 3: the service argument is text a person typed -----------------
+
+
+def test_cli_service_with_a_bracket_does_not_traceback(fake_setup):
+    """A stray bracket used to reach urlsplit and raise Invalid IPv6 URL."""
+    profile, directory = fake_setup
+    result = _run(CliRunner(), profile, directory, "--service", "foo[bar")
+    assert result.exit_code == 1
+    assert "No directory entry matches" in result.output
+    assert "Traceback" not in result.output
+    assert result.exception is None or isinstance(result.exception, SystemExit)
+
+
+def test_cli_service_with_other_junk_is_reported_not_raised(fake_setup):
+    profile, directory = fake_setup
+    for junk in ("http://[", "a]b", "://"):
+        result = _run(CliRunner(), profile, directory, "--service", junk)
+        assert result.exit_code == 1, junk
+        assert "No directory entry matches" in result.output, junk
+
+
+# --- finding 4: two entries can claim one domain ----------------------------
+
+
+def test_domain_tie_prefers_the_entry_that_ships_a_template():
+    """Pix and Pix fr both claim pix.fr. Only Pix fr can actually be emailed."""
+    directory = load_directory()
+    matched = match_entry("pix.fr", "pix.fr", directory)
+    assert matched is not None
+    assert matched.name == "Pix fr"
+    assert matched.email == "dpd@pix.fr"
+    assert has_email_template(matched)
+
+
+def test_domain_tie_break_prefers_an_address_over_nothing():
+    plain = DeletionEntry(name="Alpha", domains=["tie.example"], difficulty="easy")
+    with_mail = DeletionEntry(
+        name="Beta", domains=["tie.example"], difficulty="hard", email="p@tie.example"
+    )
+    assert match_entry("x", "tie.example", [plain, with_mail]).name == "Beta"
+    # Order in the directory must not decide it.
+    assert match_entry("x", "tie.example", [with_mail, plain]).name == "Beta"
+
+
+def test_a_zero_score_entry_never_wins_on_the_tie_break():
+    """The tie break ranks matches, it must not invent one."""
+    directory = [
+        DeletionEntry(
+            name="Unrelated",
+            domains=["unrelated.example"],
+            difficulty="hard",
+            email="a@unrelated.example",
+            email_body="Please delete.",
+        )
+    ]
+    assert match_entry("nothing-like-it", "nothing-like-it", directory) is None
+
+
+def test_cli_says_when_another_entry_shares_the_domain(tmp_path):
+    profile = tmp_path / "profile.json"
+    profile.write_text(json.dumps({"name": "Jane Q Public", "emails": ["jane@example.com"]}))
+    directory = tmp_path / "directory.json"
+    directory.write_text(
+        json.dumps(
+            {
+                "count": 2,
+                "services": [
+                    {"name": "Twin A", "domains": ["twin.example"], "difficulty": "easy"},
+                    {
+                        "name": "Twin B",
+                        "domains": ["twin.example"],
+                        "difficulty": "hard",
+                        "email": "p@twin.example",
+                        "email_body": "Please delete my account.",
+                    },
+                ],
+            }
+        )
+    )
+    result = _run(CliRunner(), profile, directory, "--service", "twin.example")
+    assert result.exit_code == 0
+    assert "Matched directory entry: Twin B" in result.output
+    assert "Also listing a domain of Twin B: Twin A" in result.output
+
+
+# --- finding 9: the summary counts services, not hits -----------------------
+
+
+def test_deletion_links_counts_a_repeated_service_once(fake_setup, tmp_path):
+    profile, directory = fake_setup
+    manifest = tmp_path / "accounts.json"
+    manifest.write_text(
+        json.dumps(
+            {
+                "username": "jqpublic",
+                "found_count": 2,
+                "hits": [
+                    {"site": "Fakebook", "url": "https://fakebook.example/jqpublic"},
+                    {"site": "Fakebook", "url": "https://fakebook.example/other"},
+                ],
+            }
+        )
+    )
+    result = CliRunner().invoke(
+        cli,
+        [
+            "accounts",
+            "deletion-links",
+            "--manifest",
+            str(manifest),
+            "--no-emails",
+            "--directory",
+            str(directory),
+        ],
+    )
+    assert result.exit_code == 0
+    assert "1 site(s) ship the exact wording" in result.output
+    # The command it prints has to work against the same directory.
+    assert "--directory" in result.output
+
+
+# --- finding 10: paths the lead named but nothing exercised -----------------
+
+
+def test_cli_save_writes_the_email_under_state(fake_setup, tmp_path, monkeypatch):
+    profile, directory = fake_setup
+    monkeypatch.chdir(tmp_path)
+    result = _run(
+        CliRunner(), profile, directory, "--service", "Fakebook", "--username", "jqpublic", "--save"
+    )
+    assert result.exit_code == 0
+    saved = list((tmp_path / "state" / "legal").glob("*.txt"))
+    assert len(saved) == 1
+    text = saved[0].read_text(encoding="utf-8")
+    assert text.startswith("To: privacy@fakebook.example")
+    assert saved[0].name.startswith("email_")
+
+
+def test_cli_save_still_works_for_a_plain_letter(fake_setup, tmp_path, monkeypatch):
+    profile, directory = fake_setup
+    monkeypatch.chdir(tmp_path)
+    result = _run(CliRunner(), profile, directory, "--recipient", "Spokeo", "--save")
+    assert result.exit_code == 0
+    saved = list((tmp_path / "state" / "legal").glob("*.txt"))
+    assert len(saved) == 1
+    assert saved[0].name.startswith("ccpa_spokeo")
+
+
+def test_jurisdiction_is_ignored_on_the_template_path(fake_setup):
+    """The dataset wording is what the service asks for, so no statute is cited."""
+    profile, directory = fake_setup
+    result = _run(
+        CliRunner(),
+        profile,
+        directory,
+        "--service",
+        "Fakebook",
+        "--username",
+        "jqpublic",
+        "--jurisdiction",
+        "gdpr",
+    )
+    assert result.exit_code == 0
+    assert "Article 17" not in result.output
+    assert "To: privacy@fakebook.example" in result.output
+
+
+def test_jurisdiction_is_still_used_when_there_is_no_template(fake_setup):
+    profile, directory = fake_setup
+    result = _run(
+        CliRunner(), profile, directory, "--service", "Addressonly", "--jurisdiction", "gdpr"
+    )
+    assert result.exit_code == 0
+    assert "Article 17" in result.output

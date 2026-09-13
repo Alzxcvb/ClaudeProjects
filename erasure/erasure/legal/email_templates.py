@@ -6,16 +6,20 @@ one of those directory entries plus the user's own details into a message that
 is ready to send.
 
 The dataset does not use named tokens. Placeholders are written by hand by the
-contributor who documented the service, so they look like ``XXXXXX`` runs,
-``<YOUR_EMAIL>``, an all caps bracket note such as ``[NUMBER OR 0]``, or a
-parenthetical instruction such as ``(put your name here)``. There is no token
-vocabulary to look up, so each placeholder is classified by the words that come
+contributor who documented the service, so they take several shapes: ``XXXXXX``
+runs, ``<YOUR_EMAIL>``, a bracket note such as ``[NUMBER OR 0]``, a
+parenthetical instruction such as ``(put your name here)``, and, easiest to
+miss, a literal sample value such as ``'your.mail@address.tld'`` or
+``'Firstname Lastname'`` that reads like real text. There is no token
+vocabulary to look up, so each blank is classified by the words that come
 immediately before it, and a value is filled in only when that reading is
 unambiguous and the user actually supplied the value.
 
 Anything else is left in place as a visible marker and reported in
-``RenderedEmail.missing``. Nothing is ever guessed. A wrong username in a
-deletion request is worse than a blank the user fills in themselves.
+``RenderedEmail.blanks``. Nothing is ever guessed. A wrong username in a
+deletion request is worse than a blank the user fills in themselves, and a
+sample address left in place is worse still, because the request cannot
+succeed and the user has no way to tell.
 """
 
 from __future__ import annotations
@@ -31,7 +35,7 @@ from erasure.profile import UserProfile
 # Matches the wording `erasure accounts deletion-links` already prints.
 DEFAULT_SUBJECT = "Account Deletion Request"
 
-# Field kinds a placeholder can stand for.
+# Field kinds a blank can stand for.
 EMAIL = "email"
 USERNAME = "username"
 NAME = "name"
@@ -64,23 +68,43 @@ LABELS = {
 _MARKER_OPEN = "<<FILL IN: "
 _MARKER_CLOSE = ">>"
 
-# Placeholder shapes actually present in the dataset. Order inside the pattern
-# matters: the email shaped run has to win over the plain run so that
+# Blank shapes actually present in the dataset. Order inside the pattern
+# matters, widest first: a quoted sample has to win over the bare email inside
+# it, and the email shaped run has to win over the plain run so that
 # ``XXXXX@XXXXX.XXXXX`` counts as one address and not three fragments.
 _PLACEHOLDER_RE = re.compile(
-    r"(?<![A-Za-z0-9])(?P<email_shaped>[Xx]{2,}@[Xx]{2,}\.[Xx]{2,})(?![A-Za-z0-9])"
+    # 'your.mail@address.tld', 'Your name', 'Firstname Lastname', 'your-username'
+    r"(?P<quoted_sample>'(?i:your[^']{0,60}|firstname\s+lastname|first\s+last"
+    r"|full\s+name|name\s+here)')"
+    # A sample address written without quotes.
+    r"|(?P<sample_email>[A-Za-z0-9._%+\-]+@(?:[A-Za-z0-9.\-]+\."
+    r"(?i:tld|here|invalid|test|example|localhost)"
+    r"|(?i:address|example|domain|yourdomain|mydomain)\.[A-Za-z]{2,6}))"
+    r"|(?<![A-Za-z0-9])(?P<email_shaped>[Xx]{2,}@[Xx]{2,}\.[Xx]{2,})(?![A-Za-z0-9])"
     r"|(?<![A-Za-z0-9])(?P<run>[Xx]{2,}|[Yy]{3,})(?![A-Za-z0-9])"
     r"|(?P<angle><[A-Za-z][A-Za-z_]{2,30}>)"
     r"|(?P<paren>\((?i:put|state|insert|enter|add|include|sign|type)\b[^)]{0,90}\))"
-    r"|(?P<bracket>\[[A-Z0-9][A-Z0-9 /]{2,40}\])"
+    # A bracket note, either an instruction or anything without padding spaces.
+    # Padding marks decoration: CoinBR titles its subject
+    # "[ Permanently Account Deletion Request ]" and that is not a blank.
+    r"|(?P<bracket>\[\s*(?i:give|enter|insert|state|put|add|include|describe"
+    r"|specify|provide|fill|type)\b[^\]]{0,140}\]"
+    r"|\[(?!\s)[^\]]{1,140}(?<!\s)\])"
 )
 
-# How much text before a placeholder is read when deciding what it stands for.
+# Shapes that are instructions written for a person to read and act on. They
+# are labelled so the report says what is being asked for, but never filled.
+_NEVER_FILLED_GROUPS = ("paren", "bracket")
+
+# How much text before a blank is read when deciding what it stands for.
 _CONTEXT_CHARS = 70
 
-# Literal cues, matched against the lowercased text just before a placeholder.
-# The cue that ends nearest the placeholder wins, and on a tie the longer cue
-# wins, so "user name" beats the bare "name" inside it.
+# Literal cues, matched against the lowercased text just before a blank. The
+# cue that ends nearest the blank wins, and on a tie the longer cue wins, so
+# "user name" beats the bare "name" inside it. Cues mapped to UNKNOWN exist to
+# beat a shorter cue that would otherwise fill the wrong thing: "display name"
+# is not a full legal name, and "Account Name" could be either a handle or a
+# display name, so both stay blank.
 _CUES: tuple[tuple[str, str], ...] = (
     ("name", NAME),
     ("full name", NAME),
@@ -91,10 +115,15 @@ _CUES: tuple[tuple[str, str], ...] = (
     ("nombre", NAME),
     ("user name", USERNAME),
     ("username", USERNAME),
-    ("account name", USERNAME),
     ("nickname", USERNAME),
     ("usuario", USERNAME),
     ("login", USERNAME),
+    ("account name", UNKNOWN),
+    ("display name", UNKNOWN),
+    ("screen name", UNKNOWN),
+    ("first name", UNKNOWN),
+    ("last name", UNKNOWN),
+    ("surname", UNKNOWN),
     ("email", EMAIL),
     ("e-mail", EMAIL),
     ("email address", EMAIL),
@@ -118,6 +147,33 @@ _CUES: tuple[tuple[str, str], ...] = (
     ("title", OTHER),
 )
 
+# Words that name a field when they appear inside the blank itself, such as
+# <YOUR_EMAIL> or [NUMBER OR 0]. Checked in order, first hit wins.
+_TOKEN_WORDS: tuple[tuple[str, str], ...] = (
+    (r"mail", EMAIL),
+    (r"user", USERNAME),
+    (r"reason", REASON),
+    (r"name", NAME),
+    (r"phone|telephone|mobile", PHONE),
+    (r"\buid\b|\bid\b|number|reference", ACCOUNT_ID),
+)
+
+
+@dataclass(frozen=True)
+class Blank:
+    """One spot the user still has to complete, and where it sits."""
+
+    kind: str
+    where: str  # "subject" or "body"
+    index: int  # 1 based, counting blanks within that field
+
+    @property
+    def label(self) -> str:
+        return LABELS[self.kind]
+
+    def describe(self) -> str:
+        return f"{self.label} (blank {self.index} in the {self.where})"
+
 
 @dataclass(frozen=True)
 class RenderedEmail:
@@ -128,13 +184,18 @@ class RenderedEmail:
     subject: str
     body: str
     from_email: Optional[str] = None
-    missing: tuple[str, ...] = ()
+    blanks: tuple[Blank, ...] = ()
     filled: tuple[str, ...] = ()
 
     @property
+    def missing(self) -> tuple[str, ...]:
+        """The kind of every spot still blank, one entry per spot."""
+        return tuple(b.kind for b in self.blanks)
+
+    @property
     def ready_to_send(self) -> bool:
-        """True when no placeholder was left for the user to complete."""
-        return not self.missing
+        """True when no blank was left for the user to complete."""
+        return not self.blanks
 
     def as_text(self) -> str:
         """The whole message as one block the user can copy into a mail client."""
@@ -197,34 +258,32 @@ def decode_mailto_escapes(text: str) -> str:
 
 
 def classify_token_text(token: str) -> str:
-    """Read a placeholder that names its own field, such as ``<YOUR_EMAIL>``.
+    """Read a blank that names its own field, such as ``<YOUR_EMAIL>``.
 
-    Also used to label a bracket note or a parenthetical instruction, which is
-    never filled but reads better when the report says what it is asking for.
+    Also used to label a bracket note, a parenthetical instruction and a quoted
+    sample value, so the report can say what is being asked for.
     """
-    inner = token.strip("<>()[]").lower()
-    if "email" in inner or "mail" in inner:
+    inner = token.strip("<>()[]'\" ").lower()
+    # An address is an address even when its local part spells another field,
+    # as in 'your.name@example.com'.
+    if "@" in inner:
         return EMAIL
-    if "user" in inner:
-        return USERNAME
-    if "reason" in inner:
-        return REASON
-    if "name" in inner:
-        return NAME
-    if "phone" in inner:
-        return PHONE
-    if "uid" in inner or "number" in inner or "id" in inner:
-        return ACCOUNT_ID
+    for pattern, kind in _TOKEN_WORDS:
+        if re.search(pattern, inner):
+            return kind
     return OTHER
 
 
-def classify_placeholder(text: str, start: int) -> str:
-    """Decide what the placeholder at ``start`` stands for, from the words before it.
+def classify_placeholder(text: str, start: int, floor: int = 0) -> str:
+    """Decide what the blank at ``start`` stands for, from the words before it.
 
+    ``floor`` is where the previous blank ended. The search never reads past it,
+    so a blank with no cue of its own cannot inherit the previous blank's kind.
     Returns UNKNOWN when no cue is close enough to be sure, which keeps the spot
     blank rather than filling it with the wrong thing.
     """
-    context = text[max(0, start - _CONTEXT_CHARS) : start].lower()
+    lower = max(0, start - _CONTEXT_CHARS, floor)
+    context = text[lower:start].lower()
     best_kind = UNKNOWN
     best_end = -1
     best_len = -1
@@ -241,11 +300,11 @@ def classify_placeholder(text: str, start: int) -> str:
 
 
 def fill_template_text(text: str, fields: TemplateFields) -> tuple[str, list[str], list[str]]:
-    """Fill every placeholder in ``text`` that can be filled safely.
+    """Fill every blank in ``text`` that can be filled safely.
 
     Returns the filled text, the kinds that were filled, and the kinds that were
-    left blank. Blanks are replaced with a visible marker so the user can see
-    exactly where to type.
+    left blank, one entry per spot in both lists. Blanks are replaced with a
+    visible marker so the user can see exactly where to type.
     """
     text = decode_mailto_escapes(text)
     filled: list[str] = []
@@ -254,20 +313,8 @@ def fill_template_text(text: str, fields: TemplateFields) -> tuple[str, list[str
     cursor = 0
     for match in _PLACEHOLDER_RE.finditer(text):
         out.append(text[cursor : match.start()])
+        kind, fillable = _read_blank(match, text, floor=cursor)
         cursor = match.end()
-        note = match.group("paren") or match.group("bracket")
-        if match.group("angle"):
-            kind = classify_token_text(match.group("angle"))
-            fillable = kind in FILLABLE
-        elif note:
-            # A bracket note or a parenthetical instruction is written for a
-            # person to read and act on, so it is never filled automatically.
-            # It is still labelled, so the report says what is being asked for.
-            kind = classify_token_text(note)
-            fillable = False
-        else:
-            kind = classify_placeholder(text, match.start())
-            fillable = kind in FILLABLE
         value = fields.value_for(kind) if fillable else None
         if value:
             out.append(value)
@@ -279,12 +326,17 @@ def fill_template_text(text: str, fields: TemplateFields) -> tuple[str, list[str
     return "".join(out), filled, missing
 
 
-def _dedupe(kinds: list[str]) -> tuple[str, ...]:
-    seen: list[str] = []
-    for k in kinds:
-        if k not in seen:
-            seen.append(k)
-    return tuple(seen)
+def _read_blank(match: "re.Match[str]", text: str, *, floor: int) -> tuple[str, bool]:
+    """Work out what one matched blank stands for and whether it may be filled."""
+    for group in _NEVER_FILLED_GROUPS:
+        if match.group(group):
+            return classify_token_text(match.group(group)), False
+    for group in ("angle", "quoted_sample", "sample_email"):
+        if match.group(group):
+            kind = classify_token_text(match.group(group))
+            return kind, kind in FILLABLE
+    kind = classify_placeholder(text, match.start(), floor=floor)
+    return kind, kind in FILLABLE
 
 
 def has_email_template(entry: DeletionEntry) -> bool:
@@ -313,17 +365,22 @@ def render_email_request(
     body, body_filled, body_missing = fill_template_text(entry.email_body, fields)
     subject_raw = entry.email_subject or DEFAULT_SUBJECT
     subject, subj_filled, subj_missing = fill_template_text(subject_raw, fields)
+    blanks = tuple(
+        Blank(kind=kind, where=where, index=i)
+        for where, kinds in (("body", body_missing), ("subject", subj_missing))
+        for i, kind in enumerate(kinds, start=1)
+    )
     return RenderedEmail(
         service=entry.name,
         to=entry.email or "",
         subject=subject,
         body=body,
         from_email=fields.email,
-        missing=_dedupe(body_missing + subj_missing),
-        filled=_dedupe(body_filled + subj_filled),
+        blanks=blanks,
+        filled=tuple(body_filled + subj_filled),
     )
 
 
 def missing_field_lines(rendered: RenderedEmail) -> list[str]:
-    """Human readable notes about what the user still has to type in."""
-    return [f"{LABELS[kind]} (marked in the text)" for kind in rendered.missing]
+    """One line per spot the user still has to type in, with where it sits."""
+    return [blank.describe() for blank in rendered.blanks]

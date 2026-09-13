@@ -79,12 +79,19 @@ def _norm(value: str) -> str:
 
 
 def _host(url: str) -> str:
-    """The bare hostname of a URL, with any www. prefix and port removed."""
+    """The bare hostname of a URL, with any www. prefix and port removed.
+
+    Returns an empty string for anything that will not parse. Callers pass
+    values a person typed, and a stray bracket makes urlsplit raise.
+    """
     if not url:
         return ""
     if "//" not in url:
         url = "//" + url
-    host = urlsplit(url).hostname or ""
+    try:
+        host = urlsplit(url).hostname or ""
+    except ValueError:
+        return ""
     return host[4:] if host.startswith("www.") else host
 
 
@@ -105,11 +112,15 @@ def match_entry(
     the site name. Returns the most specific match (longest matched token wins)
     or None. With thousands of entries a loose substring rule mismatches often,
     so host comparison is exact and brand substrings need a distinctive brand.
+
+    Two entries can claim the same domain. When they tie, the one that ships a
+    deletion email template wins, then the one that at least has an address,
+    because those give the caller somewhere to send a request.
     """
     site_n = _norm(site)
     host = _host(_norm(url or ""))
     best: Optional[DeletionEntry] = None
-    best_score = 0
+    best_rank = (0, 0, 0)
     for entry in directory:
         score = 0
         if site_n and site_n == _norm(entry.name):
@@ -127,8 +138,15 @@ def match_entry(
                 rf"(?<![a-z0-9]){re.escape(brand)}(?![a-z0-9])", site_n
             ):
                 score = max(score, 50 + len(brand))
-        if score > best_score:
-            best_score = score
+        if not score:
+            continue
+        rank = (
+            score,
+            1 if (entry.email and entry.email_body) else 0,
+            1 if entry.email else 0,
+        )
+        if rank > best_rank:
+            best_rank = rank
             best = entry
     return best
 

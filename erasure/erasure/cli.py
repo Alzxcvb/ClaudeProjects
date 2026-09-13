@@ -426,6 +426,25 @@ def accounts_find(username, timeout_per_site, overall_timeout):
     ))
 
 
+def _domain_candidate(value):
+    """Return VALUE when it can be read as a domain or URL, else None.
+
+    The service argument is matched against entry names and entry domains, but
+    a person can type anything. A stray bracket makes the URL parser raise, so
+    anything that will not parse is matched by name only.
+    """
+    from urllib.parse import urlsplit
+
+    if not value:
+        return None
+    probe = value if "//" in value else "//" + value
+    try:
+        host = urlsplit(probe).hostname
+    except ValueError:
+        return None
+    return value if host else None
+
+
 def _latest_manifest(dir_path):
     if not dir_path.exists():
         return None
@@ -481,7 +500,9 @@ def accounts_deletion_links(manifest_path, include_emails, scrub_only, directory
         table.add_column(col, overflow="fold")
     matched_n = 0
     legal_n = 0
-    template_n = 0
+    # Counted by service, not by hit: one service can show up twice in a
+    # manifest and the summary should not count it twice.
+    template_services: set = set()
     for e in enriched:
         if e.matched:
             matched_n += 1
@@ -493,10 +514,11 @@ def accounts_deletion_links(manifest_path, include_emails, scrub_only, directory
                 subject = e.matched.email_subject or DEFAULT_SUBJECT
                 note += f"\n[dim]Email {e.matched.email} (subject: {subject})[/dim]"
                 if has_email_template(e.matched):
-                    template_n += 1
+                    template_services.add(e.matched.name)
+                    extra = f" --directory {directory_path}" if directory_path else ""
                     note += (
                         "\n[green]Email template available.[/green] [dim]Fill it with "
-                        f"`erasure legal request --service \"{e.matched.name}\"`[/dim]"
+                        f"`erasure legal request --service \"{e.matched.name}\"{extra}`[/dim]"
                     )
             if e.scrub_first:
                 action = "[red]scrub[/red]"
@@ -524,9 +546,9 @@ def accounts_deletion_links(manifest_path, include_emails, scrub_only, directory
             f"[dim]{legal_n} site(s) delete only for people covered by a privacy law and will ask you "
             "to prove it. Generate the letter with `erasure legal request`.[/dim]"
         )
-    if template_n:
+    if template_services:
         console.print(
-            f"[dim]{template_n} site(s) ship the exact wording they want you to email. "
+            f"[dim]{len(template_services)} site(s) ship the exact wording they want you to email. "
             "`erasure legal request --service NAME` merges your details into it and marks "
             "anything you still have to fill in yourself.[/dim]"
         )
@@ -676,6 +698,7 @@ def legal_request(
     """
     from rich.text import Text
 
+    from erasure.legal.email_templates import has_email_template
     from erasure.legal.generator import render_request, save_request
     from erasure.profile import UserProfile
 
@@ -697,7 +720,7 @@ def legal_request(
         directory = load_directory(Path(directory_path) if directory_path else DIRECTORY_PATH)
         # Passed as both the name and the URL so that a domain works too, since
         # an emails manifest gives you domains rather than display names.
-        entry = match_entry(service, service, directory)
+        entry = match_entry(service, _domain_candidate(service), directory)
         if entry is None:
             console.print(
                 f"[red]No directory entry matches '{service}'.[/red] "
@@ -706,6 +729,19 @@ def legal_request(
             )
             sys.exit(1)
         console.print(f"[dim]Matched directory entry: {entry.name}[/dim]")
+        # Two entries can claim one domain, so say so rather than letting the
+        # user assume the one they meant is the one they got.
+        mine = {d.lower() for d in entry.domains}
+        shared = [
+            other.name
+            for other in directory
+            if other.name != entry.name and mine & {d.lower() for d in other.domains}
+        ]
+        if shared:
+            console.print(
+                f"[dim]Also listing a domain of {entry.name}: {', '.join(shared)}. "
+                "Pass the exact name if you meant one of those.[/dim]"
+            )
 
     save_key = jurisdiction
     footer = (
@@ -713,7 +749,7 @@ def legal_request(
         "Share only the identifiers needed to locate your record.[/dim]"
     )
 
-    if entry is not None and entry.email_body:
+    if entry is not None and has_email_template(entry):
         from erasure.legal.email_templates import missing_field_lines, render_email_request
 
         rendered = render_email_request(
@@ -738,8 +774,10 @@ def legal_request(
                 "[yellow]Your profile has no email address. Send this from the "
                 "address the account is registered under.[/yellow]"
             )
-        if rendered.missing:
-            footer_lines.append("[yellow]Still to fill in yourself:[/yellow]")
+        if rendered.blanks:
+            count = len(rendered.blanks)
+            word = "spot" if count == 1 else "spots"
+            footer_lines.append(f"[yellow]Still to fill in yourself, {count} {word}:[/yellow]")
             for line in missing_field_lines(rendered):
                 footer_lines.append(f"[yellow]  {line}[/yellow]")
             if "username" in rendered.missing:
