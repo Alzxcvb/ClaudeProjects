@@ -644,7 +644,7 @@ def legal_list():
     help="Which law to cite (default: ccpa).",
 )
 @click.option("--recipient", default=None, help="Broker/company name addressed in the letter.")
-@click.option("--service", default=None, help="Look this service up in the deletion directory and use its own email template when it has one.")
+@click.option("--service", default=None, help="Service name or domain to look up in the deletion directory. Uses that service's own email template when it has one.")
 @click.option("--username", default=None, help="Your username on that service. The profile does not hold one, so pass it here.")
 @click.option("--from-email", "from_email", default=None, help="Which of your addresses to send from (default: the first in your profile).")
 @click.option("--directory", "directory_path", type=click.Path(exists=True), default=None, help="Deletion directory JSON to look up (default: the bundled snapshot).")
@@ -695,7 +695,9 @@ def legal_request(
         )
 
         directory = load_directory(Path(directory_path) if directory_path else DIRECTORY_PATH)
-        entry = match_entry(service, None, directory)
+        # Passed as both the name and the URL so that a domain works too, since
+        # an emails manifest gives you domains rather than display names.
+        entry = match_entry(service, service, directory)
         if entry is None:
             console.print(
                 f"[red]No directory entry matches '{service}'.[/red] "

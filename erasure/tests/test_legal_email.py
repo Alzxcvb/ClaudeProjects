@@ -519,3 +519,20 @@ def test_deletion_links_marks_rows_that_ship_a_template(fake_setup, tmp_path):
     assert result.exit_code == 0
     assert "Email template available" in result.output
     assert "1 site(s) ship the exact wording" in result.output
+
+
+def test_cli_service_accepts_a_domain_as_well_as_a_name(fake_setup):
+    """An emails manifest gives domains, so --service fakebook.example must work."""
+    profile, directory = fake_setup
+    result = _run(
+        CliRunner(),
+        profile,
+        directory,
+        "--service",
+        "fakebook.example",
+        "--username",
+        "jqpublic",
+    )
+    assert result.exit_code == 0
+    assert "Matched directory entry: Fakebook" in result.output
+    assert "To: privacy@fakebook.example" in result.output

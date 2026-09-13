@@ -87,7 +87,7 @@ Turn account-discovery hits into action. Matches the sites found by `accounts fi
 - `hard` and `impossible` are flagged **scrub first**: overwrite the profile with a junk name, an alias email, and blank fields before you delete, since some companies retain "deleted" data.
 - `limited` is flagged **legal request**: the service deletes only for people covered by a privacy law and will ask for proof. Generate that letter with `erasure legal request`.
 
-Of the 2,612 services in the bundled snapshot, 479 give a deletion email address and 109 of those also ship the exact wording the service wants to receive. Rows that carry wording are marked **Email template available** and print the command that fills it in.
+In the snapshot fetched on 2026-09-07, of 2,612 services, 479 give a deletion email address and 109 of those also ship the exact wording the service wants to receive. Those counts move whenever you refresh the directory. Rows that carry wording are marked **Email template available** and print the command that fills it in.
 
 **Usage:**
 ```bash
@@ -137,7 +137,7 @@ erasure legal request --service "123RF" --username yourhandle   # use that servi
 
 #### Deletion emails for services that only accept email
 
-Some services will not delete an account from a settings page at all. They act only on an email, and the JustDeleteMe directory ships the wording they ask people to send. Pass `--service NAME` and Erasure looks the service up, merges your profile into that wording, and prints a message with `To`, `From` and `Subject` already set.
+Some services will not delete an account from a settings page at all. They act only on an email, and the JustDeleteMe directory ships the wording they ask people to send. Pass `--service NAME` and Erasure looks the service up, merges your profile into that wording, and prints a message with `To`, `From` and `Subject` already set. A domain works as well as a display name, so both `--service Yelp` and `--service yelp.com` resolve.
 
 The dataset does not use named tokens. Each contributor wrote the blanks by hand, so they appear as `XXXXXX` runs, `<YOUR_EMAIL>`, an all caps note such as `[NUMBER OR 0]`, or an instruction such as `(put your name here)`. Erasure reads the words just before each blank to work out what it stands for, and fills it only when that reading is unambiguous and you actually supplied the value.
 
