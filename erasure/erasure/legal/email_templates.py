@@ -8,8 +8,9 @@ is ready to send.
 The dataset does not use named tokens. Placeholders are written by hand by the
 contributor who documented the service, so they take several shapes: ``XXXXXX``
 runs, ``<YOUR_EMAIL>``, a bracket note such as ``[NUMBER OR 0]``, a
-parenthetical instruction such as ``(put your name here)``, and, easiest to
-miss, a literal sample value such as ``'your.mail@address.tld'`` or
+parenthetical instruction such as ``(put your name here)``, a bare token with
+nothing around it such as ``YOUR_EMAIL`` or ``LEETIFYACCOUNTID``, and, easiest
+to miss, a literal sample value such as ``'your.mail@address.tld'`` or
 ``'Firstname Lastname'`` that reads like real text. There is no token
 vocabulary to look up, so each blank is classified by the words that come
 immediately before it, and a value is filled in only when that reading is
@@ -20,6 +21,10 @@ Anything else is left in place as a visible marker and reported in
 deletion request is worse than a blank the user fills in themselves, and a
 sample address left in place is worse still, because the request cannot
 succeed and the user has no way to tell.
+
+Measured on the 2026-09-07 snapshot: 84 of the 109 bundled templates come out
+with every blank filled from a profile holding a name, an email and a phone
+number plus a username passed on the command line, and 74 without a username.
 """
 
 from __future__ import annotations
@@ -68,10 +73,47 @@ LABELS = {
 _MARKER_OPEN = "<<FILL IN: "
 _MARKER_CLOSE = ">>"
 
+# Words that name a field when they make up a bare token such as ``YOUR_EMAIL``
+# or ``LEETIFYACCOUNTID``. A token counts when one of these is the whole token
+# or its ending. ``ADDRESS`` is here on top of the obvious six because Leetify
+# writes its email slot as ``LEETIFYEMAILADDRESS``, which ends in ADDRESS and
+# in nothing else on the list.
+_FIELD_WORDS = ("EMAIL", "USERNAME", "ADDRESS", "ACCOUNT", "PHONE", "NAME", "ID")
+
+# All caps words in the bundled data that name a field but are ordinary prose,
+# and must stay literal text. Each line names what it protects. Keep this list
+# short: adding to it is a decision a person makes, entry by entry.
+_LITERAL_CAPS = (
+    "ID",  # MEXC: "a photo of yourself holding your ID card"
+    "UID",  # guns.lol "UID: XXXXX" and MEXC "with UID # (put the UID here)"
+    "ACCOUNT",  # StreamLabs subject: "REQUEST TO DELETE MY ACCOUNT"
+)
+# The other all caps prose the dataset sweep turned up needs no entry here,
+# because none of it contains a field word: "PERSONAL DATA." (Basilica di San
+# Pietro), "ACCESS AND CORRECT INFORMATION" (Pixel Starships), and the CHECK24
+# brand in its own body.
+_LITERAL_CAPS_GUARD = "(?!(?:" + "|".join(_LITERAL_CAPS) + r")(?![A-Za-z0-9_]))"
+
+# A blank written as a bare token, with no quotes, brackets or angle brackets
+# around it to mark it out. Either screaming snake case, which ordinary prose
+# never is, or a single all caps token that names a field. The allow list above
+# is applied as a lookahead rather than after the match, so a protected word
+# never becomes a match at all and cannot push the reading of the next blank.
+_BARE_TOKEN = (
+    r"(?<![A-Za-z0-9_])"
+    + _LITERAL_CAPS_GUARD
+    + r"(?P<bare_token>[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+"
+    + r"|[A-Z0-9]*(?:"
+    + "|".join(_FIELD_WORDS)
+    + r"))(?![A-Za-z0-9_])"
+)
+
 # Blank shapes actually present in the dataset. Order inside the pattern
 # matters, widest first: a quoted sample has to win over the bare email inside
-# it, and the email shaped run has to win over the plain run so that
-# ``XXXXX@XXXXX.XXXXX`` counts as one address and not three fragments.
+# it, the email shaped run has to win over the plain run so that
+# ``XXXXX@XXXXX.XXXXX`` counts as one address and not three fragments, and the
+# letter run has to win over the bare token so that ``XXXXXX``, which is also
+# all caps, is still read as a run.
 _PLACEHOLDER_RE = re.compile(
     # 'your.mail@address.tld', 'Your name', 'Firstname Lastname', 'your-username'
     r"(?P<quoted_sample>'(?i:your[^']{0,60}|firstname\s+lastname|first\s+last"
@@ -82,7 +124,7 @@ _PLACEHOLDER_RE = re.compile(
     r"|(?i:address|example|domain|yourdomain|mydomain)\.[A-Za-z]{2,6}))"
     r"|(?<![A-Za-z0-9])(?P<email_shaped>[Xx]{2,}@[Xx]{2,}\.[Xx]{2,})(?![A-Za-z0-9])"
     r"|(?<![A-Za-z0-9])(?P<run>[Xx]{2,}|[Yy]{3,})(?![A-Za-z0-9])"
-    r"|(?P<angle><[A-Za-z][A-Za-z_]{2,30}>)"
+    "|" + _BARE_TOKEN + r"|(?P<angle><[A-Za-z][A-Za-z_]{2,30}>)"
     r"|(?P<paren>\((?i:put|state|insert|enter|add|include|sign|type)\b[^)]{0,90}\))"
     # A bracket note, either an instruction or anything without padding spaces.
     # Padding marks decoration: CoinBR titles its subject
@@ -115,7 +157,11 @@ _CUES: tuple[tuple[str, str], ...] = (
     ("nombre", NAME),
     ("user name", USERNAME),
     ("username", USERNAME),
-    ("nickname", USERNAME),
+    # A nickname is a per server display name on Discord, Steam and Slack, not
+    # the login handle, so it is ambiguous in the same way "display name" is.
+    # It is mapped rather than dropped: dropping it would let the bare "name"
+    # cue inside the word win, and the spot would fill with a full legal name.
+    ("nickname", UNKNOWN),
     ("usuario", USERNAME),
     ("login", USERNAME),
     ("account name", UNKNOWN),
@@ -150,6 +196,10 @@ _CUES: tuple[tuple[str, str], ...] = (
 # Words that name a field when they appear inside the blank itself, such as
 # <YOUR_EMAIL> or [NUMBER OR 0]. Checked in order, first hit wins.
 _TOKEN_WORDS: tuple[tuple[str, str], ...] = (
+    # Checked before the rest on purpose. A token naming an account is never
+    # filled, so reading YOUR_ACCOUNT or LEETIFYACCOUNTID this way is the
+    # conservative answer when a token names two things at once.
+    (r"account", ACCOUNT_ID),
     (r"mail", EMAIL),
     (r"user", USERNAME),
     (r"reason", REASON),
@@ -331,7 +381,7 @@ def _read_blank(match: "re.Match[str]", text: str, *, floor: int) -> tuple[str, 
     for group in _NEVER_FILLED_GROUPS:
         if match.group(group):
             return classify_token_text(match.group(group)), False
-    for group in ("angle", "quoted_sample", "sample_email"):
+    for group in ("angle", "bare_token", "quoted_sample", "sample_email"):
         if match.group(group):
             kind = classify_token_text(match.group(group))
             return kind, kind in FILLABLE

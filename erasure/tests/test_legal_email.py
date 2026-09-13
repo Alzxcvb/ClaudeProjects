@@ -9,6 +9,12 @@ and assert that nothing it flags survives into the rendered message. They are
 written that way on purpose: a blank shape the tool does not recognise is the
 one failure that matters here, because the user is told the message is ready
 and sends a sample address to a real company.
+
+That scan is keyed on meaning as well as shape. It looks for any token that
+names a field where a value belongs, in any casing and with no delimiter
+needed, because round 2 searched for delimiters only and seven entries shipping
+a bare YOUR_EMAIL or LEETIFYACCOUNTID passed it. It keeps its own copy of the
+allow list, so widening the module's list cannot widen this one.
 """
 
 from __future__ import annotations
@@ -19,7 +25,13 @@ import re
 import pytest
 from click.testing import CliRunner
 
-from erasure.accounts.justdelete import DeletionEntry, load_directory, match_entry
+from erasure.accounts.justdelete import (
+    DeletionEntry,
+    _host,
+    load_directory,
+    match_candidates,
+    match_entry,
+)
 from erasure.cli import cli
 from erasure.legal.email_templates import (
     ACCOUNT_ID,
@@ -343,9 +355,33 @@ def test_every_bundled_template_renders_without_error():
         assert rendered.body
 
 
+# Field words this file looks for, spelled out here rather than imported from
+# the module under test. The production list can be narrowed without narrowing
+# this one, which is the whole point of keeping a second copy.
+_GUARD_FIELD_WORDS = (
+    "email",
+    "e-mail",
+    "mail",
+    "account",
+    "username",
+    "user",
+    "name",
+    "phone",
+    "telephone",
+    "address",
+    "uid",
+    "id",
+)
+
 # Deliberately wider than the production detector, and written independently of
 # it, so that an upstream refresh introducing a blank shape the tool does not
 # know about fails here instead of shipping a sample value to a real company.
+#
+# The first six alternatives are shapes: something around the blank marks it
+# out. The last three are meaning: a token that names a field, sitting where a
+# value belongs, with no delimiter of any kind. Round 2 had shapes only, and
+# seven entries shipping a bare YOUR_EMAIL or LEETIFYACCOUNTID walked straight
+# through it, so a guard built on delimiters is not a guard.
 _WIDE_BLANK_SCAN = re.compile(
     r"'[^']{1,60}'"  # any single quoted span, which upstream uses for samples
     r"|[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}"  # any address literal
@@ -353,14 +389,31 @@ _WIDE_BLANK_SCAN = re.compile(
     r"|(?<![A-Za-z0-9])[XxYy]{2,}(?![A-Za-z0-9])"  # any letter run
     r"|<[A-Za-z][A-Za-z_]{2,30}>"  # any angle token
     r"|\((?i:put|state|insert|enter|add|include|sign|type)\b[^)]{0,90}\)"
+    # any token joined by underscores, in any casing: prose never is
+    r"|(?<![A-Za-z0-9_])[A-Za-z0-9]+(?:_[A-Za-z0-9]+)+(?![A-Za-z0-9_])"
+    # your, joined to a field word by nothing, a dot, an underscore or a
+    # hyphen. A space makes it English ("your account"), a joiner makes it a
+    # token ("your-username", "youremail", "YOUR_EMAIL").
+    r"|(?<![A-Za-z0-9_])(?i:your)[._-]?(?i:" + "|".join(_GUARD_FIELD_WORDS) + r")\w*"
+    # an all caps token that is a field word or ends in one
+    r"|(?<![A-Za-z0-9_])[A-Z0-9]*(?:EMAIL|USERNAME|ADDRESS|ACCOUNT|PHONE|NAME|ID)"
+    r"(?![A-Za-z0-9_])"
 )
 
 # Spans the wide scan flags that are genuinely literal text, not blanks. Keep
-# this list tiny. A new entry here is a decision a person has to make.
+# this list tiny. A new entry here is a decision a person has to make. This is
+# this file's own copy on purpose: widening the module's allow list must not
+# widen this one, or a production change quietly switches the guard off.
 _DELIBERATELY_LITERAL = {
     # CoinBR/Stratum decorates its subject line. The padding spaces inside the
     # brackets are what separates decoration from an instruction.
     "[ Permanently Account Deletion Request ]",
+    # MEXC asks for "a photo of yourself holding your ID card".
+    "ID",
+    # guns.lol labels its blank "UID: XXXXX", MEXC writes "with UID #".
+    "UID",
+    # StreamLabs titles its email "REQUEST TO DELETE MY ACCOUNT".
+    "ACCOUNT",
 }
 
 
@@ -832,7 +885,9 @@ def test_a_zero_score_entry_never_wins_on_the_tie_break():
     assert match_entry("nothing-like-it", "nothing-like-it", directory) is None
 
 
-def test_cli_says_when_another_entry_shares_the_domain(tmp_path):
+@pytest.fixture
+def twin_setup(tmp_path):
+    """Two entries claiming one domain, contacted in two different places."""
     profile = tmp_path / "profile.json"
     profile.write_text(json.dumps({"name": "Jane Q Public", "emails": ["jane@example.com"]}))
     directory = tmp_path / "directory.json"
@@ -841,7 +896,12 @@ def test_cli_says_when_another_entry_shares_the_domain(tmp_path):
             {
                 "count": 2,
                 "services": [
-                    {"name": "Twin A", "domains": ["twin.example"], "difficulty": "easy"},
+                    {
+                        "name": "Twin A",
+                        "domains": ["twin.example"],
+                        "difficulty": "easy",
+                        "url": "https://twin.example/delete",
+                    },
                     {
                         "name": "Twin B",
                         "domains": ["twin.example"],
@@ -853,7 +913,13 @@ def test_cli_says_when_another_entry_shares_the_domain(tmp_path):
             }
         )
     )
-    result = _run(CliRunner(), profile, directory, "--service", "twin.example")
+    return profile, directory
+
+
+def test_cli_says_when_another_entry_shares_the_domain(twin_setup):
+    """Asked for by name, the note still points at the other entry."""
+    profile, directory = twin_setup
+    result = _run(CliRunner(), profile, directory, "--service", "Twin B")
     assert result.exit_code == 0
     assert "Matched directory entry: Twin B" in result.output
     assert "Also listing a domain of Twin B: Twin A" in result.output
@@ -948,3 +1014,308 @@ def test_jurisdiction_is_still_used_when_there_is_no_template(fake_setup):
     )
     assert result.exit_code == 0
     assert "Article 17" in result.output
+
+
+# --- round 3, finding 1: blanks written as bare undelimited tokens ----------
+
+
+def test_screaming_snake_token_is_filled_from_the_profile():
+    out, filled, missing = fill_template_text(
+        "Please delete the account for YOUR_EMAIL belonging to FULL_NAME.", _fields()
+    )
+    assert out == (
+        "Please delete the account for jane@example.com belonging to Jane Q Public."
+    )
+    assert filled == [EMAIL, NAME]
+    assert missing == []
+
+
+def test_screaming_snake_account_token_is_marked_not_filled():
+    """An account identifier is never guessed, whatever the profile holds."""
+    out, filled, missing = fill_template_text("Delete YOUR_ACCOUNT please.", _fields())
+    assert missing == [ACCOUNT_ID]
+    assert filled == []
+    assert "<<FILL IN: an account, customer or reference number>>" in out
+
+
+def test_bare_caps_token_without_an_underscore_is_caught():
+    """Leetify runs its field names together, so an underscore rule misses it."""
+    out, filled, missing = fill_template_text(
+        "My address is LEETIFYEMAILADDRESS and my ID is LEETIFYACCOUNTID.", _fields()
+    )
+    assert filled == [EMAIL]
+    assert missing == [ACCOUNT_ID]
+    assert "jane@example.com" in out
+    assert "LEETIFY" not in out
+
+
+def test_all_caps_prose_is_left_alone():
+    """Real words in a caps subject must not be mistaken for field names."""
+    for prose in (
+        "PERSONAL DATA.",  # Basilica di San Pietro subject
+        "ACCESS AND CORRECT INFORMATION",  # Pixel Starships subject
+        "REQUEST TO DELETE MY ACCOUNT",  # StreamLabs subject
+        "Ich habe mein CHECK24-Konto geloescht.",  # Check24 brand
+        "Include a photo of yourself holding your ID card.",  # MEXC
+    ):
+        out, filled, missing = fill_template_text(prose, _fields())
+        assert out == prose, prose
+        assert filled == [] and missing == [], prose
+
+
+def test_a_protected_caps_word_does_not_shift_the_next_blank():
+    """The allow list must not eat the cue the following blank reads.
+
+    guns.lol writes "UID: XXXXX" and Amso "Account ID: XXXX". If UID or ID
+    counted as a blank, the run after it would start its search past the cue
+    and degrade from an account number to an unknown detail.
+    """
+    for text in ("Below are my details: UID: XXXXX.", "Account ID: XXXX, thanks."):
+        _, filled, missing = fill_template_text(text, _fields())
+        assert missing == [ACCOUNT_ID], text
+        assert filled == [], text
+
+
+def test_real_bundled_entries_with_bare_tokens_are_handled():
+    """The seven dataset entries that ship a blank as a bare token.
+
+    Looked up by name on purpose. If upstream renames or drops one this raises
+    KeyError, which is the loud failure worth having.
+    """
+    profile = _profile()
+    by_name = {e.name: e for e in load_directory()}
+    fills_from_the_profile = (
+        "Basilica di San Pietro",
+        "Boulanger",
+        "DFCG",
+        "TED",
+        "VirtCloud",
+    )
+    for name in fills_from_the_profile:
+        rendered = render_email_request(by_name[name], profile=profile, username="jqpublic")
+        assert rendered.ready_to_send is True, name
+        assert "jane@example.com" in rendered.body, name
+        for token in ("YOUR_EMAIL", "FULL_NAME", "EMAIL_ADDRESS"):
+            assert token not in rendered.body, f"{name} still ships {token}"
+    virtcloud = render_email_request(by_name["VirtCloud"], profile=profile)
+    assert "Jane Q Public" in virtcloud.body
+
+    marked_never_filled = {
+        "Musei Italiani": "YOUR_ACCOUNT",
+        "Leetify": "LEETIFYACCOUNTID",
+    }
+    for name, token in marked_never_filled.items():
+        rendered = render_email_request(by_name[name], profile=profile, username="jqpublic")
+        assert rendered.ready_to_send is False, name
+        assert token not in rendered.body, f"{name} still ships {token}"
+        assert ACCOUNT_ID in rendered.missing, name
+
+    # The caps prose in the same dataset survives untouched.
+    basilica = render_email_request(
+        by_name["Basilica di San Pietro"], profile=profile, username="jqpublic"
+    )
+    assert basilica.subject == "PERSONAL DATA."
+    mexc = render_email_request(by_name["MEXC"], profile=profile, username="jqpublic")
+    assert "your ID card" in mexc.body
+    check24 = render_email_request(
+        by_name["Check24 Deutschland"], profile=profile, username="jqpublic"
+    )
+    assert "CHECK24" in check24.body
+
+
+# --- round 3, finding 3: a nickname is not a username ----------------------
+
+
+def test_nickname_stays_blank():
+    """A nickname is a display name on most services, not the login handle."""
+    out, filled, missing = fill_template_text("My nickname is XXXX.", _fields())
+    assert missing == [UNKNOWN]
+    assert filled == []
+    assert "jqpublic" not in out
+    assert "Jane Q Public" not in out
+
+
+def test_username_and_full_name_still_fill():
+    """The nickname change must not take the two unambiguous cues with it."""
+    out, filled, _ = fill_template_text(
+        "My username is XXXX and my full name is XXXX.", _fields()
+    )
+    assert filled == [USERNAME, NAME]
+    assert "jqpublic" in out and "Jane Q Public" in out
+
+
+# --- round 3, finding 4: a domain tie asks instead of picking ---------------
+
+
+def test_domain_tie_with_different_contact_paths_asks(twin_setup):
+    profile, directory = twin_setup
+    result = _run(CliRunner(), profile, directory, "--service", "twin.example")
+    # Rich wraps the console, so compare on collapsed whitespace.
+    flat = " ".join(result.output.split())
+    assert result.exit_code == 1
+    assert "matches 2 directory entries that are contacted in different places" in flat
+    assert "Twin A: web form at https://twin.example/delete" in flat
+    assert "Twin B: email to p@twin.example" in flat
+    assert "Run it again with the exact name" in flat
+    # Nothing was rendered: no message, and none of the user's details.
+    assert "To: p@twin.example" not in flat
+    assert "Jane Q Public" not in flat
+
+
+def test_the_exact_name_still_works_after_a_tie(twin_setup):
+    profile, directory = twin_setup
+    result = _run(CliRunner(), profile, directory, "--service", "Twin A")
+    assert result.exit_code == 0
+    assert "Matched directory entry: Twin A" in result.output
+
+
+def test_domain_tie_sharing_one_address_is_still_broken_automatically(tmp_path):
+    """Same address on both sides means the choice sends nothing anywhere new."""
+    profile = tmp_path / "profile.json"
+    profile.write_text(json.dumps({"name": "Jane Q Public", "emails": ["jane@example.com"]}))
+    directory = tmp_path / "directory.json"
+    directory.write_text(
+        json.dumps(
+            {
+                "count": 2,
+                "services": [
+                    {
+                        "name": "Same A",
+                        "domains": ["same.example"],
+                        "difficulty": "easy",
+                        "email": "privacy@same.example",
+                    },
+                    {
+                        "name": "Same B",
+                        "domains": ["same.example"],
+                        "difficulty": "hard",
+                        "email": "privacy@same.example",
+                        "email_body": "Please delete my account.",
+                    },
+                ],
+            }
+        )
+    )
+    result = _run(CliRunner(), profile, directory, "--service", "same.example")
+    assert result.exit_code == 0
+    assert "Matched directory entry: Same B" in result.output
+
+
+def test_two_web_forms_are_still_broken_automatically(tmp_path):
+    """Neither entry can be emailed, so no address of the user's is disclosed."""
+    profile = tmp_path / "profile.json"
+    profile.write_text(json.dumps({"name": "Jane Q Public", "emails": ["jane@example.com"]}))
+    directory = tmp_path / "directory.json"
+    directory.write_text(
+        json.dumps(
+            {
+                "count": 2,
+                "services": [
+                    {
+                        "name": "Form A",
+                        "domains": ["form.example"],
+                        "difficulty": "easy",
+                        "url": "https://form.example/a",
+                    },
+                    {
+                        "name": "Form B",
+                        "domains": ["form.example"],
+                        "difficulty": "hard",
+                        "url": "https://form.example/b",
+                    },
+                ],
+            }
+        )
+    )
+    result = _run(CliRunner(), profile, directory, "--service", "form.example")
+    assert result.exit_code == 0
+    assert "Matched directory entry: Form A" in result.output
+
+
+def test_a_domain_tie_writes_nothing_to_output_or_state(twin_setup, tmp_path, monkeypatch):
+    """The exit has to happen before any file is written."""
+    import erasure.legal.generator as generator
+
+    profile, directory = twin_setup
+    out = tmp_path / "letter.txt"
+    saved = []
+    monkeypatch.setattr(generator, "save_request", lambda *a, **k: saved.append(a) or "x")
+    result = _run(
+        CliRunner(),
+        profile,
+        directory,
+        "--service",
+        "twin.example",
+        "--output",
+        str(out),
+        "--save",
+    )
+    assert result.exit_code == 1
+    assert not out.exists()
+    assert saved == []
+
+
+def test_real_domain_ties_ask_for_the_exact_name():
+    """The three shared domains in the snapshot whose entries differ."""
+    directory = load_directory()
+    expected = {
+        "pix.fr": {"Pix", "Pix fr"},
+        "trenitalia.com": {"Trenitalia", "Trenitalia France"},
+        "fxhome.com": {"FXhome", "HitFilm"},
+    }
+    for domain, names in expected.items():
+        tied = match_candidates(domain, domain, directory)
+        assert {e.name for e in tied} == names, domain
+        assert len({e.email for e in tied}) > 1, domain
+
+
+def test_entry_names_that_could_tie_still_resolve_to_themselves():
+    """Asking by name must never become ambiguous.
+
+    Only an entry that shares a domain with another, or whose name reads as a
+    host, can tie with anything, so those are the names checked here. The whole
+    set of 2,612 was swept once by hand and every name resolved to itself; this
+    keeps the part of it that can actually break, because sweeping all 2,612
+    takes about four minutes.
+    """
+    directory = load_directory()
+    claimed = {}
+    for entry in directory:
+        for domain in entry.domains:
+            claimed.setdefault(domain.lower(), []).append(entry.name)
+    shared = {d for d, names in claimed.items() if len(names) > 1}
+
+    def name_reads_as_another_entrys_domain(entry):
+        host = _host(entry.name.strip().lower())
+        if not host:
+            return False
+        return any(
+            (host == domain or host.endswith("." + domain))
+            and any(owner != entry.name for owner in owners)
+            for domain, owners in claimed.items()
+        )
+
+    risky = [
+        e
+        for e in directory
+        if any(d.lower() in shared for d in e.domains)
+        or name_reads_as_another_entrys_domain(e)
+    ]
+    assert len(risky) >= 30
+    for entry in risky:
+        tied = match_candidates(entry.name, entry.name, directory)
+        assert match_entry(entry.name, entry.name, directory).name == entry.name, entry.name
+        assert not (len(tied) > 1 and len({e.email for e in tied}) > 1), entry.name
+
+
+def test_match_entry_keeps_its_silent_tie_break_for_the_hit_list():
+    """`accounts deletion-links` cannot ask, so its matcher still picks one."""
+    plain = DeletionEntry(name="Alpha", domains=["tie.example"], difficulty="easy")
+    with_mail = DeletionEntry(
+        name="Beta", domains=["tie.example"], difficulty="hard", email="p@tie.example"
+    )
+    assert match_entry("x", "tie.example", [plain, with_mail]).name == "Beta"
+    assert [e.name for e in match_candidates("x", "tie.example", [plain, with_mail])] == [
+        "Alpha",
+        "Beta",
+    ]

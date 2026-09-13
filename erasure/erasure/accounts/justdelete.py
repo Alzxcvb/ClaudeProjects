@@ -100,6 +100,60 @@ def _host_matches(host: str, domain: str) -> bool:
     return bool(host) and bool(domain) and (host == domain or host.endswith("." + domain))
 
 
+def _match_score(site_n: str, host: str, entry: DeletionEntry) -> int:
+    """How well one entry answers a site name or host. 0 means no match."""
+    score = 0
+    if site_n and site_n == _norm(entry.name):
+        score = max(score, 100)
+    for domain in entry.domains:
+        domain_n = _norm(domain)
+        if _host_matches(host, domain_n):
+            score = max(score, 90 + len(domain_n))
+        brand = domain_n.split(".")[0]
+        if not brand or not site_n:
+            continue
+        if brand == site_n:
+            score = max(score, 60 + len(brand))
+        elif len(brand) >= _MIN_SUBSTRING_BRAND and re.search(
+            rf"(?<![a-z0-9]){re.escape(brand)}(?![a-z0-9])", site_n
+        ):
+            score = max(score, 50 + len(brand))
+    return score
+
+
+def match_candidates(
+    site: str,
+    url: Optional[str],
+    directory: list[DeletionEntry],
+) -> list[DeletionEntry]:
+    """Every entry that matches equally well, in directory order.
+
+    Tries, in order: exact name match, any of the entry's domains matching the
+    hit URL's host, and the entry's bare brand (domain without TLD) matching
+    the site name. The most specific match wins, longest matched token first,
+    and everything tied with it comes back too. With thousands of entries a
+    loose substring rule mismatches often, so host comparison is exact and
+    brand substrings need a distinctive brand.
+
+    A caller that has to choose a recipient should look at this list rather
+    than at ``match_entry``, because two entries can claim one domain while
+    belonging to different companies.
+    """
+    site_n = _norm(site)
+    host = _host(_norm(url or ""))
+    best_score = 0
+    tied: list[DeletionEntry] = []
+    for entry in directory:
+        score = _match_score(site_n, host, entry)
+        if not score or score < best_score:
+            continue
+        if score > best_score:
+            best_score = score
+            tied = []
+        tied.append(entry)
+    return tied
+
+
 def match_entry(
     site: str,
     url: Optional[str],
@@ -107,41 +161,22 @@ def match_entry(
 ) -> Optional[DeletionEntry]:
     """Match a hit to a directory entry by service name or domain.
 
-    Tries, in order: exact name match, any of the entry's domains matching the
-    hit URL's host, and the entry's bare brand (domain without TLD) matching
-    the site name. Returns the most specific match (longest matched token wins)
-    or None. With thousands of entries a loose substring rule mismatches often,
-    so host comparison is exact and brand substrings need a distinctive brand.
+    Returns the most specific match or None. When several entries tie, the one
+    that ships a deletion email template wins, then the one that at least has
+    an address, because those give the caller somewhere to send a request.
 
-    Two entries can claim the same domain. When they tie, the one that ships a
-    deletion email template wins, then the one that at least has an address,
-    because those give the caller somewhere to send a request.
+    That tie break picks silently, which is fine when it is only labelling a
+    list of accounts already found, and is not fine when the answer decides who
+    receives the user's name and contact details. `erasure legal request` uses
+    ``match_candidates`` and asks instead.
     """
-    site_n = _norm(site)
-    host = _host(_norm(url or ""))
-    best: Optional[DeletionEntry] = None
-    best_rank = (0, 0, 0)
-    for entry in directory:
-        score = 0
-        if site_n and site_n == _norm(entry.name):
-            score = max(score, 100)
-        for domain in entry.domains:
-            domain_n = _norm(domain)
-            if _host_matches(host, domain_n):
-                score = max(score, 90 + len(domain_n))
-            brand = domain_n.split(".")[0]
-            if not brand or not site_n:
-                continue
-            if brand == site_n:
-                score = max(score, 60 + len(brand))
-            elif len(brand) >= _MIN_SUBSTRING_BRAND and re.search(
-                rf"(?<![a-z0-9]){re.escape(brand)}(?![a-z0-9])", site_n
-            ):
-                score = max(score, 50 + len(brand))
-        if not score:
-            continue
+    tied = match_candidates(site, url, directory)
+    if not tied:
+        return None
+    best = tied[0]
+    best_rank = (0, 0)
+    for entry in tied:
         rank = (
-            score,
             1 if (entry.email and entry.email_body) else 0,
             1 if entry.email else 0,
         )
