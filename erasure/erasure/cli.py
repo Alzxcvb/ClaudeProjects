@@ -437,10 +437,12 @@ def _latest_manifest(dir_path):
 @click.option("--manifest", "manifest_path", type=click.Path(exists=True), help="Accounts/emails manifest JSON (default: latest in state/)")
 @click.option("--include-emails/--no-emails", default=True, help="Also fold in the latest holehe emails manifest")
 @click.option("--scrub-only", is_flag=True, help="Only show sites you should scrub before deleting")
-def accounts_deletion_links(manifest_path, include_emails, scrub_only):
+@click.option("--directory", "directory_path", type=click.Path(exists=True), default=None, help="Deletion directory JSON to match against (default: the bundled snapshot).")
+def accounts_deletion_links(manifest_path, include_emails, scrub_only, directory_path):
     """Map discovered accounts to deletion difficulty + direct delete links."""
     from rich.table import Table
-    from erasure.accounts.justdelete import enrich_hits
+    from erasure.accounts.justdelete import DIRECTORY_PATH, enrich_hits, load_directory
+    from erasure.legal.email_templates import DEFAULT_SUBJECT, has_email_template
 
     hits: list[dict] = []
     if manifest_path:
@@ -462,7 +464,8 @@ def accounts_deletion_links(manifest_path, include_emails, scrub_only):
         )
         sys.exit(0)
 
-    enriched = enrich_hits(hits)
+    directory = load_directory(Path(directory_path) if directory_path else DIRECTORY_PATH)
+    enriched = enrich_hits(hits, directory)
     if scrub_only:
         enriched = [e for e in enriched if e.scrub_first]
 
@@ -478,6 +481,7 @@ def accounts_deletion_links(manifest_path, include_emails, scrub_only):
         table.add_column(col, overflow="fold")
     matched_n = 0
     legal_n = 0
+    template_n = 0
     for e in enriched:
         if e.matched:
             matched_n += 1
@@ -486,8 +490,14 @@ def accounts_deletion_links(manifest_path, include_emails, scrub_only):
             link = e.matched.url or "-"
             note = f"\n[dim]{e.matched.notes}[/dim]" if e.matched.notes else ""
             if e.matched.email:
-                subject = e.matched.email_subject or "Account Deletion Request"
+                subject = e.matched.email_subject or DEFAULT_SUBJECT
                 note += f"\n[dim]Email {e.matched.email} (subject: {subject})[/dim]"
+                if has_email_template(e.matched):
+                    template_n += 1
+                    note += (
+                        "\n[green]Email template available.[/green] [dim]Fill it with "
+                        f"`erasure legal request --service \"{e.matched.name}\"`[/dim]"
+                    )
             if e.scrub_first:
                 action = "[red]scrub[/red]"
             elif e.legal_request:
@@ -513,6 +523,12 @@ def accounts_deletion_links(manifest_path, include_emails, scrub_only):
         console.print(
             f"[dim]{legal_n} site(s) delete only for people covered by a privacy law and will ask you "
             "to prove it. Generate the letter with `erasure legal request`.[/dim]"
+        )
+    if template_n:
+        console.print(
+            f"[dim]{template_n} site(s) ship the exact wording they want you to email. "
+            "`erasure legal request --service NAME` merges your details into it and marks "
+            "anything you still have to fill in yourself.[/dim]"
         )
 
 
@@ -628,13 +644,38 @@ def legal_list():
     help="Which law to cite (default: ccpa).",
 )
 @click.option("--recipient", default=None, help="Broker/company name addressed in the letter.")
+@click.option("--service", default=None, help="Look this service up in the deletion directory and use its own email template when it has one.")
+@click.option("--username", default=None, help="Your username on that service. The profile does not hold one, so pass it here.")
+@click.option("--from-email", "from_email", default=None, help="Which of your addresses to send from (default: the first in your profile).")
+@click.option("--directory", "directory_path", type=click.Path(exists=True), default=None, help="Deletion directory JSON to look up (default: the bundled snapshot).")
 @click.option("--profile", "profile_path", type=click.Path(exists=True), help="Profile JSON (default: ~/.erasure/profile.json)")
 @click.option("--deadline-days", type=int, default=None, help="Override the statutory response deadline.")
 @click.option("--include-dob", is_flag=True, help="Include date of birth as an identifier (off by default).")
 @click.option("--output", "output_path", type=click.Path(), default=None, help="Save the letter to this path.")
 @click.option("--save", "save_to_state", is_flag=True, help="Save the letter under state/legal/.")
-def legal_request(jurisdiction, recipient, profile_path, deadline_days, include_dob, output_path, save_to_state):
-    """Render a deletion-request letter for the active profile."""
+def legal_request(
+    jurisdiction,
+    recipient,
+    service,
+    username,
+    from_email,
+    directory_path,
+    profile_path,
+    deadline_days,
+    include_dob,
+    output_path,
+    save_to_state,
+):
+    """Render a deletion request for the active profile.
+
+    With --service, look the service up in the bundled deletion directory. Some
+    services only delete on request by email and ship their own wording, and for
+    those this prints a ready to send message with your details merged in.
+    Anything the tool cannot fill safely is marked in the text and listed below
+    it, so nothing is ever guessed on your behalf.
+    """
+    from rich.text import Text
+
     from erasure.legal.generator import render_request, save_request
     from erasure.profile import UserProfile
 
@@ -644,26 +685,111 @@ def legal_request(jurisdiction, recipient, profile_path, deadline_days, include_
         sys.exit(1)
 
     profile = UserProfile.model_validate_json(target.read_text())
-    text = render_request(
-        profile=profile,
-        jurisdiction=jurisdiction,
-        recipient=recipient,
-        deadline_days=deadline_days,
-        include_dob=include_dob,
+
+    entry = None
+    if service:
+        from erasure.accounts.justdelete import (
+            DIRECTORY_PATH,
+            load_directory,
+            match_entry,
+        )
+
+        directory = load_directory(Path(directory_path) if directory_path else DIRECTORY_PATH)
+        entry = match_entry(service, None, directory)
+        if entry is None:
+            console.print(
+                f"[red]No directory entry matches '{service}'.[/red] "
+                "Check the name with `erasure accounts deletion-links`, or drop "
+                "--service to write a plain jurisdiction letter."
+            )
+            sys.exit(1)
+        console.print(f"[dim]Matched directory entry: {entry.name}[/dim]")
+
+    save_key = jurisdiction
+    footer = (
+        "[dim]Paste this into the broker's contact form or privacy email. "
+        "Share only the identifiers needed to locate your record.[/dim]"
     )
+
+    if entry is not None and entry.email_body:
+        from erasure.legal.email_templates import missing_field_lines, render_email_request
+
+        rendered = render_email_request(
+            entry, profile=profile, username=username, from_email=from_email
+        )
+        text = rendered.as_text()
+        title = f"erasure legal request (email template, {entry.name})"
+        save_key = "email"
+        if not recipient:
+            recipient = entry.name
+        footer_lines = [
+            "[dim]This wording comes from the JustDeleteMe directory, which is what "
+            "this service asks people to send.[/dim]"
+        ]
+        if rendered.from_email:
+            footer_lines.append(
+                f"[dim]Send it from {rendered.from_email}. Most services match the "
+                "request against the address on the account.[/dim]"
+            )
+        else:
+            footer_lines.append(
+                "[yellow]Your profile has no email address. Send this from the "
+                "address the account is registered under.[/yellow]"
+            )
+        if rendered.missing:
+            footer_lines.append("[yellow]Still to fill in yourself:[/yellow]")
+            for line in missing_field_lines(rendered):
+                footer_lines.append(f"[yellow]  {line}[/yellow]")
+            if "username" in rendered.missing:
+                footer_lines.append("[dim]Pass --username to fill the username.[/dim]")
+        else:
+            footer_lines.append("[green]Every placeholder was filled.[/green]")
+        footer = "\n".join(footer_lines)
+    else:
+        letter = render_request(
+            profile=profile,
+            jurisdiction=jurisdiction,
+            recipient=recipient or (entry.name if entry else None),
+            deadline_days=deadline_days,
+            include_dob=include_dob,
+        )
+        title = f"erasure legal request ({jurisdiction})"
+        if entry is not None and entry.email:
+            from erasure.legal.email_templates import DEFAULT_SUBJECT
+
+            sender = from_email or (profile.emails[0] if profile.emails else None)
+            header = [f"To: {entry.email}"]
+            if sender:
+                header.append(f"From: {sender}")
+            header.append(f"Subject: {entry.email_subject or DEFAULT_SUBJECT}")
+            text = "\n".join(header) + "\n\n" + letter
+            save_key = "email"
+            footer = (
+                f"[dim]{entry.name} accepts deletion requests by email but ships no "
+                "wording of its own, so this is your jurisdiction letter addressed to "
+                "them. Send it from the address on the account.[/dim]"
+            )
+        else:
+            text = letter
+            if entry is not None:
+                where = entry.url or "the service's own settings page"
+                footer = (
+                    f"[dim]{entry.name} has no deletion email in the directory. "
+                    f"Delete the account at {where}, and use this letter only if that "
+                    "route fails.[/dim]"
+                )
 
     if output_path:
         Path(output_path).write_text(text, encoding="utf-8")
         console.print(f"[green]Letter written:[/green] {output_path}")
     if save_to_state:
-        saved = save_request(text, jurisdiction=jurisdiction, recipient=recipient)
+        saved = save_request(text, jurisdiction=save_key, recipient=recipient)
         console.print(f"[green]Saved to state:[/green] {saved}")
 
-    console.print(Panel(text, title=f"erasure legal request ({jurisdiction})", expand=False))
-    console.print(
-        "[dim]Paste this into the broker's contact form or privacy email. "
-        "Share only the identifiers needed to locate your record.[/dim]"
-    )
+    # Rendered as Text, not markup: a template can contain square brackets such
+    # as [NUMBER OR 0] that Rich would otherwise read as a style tag.
+    console.print(Panel(Text(text), title=title, expand=False))
+    console.print(footer)
 
 
 @cli.group()

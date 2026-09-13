@@ -87,9 +87,11 @@ Turn account-discovery hits into action. Matches the sites found by `accounts fi
 - `hard` and `impossible` are flagged **scrub first**: overwrite the profile with a junk name, an alias email, and blank fields before you delete, since some companies retain "deleted" data.
 - `limited` is flagged **legal request**: the service deletes only for people covered by a privacy law and will ask for proof. Generate that letter with `erasure legal request`.
 
+Of the 2,612 services in the bundled snapshot, 479 give a deletion email address and 109 of those also ship the exact wording the service wants to receive. Rows that carry wording are marked **Email template available** and print the command that fills it in.
+
 **Usage:**
 ```bash
-erasure accounts deletion-links [--manifest PATH] [--no-emails] [--scrub-only]
+erasure accounts deletion-links [--manifest PATH] [--no-emails] [--scrub-only] [--directory PATH]
 ```
 
 The directory ships as a committed snapshot so the command works offline. Refresh it from upstream with `python3 scripts/refresh_deletion_directory.py`; local additions live in `erasure/accounts/deletion_directory_overrides.json` and are layered on top.
@@ -130,7 +132,20 @@ Draft statute-citing deletion / opt-out letters off your profile. A request that
 ```bash
 erasure legal list                          # list what each regime cites
 erasure legal request --recipient "Spokeo" --jurisdiction ccpa [--save] [--output letter.txt]
+erasure legal request --service "123RF" --username yourhandle   # use that service's own email template
 ```
+
+#### Deletion emails for services that only accept email
+
+Some services will not delete an account from a settings page at all. They act only on an email, and the JustDeleteMe directory ships the wording they ask people to send. Pass `--service NAME` and Erasure looks the service up, merges your profile into that wording, and prints a message with `To`, `From` and `Subject` already set.
+
+The dataset does not use named tokens. Each contributor wrote the blanks by hand, so they appear as `XXXXXX` runs, `<YOUR_EMAIL>`, an all caps note such as `[NUMBER OR 0]`, or an instruction such as `(put your name here)`. Erasure reads the words just before each blank to work out what it stands for, and fills it only when that reading is unambiguous and you actually supplied the value.
+
+Your full name, email address and phone number come from your profile. A username is not part of a profile, so pass `--username`. Use `--from-email` to send from an address other than the first one in your profile.
+
+Anything that cannot be filled safely is left in the text as a visible `<<FILL IN: ...>>` marker and listed underneath, so you can see exactly what to type. A reason for leaving, an account or customer number, and a passport number are never filled in automatically even when your profile holds something similar. Nothing is ever guessed.
+
+`--service` also works for the other two cases. When the directory has an address but no wording, you get your jurisdiction letter addressed to that address. When it has no address at all, you get the letter plus a pointer to the service's own delete page.
 
 ### `erasure tracker`
 The structured version of the thread's tracking sheet: one row per site with opt-out URL, method, date requested, status, and an auto-computed follow-up date (45 days, the CCPA window). Seed it from the broker registry, mark requests as you send them, and export to CSV. Because brokers relist you within 6 to 12 months, `--due` surfaces the rows whose follow-up has come around.
