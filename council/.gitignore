@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+ledger.db
+ledger.db-wal
+ledger.db-shm
