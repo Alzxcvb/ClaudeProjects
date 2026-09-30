@@ -609,7 +609,7 @@
             <div class="category-title">
                 <span class="category-icon">💻</span> Device Security
             </div>
-            <span class="category-pts" id="pts-device">0 / 26 pts</span>
+            <span class="category-pts" id="pts-device">0 / 32 pts</span>
         </div>
         <div class="category-body">
             <label class="check-item" data-pts="8" data-cat="device">
@@ -645,6 +645,15 @@
                 <div class="check-text">
                     <strong>Enabled Advanced Data Protection for iCloud (or the Android/Microsoft equivalent)</strong>
                     <small>iPhone: Settings → your name → iCloud → Advanced Data Protection → turn on. Set up a recovery contact or recovery key first (Settings → your name → Sign-In &amp; Security → Account Recovery) since Apple cannot recover this data for you if you lose access, and update every device on the account first. This raises iCloud's end-to-end encrypted categories from 15 to 25, so Apple no longer holds the keys and cannot hand over that content in response to a warrant. Still not covered even with it on: Mail, Contacts, Calendar, Shared Albums, anything shared by "anyone with a link", real time collaboration in Pages, Numbers and Keynote, and file metadata such as modification dates and checksums. It also does not stop a subpoena for account metadata or connection logs, and it does not stop a search of an unlocked device. Side effect worth knowing: iCloud.com web access is switched off when you turn this on, and each session has to be approved from one of your devices.</small>
+                </div>
+                <div class="check-pts">+6</div>
+            </label>
+            <label class="check-item" data-pts="6" data-cat="device">
+                <input type="checkbox">
+                <div class="custom-check"></div>
+                <div class="check-text">
+                    <strong>Prepared your phone for theft</strong>
+                    <small>iPhone: Settings → Face ID (or Touch ID) &amp; Passcode → Stolen Device Protection → turn it on, then choose "Always" under Require Security Delay. It has been on by default since iOS 26.4, but the default only applies away from familiar places like home or work, so "Always" is worth it if you travel or move around. On the same screen, under Allow Access When Locked, turn off Control Center so a thief cannot switch on Airplane Mode from the lock screen. Keep Find My on. If the phone is stolen, mark it as lost at iCloud.com/find, and do not remove it from Find My, because that switches off Activation Lock and makes the phone easy to wipe and resell. Android (10 and up): Settings → Google → All services → Theft protection → turn on Theft Detection Lock, which locks the screen automatically if it senses the phone being snatched from you. Skip the viral "thief selfie" charger shortcuts: they run every time you charge your own phone, and iPhone shows a green dot whenever an app is using the camera.</small>
                 </div>
                 <div class="check-pts">+6</div>
             </label>
@@ -1118,7 +1127,7 @@
         '2fa': 25,
         network: 20,
         router: 25,
-        device: 26,
+        device: 32,
         accounts: 15,
         phonedata: 20,
         footprint: 15,
