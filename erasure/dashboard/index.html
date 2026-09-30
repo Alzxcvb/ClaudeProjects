@@ -1057,6 +1057,12 @@
         const numEl = document.getElementById('scoreNumber');
         numEl.textContent = pct;
 
+        // Update cat pts displays (before the zero score early return, so they never go stale)
+        Object.keys(catScores).forEach(cat => {
+            const el = document.getElementById('pts-' + cat);
+            if (el) el.textContent = catScores[cat] + ' / ' + catMaxes[cat] + ' pts';
+        });
+
         // Tier
         const tierEl = document.getElementById('scoreTier');
 
@@ -1072,17 +1078,13 @@
         tierEl.className = 'score-tier tier-' + tier;
         tierEl.textContent = label;
         circle.classList.add('progress-' + tier);
-
-        // Update cat pts displays
-        Object.keys(catScores).forEach(cat => {
-            const el = document.getElementById('pts-' + cat);
-            if (el) el.textContent = catScores[cat] + ' / ' + catMaxes[cat] + ' pts';
-        });
     }
 
     // Wire up checkboxes
     document.querySelectorAll('.check-item').forEach(item => {
-        item.addEventListener('click', () => {
+        item.addEventListener('click', (e) => {
+            // Stop the label from also clicking its hidden checkbox, which ran this handler twice
+            e.preventDefault();
             const checkbox = item.querySelector('input[type="checkbox"]');
             checkbox.checked = !checkbox.checked;
 
